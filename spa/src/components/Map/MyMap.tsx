@@ -1,24 +1,22 @@
-import React, { useState, useEffect, useRef, useLayoutEffect, FC } from 'react';
+import { useState, useEffect, useRef, FC } from 'react';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import 'ol/ol.css';
 import 'ol/proj';
-import { fromLonLat, transform } from 'ol/proj';
+import { transform} from 'ol/proj';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import Projection from 'ol/proj';
-import proj4 from 'proj4';
-import { register } from 'ol/proj/proj4';
-import { get as getProjection } from 'ol/proj';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
+import { MyTheme } from '../../styles/global';
 import { features } from 'process';
 
 import { useStateDispatch } from '../../hooks/useRedux';
 import { mapService } from '../../services/map.services';
+
 
 const MyMap: FC = () => {
   const [map, setMap]: [map: any, setMap: any] = useState();
@@ -39,6 +37,9 @@ const MyMap: FC = () => {
     geometry: new Point(pos),
     name: 'My Marker',
   });
+
+
+  const pin :string = `<svg width='33' height='53' version='1.1' xmlns='http://www.w3.org/2000/svg'><path d='M33 16.5C33 25.6127 28 33 16.5 53.5C5 33 0 25.6127 0 16.5C0 7.3873 7.3873 0 16.5 0C25.6127 0 33 7.3873 33 16.5Z' fill='${MyTheme.colors.accent.replace("#", "%23")}' /></svg>`
 
   useEffect(() => {
     dispatch(mapService.getLocations());
@@ -64,7 +65,7 @@ const MyMap: FC = () => {
               anchor: [0.5, 46],
               anchorXUnits: 'fraction',
               anchorYUnits: 'pixels',
-              src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+              src: 'data:image/svg+xml;utf8,' + pin,
             }),
           }),
         }),
@@ -79,7 +80,7 @@ const MyMap: FC = () => {
 
   return (
     <div
-      style={{ height: '100vh', width: '100%' }}
+      style={{ height: '100vh', width: '100%', position: 'fixed'}}
       ref={mapElement}
       className='map-container'
     />
