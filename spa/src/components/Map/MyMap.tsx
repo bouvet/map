@@ -18,7 +18,7 @@ import Icon from 'ol/style/Icon';
 import { features } from 'process';
 
 import { useStateDispatch } from '../../hooks/useRedux';
-import { getLocations } from '../../services/location.services';
+import { mapService } from '../../services/map.services';
 
 const MyMap: FC = () => {
   const [map, setMap]: [map: any, setMap: any] = useState();
@@ -41,7 +41,7 @@ const MyMap: FC = () => {
   });
 
   useEffect(() => {
-    dispatch(getLocations());
+    dispatch(mapService.getLocations());
     /*
     proj4.defs(
       "EPSG:3857", 
