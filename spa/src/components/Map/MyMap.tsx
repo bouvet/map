@@ -7,12 +7,12 @@ import 'ol/proj';
 import { transform} from 'ol/proj';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import { MyTheme } from '../../styles/global';
+import { features } from 'process';
 
 
 const MyMap: FC = () => {
@@ -28,6 +28,7 @@ const MyMap: FC = () => {
     geometry: new Point(pos),
     name: 'My Marker',
   });
+
 
   const pin :string = `<svg width='33' height='53' version='1.1' xmlns='http://www.w3.org/2000/svg'><path d='M33 16.5C33 25.6127 28 33 16.5 53.5C5 33 0 25.6127 0 16.5C0 7.3873 7.3873 0 16.5 0C25.6127 0 33 7.3873 33 16.5Z' fill='${MyTheme.colors.accent.replace("#", "%23")}' /></svg>`
 
@@ -74,6 +75,6 @@ const MyMap: FC = () => {
       className='map-container'
     />
   );
-}
+};
 
 export default MyMap;
