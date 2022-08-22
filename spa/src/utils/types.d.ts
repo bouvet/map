@@ -1,5 +1,5 @@
 // category types, TODO: fetch these from DB
-export type Category = "Basketball" | "Fotball" | "Skating" | "Pumptrack" | "Other";
+export type Category = "Basketball" | "Fotball" | "Skating" | "Pumptrack" | "Tennis" | "Volleyball" | "Other";
 
 // interface for location object
 export interface LocationData {
