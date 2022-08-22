@@ -15,6 +15,8 @@ namespace api.Controllers
     {
         private readonly CategoryContext _context;
 
+        
+
         public CategoryItemsController(CategoryContext context)
         {
             _context = context;
@@ -92,7 +94,8 @@ namespace api.Controllers
             _context.CategoryItems.Add(categoryItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategoryItem", new { id = categoryItem.Id }, categoryItem);
+            //return CreatedAtAction("GetCategoryItem", new { id = categoryItem.Id }, categoryItem);
+            return CreatedAtAction(nameof(GetCategoryItem), new { id = categoryItem.Id }, categoryItem);
         }
 
         // DELETE: api/CategoryItems/5
