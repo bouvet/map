@@ -12,7 +12,7 @@ export const MyTheme = {
         header: '',
     },
     fontSize: {
-        body: '12px',
+        body: '16px',
         header: '16px',
     }
 }
