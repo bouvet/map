@@ -1,5 +1,7 @@
 // category types, TODO: fetch these from DB
-export type Category = "Basketball" | "Fotball" | "Skating" | "Pumptrack" | "Tennis" | "Volleyball" | "Other";
+export const category = ["Basketball", "Fotball", "Skating", "Pumptrack", "Tennis", "Volleyball", "Other"]
+export type Category = typeof category[number];
+
 
 // interface for location object
 export interface LocationData {
