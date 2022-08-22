@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import locationState from './state/location.state';
-import userState from './state/user.state';
+import mapState from './state/map.state';
+import authState from './state/auth.state';
 
 export const store = configureStore({
   reducer: {
-    location: locationState,
-    users: userState,
+    map: mapState,
+    auth: authState,
   },
 });
 

@@ -17,12 +17,21 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import { features } from 'process';
 
+import { useStateDispatch } from '../../hooks/useRedux';
+import { getLocations } from '../../services/location.services';
+
 const MyMap: FC = () => {
   const [map, setMap]: [map: any, setMap: any] = useState();
+
+  const dispatch = useStateDispatch();
   const mapElement: any = useRef();
   const mapRef = useRef();
   mapRef.current = map;
-  const pos = transform([5.732116770030319, 58.91645986493334], 'EPSG:4326', 'EPSG:3857'); //use order lon, lat
+  const pos = transform(
+    [5.732116770030319, 58.91645986493334],
+    'EPSG:4326',
+    'EPSG:3857'
+  ); //use order lon, lat
 
   console.log('test', pos);
 
@@ -32,6 +41,7 @@ const MyMap: FC = () => {
   });
 
   useEffect(() => {
+    dispatch(getLocations());
     /*
     proj4.defs(
       "EPSG:3857", 
