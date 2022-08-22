@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import {LocationData, Category} from "./types"
+import {LocationData, Category} from "./types.d"
 
 export function filter(locations : LocationData[], category : Category) : LocationData[] {
     /**
