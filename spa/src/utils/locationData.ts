@@ -1,17 +1,6 @@
 import { faker } from '@faker-js/faker';
 import {LocationData, Category} from "./types"
 
-
-
-let location : LocationData = {
-    latitude: 58.91645986493334,
-    longitude: 5.732116770030319,
-    name: "kanalpiren",                 // park name
-    description: "",                    // park description
-    category: ['Skating', 'Fotball', "Other"] // catagories the park fits
-}
-
-
 export function filter(locations : LocationData[], category : Category) : LocationData[] {
     /**
      * returns a filtered array containing only locations with @param {category}.
@@ -57,11 +46,3 @@ export function fake_locations(n : number) : LocationData[] {
 
     return locations;
 }
-
-let locations = fake_locations(10);
-console.log(locations);
-
-console.log("Fotball parks:")
-for (let idx in filter(locations, 'Fotball') ) {
-    console.log(locations[idx].name)
-} 
