@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
-import { useStateDispatch } from '../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 
 interface Props {
     clicked: boolean;

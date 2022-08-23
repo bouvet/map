@@ -108,8 +108,8 @@ export function fake_locations(n : number) : Location[] {
             },
             geometry: {
                 coordinates: [
-                    Number(faker.address.longitude(5, 5, 4)),
-                    Number(faker.address.latitude(58, 58, 4)) ],
+                    Number(faker.address.longitude(6, 5.4, 4)),
+                    Number(faker.address.latitude(59, 58.4, 4)) ],
                 type: "Point"
             },
         }

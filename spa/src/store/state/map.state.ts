@@ -7,6 +7,7 @@ const initialState = {
     locations: [] as Location[],
     filteredLocations: [] as Location[],
     selected: '',
+    Category: [],
 };
 
 export const mapState = createSlice({
