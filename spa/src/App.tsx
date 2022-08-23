@@ -1,15 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import MyMap from './components/Map/MyMap';
+import Map from './components/Map/Map';
 import { FilterMenu } from './components/Filter/FilterMenu';
 import { FilterButton } from './components/Filter/Buttons';
 import { category } from './utils/types.d';
 import { useStateSelector } from './hooks/useRedux';
 import { Header } from './components/Navigation/Header';
 import { FilterEvent } from './utils/filterLogic';
-
-
 
 function App() {
 
@@ -28,7 +23,7 @@ function App() {
         {mappedFilter}
 
       </FilterMenu>
-      <MyMap />
+      <Map />
     </div>
   );
 }
