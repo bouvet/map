@@ -1,14 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import MyMap from './components/Map/MyMap';
+import Map from './components/Map/Map';
 
 function App() {
-  return (
-    <div className="App">
-      <MyMap />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Map />
+        </div>
+    );
 }
 
 export default App;
