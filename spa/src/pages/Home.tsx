@@ -24,7 +24,7 @@ export const Home = () => {
         <div className="App">
             <Header content={selected}></Header>
             <FilterMenu>{mappedFilter}</FilterMenu>
-            <Map locations={locations} filteredLocations={filteredLocations} />
+            <Map locations={filteredLocations} filteredLocations={filteredLocations} />
         </div>
     );
 };

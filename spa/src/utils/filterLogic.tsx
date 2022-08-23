@@ -13,5 +13,6 @@ export function FilterEvent() {
     useEffect(() => {
         console.log('filer this ', selected, filter(locations, selected));
         dispatch(mapActions.setFilteredLocations(filter(locations, selected)));
+        
     }, [selected]);
 }

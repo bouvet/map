@@ -23,6 +23,8 @@ export interface Properties {
     title: string;
     description: string;
     category: Array<Category>;
+    img?: Blob;
+    rating?: number;
 }
 export interface Location {
     [index: string]: any;
