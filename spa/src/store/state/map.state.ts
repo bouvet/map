@@ -5,6 +5,7 @@ import { LocationData } from '../../utils/types.d';
 const initialState = {
   loading: true,
   locations: [] as LocationData[],
+  selected: '',
 };
 
 export const mapState = createSlice({
@@ -17,6 +18,9 @@ export const mapState = createSlice({
     loadLocations(state, action: { payload: LocationData[]; type: string }) {
       state.locations = action.payload;
     },
+    setSelected(state, action: { payload: string; type: string }) {
+      state.selected = action.payload;
+    }
   },
 });
 
