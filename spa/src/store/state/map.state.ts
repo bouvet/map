@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { LocationData } from '../../utils/types.d';
+import { Location } from '../../utils/types.d';
 
 const initialState = {
   loading: true,
-  locations: [] as LocationData[],
+  locations: [] as Location[],
   selected: '',
 };
 
@@ -15,7 +15,7 @@ export const mapState = createSlice({
     setLoading(state, action: { payload: boolean; type: string }) {
       state.loading = action.payload;
     },
-    loadLocations(state, action: { payload: LocationData[]; type: string }) {
+    loadLocations(state, action: { payload: Location[]; type: string }) {
       state.locations = action.payload;
     },
     setSelected(state, action: { payload: string; type: string }) {

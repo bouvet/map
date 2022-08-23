@@ -7,6 +7,7 @@ import { FilterButton } from './components/Filter/Buttons';
 import { category } from './utils/types.d';
 import { useStateSelector } from './hooks/useRedux';
 import { Header } from './components/Navigation/Header';
+import { FilterEvent } from './utils/filterLogic';
 
 
 
@@ -17,6 +18,8 @@ function App() {
   const mappedFilter = category.map(item => (
     <FilterButton key={item} text={item} />
   ));
+  
+  FilterEvent();
 
   return (
     <div className="App">
