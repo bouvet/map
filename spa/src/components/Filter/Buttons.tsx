@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
-import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
+import { useStateDispatch } from '../../hooks/useRedux';
 
 interface Props {
     clicked: boolean;
@@ -17,16 +17,14 @@ const FilterButtonStyle = styled.div<Props>`
     font-size: ${MyTheme.fontSize.icon};
     padding: 0px 10px;
     border-radius: 27px;
-    background-color: ${props => props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase };
+    background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase)};
     color: ${MyTheme.colors.lightbase};
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    `;
+`;
 
-
-
-export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
+export const FilterButton: React.FC<FilterProps> = ({ text }) => {
 
     const { selected } = useStateSelector(state => state.map)
     const [select, setSelect] = useState(false);
@@ -43,9 +41,9 @@ export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
 
     const updateGlobalState = (activity :string) => {
         // Update the global state
-        console.log(activity);
+        // console.log(activity);
         dispatch(mapActions.setSelected(activity));
-    }
+    };
 
     const handleClick = () => {
         if (!select) {
@@ -54,8 +52,7 @@ export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
             updateGlobalState("");
         }
         setSelect(!select);
-
-    }
+    };
 
     return (
         <FilterButtonStyle clicked={select} onClick={handleClick}>
