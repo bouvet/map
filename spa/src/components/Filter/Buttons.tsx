@@ -14,7 +14,7 @@ interface FilterProps {
 const FilterButtonStyle = styled.div<Props>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     height: 27px;
-    font-size: ${MyTheme.fontSize.body};
+    font-size: ${MyTheme.fontSize.icon};
     padding: 0px 10px;
     border-radius: 27px;
     background-color: ${props => props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase };
@@ -28,10 +28,18 @@ const FilterButtonStyle = styled.div<Props>`
 
 export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
 
+    const { selected } = useStateSelector(state => state.map)
     const [select, setSelect] = useState(false);
-
-
     const dispatch = useStateDispatch()
+
+    useEffect(() => {
+        if (selected === text) {
+            setSelect(true);
+        } else {
+            setSelect(false);
+        }
+    }, [selected]);
+
 
     const updateGlobalState = (activity :string) => {
         // Update the global state
@@ -40,8 +48,13 @@ export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
     }
 
     const handleClick = () => {
-        //setSelect(!select);
-        updateGlobalState(text);
+        if (!select) {
+            updateGlobalState(text);
+        } else {
+            updateGlobalState("");
+        }
+        setSelect(!select);
+
     }
 
     return (
