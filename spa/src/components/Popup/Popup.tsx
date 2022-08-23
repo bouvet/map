@@ -81,6 +81,8 @@ export const Popup: React.FunctionComponent<PopupProps> = ({name, description, r
 
     if (rating > 5) {
         rating = 5;
+    } else if (rating < 0) {
+        rating = 0;
     }
     useEffect(() => {
         let temp: any[] = []
