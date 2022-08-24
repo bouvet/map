@@ -1,14 +1,13 @@
 import { faker } from '@faker-js/faker';
 import {Category, Location, category} from "./types.d"
 
+/**
+ * returns a filtered array containing only locations with @param category.
+ * @param locations @type Array\<Location\>
+ * @param category  @type Category
+ * @returns @type Array<Location>
+ */
 export function filter (locations: Location[], category: Category){
-    /**
-     * returns a filtered array containing only locations with @param {category}.
-     * @param {locations} @type {Array<Location>}
-     * @param {category}  @type {Category}
-     * @returns @type {Array<Location>}
-     */
-
     // new output array
     let filterLocations : Location[] = [];
 
@@ -23,12 +22,13 @@ export function filter (locations: Location[], category: Category){
     return filterLocations;
   }
 
+/**
+ * returns a array with fake locations with @param n amount of locations
+ * @param n @type number
+ * @returns @type Array\<Location\>
+ */
 export function fake_locations(n : number) : Location[] {
-    /**
-     * returns a array with fake locations with @param {n} amount of locations
-     * @param {n} @type {number}
-     * @returns @type {Array<Location>}
-     */
+
     
     // output array
     let locations : Location[] = [];
