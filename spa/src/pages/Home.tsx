@@ -2,7 +2,7 @@
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
 // import { Header } from '../components/Navigation/Header';
-import { Map } from '../features/map';
+import { ReactMapGL } from '../features/map';
 // import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { FilterEvent } from '../utils/filterLogic';
 import { category } from '../utils/types.d';
@@ -24,7 +24,7 @@ export const Home = () => {
         <div className="App">
             {/* <Header content={selected}></Header> */}
             <FilterMenu>{mappedFilter}</FilterMenu>
-            <Map />
+            <ReactMapGL />
         </div>
     );
 };
