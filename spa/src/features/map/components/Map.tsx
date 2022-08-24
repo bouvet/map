@@ -15,6 +15,8 @@ export const ReactMapGL = () => {
         zoom: 11,
     });
 
+    const [selectedMarker, setSelectedMarker] = useState('');
+
     const { locations, filteredLocations, selected } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
@@ -34,8 +36,8 @@ export const ReactMapGL = () => {
         }
     }, []);
 
-    const onClickHandler = (obj: Location) => {
-        console.log('Clicked', obj);
+    const onClickHandler = (location: Location) => {
+        setSelectedMarker(location.properties.title);
     };
 
     return (
@@ -55,7 +57,7 @@ export const ReactMapGL = () => {
                             coordinates={locaction.geometry.coordinates}
                             onClickHandler={onClickHandler}
                             locaction={locaction}
-                            color={'purple'}
+                            selectedMarker={selectedMarker}
                         />
                     ))}
                 {!selected &&
@@ -65,7 +67,7 @@ export const ReactMapGL = () => {
                             coordinates={locaction.geometry.coordinates}
                             onClickHandler={onClickHandler}
                             locaction={locaction}
-                            color={'red'}
+                            selectedMarker={selectedMarker}
                         />
                     ))}
             </ReactMap>
