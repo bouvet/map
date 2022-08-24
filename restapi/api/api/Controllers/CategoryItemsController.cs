@@ -26,6 +26,10 @@ namespace api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryItem>>> GetCategoryItems()
         {
+            // allow cross origin
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+
           if (_context.CategoryItems == null)
           {
               return NotFound();
@@ -37,18 +41,20 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryItem>> GetCategoryItem(long id)
         {
-          if (_context.CategoryItems == null)
-          {
-              return NotFound();
-          }
-            var categoryItem = await _context.CategoryItems.FindAsync(id);
-
-            if (categoryItem == null)
+            // allow cross origin
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            if (_context.CategoryItems == null)
             {
                 return NotFound();
             }
+                var categoryItem = await _context.CategoryItems.FindAsync(id);
 
-            return categoryItem;
+                if (categoryItem == null)
+                {
+                    return NotFound();
+                }
+
+                return categoryItem;
         }
 
         // PUT: api/CategoryItems/5
@@ -56,6 +62,9 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategoryItem(long id, CategoryItem categoryItem)
         {
+            // allow cross origin
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
             if (id != categoryItem.Id)
             {
                 return BadRequest();
@@ -87,21 +96,27 @@ namespace api.Controllers
         [HttpPost]
         public async Task<ActionResult<CategoryItem>> PostCategoryItem(CategoryItem categoryItem)
         {
-          if (_context.CategoryItems == null)
-          {
-              return Problem("Entity set 'CategoryContext.CategoryItems'  is null.");
-          }
-            _context.CategoryItems.Add(categoryItem);
-            await _context.SaveChangesAsync();
+            // allow cross origin
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            
+            if (_context.CategoryItems == null)
+            {
+                return Problem("Entity set 'CategoryContext.CategoryItems'  is null.");
+            }
+                _context.CategoryItems.Add(categoryItem);
+                await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetCategoryItem", new { id = categoryItem.Id }, categoryItem);
-            return CreatedAtAction(nameof(GetCategoryItem), new { id = categoryItem.Id }, categoryItem);
+                //return CreatedAtAction("GetCategoryItem", new { id = categoryItem.Id }, categoryItem);
+                return CreatedAtAction(nameof(GetCategoryItem), new { id = categoryItem.Id }, categoryItem);
         }
 
         // DELETE: api/CategoryItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategoryItem(long id)
         {
+            // allow cross origin
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
             if (_context.CategoryItems == null)
             {
                 return NotFound();
