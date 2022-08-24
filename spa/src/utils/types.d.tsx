@@ -3,22 +3,13 @@ export const category = ["Basketball", "Fotball", "Skating", "Pumptrack", "Tenni
 export type Category = typeof category[number];
 
 
-
-// interface for location object
-export interface LocationData {
-    [index: string]: any;
-    latitude: number;
-    longitude: number;
-    name: string;
-    description: string;
-    category: Array<Category>;
-}
-
-// new interface
+// interface for coordinates in Location interface
 export interface Geometry {
     coordinates: Array<number>
-    type: "Point";
+    type: "Point";            // mapbox type Point
 }
+
+// interface for properties in Location interface
 export interface Properties {
     title: string;
     description: string;
@@ -26,9 +17,11 @@ export interface Properties {
     img?: Blob;
     rating?: number;
 }
+
+// Location interface
 export interface Location {
-    [index: string]: any;
-    type: "Feature";
+    [index: string]: any;   // needed to make Location arrays
+    type: "Feature";        // mapbox feature
     properties: Properties;
     geometry: Geometry;
     pinColor?: string;
@@ -36,8 +29,6 @@ export interface Location {
 
 
 /*
-
-
 let test : Location =  {
     type: "Feature",
     properties: {
@@ -66,30 +57,4 @@ let test : Location =  {
       pinColor: 'purple',
     }
 
-
-
-
- {
-      "type": "Feature",
-      "properties": {
-        "title": "Lincoln Park",
-        "description": "A northside park that is home to the Lincoln Park Zoo"
-      },
-      "geometry": {
-        "coordinates": [-87.637596, 41.940403],
-        "type": "Point"
-      }
-    },
-
-{
-      "type": "Feature",
-      "properties": {
-        "title": "Burnham Park",
-        "description": "A lakefront park on Chicago's south side"
-      },
-      "geometry": {
-        "coordinates": [-87.603735, 41.829985],
-        "type": "Point"
-      }
-    },
 */

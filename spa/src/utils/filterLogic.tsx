@@ -6,13 +6,18 @@ import { mapActions } from '../store/state/map.state';
 import { filter } from './locationData';
 
 export function FilterEvent() {
+    /**
+     *  sets up a useEffect()[@var selected] for filtering locations on "selected" state value
+     */
+
+    // redux stuff for global states
     const { selected, locations } = useStateSelector((state) => state.map);
     const dispatch = useStateDispatch();
 
-    const [count, setCount] = useState(0);
     useEffect(() => {
         console.log('filer this ', selected, filter(locations, selected));
+
+        // dispatch sets the global state value of filtered locations
         dispatch(mapActions.setFilteredLocations(filter(locations, selected)));
-        
     }, [selected]);
 }
