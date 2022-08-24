@@ -9,7 +9,7 @@ export const MyTheme = {
         opaque: 'rgba(0, 0, 0, 0.5)',
     },
     fontFamily: {
-        body: '',
+        body: 'Open Sans, sans-serif',
         header: '',
     },
     fontSize: {
