@@ -6,13 +6,15 @@ export const MyTheme = {
         darkbase: '#282828',
         lightbase: '#FFFFFF',
         darkcolor: '#000000',
+        opaque: 'rgba(0, 0, 0, 0.5)',
     },
     fontFamily: {
-        body: '',
+        body: 'Open Sans, sans-serif',
         header: '',
     },
     fontSize: {
-        body: '16px',
+        body: '12px',
+        icon: '16px',
         header: '16px',
     }
 }
