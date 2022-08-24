@@ -7,7 +7,7 @@ export const mapService = {
     getLocations() {
         return async (dispatch: AppDispatch) => {
             try {
-                console.log('mapservice 2')
+                // console.log('mapservice 2')
                 dispatch(mapActions.setLoading(true));
                 const locations = fake_locations(20);
                 dispatch(mapActions.loadLocations(locations));
