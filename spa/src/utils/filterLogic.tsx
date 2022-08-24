@@ -19,5 +19,6 @@ export function FilterEvent() {
 
         // dispatch sets the global state value of filtered locations
         dispatch(mapActions.setFilteredLocations(filter(locations, selected)));
+        
     }, [selected]);
 }
