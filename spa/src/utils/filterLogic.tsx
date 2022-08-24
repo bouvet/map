@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { mapService } from '../features/map';
+import { useEffect } from 'react';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { mapActions } from '../store/state/map.state';
 import { filter } from './locationData';
@@ -22,6 +20,6 @@ export function FilterEvent() {
         }
         // dispatch sets the global state value of filtered locations
         dispatch(mapActions.setFilteredLocations(filter(locations, selected)));
-      
-    }, [selected]);
+    }, [selected, dispatch, locations]);
+
 }
