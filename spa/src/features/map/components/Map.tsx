@@ -75,7 +75,7 @@ export const Map = () => {
     }, [locations]);
 
     useEffect(() => {
-        if (map.current && selected) {
+        if (map.current &&  map.current.loaded()) {
             if (map.current.getLayer('all-locations')) map.current.removeLayer('all-locations');
             if (map.current.getLayer('filtered-locations')) map.current.removeLayer('filtered-locations');
             if (map.current.getSource('filtered-locations')) map.current.removeSource('filtered-locations');

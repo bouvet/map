@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { mapService } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { mapActions } from '../store/state/map.state';
 import { filter } from './locationData';
@@ -15,11 +16,12 @@ export function FilterEvent() {
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        if (selected === ""){
-            dispatch(mapActions.setFilteredLocations(locations));    
-        }
         // dispatch sets the global state value of filtered locations
-        dispatch(mapActions.setFilteredLocations(filter(locations, selected)));
+        if (selected === ""){
+            dispatch(mapActions.setFilteredLocations(locations));
+        } else {
+            dispatch(mapActions.setFilteredLocations(filter(locations, selected)));
+        }
     }, [selected, dispatch, locations]);
 
 }
