@@ -1,7 +1,6 @@
 // import { useEffect } from 'react';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
-import { Popup } from '../components/Popup/Popup';
 // import { Header } from '../components/Navigation/Header';
 import { ReactMapGL } from '../features/map';
 // import { useStateDispatch, useStateSelector } from '../hooks/useRedux';

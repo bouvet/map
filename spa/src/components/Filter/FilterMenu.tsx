@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 type FilterProps = {
@@ -24,17 +25,11 @@ const FilterMenuContent = styled.div`
     z-index: 2;
 `;
 
-
 /** Takes in an array of FilterButton components as children
  * type of children is React.ReactNode.
  */
-export const FilterMenu: React.FunctionComponent<FilterProps> = ({ children }) => {
-    return (
-        <FilterMenuWrapper>
-            <FilterMenuContent>
-                {children}
-            </FilterMenuContent>
-        </FilterMenuWrapper>
-    );
-};
-
+export const FilterMenu: React.FunctionComponent<FilterProps> = ({ children }) => (
+    <FilterMenuWrapper>
+        <FilterMenuContent>{children}</FilterMenuContent>
+    </FilterMenuWrapper>
+);

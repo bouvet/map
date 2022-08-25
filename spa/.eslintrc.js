@@ -46,7 +46,7 @@ module.exports = {
         'import/extensions': 0,
         'import/no-cycle': 0,
         'import/prefer-default-export': 'off',
-        'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
+        // 'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
         'max-len': ['warn', { code: 140, ignorePattern: '^import .*' }],
         'no-console': process.env.NODE_ENV === 'prod' ? 1 : 0,
         'no-shadow': 'off',
