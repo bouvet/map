@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { mapActions } from '../store/state/map.state';
-import { getFilterOnCategory as applyFilterLocationOnCategory } from './locationData';
+import { applyFilterLocationOnCategory } from './locationData';
 
 /**
  *  sets up a useEffect()[@var selected] for filtering locations on "selected" state value

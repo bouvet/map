@@ -7,7 +7,7 @@ import {Category, Location, category} from "./types.d"
  * @param category  @type Category
  * @returns @type Array<Location>
  */
-export function getFilterOnCategory (locations: Location[], category: Category){
+export function applyFilterLocationOnCategory (locations: Location[], category: Category){
     let filterLocations : Location[] = [];
 
     for (let idx in locations){
