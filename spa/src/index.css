@@ -4,6 +4,12 @@
   margin: 0px;
   padding: 0px;
   font-family: 'Open Sans', sans-serif;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+*::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
 }
 
 .container {
