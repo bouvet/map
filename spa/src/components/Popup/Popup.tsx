@@ -12,7 +12,11 @@ interface PopupProps {
     rating: number;
 }
 
-const PopupWrapper = styled.div`
+interface VisibilityProp {
+    visibility: string;
+}
+
+const PopupWrapper = styled.div<VisibilityProp>`
     width: 92%;
     height: 150px;
     background-color: ${MyTheme.colors.lightbase};
@@ -20,9 +24,9 @@ const PopupWrapper = styled.div`
     bottom: 10px;
     right: 4%;
     border-radius: 10px;
-    z-index: 1;
+    z-index: 10;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-    display: flex;
+    display: ${props => props.visibility};
 `;
 
 const PopupImage = styled.div`
@@ -70,19 +74,26 @@ const Bodytext = styled.p`
     margin: 5px 0px;
     font-size: ${MyTheme.fontSize.body};
 `
-
+/**
+ * Popup component which displays brief information about the park
+ * @param name string containing name of park 
+ * @param description string containing description of park
+ * @param rating number with rating of park 1-5 
+ */
 export const Popup: React.FunctionComponent<PopupProps> = ({name, description, rating}) => {
 
     const handleClick = () => {
         console.log("Clicked");
+        setVisibility("none");
     };
 
     const [stars, setStars] = useState([<span></span>]);
+    const [visibility, setVisibility] = useState("flex");
 
     if (rating > 5) {
         rating = 5;
-    } else if (rating < 0) {
-        rating = 0;
+    } else if (rating < 1) {
+        rating = 1;
     }
     useEffect(() => {
         let temp: any[] = []
@@ -105,7 +116,7 @@ export const Popup: React.FunctionComponent<PopupProps> = ({name, description, r
     }, []);
 
     return (
-        <PopupWrapper>
+        <PopupWrapper visibility={visibility}>
             <PopupImage>
                 <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClick}>
                     <span className="material-symbols-outlined">
