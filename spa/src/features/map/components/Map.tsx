@@ -38,6 +38,13 @@ export const ReactMapGL: FC = () => {
 
     const onClickHandler = (location: Location) => {
         setSelectedMarker(location.properties.title);
+        if (mapRef.current) {
+            setViewState({ 
+                latitude: location.geometry.coordinates[1], 
+                longitude: location.geometry.coordinates[0], 
+                zoom: 14 
+            });
+        }
     };
 
     return (
