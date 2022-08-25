@@ -7,13 +7,10 @@ import {Category, Location, category} from "./types.d"
  * @param category  @type Category
  * @returns @type Array<Location>
  */
-export function filter (locations: Location[], category: Category){
-    // new output array
+export function getFilterOnCategory (locations: Location[], category: Category){
     let filterLocations : Location[] = [];
 
-    // loop through input array locations
     for (let idx in locations){
-    // if the location includes category includes the category add it to the output array.
         if(locations[idx].properties.category.includes(category)){
             filterLocations.push(locations[idx]);
         }
@@ -27,36 +24,31 @@ export function filter (locations: Location[], category: Category){
  * @param n @type number
  * @returns @type Array\<Location\>
  */
-export function fake_locations(n : number) : Location[] {
-
-    
-    // output array
+export function generateFakeLocations(n : number) : Location[] {
     let locations : Location[] = [];
 
-    // loop n times
     for (let i = 0; i < n; i++){
-        // random number to select from a random category from the category array
-        let randomCategory = Math.floor(Math.random() * category.length);
-        
-        // new location
+        let lorem = faker.lorem.paragraphs(2, '<br/>\n');
+        let title = faker.unique(faker.name.lastName) + " Park"
+
+        let randomCategoryIndex = Math.floor(Math.random() * category.length);
+        let randomCategory = category[randomCategoryIndex]
+
+        let longitude = Number(faker.address.longitude(6, 5.4, 4));
+        let latitude = Number(faker.address.latitude(59, 58.4, 4))
+
         let fakeLocation : Location = {
             type: "Feature",
             properties: {
-                // faker.unique makes sure it wont give same name twice
-                title: faker.unique(faker.name.lastName) + " Park",
-                description:faker.lorem.paragraphs(2, '<br/>\n'), 
-                // random category from the category array defined in ./types.d.tsx
-                category: [category[randomCategory]] 
+                title: title,
+                description: lorem, 
+                category: [randomCategory] 
             },
             geometry: {
-                coordinates: [
-                    // random cooridnate. format: (max, min, accuracy/decimal numbers)
-                    Number(faker.address.longitude(6, 5.4, 4)),
-                    Number(faker.address.latitude(59, 58.4, 4)) ],
+                coordinates: [ longitude, latitude ],
                 type: "Point"
             },
         }
-        // add location to output array.
         locations.push(fakeLocation)
     }
 

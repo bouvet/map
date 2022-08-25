@@ -1,7 +1,7 @@
 import { mapActions } from '../../../store/state/map.state';
 import { AppDispatch } from '../../../store/index';
 
-import { fake_locations } from '../../../utils/locationData';
+import { generateFakeLocations } from '../../../utils/locationData';
 
 export const mapService = {
     getLocations() {
@@ -9,7 +9,7 @@ export const mapService = {
             try {
                 // console.log('mapservice 2')
                 dispatch(mapActions.setLoading(true));
-                const locations = fake_locations(20);
+                const locations = generateFakeLocations(20);
                 dispatch(mapActions.loadLocations(locations));
                 dispatch(mapActions.setLoading(false));
             } catch (error) {

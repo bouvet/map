@@ -5,7 +5,7 @@ import { Popup } from '../components/Popup/Popup';
 // import { Header } from '../components/Navigation/Header';
 import { ReactMapGL } from '../features/map';
 // import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { FilterEvent } from '../utils/filterLogic';
+import { useFilterEvent } from '../utils/filterLogic';
 import { category } from '../utils/types.d';
 
 export const Home = () => {
@@ -19,7 +19,7 @@ export const Home = () => {
 
     const mappedFilter = category.map((item) => <FilterButton key={item} text={item} />);
 
-    FilterEvent();
+    useFilterEvent();
 
     return (
         <div className="App">

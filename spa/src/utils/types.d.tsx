@@ -9,8 +9,11 @@ export type Category = typeof category[number];
  * @param type mapbox variable
  */
 export interface Geometry {
+    /** @param coordinate @type Array\<number\> */
     coordinates: Array<number>
-    type: "Point";            // mapbox type Point
+    
+    /** @param type mapbox variable */
+    type: "Point";
 }
 
 /**
@@ -60,35 +63,3 @@ export interface Location {
     /** @param pinColor mapbox pin color variable */
     pinColor?: string;
 }
-
-
-/*
-let test : Location =  {
-    type: "Feature",
-    properties: {
-      title: 'Lincoln Park',
-      description: 'A northside park that is home to the Lincoln Park Zoo',
-      category: ['Fotball']
-    },
-    geometry: {
-      coordinates: [5.7394, 58.9554],
-      type: 'Point',
-    },
-    pinColor: 'purple',
-  }
-
-
-    {
-      type: 'Feature',
-      properties: {
-        title: 'Lincoln Park',
-        description: 'A northside park that is home to the Lincoln Park Zoo',
-      },
-      geometry: {
-        coordinates: [5.7394, 58.9554],
-        type: 'Point',
-      },
-      pinColor: 'purple',
-    }
-
-*/
