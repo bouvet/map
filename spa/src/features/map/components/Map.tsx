@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, FC } from 'react';
 import { Map as ReactMap } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 
@@ -8,7 +8,7 @@ import { Location } from '../../../utils/types.d';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-export const ReactMapGL = () => {
+export const ReactMapGL: FC = () => {
     const [viewState, setViewState] = useState({
         longitude: 5.7063,
         latitude: 58.9566,
@@ -29,7 +29,7 @@ export const ReactMapGL = () => {
 
     const onMapLoad = useCallback((evt: any) => {
         if (mapRef.current) {
-            //@ts-ignore
+            // @ts-ignore
             mapRef.current.on('move', () => {
                 setViewState(evt.viewState);
             });

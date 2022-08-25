@@ -15,7 +15,6 @@ interface FilterProps {
     text: string;
 }
 
-
 /** Styling of filterbuttons, with conditional colors based on the Props.clicked value */
 const FilterButtonStyle = styled.div<Props>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
@@ -23,19 +22,18 @@ const FilterButtonStyle = styled.div<Props>`
     font-size: ${MyTheme.fontSize.icon};
     padding: 0px 10px;
     border-radius: 27px;
-    background-color: ${props => props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase };
+    background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase)};
     color: ${MyTheme.colors.lightbase};
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    `;
-
+`;
 
 /** Filterbutton export with FilterProps.text as the displayed value of the button */
-export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
-    const { selected } = useStateSelector(state => state.map)
+export const FilterButton: React.FunctionComponent<FilterProps> = ({ text }) => {
+    const { selected } = useStateSelector((state) => state.map);
     const [select, setSelect] = useState(false);
-    const dispatch = useStateDispatch()
+    const dispatch = useStateDispatch();
 
     /** Updating the conditional coloring of the button based on the global state selected
      *  Selected is a string with the currently selected category as a string.
@@ -46,14 +44,14 @@ export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
         } else {
             setSelect(false);
         }
-    }, [selected]);
+    }, [selected, text]);
 
     /** Method for updating the global state selected when the button is clicked */
-    const updateGlobalState = (activity :string) => {
+    const updateGlobalState = (activity: string) => {
         // Update the global state
         console.log(activity);
         dispatch(mapActions.setSelected(activity));
-    }
+    };
 
     /** Event handler for click events.
      *  Calls function for updating global state.
@@ -62,10 +60,10 @@ export const FilterButton: React.FunctionComponent<FilterProps> = ({text}) => {
         if (!select) {
             updateGlobalState(text);
         } else {
-            updateGlobalState("");
+            updateGlobalState('');
         }
         setSelect(!select);
-    }
+    };
 
     return (
         <FilterButtonStyle clicked={select} onClick={handleClick}>

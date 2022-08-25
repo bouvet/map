@@ -14,7 +14,7 @@ export function useFilterEvent() {
         if (selected === ""){
             dispatch(mapActions.setFilteredLocations(locations));
         } else {
-            let filteredLocations = applyFilterLocationOnCategory(locations, selected)
+            const filteredLocations = applyFilterLocationOnCategory(locations, selected)
             dispatch(mapActions.setFilteredLocations(filteredLocations));
         }
     }, [selected, dispatch, locations]);
