@@ -8,6 +8,7 @@ const initialState = {
     filteredLocations: [] as Location[],
     selected: '',
     Category: [],
+    popUpIsVisible: false,
 };
 
 export const mapState = createSlice({
@@ -25,6 +26,9 @@ export const mapState = createSlice({
         },
         setSelected(state, action: { payload: string; type: string }) {
             state.selected = action.payload;
+        },
+        setPopupVisibility(state, action: { payload: boolean; type: string }) {
+            state.popUpIsVisible = action.payload;
         },
     },
 });

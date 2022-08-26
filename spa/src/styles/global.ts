@@ -19,8 +19,6 @@ export const MyTheme = {
     }
 }
 
-
-
 export default createGlobalStyle`
     *{
         margin: 0;
