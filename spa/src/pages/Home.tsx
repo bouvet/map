@@ -7,7 +7,6 @@ import { ReactMapGL } from '../features/map';
 import { useStateSelector } from '../hooks/useRedux';
 // import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { useFilterEvent } from '../utils/filterLogic';
-import { category } from '../utils/types.d';
 
 export const Home = () => {
     // const { selected, locations, filteredLocations } = useStateSelector((state) => state.map);
@@ -18,10 +17,10 @@ export const Home = () => {
     //     dispatch(mapService.getLocations());
     // }, [dispatch]);
 
-    const mappedFilter = category.map((item) => <FilterButton key={item} text={item} />);
-
     useFilterEvent();
-    const { popUpIsVisible, currentlySelectedLocation } = useStateSelector((state) => state.map);
+    const { popUpIsVisible, currentlySelectedLocation, categories } = useStateSelector((state) => state.map);
+
+    const mappedFilter = categories.map((item) => <FilterButton key={item.name} text={item.name} />);
 
     return (
         <div className="App">

@@ -1,6 +1,12 @@
 // category types, TODO: fetch these from DB
-export const category = ['Basketball', 'Fotball', 'Skating', 'Pumptrack', 'Tennis', 'Volleyball', 'Other'];
-export type Category = typeof category[number];
+// export const category = ['Basketball', 'Fotball', 'Skating', 'Pumptrack', 'Tennis', 'Volleyball', 'Other'];
+// export type Category = typeof category[number];
+
+export interface Category {
+    [index: string]: any;
+    emoji: string;
+    name: string;
+}
 
 /**
  * interface for coordinates in Location interface
