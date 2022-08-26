@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const MyTheme = {
     colors: {
@@ -16,10 +16,8 @@ export const MyTheme = {
         body: '12px',
         icon: '16px',
         header: '16px',
-    }
-}
-
-
+    },
+};
 
 export default createGlobalStyle`
     *{
@@ -32,4 +30,4 @@ export default createGlobalStyle`
     #root {
         margin: 0;
     }
-`
+`;
