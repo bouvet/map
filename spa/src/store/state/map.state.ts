@@ -12,8 +12,6 @@ const initialState = {
     currentlySelectedLocation: {} as Location,
 };
 
-
-
 export const mapState = createSlice({
     name: 'map',
     initialState,
