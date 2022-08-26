@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { MyTheme } from '../../styles/global';
-import { mapActions } from '../../store/state/map.state';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
+import { mapActions } from '../../store/state/map.state';
+import { MyTheme } from '../../styles/global';
 import { RoundButton } from '../Navigation/Buttons';
 
 
-interface PopupProps {
+interface PopupContentProps {
     name: string;
     description: string;
     rating: number;
 }
 
-interface VisibilityProp {
-    visibility: string;
-}
-
-const PopupWrapper = styled.div<VisibilityProp>`
+const PopupWrapper = styled.div`
     width: 92%;
     height: 150px;
     background-color: ${MyTheme.colors.lightbase};
@@ -26,7 +22,7 @@ const PopupWrapper = styled.div<VisibilityProp>`
     border-radius: 10px;
     z-index: 10;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-    display: ${props => props.visibility};
+    display: flex;
 `;
 
 const PopupImage = styled.div`
@@ -76,19 +72,20 @@ const Bodytext = styled.p`
 `
 /**
  * Popup component which displays brief information about the park
- * @param name string containing name of park 
- * @param description string containing description of park
- * @param rating number with rating of park 1-5 
+ * @param name {string} name of park 
+ * @param description {string} description of park
+ * @param rating {number} rating of park 1-5 
  */
-export const Popup: React.FunctionComponent<PopupProps> = ({name, description, rating}) => {
+export const Popup: React.FunctionComponent<PopupContentProps> = ({name, description, rating}) => {
 
+    const dispatch = useStateDispatch();
+
+    const { popUpIsVisible } = useStateSelector((state) => state.map);
     const handleClick = () => {
-        console.log("Clicked");
-        setVisibility("none");
+        dispatch(mapActions.setPopupVisibility(!popUpIsVisible));
     };
 
     const [stars, setStars] = useState([<span></span>]);
-    const [visibility, setVisibility] = useState("flex");
 
     if (rating > 5) {
         rating = 5;
@@ -97,14 +94,14 @@ export const Popup: React.FunctionComponent<PopupProps> = ({name, description, r
     }
     useEffect(() => {
         let temp: any[] = []
-        for (let i=0; i<rating; i++) {
+        for (let i=0; i<rating; i += 1) {
             temp.push(
                 <span key={i.toString() + "solid"} className="material-symbols-rounded">
                     star
                 </span>
             )
         }
-        for (let i=0; i < (5-rating);i++) {
+        for (let i=0; i < (5-rating);i += 1) {
             temp.push(
                 <span key={i.toString() + "outlined"} className="material-symbols-outlined">
                     star
@@ -116,7 +113,7 @@ export const Popup: React.FunctionComponent<PopupProps> = ({name, description, r
     }, []);
 
     return (
-        <PopupWrapper visibility={visibility}>
+        <PopupWrapper>
             <PopupImage>
                 <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClick}>
                     <span className="material-symbols-outlined">

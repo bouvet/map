@@ -13,7 +13,7 @@ export const mapService = {
                 dispatch(mapActions.loadLocations(locations));
                 dispatch(mapActions.setLoading(false));
             } catch (error) {
-                //TODO: Push error to error state
+                // TODO: Push error to error state
                 console.error(error);
             }
         };
