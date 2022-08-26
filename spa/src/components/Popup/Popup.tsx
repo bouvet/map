@@ -5,11 +5,15 @@ import { mapActions } from '../../store/state/map.state';
 import { MyTheme } from '../../styles/global';
 import { RoundButton } from '../Navigation/Buttons';
 
-
 interface PopupContentProps {
     name: string;
     description: string;
     rating?: number;
+    image?: string;
+}
+
+interface PopUpImageProp {
+    imageURL: string;
 }
 
 const PopupWrapper = styled.div`
@@ -25,8 +29,9 @@ const PopupWrapper = styled.div`
     display: flex;
 `;
 
-const PopupImage = styled.div`
-    background: url('https://minsak.no/uploads/1467014530_865438838.full.jpg');
+const PopupImage = styled.div<PopUpImageProp>`
+    background: url(${(props) => props.imageURL});
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100%;
@@ -43,7 +48,7 @@ const CloseBtn = styled(RoundButton)`
     &:active {
         background-color: ${MyTheme.colors.darkbase};
     }
-`
+`;
 
 const PopupContent = styled.div`
     width: calc(60% - 20px);
@@ -57,35 +62,51 @@ const Parkname = styled.p`
     font-weight: bolder;
     margin: 0px;
     font-size: ${MyTheme.fontSize.header};
-`
+`;
 
 const Rating = styled.div`
     width: 100%;
     color: ${MyTheme.colors.accent};
-
 `;
 
-const Bodytext = styled.p`
+const Bodytext = styled.div`
     justify-content: left;
     margin: 5px 0px;
     font-size: ${MyTheme.fontSize.body};
-`
+`;
+
+const ReadMoreLink = styled.a`
+    color: ${MyTheme.colors.accent};
+    text-decoration: underline;
+    white-space: nowrap;
+`;
 /**
  * Popup component which displays brief information about the park
- * @param name {string} name of park 
+ * @param name {string} name of park
  * @param description {string} description of park
- * @param rating {number} rating of park 1-5 
+ * @param rating {number} rating of park 1-5
  */
-export const Popup: React.FunctionComponent<PopupContentProps> = ({name, description, rating}) => {
-
+export const Popup: React.FunctionComponent<PopupContentProps> = ({ name, description, rating, image }) => {
+    console.log(image);
     const dispatch = useStateDispatch();
 
     const { popUpIsVisible } = useStateSelector((state) => state.map);
-    const handleClick = () => {
+
+    const handleClickClose = () => {
         dispatch(mapActions.setPopupVisibility(!popUpIsVisible));
     };
 
-    const [stars, setStars] = useState([<span></span>]);
+    const handleClickShowLocationPage = () => {
+        console.log(name);
+    };
+
+    const [displayedDescription, setDisplayedDescription] = useState('');
+
+    useEffect(() => {
+        setDisplayedDescription(`${description.slice(0, 100)}...`);
+    }, [description]);
+
+    const [stars, setStars] = useState([<span />]);
 
     if (rating) {
         if (rating > 5) {
@@ -95,20 +116,20 @@ export const Popup: React.FunctionComponent<PopupContentProps> = ({name, descrip
         }
     }
     useEffect(() => {
-        let temp: any[] = []
-        for (let i=0; i<rating; i += 1) {
+        const temp: any[] = [];
+        for (let i = 0; i < rating; i += 1) {
             temp.push(
-                <span key={i.toString() + "solid"} className="material-symbols-rounded">
+                <span key={`${i.toString()}solid`} className="material-symbols-rounded">
                     star
-                </span>
-            )
+                </span>,
+            );
         }
-        for (let i=0; i < (5-rating);i += 1) {
+        for (let i = 0; i < 5 - rating; i += 1) {
             temp.push(
-                <span key={i.toString() + "outlined"} className="material-symbols-outlined">
+                <span key={`${i.toString()}outlined`} className="material-symbols-outlined">
                     star
-                </span>
-            )
+                </span>,
+            );
         }
         setStars(temp);
         console.log(stars);
@@ -116,21 +137,18 @@ export const Popup: React.FunctionComponent<PopupContentProps> = ({name, descrip
 
     return (
         <PopupWrapper>
-            <PopupImage>
-                <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClick}>
-                    <span className="material-symbols-outlined">
-                        close
-                    </span>
+            <PopupImage imageURL={image}>
+                <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickClose}>
+                    <span className="material-symbols-outlined">close</span>
                 </CloseBtn>
             </PopupImage>
             <PopupContent>
                 <Parkname>{name}</Parkname>
-                <Rating>
-                {stars}
-                </Rating>
-                <Bodytext>{description}</Bodytext>
+                <Rating>{stars}</Rating>
+                <Bodytext>
+                    {displayedDescription} <ReadMoreLink onClick={handleClickShowLocationPage}> les mer</ReadMoreLink>
+                </Bodytext>
             </PopupContent>
         </PopupWrapper>
     );
 };
-

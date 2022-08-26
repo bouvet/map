@@ -36,7 +36,7 @@ export const ReactMapGL: FC = () => {
             });
         }
     }, []);
-    
+
     const onClickHandler = (location: Location) => {
         setSelectedMarker(location.properties.title);
         if (mapRef.current) {

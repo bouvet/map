@@ -33,6 +33,7 @@ export const Home = () => {
                     name={currentlySelectedLocation.properties.title}
                     description={currentlySelectedLocation.properties.description}
                     rating={currentlySelectedLocation.properties.rating}
+                    image={currentlySelectedLocation.properties.img}
                 />
             )}
         </div>
