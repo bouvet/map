@@ -25,7 +25,7 @@ export function generateFakeCategories() {
     const fakeCategories = [];
 
     for (let i = 0; i < cats.length; i += 1) {
-        const fakeCategory: Category = { name: cats[i], emoji: '🥙' };
+        const fakeCategory: Category = { name: cats[i], emoji: '🔥' };
         fakeCategories.push(fakeCategory);
     }
 
