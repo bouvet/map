@@ -9,7 +9,10 @@ const initialState = {
     selected: '',
     Category: [],
     popUpIsVisible: false,
+    currentlySelectedLocation: {} as Location,
 };
+
+
 
 export const mapState = createSlice({
     name: 'map',
@@ -29,6 +32,9 @@ export const mapState = createSlice({
         },
         setPopupVisibility(state, action: { payload: boolean; type: string }) {
             state.popUpIsVisible = action.payload;
+        },
+        setCurrentlySelectedLocation(state, action: { payload: Location; type: string }) {
+            state.currentlySelectedLocation = action.payload;
         },
     },
 });

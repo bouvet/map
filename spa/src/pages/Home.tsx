@@ -21,16 +21,20 @@ export const Home = () => {
     const mappedFilter = category.map((item) => <FilterButton key={item} text={item} />);
 
     useFilterEvent();
-    const { popUpIsVisible } = useStateSelector((state) => state.map);
+    const { popUpIsVisible, currentlySelectedLocation } = useStateSelector((state) => state.map);
 
     return (
         <div className="App">
             {/* <Header content={selected}></Header> */}
             <FilterMenu>{mappedFilter}</FilterMenu>
             <ReactMapGL />
-            {popUpIsVisible &&
-                <Popup name="My park" description="This is a really nice park to do park stuff" rating={2}/>
-            }
+            {popUpIsVisible && (
+                <Popup
+                    name={currentlySelectedLocation.properties.title}
+                    description={currentlySelectedLocation.properties.description}
+                    rating={currentlySelectedLocation.properties.rating}
+                />
+            )}
         </div>
     );
 };
