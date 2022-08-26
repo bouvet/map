@@ -47,6 +47,7 @@ export const ReactMapGL: FC = () => {
             });
         }
         dispatch(mapActions.setPopupVisibility(true));
+        dispatch(mapActions.setCurrentlySelectedLocation(location));
     };
 
     return (
