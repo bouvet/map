@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "OPQELg4o5P5fBpZT2kEDJS/wkuOxCQPHpqAlFhdYJBhzHSBckxqz5ux2oBAlJZcVQWM2Vvkhm9bO2PupNpNOcQ==",
+  "dgSpecHash": "jzuW45zPL4TaIMxS8d7LRpo+sARnsmDT2xECEWd/kKVUx2vegkrzQuN9oYB5NCOQYgyLeST1l1qhm45QmhtiTg==",
   "success": true,
   "projectFilePath": "C:\\Users\\glen.sorbo\\Work\\map\\restapi\\restapi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\glen.sorbo\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\inmemorydatabase\\1.0.0\\inmemorydatabase.1.0.0.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
@@ -11,6 +12,7 @@
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.8\\microsoft.entityframeworkcore.6.0.8.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.8\\microsoft.entityframeworkcore.abstractions.6.0.8.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.8\\microsoft.entityframeworkcore.analyzers.6.0.8.nupkg.sha512",
+    "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.8\\microsoft.entityframeworkcore.design.6.0.8.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.8\\microsoft.entityframeworkcore.inmemory.6.0.8.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.8\\microsoft.entityframeworkcore.relational.6.0.8.nupkg.sha512",
     "C:\\Users\\glen.sorbo\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\6.0.8\\microsoft.entityframeworkcore.sqlserver.6.0.8.nupkg.sha512",
