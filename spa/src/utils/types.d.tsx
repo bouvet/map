@@ -20,7 +20,7 @@ export interface Geometry {
  * @param title string name of a park
  * @param description string description of park
  * @param category array with park categories
- * @param img Blob with image data
+ * @param img sting with image data
  * @param rating number to indicate star rating on park
  */
 export interface Properties {
@@ -33,8 +33,8 @@ export interface Properties {
     /** @param category array with park categories */
     category: Array<Category>;
 
-    /** @param img Blob with image data */
-    img?: Blob;
+    /** @param img string with image data */
+    img?: string;
 
     /** @param rating number to indicate star rating on park */
     rating?: number;
