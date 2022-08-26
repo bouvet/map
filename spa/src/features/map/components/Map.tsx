@@ -5,6 +5,7 @@ import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapService } from '../services/map.services';
 import { Location } from '../../../utils/types.d';
+import { mapActions } from '../../../store/state/map.state';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -17,7 +18,7 @@ export const ReactMapGL: FC = () => {
 
     const [selectedMarker, setSelectedMarker] = useState('');
 
-    const { locations, filteredLocations, selected } = useStateSelector((state) => state.map);
+    const { locations, filteredLocations, selectedFilterCategory, popUpIsVisible } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
 
@@ -45,6 +46,8 @@ export const ReactMapGL: FC = () => {
                 zoom: 14,
             });
         }
+        dispatch(mapActions.setPopupVisibility(true));
+        dispatch(mapActions.setCurrentlySelectedLocation(location));
     };
 
     return (
@@ -57,7 +60,7 @@ export const ReactMapGL: FC = () => {
                 style={{ width: '100%', height: '100%', margin: 0, padding: 0 }}
                 mapboxAccessToken={MAPBOX_TOKEN}
             >
-                {selected &&
+                {selectedFilterCategory &&
                     filteredLocations.map((locaction) => (
                         <CustomMarker
                             key={locaction.properties.title}
@@ -67,7 +70,7 @@ export const ReactMapGL: FC = () => {
                             selectedMarker={selectedMarker}
                         />
                     ))}
-                {!selected &&
+                {!selectedFilterCategory &&
                     locations.map((locaction) => (
                         <CustomMarker
                             key={locaction.properties.title}

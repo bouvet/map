@@ -1,11 +1,12 @@
 // import { useEffect } from 'react';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
+import { Popup } from '../components/Popup/Popup';
 // import { Header } from '../components/Navigation/Header';
 import { ReactMapGL } from '../features/map';
+import { useStateSelector } from '../hooks/useRedux';
 // import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { useFilterEvent } from '../utils/filterLogic';
-import { category } from '../utils/types.d';
 
 export const Home = () => {
     // const { selected, locations, filteredLocations } = useStateSelector((state) => state.map);
@@ -16,15 +17,24 @@ export const Home = () => {
     //     dispatch(mapService.getLocations());
     // }, [dispatch]);
 
-    const mappedFilter = category.map((item) => <FilterButton key={item} text={item} />);
-
     useFilterEvent();
+    const { popUpIsVisible, currentlySelectedLocation, categories } = useStateSelector((state) => state.map);
+
+    const mappedFilter = categories.map((item) => <FilterButton key={item.name} text={item.name} />);
 
     return (
         <div className="App">
             {/* <Header content={selected}></Header> */}
             <FilterMenu>{mappedFilter}</FilterMenu>
             <ReactMapGL />
+            {popUpIsVisible && (
+                <Popup
+                    name={currentlySelectedLocation.properties.title}
+                    description={currentlySelectedLocation.properties.description}
+                    rating={currentlySelectedLocation.properties.rating}
+                    image={currentlySelectedLocation.properties.img}
+                />
+            )}
         </div>
     );
 };

@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 
-
-/** Background color and Text color both as string types
-*/
-interface Props {
-    /** Color for background of RoundButton component */
+interface ButtonStylingProps {
     backgroundColor: string;
-    /** Color for Icon inside component */
     textColor: string;
 }
 
@@ -17,7 +12,7 @@ interface Props {
  * @param backgroundColor
  * @param textColor
  */
-export const RoundButton = styled.div<Props>`
+export const RoundButton = styled.div<ButtonStylingProps>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     height: 50px;
     width: 50px;
