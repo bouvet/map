@@ -7,10 +7,11 @@ import { applyFilterLocationOnCategory } from './locationData';
  *  sets up a useEffect()[@var selected] for filtering locations on "selected" state value
  */
 export function useFilterEvent() {
-    const { selected: selectedFilterCategory, locations } = useStateSelector((state: any) => state.map);
+    const { selectedFilterCategory, locations } = useStateSelector((state: any) => state.map);
     const dispatch = useStateDispatch();
 
     useEffect(() => {
+
         if (selectedFilterCategory === '') {
             dispatch(mapActions.setFilteredLocations(locations));
         } else {

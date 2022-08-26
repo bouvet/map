@@ -8,14 +8,17 @@ import { Category, Location } from './types.d';
  * @param category  @type Category
  * @returns @type Array<Location>
  */
-export function applyFilterLocationOnCategory(locations: Location[], category: Category) {
+export function applyFilterLocationOnCategory(locations: Location[], category: string) {
     const filterLocations: Location[] = [];
 
     for (let i = 0; i < locations.length; i += 1) {
-        if (locations[i].properties.category.includes(category)) {
-            filterLocations.push(locations[i]);
+        for (let j = 0; j < locations[i].properties.category.length; j += 1) {
+            if (locations[i].properties.category[j].name === category) {
+                filterLocations.push(locations[i]);
+            }
         }
     }
+
 
     return filterLocations;
 }
