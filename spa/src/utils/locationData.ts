@@ -10,23 +10,24 @@ import { Category, Location, category } from './types.d';
 export function applyFilterLocationOnCategory(locations: Location[], category: Category) {
     const filterLocations: Location[] = [];
 
-    for (let idx = 0; idx < locations.length; idx += 1) {
-        if (locations[idx].properties.category.includes(category)) {
-            filterLocations.push(locations[idx]);
+    for (let i = 0; i < locations.length; i += 1) {
+        if (locations[i].properties.category.includes(category)) {
+            filterLocations.push(locations[i]);
         }
     }
+
     return filterLocations;
 }
 
 /**
  * returns a array with fake locations with @param n amount of locations
- * @param n @type number
+ * @param numberOfFakeLocations @type number
  * @returns @type Array\<Location\>
  */
-export function generateFakeLocations(n: number): Location[] {
+export function generateFakeLocations(numberOfFakeLocations: number): Location[] {
     const locations: Location[] = [];
 
-    for (let i = 0; i < n; i += 1) {
+    for (let i = 0; i < numberOfFakeLocations; i += 1) {
         const lorem = faker.lorem.paragraphs(2, '<br/>\n');
         const title = `${faker.unique(faker.name.lastName)} Park`;
 
