@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import {Category, Location, category} from "./types.d"
+import { Category, Location, category } from './types.d';
 
 /**
  * returns a filtered array containing only locations with @param category.
@@ -7,49 +7,48 @@ import {Category, Location, category} from "./types.d"
  * @param category  @type Category
  * @returns @type Array<Location>
  */
-export function applyFilterLocationOnCategory (locations: Location[], category: Category){
-    let filterLocations : Location[] = [];
+export function applyFilterLocationOnCategory(locations: Location[], category: Category) {
+    const filterLocations: Location[] = [];
 
-    for (let idx in locations){
-        if(locations[idx].properties.category.includes(category)){
+    for (let idx = 0; idx < locations.length; idx += 1) {
+        if (locations[idx].properties.category.includes(category)) {
             filterLocations.push(locations[idx]);
         }
     }
-     
     return filterLocations;
-  }
+}
 
 /**
  * returns a array with fake locations with @param n amount of locations
  * @param n @type number
  * @returns @type Array\<Location\>
  */
-export function generateFakeLocations(n : number) : Location[] {
-    let locations : Location[] = [];
+export function generateFakeLocations(n: number): Location[] {
+    const locations: Location[] = [];
 
-    for (let i = 0; i < n; i++){
-        let lorem = faker.lorem.paragraphs(2, '<br/>\n');
-        let title = faker.unique(faker.name.lastName) + " Park"
+    for (let i = 0; i < n; i += 1) {
+        const lorem = faker.lorem.paragraphs(2, '<br/>\n');
+        const title = `${faker.unique(faker.name.lastName)} Park`;
 
-        let randomCategoryIndex = Math.floor(Math.random() * category.length);
-        let randomCategory = category[randomCategoryIndex]
+        const randomCategoryIndex = Math.floor(Math.random() * category.length);
+        const randomCategory = category[randomCategoryIndex];
 
-        let longitude = Number(faker.address.longitude(6, 5.4, 4));
-        let latitude = Number(faker.address.latitude(59, 58.4, 4))
+        const longitude = Number(faker.address.longitude(6, 5.4, 4));
+        const latitude = Number(faker.address.latitude(59, 58.4, 4));
 
-        let fakeLocation : Location = {
-            type: "Feature",
+        const fakeLocation: Location = {
+            type: 'Feature',
             properties: {
-                title: title,
-                description: lorem, 
-                category: [randomCategory] 
+                title,
+                description: lorem,
+                category: [randomCategory],
             },
             geometry: {
-                coordinates: [ longitude, latitude ],
-                type: "Point"
+                coordinates: [longitude, latitude],
+                type: 'Point',
             },
-        }
-        locations.push(fakeLocation)
+        };
+        locations.push(fakeLocation);
     }
 
     return locations;
