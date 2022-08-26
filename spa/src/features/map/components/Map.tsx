@@ -18,7 +18,7 @@ export const ReactMapGL: FC = () => {
 
     const [selectedMarker, setSelectedMarker] = useState('');
 
-    const { locations, filteredLocations, selected, popUpIsVisible } = useStateSelector((state) => state.map);
+    const { locations, filteredLocations, selectedFilterCategory, popUpIsVisible } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
 
@@ -60,7 +60,7 @@ export const ReactMapGL: FC = () => {
                 style={{ width: '100%', height: '100%', margin: 0, padding: 0 }}
                 mapboxAccessToken={MAPBOX_TOKEN}
             >
-                {selected &&
+                {selectedFilterCategory &&
                     filteredLocations.map((locaction) => (
                         <CustomMarker
                             key={locaction.properties.title}
@@ -70,7 +70,7 @@ export const ReactMapGL: FC = () => {
                             selectedMarker={selectedMarker}
                         />
                     ))}
-                {!selected &&
+                {!selectedFilterCategory &&
                     locations.map((locaction) => (
                         <CustomMarker
                             key={locaction.properties.title}

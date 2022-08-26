@@ -7,17 +7,15 @@ import { applyFilterLocationOnCategory } from './locationData';
  *  sets up a useEffect()[@var selected] for filtering locations on "selected" state value
  */
 export function useFilterEvent() {
-    const { selected, locations } = useStateSelector((state: any) => state.map);
+    const { selected: selectedFilterCategory, locations } = useStateSelector((state: any) => state.map);
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        if (selected === '') {
+        if (selectedFilterCategory === '') {
             dispatch(mapActions.setFilteredLocations(locations));
         } else {
-            const filteredLocations = applyFilterLocationOnCategory(locations, selected);
-            console.log('blob?', locations[19].properties);
-            console.log('rating?', locations[0].properties.rating);
+            const filteredLocations = applyFilterLocationOnCategory(locations, selectedFilterCategory);
             dispatch(mapActions.setFilteredLocations(filteredLocations));
         }
-    }, [selected, dispatch, locations]);
+    }, [selectedFilterCategory, dispatch, locations]);
 }

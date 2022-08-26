@@ -26,21 +26,21 @@ const FilterButtonStyle = styled.div<FilterButtonToggledProps>`
 `;
 
 export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = ({ text }) => {
-    const { selected } = useStateSelector((state) => state.map);
+    const { selectedFilterCategory } = useStateSelector((state) => state.map);
     const [select, setSelect] = useState(false);
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        if (selected === text) {
+        if (selectedFilterCategory === text) {
             setSelect(true);
         } else {
             setSelect(false);
         }
-    }, [selected, text]);
+    }, [selectedFilterCategory, text]);
 
     const updateGlobalStateForSelectedCategory = (activity: string) => {
         console.log(activity);
-        dispatch(mapActions.setSelected(activity));
+        dispatch(mapActions.setSelectedFilterCategory(activity));
     };
 
     const handleClickFilterButton = () => {
