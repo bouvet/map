@@ -1,8 +1,10 @@
 // import { useEffect } from 'react';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
+import { Popup } from '../components/Popup/Popup';
 // import { Header } from '../components/Navigation/Header';
 import { ReactMapGL } from '../features/map';
+import { useStateSelector } from '../hooks/useRedux';
 // import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { useFilterEvent } from '../utils/filterLogic';
 import { category } from '../utils/types.d';
@@ -19,12 +21,16 @@ export const Home = () => {
     const mappedFilter = category.map((item) => <FilterButton key={item} text={item} />);
 
     useFilterEvent();
+    const { popUpIsVisible } = useStateSelector((state) => state.map);
 
     return (
         <div className="App">
             {/* <Header content={selected}></Header> */}
             <FilterMenu>{mappedFilter}</FilterMenu>
             <ReactMapGL />
+            {popUpIsVisible &&
+                <Popup name="My park" description="This is a really nice park to do park stuff" rating={2}/>
+            }
         </div>
     );
 };
