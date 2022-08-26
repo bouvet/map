@@ -1,6 +1,7 @@
 # Single Page Application
 
 React Application for the project Verden Venter.
+The application utlises a map for the user to explore locations with exercise equiptment in Stavanger. 
 
 ## Installation
 
