@@ -38,7 +38,7 @@ export function generateFakeLocations(numberOfFakeLocations: number): Location[]
         const latitude = Number(faker.address.latitude(59, 58.4, 4));
 
         const rating = Math.floor(Math.random() * 5);
-        const image = faker.image.nature(640, 480, false);
+        const image = faker.image.nature(640, 480, true);
 
         const fakeLocation: Location = {
             type: 'Feature',
