@@ -1,7 +1,6 @@
 // category types, TODO: fetch these from DB
-export const category = ["Basketball", "Fotball", "Skating", "Pumptrack", "Tennis", "Volleyball", "Other"]
+export const category = ['Basketball', 'Fotball', 'Skating', 'Pumptrack', 'Tennis', 'Volleyball', 'Other'];
 export type Category = typeof category[number];
-
 
 /**
  * interface for coordinates in Location interface
@@ -10,10 +9,10 @@ export type Category = typeof category[number];
  */
 export interface Geometry {
     /** @param coordinate @type Array\<number\> */
-    coordinates: Array<number>
-    
+    coordinates: Array<number>;
+
     /** @param type mapbox variable */
-    type: "Point";
+    type: 'Point';
 }
 
 /**
@@ -41,25 +40,25 @@ export interface Properties {
     rating?: number;
 }
 
-/** 
+/**
  * @param type: Feature for mapbox pins
  * @param properties interface with info about location
  * @param geometry interface with coordinates
  * @param pinColor mapbox variable
  */
 export interface Location {
-  /** needed to make Location arrays */
-    [index: string]: any; 
-    
+    /** needed to make Location arrays */
+    [index: string]: any;
+
     /** @param type mapbox type: Feature */
-    type: "Feature";
+    type: 'Feature';
 
     /** @param Properties interface holds info about the Location */
     properties: Properties;
 
     /** @param geometry interface with coordinate */
     geometry: Geometry;
-    
+
     /** @param pinColor mapbox pin color variable */
     pinColor?: string;
 }
