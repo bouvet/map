@@ -9,7 +9,7 @@ import { RoundButton } from '../Navigation/Buttons';
 interface PopupContentProps {
     name: string;
     description: string;
-    rating: number;
+    rating?: number;
 }
 
 const PopupWrapper = styled.div`
@@ -87,10 +87,12 @@ export const Popup: React.FunctionComponent<PopupContentProps> = ({name, descrip
 
     const [stars, setStars] = useState([<span></span>]);
 
-    if (rating > 5) {
-        rating = 5;
-    } else if (rating < 1) {
-        rating = 1;
+    if (rating) {
+        if (rating > 5) {
+            rating = 5;
+        } else if (rating < 1) {
+            rating = 1;
+        }
     }
     useEffect(() => {
         let temp: any[] = []
