@@ -15,6 +15,8 @@ export function useFilterEvent() {
             dispatch(mapActions.setFilteredLocations(locations));
         } else {
             const filteredLocations = applyFilterLocationOnCategory(locations, selected);
+            console.log('blob?', locations[19].properties);
+            console.log('rating?', locations[0].properties.rating);
             dispatch(mapActions.setFilteredLocations(filteredLocations));
         }
     }, [selected, dispatch, locations]);
