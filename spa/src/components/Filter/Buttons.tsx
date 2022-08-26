@@ -10,6 +10,7 @@ interface FilterButtonToggledProps {
 
 interface FilterButtonContentProps {
     text: string;
+    emoji: string;
 }
 
 const FilterButtonStyle = styled.div<FilterButtonToggledProps>`
@@ -19,13 +20,23 @@ const FilterButtonStyle = styled.div<FilterButtonToggledProps>`
     padding: 0px 10px;
     border-radius: 27px;
     background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase)};
+    transition: 0.1s;
     color: ${MyTheme.colors.lightbase};
     display: inline-flex;
     align-items: center;
     justify-content: center;
 `;
 
-export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = ({ text }) => {
+const FilterButtonEmoji = styled.span`
+    display: inline;
+    margin-right: 8px;
+`;
+
+const FilterButtonName = styled.span`
+    display: inline;
+`;
+
+export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = ({ text, emoji }) => {
     const { selectedFilterCategory } = useStateSelector((state) => state.map);
     const [select, setSelect] = useState(false);
     const dispatch = useStateDispatch();
@@ -54,7 +65,8 @@ export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = (
 
     return (
         <FilterButtonStyle clicked={select} onClick={handleClickFilterButton}>
-            {text}
+            <FilterButtonEmoji>{emoji}</FilterButtonEmoji>
+            <FilterButtonName>{text}</FilterButtonName>
         </FilterButtonStyle>
     );
 };

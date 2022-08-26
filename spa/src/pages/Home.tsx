@@ -17,10 +17,10 @@ export const Home = () => {
     //     dispatch(mapService.getLocations());
     // }, [dispatch]);
 
+    
     useFilterEvent();
-    const { popUpIsVisible, currentlySelectedLocation, categories } = useStateSelector((state) => state.map);
-
-    const mappedFilter = categories.map((item) => <FilterButton key={item.name} text={item.name} />);
+    const { popUpIsVisible, categories, currentlySelectedLocation } = useStateSelector((state) => state.map);
+    const mappedFilter = categories.map((item: any) => <FilterButton key={item.name} text={item.name} emoji={item.emoji} />);
 
     return (
         <div className="App">
