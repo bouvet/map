@@ -7,32 +7,24 @@ namespace restapi.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private static List<Category> categories = new List<Category>
-            {
-                new Category
-                {
-                    Id = 1,
-                    Name = "Fotball",
-                    Emoji = "⚽"
-                },
-                new Category
-                {
-                    Id = 2,
-                    Name = "Tennis",
-                    Emoji = "🎾"
-                }
-            };
+
+        private readonly DataContext _context;
+        public CategoryController(DataContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(categories); 
+            return Ok(await _context.Categories.ToListAsync()); 
         }
         
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> Get(int id)
         {
-            var category = categories.Find(x => x.Id == id);
+            //var category = categories.Find(x => x.Id == id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null) 
                 return NotFound();
 
@@ -42,32 +34,35 @@ namespace restapi.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Category>>> AddCategory(Category category)
         {
-            categories.Add(category);
-            return Ok(categories);
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Categories.ToListAsync());
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Category>>> UpdateCategory(Category request)
         {
-            var category = categories.Find(x => x.Id == request.Id);
+            var category = await _context.Categories.FindAsync(request.Id);
             if (category == null)
                 return NotFound();
 
             category.Name = request.Name;
             category.Emoji = request.Emoji;
 
+            await _context.SaveChangesAsync();
             
-            return Ok(categories);
+            return Ok(await _context.Categories.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Category>>> DeleteCategory(int id){
-            var category = categories.Find(x => x.Id == id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
-                return NotFound("Categoy not found");
-            
-            categories.Remove(category);
-            return Ok(categories);
+                return NotFound();
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Categories.ToListAsync());
         }
 
     }

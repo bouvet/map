@@ -7,5 +7,7 @@ namespace restapi.Data
     public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
     public DbSet<Park> Parks { get; set; }
+
+    public DbSet<Category> Categories { get; set; }
   }
 }
