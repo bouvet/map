@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
 
 namespace restapi.Controllers
 {
   [Route("api/[controller]")]
-  [ApiController]
+  [Produces(MediaTypeNames.Application.Json)]
+  [Consumes(MediaTypeNames.Application.Json)]
   public class ParkController : ControllerBase
   {
 
@@ -24,16 +26,19 @@ namespace restapi.Controllers
 
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServiceResponse<Park>>> GetSinglePark(int id)
     {
-
-      var park = await parkService.GetParkById(id);
-      if (park.Data is not null)
+      var response = await parkService.GetParkById(id);
+      if (response.Success is true)
       {
-        return Ok(park);
+        return Ok(response);
       }
-      return NotFound();
-
+      else
+      {
+        return NotFound(response);
+      }
     }
 
     // // PUT: api/LocationItems/5

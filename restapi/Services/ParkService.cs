@@ -39,12 +39,13 @@ namespace restapi.Services
       try
       {
         var park = await dataContext.Parks.FirstOrDefaultAsync(park => park.Id == id);
-        if (park is not null)
+        if (park is null)
         {
-          response.Data = park;
-          response.Success = true;
+          throw new Exception($"Park with id {id} was not found");
         }
 
+        response.Data = park;
+        response.Success = true;
       }
       catch (Exception exception)
       {
