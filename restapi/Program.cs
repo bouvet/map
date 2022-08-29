@@ -3,6 +3,7 @@ global using restapi.Data;
 global using restapi.Models;
 global using restapi.Interfaces;
 global using restapi.Services;
+global using restapi.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 

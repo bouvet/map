@@ -12,13 +12,14 @@ namespace restapi.Services
             this.dataContext = dataContext;
         }
 
-        public async Task<ServiceResponse<List<Category>>> AddCategory(Category request)
+        public async Task<ServiceResponse<List<Category>>> AddCategory(CategoryDto request)
         {
             var response = new ServiceResponse<List<Category>> { };
 
             try
             {
-                dataContext.Categories.Add(request);
+                
+                dataContext.Categories.Add(new Category { Name = request.Name, Emoji = request.Emoji});
                 await dataContext.SaveChangesAsync();
 
                 var categories = await dataContext.Categories.ToListAsync();

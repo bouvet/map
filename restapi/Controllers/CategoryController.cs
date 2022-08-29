@@ -27,7 +27,7 @@ namespace restapi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Category>>> AddCategory(Category category)
+        public async Task<ActionResult<List<CategoryDto>>> AddCategory(CategoryDto category)
         {
             return Ok(await categoryService.AddCategory(category));
         }
