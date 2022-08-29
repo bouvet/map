@@ -1,15 +1,17 @@
-﻿namespace restapi
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace restapi.Models
 {
   public class Park
   {
     public int Id { get; set; }
-
+    [Required]
     public string Name { get; set; } = string.Empty;
-
+    [Required]
     public string Description { get; set; } = string.Empty;
-
+    [Required]
     public double Latitude { get; set; }
-
+    [Required]
     public double Longitude { get; set; }
   }
 
