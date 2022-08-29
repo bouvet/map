@@ -6,31 +6,28 @@ namespace restapi.Controllers
   [Route("api/[controller]")]
   [Produces(MediaTypeNames.Application.Json)]
   [Consumes(MediaTypeNames.Application.Json)]
-  public class ParkController : ControllerBase
+  public class LocationController : ControllerBase
   {
+    private readonly ILocationService locationService;
 
-    // private readonly DataContext context;
-    private readonly IParkService parkService;
-
-    public ParkController(IParkService parkService)
+    public LocationController(ILocationService locationService)
     {
-      // this.context = context;
-      this.parkService = parkService;
+      this.locationService = locationService;
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<Park>>>> GetAllParks()
+    public async Task<ActionResult<ServiceResponse<List<Location>>>> GetAllLocations()
     {
-      return Ok(await parkService.GetAllParks());
+      return Ok(await locationService.GetAllLocations());
     }
 
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ServiceResponse<Park>>> GetSinglePark(int id)
+    public async Task<ActionResult<ServiceResponse<Location>>> GetLocationById(int id)
     {
-      var response = await parkService.GetParkById(id);
+      var response = await locationService.GetLocationById(id);
       if (response.Success is true)
       {
         return Ok(response);

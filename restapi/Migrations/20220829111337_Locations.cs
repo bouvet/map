@@ -4,7 +4,7 @@
 
 namespace restapi.Migrations
 {
-    public partial class Park : Migration
+    public partial class Locations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace restapi.Migrations
                 name: "LocationItems");
 
             migrationBuilder.CreateTable(
-                name: "Parks",
+                name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,14 +24,14 @@ namespace restapi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Parks", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Parks");
+                name: "Locations");
 
             migrationBuilder.CreateTable(
                 name: "LocationItems",

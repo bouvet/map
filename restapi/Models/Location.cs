@@ -2,7 +2,7 @@
 
 namespace restapi.Models
 {
-  public class Park
+  public class Location
   {
     public int Id { get; set; }
     [Required]
