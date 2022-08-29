@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace restapi.Controllers
 {
@@ -7,7 +8,43 @@ namespace restapi.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        private readonly ICategoryService categoryService;
 
+        public CategoryController(ICategoryService categoryService)
+        {
+            this.categoryService = categoryService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<List<Category>>>> GetAllCategories()
+        {
+            return Ok(await categoryService.GetAllCategories());
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<List<Category>>>> GetCategory(int id)
+        {
+            return Ok(await categoryService.GetCategory(id));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<List<Category>>> AddCategory(Category category)
+        {
+            return Ok(await categoryService.AddCategory(category));
+        }
+
+
+        [HttpPut]
+        public async Task<ActionResult<List<Category>>> UpdateCategory(Category request)
+        {
+            return Ok(await categoryService.UpdateCategory(request));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<Category>>> DeleteCategory(int id)
+        {
+            return Ok(await categoryService.DeleteCategory(id));
+        }
+        /*
         private readonly DataContext _context;
         public CategoryController(DataContext context)
         {
@@ -64,6 +101,6 @@ namespace restapi.Controllers
             await _context.SaveChangesAsync();
             return Ok(await _context.Categories.ToListAsync());
         }
-
+        */
     }
 }
