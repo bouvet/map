@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using restapi.Dtos.Park;
 
 namespace restapi.Controllers
 {
@@ -24,21 +22,19 @@ namespace restapi.Controllers
       return Ok(await parkService.GetAllParks());
     }
 
-    // // GET: api/LocationItems/5
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<ParkDto>> GetSinglePark(int id)
-    // {
 
-    //   var park = await context.Parks.FindAsync(id);
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ServiceResponse<Park>>> GetSinglePark(int id)
+    {
 
-    //   if (park == null)
-    //   {
-    //     return NotFound("Park not found");
-    //   }
+      var park = await parkService.GetParkById(id);
+      if (park.Data is not null)
+      {
+        return Ok(park);
+      }
+      return NotFound();
 
-    //   return Ok(park);
-
-    // }
+    }
 
     // // PUT: api/LocationItems/5
     // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
