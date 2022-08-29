@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
@@ -9,24 +9,29 @@ import { RoundButton } from '../Navigation/Buttons';
 interface PopupContentProps {
     name: string;
     description: string;
-    rating?: number;
+    rating: number;
     image?: string;
 }
 
 interface PopUpImageProp {
-    imageURL: string;
+    imageURL?: string;
 }
 
-const PopupWrapper = styled.div`
+export const PopupCard = styled.div`
     width: 92%;
     height: 150px;
     background-color: ${MyTheme.colors.lightbase};
-    position: fixed;
+    position: absolute;
     bottom: 10px;
     right: 4%;
     border-radius: 10px;
     z-index: 10;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+`;
+
+export const PopupWrapper = styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
 `;
 
@@ -101,14 +106,14 @@ const ReadMoreLink = styled.a`
  * @param description {string} description of park
  * @param rating {number} rating of park 1-5
  */
-export const Popup: React.FunctionComponent<PopupContentProps> = ({ name, description, rating, image }) => {
-    console.log(image);
+export const Popup: FC<PopupContentProps> = ({ name, description, rating, image }) => {
     const dispatch = useStateDispatch();
 
     const { popUpIsVisible } = useStateSelector((state) => state.map);
 
     const handleClickClose = () => {
         dispatch(mapActions.setPopupVisibility(!popUpIsVisible));
+        dispatch(mapActions.setSelectedMarker(''));
     };
 
     const handleClickShowLocationPage = () => {
@@ -121,12 +126,14 @@ export const Popup: React.FunctionComponent<PopupContentProps> = ({ name, descri
         setDisplayedDescription(`${description.slice(0, 100)}...`);
     }, [description]);
 
-    const [stars, setStars] = useState([<span />]);
+    const [stars, setStars] = useState([<span key="rating" />]);
 
     if (rating) {
         if (rating > 5) {
+            // eslint-disable-next-line no-param-reassign
             rating = 5;
         } else if (rating < 1) {
+            // eslint-disable-next-line no-param-reassign
             rating = 1;
         }
     }
@@ -148,7 +155,7 @@ export const Popup: React.FunctionComponent<PopupContentProps> = ({ name, descri
         }
         setStars(temp);
         console.log(stars);
-    }, []);
+    }, [rating]);
 
     return (
         <PopupWrapper>
