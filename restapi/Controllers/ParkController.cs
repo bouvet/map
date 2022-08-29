@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using restapi.Dtos.Park;
 
 namespace restapi.Controllers
 {
@@ -8,88 +9,90 @@ namespace restapi.Controllers
   public class ParkController : ControllerBase
   {
 
-    private readonly DataContext context;
+    // private readonly DataContext context;
+    private readonly IParkService parkService;
 
-    public ParkController(DataContext context)
+    public ParkController(IParkService parkService)
     {
-      this.context = context;
+      // this.context = context;
+      this.parkService = parkService;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ParkDto>>> GetPark()
+    public async Task<ActionResult<ServiceResponse<List<Park>>>> GetAllParks()
     {
-
-      return Ok(await context.Parks.ToListAsync());
+      return Ok(await parkService.GetAllParks());
     }
 
-    // GET: api/LocationItems/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ParkDto>> GetSinglePark(int id)
-    {
+    // // GET: api/LocationItems/5
+    // [HttpGet("{id}")]
+    // public async Task<ActionResult<ParkDto>> GetSinglePark(int id)
+    // {
 
-      var park = await context.Parks.FindAsync(id);
+    //   var park = await context.Parks.FindAsync(id);
 
-      if (park == null)
-      {
-        return NotFound("Park not found");
-      }
+    //   if (park == null)
+    //   {
+    //     return NotFound("Park not found");
+    //   }
 
-      return Ok(park);
+    //   return Ok(park);
 
-    }
+    // }
 
-    // PUT: api/LocationItems/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut()]
-    public async Task<ActionResult<List<ParkDto>>> UpdatePark(Park request)
-    {
-      var park = await context.Parks.FindAsync(request.Id);
+    // // PUT: api/LocationItems/5
+    // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // [HttpPut()]
+    // public async Task<ActionResult<List<ParkDto>>> UpdatePark(Park request)
+    // {
+    //   var park = await context.Parks.FindAsync(request.Id);
 
-      if (park == null)
-      {
-        return NotFound("Park not found");
-      }
+    //   if (park == null)
+    //   {
+    //     return NotFound("Park not found");
+    //   }
 
-      park.Name = request.Name;
-      park.Description = request.Description;
-      park.Latitude = request.Latitude;
-      park.Longitude = request.Longitude;
+    //   park.Name = request.Name;
+    //   park.Description = request.Description;
+    //   park.Latitude = request.Latitude;
+    //   park.Longitude = request.Longitude;
 
-      await context.SaveChangesAsync();
+    //   await context.SaveChangesAsync();
 
-      return Ok(await context.Parks.ToListAsync());
+    //   return Ok(await context.Parks.ToListAsync());
 
-    }
+    // }
 
-    // POST: api/LocationItems
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    public async Task<ActionResult<ParkDto>> AddPark(Park newPark)
-    {
-      context.Parks.Add(newPark);
-      await context.SaveChangesAsync();
+    // // POST: api/LocationItems
+    // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // [HttpPost]
+    // public async Task<ActionResult<Park>> AddPark(Park newPark)
+    // {
 
-      return Ok(await context.Parks.ToListAsync());
-    }
+    //   context.Parks.Add(newPark);
+    //   await context.SaveChangesAsync();
 
-    // DELETE: api/LocationItems/5
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<List<Park>>> DeletePark(int id)
-    {
-      var park = await context.Parks.FindAsync(id);
+    //   return Ok(await context.Parks.ToListAsync());
+    // }
 
-      if (park == null)
-      {
-        return NotFound("Park not found");
-      }
+    // // DELETE: api/LocationItems/5
+    // [HttpDelete("{id}")]
+    // public async Task<ActionResult<List<Park>>> DeletePark(int id)
+    // {
+    //   var park = await context.Parks.FindAsync(id);
 
-      context.Parks.Remove(park);
+    //   if (park == null)
+    //   {
+    //     return NotFound("Park not found");
+    //   }
 
-      await context.SaveChangesAsync();
+    //   context.Parks.Remove(park);
 
-      return Ok(await context.Parks.ToListAsync());
+    //   await context.SaveChangesAsync();
 
-    }
+    //   return Ok(await context.Parks.ToListAsync());
+
+    // }
 
   }
 }
