@@ -4,6 +4,8 @@ React Application for the project Verden Venter.
 The application utlises a map for the user to explore locations with exercise equiptment in Stavanger. 
 
 ## Installation
+!NB: Be sure to perform the following actions in the `.SPA/` directory, to prevent installing node modules in the parent directory.
+
 
 Use the package manager [npm](https://www.npmjs.com/) to install required packages.
 
