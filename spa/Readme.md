@@ -20,4 +20,8 @@ To run the application
 npm start
 ```
 
-test
+The application will run localy on your machine, for access to the application via an external device, use the command:
+```bash
+HOST=0.0.0.0 npm run start
+```
+and connect to the host devices IP-address, with the designated port.
