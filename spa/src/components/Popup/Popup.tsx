@@ -1,4 +1,5 @@
 import { useEffect, useState, FC } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
@@ -53,6 +54,20 @@ const CloseBtn = styled(RoundButton)`
     &:active {
         background-color: ${MyTheme.colors.darkbase};
     }
+`;
+const ExpandLink: FC = () => (
+    <Link to="/location-info">
+        <span className="material-symbols-outlined">open_in_full</span>
+    </Link>
+);
+
+const ExpandBtn = styled(RoundButton)`
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 10px;
+    right: 10px;
+    //box-shadow: none;
 `;
 
 const PopupContent = styled.div`
@@ -150,6 +165,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 </CloseBtn>
             </PopupImage>
             <PopupContent>
+                <ExpandBtn><ExpandLink /></ExpandBtn>
                 <Parkname>{name}</Parkname>
                 <Rating>{stars}</Rating>
                 <Bodytext>
