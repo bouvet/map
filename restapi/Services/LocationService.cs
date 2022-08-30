@@ -12,24 +12,11 @@ namespace restapi.Services
     public async Task<ServiceResponse<List<Location>>> GetAllLocations()
     {
       var response = new ServiceResponse<List<Location>> { };
-      try
-      {
-        var locations = await dataContext.Locations.ToListAsync();
-        if (locations is not null)
-        {
-          response.Data = locations;
-          response.Success = true;
-        }
-      }
-      catch (Exception exception)
-      {
-        response.Data = null;
-        response.Success = false;
-        response.Message = exception.Message;
-      }
-
+      var locations = await dataContext.Locations.ToListAsync();
+      response.Data = locations;
+      response.StatusCode = 200;
+      response.Success = true;
       return response;
-
     }
 
     public async Task<ServiceResponse<Location>> GetLocationById(int id)
@@ -51,6 +38,7 @@ namespace restapi.Services
       {
         response.Data = null;
         response.Success = false;
+        response.StatusCode = 404;
         response.Message = exception.Message;
       }
 

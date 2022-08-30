@@ -1,7 +1,4 @@
-﻿using System.Net.Mime;
-using Microsoft.AspNetCore.Mvc;
-
-namespace restapi.Controllers
+﻿namespace restapi.Controllers
 {
   [Route("api/[controller]")]
   [Produces(MediaTypeNames.Application.Json)]
@@ -18,7 +15,8 @@ namespace restapi.Controllers
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<Location>>>> GetAllLocations()
     {
-      return Ok(await locationService.GetAllLocations());
+      var response = await locationService.GetAllLocations();
+      return Ok(response);
     }
 
 
