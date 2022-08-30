@@ -1,4 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
+global using System.ComponentModel.DataAnnotations;
+global using System.Net.Mime;
+global using Microsoft.AspNetCore.Mvc;
 global using restapi.Data;
 global using restapi.Models;
 global using restapi.Interfaces;
@@ -16,8 +19,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
-builder.Services.AddScoped<IParkService, ParkService>();
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+
 
 var app = builder.Build();
 

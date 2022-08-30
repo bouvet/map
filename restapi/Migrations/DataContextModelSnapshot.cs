@@ -42,7 +42,7 @@ namespace restapi.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("restapi.Models.Park", b =>
+modelBuilder.Entity("restapi.Models.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace restapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Parks");
+                    b.ToTable("Locations");
                 });
 #pragma warning restore 612, 618
         }

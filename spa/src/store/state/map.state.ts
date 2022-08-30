@@ -7,6 +7,7 @@ const initialState = {
     locations: [] as Location[],
     filteredLocations: [] as Location[],
     selectedFilterCategory: '',
+    selectedMarker: '',
     categories: [] as Category[],
     popUpIsVisible: false,
     currentlySelectedLocation: {} as Location,
@@ -28,6 +29,9 @@ export const mapState = createSlice({
         setSelectedFilterCategory(state, action: { payload: string; type: string }) {
             state.selectedFilterCategory = action.payload;
         },
+        setSelectedMarker(state, action: { payload: string; type: string }) {
+            state.selectedMarker = action.payload;
+        },
         setPopupVisibility(state, action: { payload: boolean; type: string }) {
             state.popUpIsVisible = action.payload;
         },
@@ -36,7 +40,7 @@ export const mapState = createSlice({
         },
         setCategories(state, action: { payload: Category[]; type: string }) {
             state.categories = action.payload;
-        }
+        },
     },
 });
 

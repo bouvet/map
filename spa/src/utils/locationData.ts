@@ -72,6 +72,7 @@ export function generateFakeLocations(numberOfFakeLocations: number, categories:
             },
         };
         locations.push(fakeLocation);
+        console.log(fakeLocation);
     }
 
     return locations;
