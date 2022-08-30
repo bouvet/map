@@ -10,6 +10,10 @@ namespace restapi.Services
       this.dataContext = dataContext;
     }
 
+    public Task<ServiceResponse<Property>> AddProperty(AddPropertyDto newProperty)
+    {
+      throw new NotImplementedException();
+    }
 
     public async Task<ServiceResponse<List<Property>>> GetAllProperties()
     {
