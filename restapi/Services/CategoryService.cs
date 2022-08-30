@@ -35,7 +35,7 @@ namespace restapi.Services
                 response.StatusCode = 500;
                 response.Data = null;
                 response.Success = false;
-                response.Message = exception.Message;
+                response.Message = "Ops, something went wrong!"; // exception.Message;
             }
 
 
@@ -97,7 +97,7 @@ namespace restapi.Services
                 response.StatusCode = 500;
                 response.Data = null;
                 response.Success = false;
-                response.Message = "Failed to add Category"; // exception.Message;
+                response.Message = "Ops, something went wrong!"; // exception.Message;
             }
 
 
