@@ -1,6 +1,6 @@
-﻿namespace restapi.Dtos.Park
+﻿namespace restapi.Dtos.Location
 {
-  public class ParkDto
+  public class LocationDto
   {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
@@ -10,7 +10,7 @@
 
   }
 
-  public class AddParkDto
+  public class AddLoctionDto
   {
 
     public string Name { get; set; } = string.Empty;

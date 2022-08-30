@@ -21,7 +21,7 @@ namespace restapi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("restapi.Park", b =>
+            modelBuilder.Entity("restapi.Models.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +45,7 @@ namespace restapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Parks");
+                    b.ToTable("Locations");
                 });
 #pragma warning restore 612, 618
         }
