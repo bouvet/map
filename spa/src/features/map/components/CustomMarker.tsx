@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { Marker } from 'react-map-gl';
 import { MyTheme } from '../../../styles/global';
 import { Location } from '../../../utils/types.d';
@@ -10,7 +10,7 @@ type Props = {
     selectedMarker: string;
 };
 
-export const CustomMarker: React.FC<Props> = ({ coordinates, onClickHandler, selectedMarker, locaction }) => {
+export const CustomMarker: FC<Props> = ({ coordinates, onClickHandler, selectedMarker, locaction }) => {
     const [color, setColor] = useState(MyTheme.colors.darkbase);
 
     useEffect(() => {

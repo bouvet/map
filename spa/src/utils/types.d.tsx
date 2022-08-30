@@ -43,7 +43,7 @@ export interface Properties {
     img?: string;
 
     /** @param rating number to indicate star rating on park */
-    rating?: number;
+    rating: number;
 }
 
 /**

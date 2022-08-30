@@ -16,9 +16,7 @@ export const ReactMapGL: FC = () => {
         zoom: 11,
     });
 
-    const [selectedMarker, setSelectedMarker] = useState('');
-
-    const { locations, filteredLocations, selectedFilterCategory, popUpIsVisible } = useStateSelector((state) => state.map);
+    const { locations, filteredLocations, selectedFilterCategory, selectedMarker } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
 
@@ -38,16 +36,22 @@ export const ReactMapGL: FC = () => {
     }, []);
 
     const onClickHandler = (location: Location) => {
-        setSelectedMarker(location.properties.title);
-        if (mapRef.current) {
-            setViewState({
-                latitude: location.geometry.coordinates[1],
-                longitude: location.geometry.coordinates[0],
-                zoom: 14,
-            });
+        if (selectedMarker === location.properties.title) {
+            dispatch(mapActions.setSelectedMarker(''));
+            dispatch(mapActions.setPopupVisibility(false));
+            // dispatch(mapActions.setCurrentlySelectedLocation());
+        } else {
+            dispatch(mapActions.setSelectedMarker(location.properties.title));
+            if (mapRef.current) {
+                setViewState({
+                    latitude: location.geometry.coordinates[1],
+                    longitude: location.geometry.coordinates[0],
+                    zoom: 14,
+                });
+            }
+            dispatch(mapActions.setPopupVisibility(true));
+            dispatch(mapActions.setCurrentlySelectedLocation(location));
         }
-        dispatch(mapActions.setPopupVisibility(true));
-        dispatch(mapActions.setCurrentlySelectedLocation(location));
     };
 
     return (
