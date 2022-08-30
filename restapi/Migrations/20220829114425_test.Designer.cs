@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using restapi.Data;
 
@@ -10,9 +11,10 @@ using restapi.Data;
 namespace restapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220829114425_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,7 @@ namespace restapi.Migrations
                     b.ToTable("Categories");
                 });
 
-modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Models.Park", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +68,7 @@ modelBuilder.Entity("restapi.Models.Location", b =>
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Parks");
                 });
 #pragma warning restore 612, 618
         }
