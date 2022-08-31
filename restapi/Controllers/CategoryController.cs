@@ -66,7 +66,7 @@ namespace restapi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleListCategory))]
         [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(SwaggerExampleListCategory404))]
-        public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCategory(int id)
+        public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(int id)
         {
             var response = await categoryService.DeleteCategory(id);
             return StatusCode(response.StatusCode, response);

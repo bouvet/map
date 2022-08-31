@@ -75,20 +75,18 @@ namespace restapi.Services
         }
 
 
-        public async Task<ServiceResponse<List<Category>>> AddCategory(CategoryDto request)
+        public async Task<ServiceResponse<Category>> AddCategory(CategoryDto request)
         {
-            var response = new ServiceResponse<List<Category>> { };
+            var response = new ServiceResponse<Category> { };
 
             try
             {
-
-                dataContext.Categories.Add(new Category { Name = request.Name, Emoji = request.Emoji });
+                var category = new Category { Name = request.Name, Emoji = request.Emoji };
+                dataContext.Categories.Add(category);
                 await dataContext.SaveChangesAsync();
 
-                var categories = await dataContext.Categories.ToListAsync();
-
                 response.StatusCode = 201;
-                response.Data = categories;
+                response.Data = category;
                 response.Success = true;
                 
             }
@@ -104,9 +102,9 @@ namespace restapi.Services
             return response;
         }
 
-        public async Task<ServiceResponse<List<Category>>> DeleteCategory(int id)
+        public async Task<ServiceResponse<Object>> DeleteCategory(int id)
         {
-            var response = new ServiceResponse<List<Category>> { };
+            var response = new ServiceResponse<Object> { };
 
             try
             {
@@ -123,9 +121,10 @@ namespace restapi.Services
 
                 var categories = await dataContext.Categories.ToListAsync();
                
-                response.StatusCode = 200;
+                response.StatusCode = 204;
                 response.Success = true;
-                response.Data = categories;
+                response.Data = null;
+                response.Message = "Succsesfully deleted!";
 
             }
             catch (Exception exception)
@@ -140,9 +139,9 @@ namespace restapi.Services
             return response;
         }
 
-        public async Task<ServiceResponse<List<Category>>> UpdateCategory(Category request)
+        public async Task<ServiceResponse<Category>> UpdateCategory(Category request)
         {
-            var response = new ServiceResponse<List<Category>> { };
+            var response = new ServiceResponse<Category> { };
 
             try
             {
@@ -157,12 +156,12 @@ namespace restapi.Services
                 category.Name = request.Name;
                 category.Emoji = request.Emoji;
                 await dataContext.SaveChangesAsync();
-
+                /*
                 var categories = await dataContext.Categories.ToListAsync();
                 if (categories is null) 
                     throw new Exception("Could not reach the database");
-                
-                response.Data = categories;
+                */
+                response.Data = category;
                 response.Success = true;
                 response.StatusCode = 200;
             }

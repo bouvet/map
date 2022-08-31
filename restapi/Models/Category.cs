@@ -8,6 +8,7 @@ namespace restapi
 
     public string Emoji { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public List<Location> Locations { get; set; } = new List<Location>();
 
   }
