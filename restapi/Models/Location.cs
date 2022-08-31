@@ -3,30 +3,16 @@
   public class Location
   {
     public int Id { get; set; }
-    public string Type { get; set; } = "Feature";
-    public Property? Properties { get; set; }
-    // public Geometry Geometry { get; set; }
+    [Required]
+    public string Title { get; set; } = string.Empty;
+    [Required]
+    public string Description { get; set; } = string.Empty;
+    public string Img { get; set; } = string.Empty;
+    public int Rating { get; set; }
+    [Required]
+    public double Latitude { get; set; }
+    [Required]
+    public double Longitude { get; set; }
+    public List<Category> Categories { get; set; } = new List<Category>();
   }
-
 }
-
-
-
-/*
-[
-  {
-    type: "Feature",
-    properties: {
-      title: "",
-      description: "",
-      category: [],
-      img: "",
-      rating: int
-    },
-    geometry: {
-      coordinates: [double, double],
-      type: "Point"
-    }
-  }
-]
-*/
