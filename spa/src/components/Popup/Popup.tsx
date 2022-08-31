@@ -29,7 +29,7 @@ export const PopupCard = styled.div`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 `;
 
-export const PopupWrapper = styled.div`
+const PopupWrapper = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -141,7 +141,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
         const temp: any[] = [];
         for (let i = 0; i < rating; i += 1) {
             temp.push(
-                <span key={`${i.toString()}solid`} className="material-symbols-rounded">
+                <span key={`${i.toString()}solid`} className="material-icons">
                     star
                 </span>,
             );
@@ -154,7 +154,6 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
             );
         }
         setStars(temp);
-        console.log(stars);
     }, [rating]);
 
     return (
@@ -165,7 +164,9 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 </CloseBtn>
             </PopupImage>
             <PopupContent>
-                <ExpandBtn><ExpandLink /></ExpandBtn>
+                <ExpandBtn backgroundColor={MyTheme.colors.lightbase} textColor={MyTheme.colors.darkbase}>
+                    <ExpandLink />
+                </ExpandBtn>
                 <Parkname>{name}</Parkname>
                 <Rating>{stars}</Rating>
                 <Bodytext>

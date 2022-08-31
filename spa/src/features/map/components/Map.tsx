@@ -40,6 +40,13 @@ export const ReactMapGL: FC = () => {
             dispatch(mapActions.setSelectedMarker(''));
             dispatch(mapActions.setPopupVisibility(false));
             // dispatch(mapActions.setCurrentlySelectedLocation());
+            if (mapRef.current) {
+                setViewState({
+                    latitude: location.geometry.coordinates[1],
+                    longitude: location.geometry.coordinates[0],
+                    zoom: 12,
+                });
+            }
         } else {
             dispatch(mapActions.setSelectedMarker(location.properties.title));
             if (mapRef.current) {

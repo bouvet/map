@@ -5,7 +5,6 @@ interface ButtonStylingProps {
     textColor: string;
 }
 
-
 /** Round button with required arguments for color of background and text
  * structure is div, so to insert an icon into the button is done with
  * opening and closing tags
@@ -17,8 +16,8 @@ export const RoundButton = styled.div<ButtonStylingProps>`
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    background-color: ${props => props.backgroundColor};
-    color: ${props => props.textColor};
+    background-color: ${(props) => props.backgroundColor};
+    color: ${(props) => props.textColor};
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -26,4 +25,10 @@ export const RoundButton = styled.div<ButtonStylingProps>`
     position: fixed;
     bottom: 30px;
     right: 30px;
+`;
+
+export const BackButton = styled(RoundButton)`
+    z-index: 1;
+    top: 10px;
+    left: 10px;
 `;
