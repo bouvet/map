@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 type FilterMenuContentProps = {
@@ -10,7 +10,6 @@ const FilterMenuWrapper = styled.div`
     width: 100%;
 `;
 
-
 const FilterMenuContent = styled.div`
     display: flex;
     gap: 10px;
@@ -21,8 +20,7 @@ const FilterMenuContent = styled.div`
     z-index: 2;
 `;
 
-
-export const FilterMenu: React.FunctionComponent<FilterMenuContentProps> = ({ children }) => (
+export const FilterMenu: FC<FilterMenuContentProps> = ({ children }) => (
     <FilterMenuWrapper>
         <FilterMenuContent>{children}</FilterMenuContent>
     </FilterMenuWrapper>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
@@ -36,7 +36,7 @@ const FilterButtonName = styled.span`
     display: inline;
 `;
 
-export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = ({ text, emoji }) => {
+export const FilterButton: FC<FilterButtonContentProps> = ({ text, emoji }) => {
     const { selectedFilterCategory } = useStateSelector((state) => state.map);
     const [select, setSelect] = useState(false);
     const dispatch = useStateDispatch();
@@ -50,7 +50,6 @@ export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = (
     }, [selectedFilterCategory, text]);
 
     const updateGlobalStateForSelectedCategory = (activity: string) => {
-        console.log(activity);
         dispatch(mapActions.setSelectedFilterCategory(activity));
     };
 
