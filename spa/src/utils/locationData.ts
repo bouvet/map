@@ -22,11 +22,12 @@ export function applyFilterLocationOnCategory(locations: Location[], category: s
 }
 
 export function generateFakeCategories() {
-    const cats = ['Basketball', 'Fotball', 'Skating', 'Pumptrack', 'Tennis', 'Volleyball', 'Other'];
+    const cats = ['Stryke', 'Basketball', 'Fotball', 'Skating', 'Pumptrack', 'Tennis', 'Volleyball', 'Diverse'];
+    const emoji = ['💪', '🏀', '⚽️', '🛹', '🚲', '🎾', '🏐', '🤔'];
     const fakeCategories = [];
 
     for (let i = 0; i < cats.length; i += 1) {
-        const fakeCategory: Category = { name: cats[i], emoji: '🔥' };
+        const fakeCategory: Category = { name: cats[i], emoji: emoji[i] };
         fakeCategories.push(fakeCategory);
     }
 
