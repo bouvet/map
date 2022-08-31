@@ -39,9 +39,9 @@ namespace restapi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(SwaggerExampleListCategory500), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleListCategory))]
+        [SwaggerResponseExample(StatusCodes.Status201Created, typeof(SwaggerExampleCategory))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(SwaggerExampleListCategory500))]
         public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory(CategoryDto category)
         {
@@ -53,7 +53,7 @@ namespace restapi.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleListCategory))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleCategory))]
         [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(SwaggerExampleListCategory404))]
         public async Task<ActionResult<ServiceResponse<List<Category>>>> UpdateCategory(Category request)
         {
@@ -62,13 +62,15 @@ namespace restapi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleListCategory))]
+        // [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleListCategory))]
         [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(SwaggerExampleListCategory404))]
         public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(int id)
         {
             var response = await categoryService.DeleteCategory(id);
+            if (response.Success)
+                return StatusCode(response.StatusCode); 
             return StatusCode(response.StatusCode, response);
         }
     }
