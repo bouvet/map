@@ -1,4 +1,5 @@
 import { useEffect, useState, FC } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
@@ -28,7 +29,7 @@ export const PopupCard = styled.div`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 `;
 
-export const PopupWrapper = styled.div`
+const PopupWrapper = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -53,6 +54,20 @@ const CloseBtn = styled(RoundButton)`
     &:active {
         background-color: ${MyTheme.colors.darkbase};
     }
+`;
+const ExpandLink: FC = () => (
+    <Link to="/location-info">
+        <span className="material-symbols-outlined">open_in_full</span>
+    </Link>
+);
+
+const ExpandBtn = styled(RoundButton)`
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 10px;
+    right: 10px;
+    //box-shadow: none;
 `;
 
 const PopupContent = styled.div`
@@ -150,6 +165,9 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 </CloseBtn>
             </PopupImage>
             <PopupContent>
+                <ExpandBtn backgroundColor={MyTheme.colors.lightbase} textColor={MyTheme.colors.darkbase}>
+                    <ExpandLink />
+                </ExpandBtn>
                 <Parkname>{name}</Parkname>
                 <Rating>{stars}</Rating>
                 <Bodytext>
