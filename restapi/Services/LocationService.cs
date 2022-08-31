@@ -9,9 +9,9 @@ namespace restapi.Services
       this.dataContext = dataContext;
     }
 
-    public async Task<ServiceResponse<AddLocationResponseDto>> AddLocation(AddLoctionDto request)
+    public async Task<ServiceResponse<LocationResponseDto>> AddLocation(AddLoctionDto request)
     {
-      var response = new ServiceResponse<AddLocationResponseDto>();
+      var response = new ServiceResponse<LocationResponseDto>();
 
       try
       {
@@ -37,6 +37,7 @@ namespace restapi.Services
           location.Categories.Add(category);
         }
 
+        dataContext.Locations.Add(location);
         await dataContext.SaveChangesAsync();
 
         var geometry = new Geometry();
@@ -52,7 +53,7 @@ namespace restapi.Services
         };
 
 
-        response.Data = new AddLocationResponseDto { Geometry = geometry, Properties = properties };
+        response.Data = new LocationResponseDto { Geometry = geometry, Properties = properties };
         response.StatusCode = 201;
         response.Success = true;
         response.Message = "Location successfully saved!";
@@ -69,19 +70,72 @@ namespace restapi.Services
       return response;
     }
 
-    public async Task<ServiceResponse<List<Location>>> GetAllLocations()
+    public async Task<ServiceResponse<ServiceResponseDto>> DeleteLocation(int id)
     {
-      var response = new ServiceResponse<List<Location>>();
-      var locations = await dataContext.Locations.ToListAsync();
-      response.Data = locations;
-      response.StatusCode = 200;
-      response.Success = true;
+      var response = new ServiceResponse<ServiceResponseDto>();
+      try
+      {
+        var location = await dataContext.Locations.FindAsync(id);
+        if (location is null)
+        {
+          response.StatusCode = 404;
+          throw new Exception($"Location with id {id} was not found!");
+        }
+        dataContext.Locations.Remove(location);
+        await dataContext.SaveChangesAsync();
+        response.StatusCode = 200;
+      }
+      catch (Exception exception)
+      {
+        response.Message = exception.Message;
+      }
       return response;
     }
 
-    public async Task<ServiceResponse<Location>> GetLocationById(int id)
+    public async Task<ServiceResponse<List<LocationResponseDto>>> GetAllLocations()
     {
-      var response = new ServiceResponse<Location>();
+      var response = new ServiceResponse<List<LocationResponseDto>>();
+      try
+      {
+        var locations = await dataContext.Locations.ToListAsync();
+        var transformedLocations = new List<LocationResponseDto>();
+
+        foreach (Location location in locations)
+        {
+          var geometry = new Geometry();
+          geometry.Coordinates = new[] { location.Longitude, location.Latitude };
+
+          var properties = new Properties
+          {
+            Title = location.Title,
+            Description = location.Description,
+            Img = location.Img,
+            Rating = location.Rating,
+            Category = location.Categories
+          };
+
+          var transformedLocation = new LocationResponseDto { Geometry = geometry, Properties = properties };
+
+          transformedLocations.Add(transformedLocation);
+        }
+
+        response.Data = transformedLocations;
+        response.StatusCode = 200;
+        response.Success = true;
+      }
+      catch (Exception)
+      {
+        response.Data = null;
+        response.StatusCode = 500;
+        response.Message = "Something went wrong, please try again";
+      }
+
+      return response;
+    }
+
+    public async Task<ServiceResponse<LocationResponseDto>> GetLocationById(int id)
+    {
+      var response = new ServiceResponse<LocationResponseDto>();
 
       try
       {
@@ -91,7 +145,19 @@ namespace restapi.Services
           throw new Exception($"Location with id {id} was not found");
         }
 
-        response.Data = location;
+        var geometry = new Geometry();
+        geometry.Coordinates = new[] { location.Longitude, location.Latitude };
+
+        var properties = new Properties
+        {
+          Title = location.Title,
+          Description = location.Description,
+          Img = location.Img,
+          Rating = location.Rating,
+          Category = location.Categories
+        };
+
+        response.Data = new LocationResponseDto { Geometry = geometry, Properties = properties };
         response.Success = true;
       }
       catch (Exception exception)

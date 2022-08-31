@@ -32,7 +32,7 @@
     public List<int>? CategoryIds { get; set; }
   }
 
-  public class AddLocationResponseDto
+  public class LocationResponseDto
   {
     public string Type { get; set; } = "Feature";
     public Properties? Properties { get; set; }
