@@ -141,7 +141,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
         const temp: any[] = [];
         for (let i = 0; i < rating; i += 1) {
             temp.push(
-                <span key={`${i.toString()}solid`} className="material-symbols-rounded">
+                <span key={`${i.toString()}solid`} className="material-icons">
                     star
                 </span>,
             );
@@ -154,7 +154,6 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
             );
         }
         setStars(temp);
-        console.log(stars);
     }, [rating]);
 
     return (

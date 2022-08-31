@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker';
-import { useStateSelector } from '../hooks/useRedux';
 import { Category, Location } from './types.d';
 
 /**
@@ -18,7 +17,6 @@ export function applyFilterLocationOnCategory(locations: Location[], category: s
             }
         }
     }
-
 
     return filterLocations;
 }
@@ -72,7 +70,6 @@ export function generateFakeLocations(numberOfFakeLocations: number, categories:
             },
         };
         locations.push(fakeLocation);
-        console.log(fakeLocation);
     }
 
     return locations;
