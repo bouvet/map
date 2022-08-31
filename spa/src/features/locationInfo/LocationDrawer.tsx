@@ -9,6 +9,7 @@ import { Typography } from '@mui/material';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import styled from 'styled-components';
 import { useStateSelector } from '../../hooks/useRedux';
+import { Review } from './Review';
 
 const drawerBleeding = 56;
 
@@ -35,6 +36,12 @@ const ContentWrapper = styled.div`
     width: 94%;
     margin-left: 3%;
     margin-right: 3%;
+    overflow-y: scroll;
+`;
+
+const ContentContainer = styled.div`
+    width: 100%;
+    padding: 10px 0px;
 `;
 
 const GridWrapper = styled.div`
@@ -42,14 +49,16 @@ const GridWrapper = styled.div`
     grid-template-columns: 1fr 1fr;
 `;
 
-const GridItem = styled.div`
+const ImageContainer = styled.div`
     width: 100%;
+    overflow-x: scroll;
     display: flex;
-    align-content: center;
+    gap: 10px;
+    padding: 10px 0px;
 `;
 
-const Description = styled.div`
-    background-color: white;
+const Image = styled.img`
+    height: 100px;
 `;
 
 // const Img =
@@ -57,7 +66,7 @@ const Description = styled.div`
 // const Review =
 
 export const SwipeableEdgeDrawer: FC = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -87,7 +96,7 @@ export const SwipeableEdgeDrawer: FC = () => {
         const temp: any[] = [];
         for (let i = 0; i < rating; i += 1) {
             temp.push(
-                <span key={`${i.toString()}solid`} className="material-symbols-rounded">
+                <span key={`${i.toString()}solid`} className="material-icons">
                     star
                 </span>,
             );
@@ -100,7 +109,6 @@ export const SwipeableEdgeDrawer: FC = () => {
             );
         }
         setStars(temp);
-        console.log(stars);
     }, [rating]);
 
     return (
@@ -110,7 +118,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <Global
                     styles={{
                         '.MuiDrawer-root > .MuiPaper-root': {
-                            height: `calc(50% - ${drawerBleeding}px)`,
+                            height: `calc(70% - ${drawerBleeding}px)`,
                             overflow: 'visible',
                         },
                     }}
@@ -118,7 +126,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <SwipeableDrawer
                     anchor="bottom"
                     open={open}
-                    onClose={toggleDrawer(true)} // set to false
+                    onClose={toggleDrawer(false)} // set to false
                     onOpen={toggleDrawer(true)}
                     swipeAreaWidth={drawerBleeding}
                     disableSwipeToOpen={false}
@@ -146,19 +154,43 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }}>{stars}</Typography>
                         </GridWrapper>
                     </StyledBox>
-                    <StyledBox
-                        sx={{
-                            px: 2,
-                            pb: 2,
-                            height: 'auto',
-                            overflow: 'auto',
-                        }}
-                    >
-                        {locationDescription}
-                        {locationDescription}
-                        {locationDescription}
-                        {locationDescription}
-                    </StyledBox>
+                    <ContentWrapper>
+                        <ImageContainer>
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                            <Image src={locationImg} alt="location" />
+                        </ImageContainer>
+                        <ContentContainer>{locationDescription}</ContentContainer>
+                        <ContentContainer>
+                            <b>Omtaler</b>
+                        </ContentContainer>
+                        <Review
+                            name="Ola Nordman"
+                            age={24}
+                            rating={3}
+                            review="This park truly is average :) perfect for me!"
+                            date="24.12.2012"
+                        />
+                        <Review
+                            name="Ola Svenskman"
+                            age={222}
+                            rating={1}
+                            review="This park is not even close to the quality we expect in sweden! Alt for Norje, under Sverje..."
+                            date="17.05.1814"
+                        />
+                        <Review
+                            name="Kjersti Giftekniv"
+                            age={74}
+                            rating={5}
+                            review="I meet the nicest man here! We will get married at this park, as it is something special to the both of us"
+                            date="01.01.2024"
+                        />
+                    </ContentWrapper>
                 </SwipeableDrawer>
             </Root>
         </StyledEngineProvider>
