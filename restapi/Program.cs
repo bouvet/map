@@ -1,6 +1,6 @@
 global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
-global using System.Net.Mime;
+global using System.Text.Json.Serialization;
 global using Microsoft.AspNetCore.Mvc;
 global using restapi.Data;
 global using restapi.Models;
@@ -26,9 +26,8 @@ builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
 
-builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
-builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 var app = builder.Build();
