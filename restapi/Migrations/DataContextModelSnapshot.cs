@@ -23,16 +23,17 @@ namespace restapi.Migrations
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("restapi.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Emoji")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Emoji")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");
@@ -41,7 +42,7 @@ namespace restapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
                     b.HasIndex("LocationId");
 
@@ -49,21 +50,20 @@ namespace restapi.Migrations
                 });
 
             modelBuilder.Entity("restapi.Models.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Img")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
+                b.Property<string>("Img")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
 
@@ -73,11 +73,11 @@ namespace restapi.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
                     b.ToTable("Locations");
                 });
