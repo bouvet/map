@@ -2755,19 +2755,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\skjalg.eriksen\\.nuget\\packages\\": {}
+    "C:\\Users\\glen.sorbo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\skjalg.eriksen\\source\\repos\\map\\restapi\\restapi.csproj",
+      "projectUniqueName": "C:\\Users\\glen.sorbo\\Work\\map\\restapi\\restapi.csproj",
       "projectName": "restapi",
-      "projectPath": "C:\\Users\\skjalg.eriksen\\source\\repos\\map\\restapi\\restapi.csproj",
-      "packagesPath": "C:\\Users\\skjalg.eriksen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\skjalg.eriksen\\source\\repos\\map\\restapi\\obj\\",
+      "projectPath": "C:\\Users\\glen.sorbo\\Work\\map\\restapi\\restapi.csproj",
+      "packagesPath": "C:\\Users\\glen.sorbo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\glen.sorbo\\Work\\map\\restapi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\skjalg.eriksen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\glen.sorbo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
