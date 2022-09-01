@@ -11,9 +11,10 @@ const initialState = {
     categories: [] as Category[],
     popUpIsVisible: false,
     currentlySelectedLocation: {} as Location,
+    homeMarkerFocus: false,
 };
 
-export const mapState = createSlice({
+const mapState = createSlice({
     name: 'map',
     initialState,
     reducers: {
@@ -41,9 +42,12 @@ export const mapState = createSlice({
         setCategories(state, action: { payload: Category[]; type: string }) {
             state.categories = action.payload;
         },
+        setHomeMarkerFocus(state, action: { payload: boolean; type: string }) {
+            state.homeMarkerFocus = action.payload;
+        },
     },
 });
 
 export const mapActions = mapState.actions;
 
-export default mapState.reducer;
+export const mapReducer = mapState.reducer;

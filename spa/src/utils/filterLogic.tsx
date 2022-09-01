@@ -11,7 +11,6 @@ export function useFilterEvent() {
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-
         if (selectedFilterCategory === '') {
             dispatch(mapActions.setFilteredLocations(locations));
         } else {

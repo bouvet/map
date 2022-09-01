@@ -4,7 +4,14 @@ namespace restapi.Data
   {
     public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      modelBuilder.Entity<Location>().Navigation(location => location.Categories).AutoInclude();
+    }
+
     public DbSet<Location> Locations { get; set; }
     public DbSet<Category> Categories { get; set; }
   }
+
+
 }

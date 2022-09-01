@@ -12,7 +12,7 @@
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<Location>>>> GetAllLocations()
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetAllLocations()
     {
       var response = await locationService.GetAllLocations();
       return Ok(response);
@@ -20,9 +20,9 @@
 
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ServiceResponse<LocationService>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ServiceResponse<LocationResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ServiceResponse<LocationService>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ServiceResponse<Location>>> GetLocationById(int id)
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(int id)
     {
       var response = await locationService.GetLocationById(id);
       if (response.Success is true)
@@ -39,12 +39,22 @@
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ServiceResponse<AddLocationResponseDto>>> AddLocation(AddLoctionDto newLocation)
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation(AddLoctionDto newLocation)
     {
       var response = await locationService.AddLocation(newLocation);
 
       return StatusCode(response.StatusCode, response);
 
+    }
+
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<ServiceResponse<ServiceResponseDto>>> DeleteLocation(int id)
+    {
+      var response = await locationService.DeleteLocation(id);
+      return StatusCode(response.StatusCode, response);
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
@@ -19,9 +19,9 @@ const FilterButtonStyle = styled.div<FilterButtonToggledProps>`
     font-size: ${MyTheme.fontSize.icon};
     padding: 0px 10px;
     border-radius: 27px;
-    background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.darkbase)};
+    background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.lightbase)};
     transition: 0.1s;
-    color: ${MyTheme.colors.lightbase};
+    color: ${(props) => (props.clicked ? MyTheme.colors.lightbase : MyTheme.colors.darkbase)};
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -34,9 +34,10 @@ const FilterButtonEmoji = styled.span`
 
 const FilterButtonName = styled.span`
     display: inline;
+    white-space: nowrap;
 `;
 
-export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = ({ text, emoji }) => {
+export const FilterButton: FC<FilterButtonContentProps> = ({ text, emoji }) => {
     const { selectedFilterCategory } = useStateSelector((state) => state.map);
     const [select, setSelect] = useState(false);
     const dispatch = useStateDispatch();
@@ -50,7 +51,6 @@ export const FilterButton: React.FunctionComponent<FilterButtonContentProps> = (
     }, [selectedFilterCategory, text]);
 
     const updateGlobalStateForSelectedCategory = (activity: string) => {
-        console.log(activity);
         dispatch(mapActions.setSelectedFilterCategory(activity));
     };
 

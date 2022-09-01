@@ -1,5 +1,4 @@
 import { useEffect, useState, FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
@@ -55,11 +54,7 @@ const CloseBtn = styled(RoundButton)`
         background-color: ${MyTheme.colors.darkbase};
     }
 `;
-const ExpandLink: FC = () => (
-    <Link to="/location-info">
-        <span className="material-symbols-outlined">open_in_full</span>
-    </Link>
-);
+const ExpandLink: FC = () => <span className="material-symbols-outlined">open_in_full</span>;
 
 const ExpandBtn = styled(RoundButton)`
     position: absolute;
@@ -117,7 +112,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     };
 
     const handleClickShowLocationPage = () => {
-        console.log(name);
+        dispatch(mapActions.setHomeMarkerFocus(true));
     };
 
     const [displayedDescription, setDisplayedDescription] = useState('');
@@ -141,7 +136,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
         const temp: any[] = [];
         for (let i = 0; i < rating; i += 1) {
             temp.push(
-                <span key={`${i.toString()}solid`} className="material-symbols-rounded">
+                <span key={`${i.toString()}solid`} className="material-icons">
                     star
                 </span>,
             );
@@ -154,7 +149,6 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
             );
         }
         setStars(temp);
-        console.log(stars);
     }, [rating]);
 
     return (
@@ -165,7 +159,11 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 </CloseBtn>
             </PopupImage>
             <PopupContent>
-                <ExpandBtn backgroundColor={MyTheme.colors.lightbase} textColor={MyTheme.colors.darkbase}>
+                <ExpandBtn
+                    backgroundColor={MyTheme.colors.lightbase}
+                    textColor={MyTheme.colors.darkbase}
+                    onClick={handleClickShowLocationPage}
+                >
                     <ExpandLink />
                 </ExpandBtn>
                 <Parkname>{name}</Parkname>
