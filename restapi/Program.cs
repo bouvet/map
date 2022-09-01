@@ -30,6 +30,9 @@ builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCate
 builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleCategory>();
 builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory404>();
 builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory500>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory400>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Delete>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Post>();
 builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
 // builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
