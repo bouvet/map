@@ -14,7 +14,8 @@
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetAllLocations()
     {
-      var response = await locationService.GetAllLocations();
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            var response = await locationService.GetAllLocations();
       return Ok(response);
     }
 
@@ -24,7 +25,8 @@
     [ProducesResponseType(typeof(ServiceResponse<LocationService>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(int id)
     {
-      var response = await locationService.GetLocationById(id);
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            var response = await locationService.GetLocationById(id);
       if (response.Success is true)
       {
         return Ok(response);
