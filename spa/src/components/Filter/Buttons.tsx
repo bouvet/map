@@ -17,7 +17,7 @@ const FilterButtonStyle = styled.div<FilterButtonToggledProps>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     height: 27px;
     font-size: ${MyTheme.fontSize.icon};
-    padding: 0px 10px;
+    padding: 5px 10px;
     border-radius: 27px;
     background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.lightbase)};
     transition: 0.1s;
@@ -52,6 +52,8 @@ export const FilterButton: FC<FilterButtonContentProps> = ({ text, emoji }) => {
 
     const updateGlobalStateForSelectedCategory = (activity: string) => {
         dispatch(mapActions.setSelectedFilterCategory(activity));
+        dispatch(mapActions.setSelectedMarker(''));
+        dispatch(mapActions.setPopupVisibility(false));
     };
 
     const handleClickFilterButton = () => {
