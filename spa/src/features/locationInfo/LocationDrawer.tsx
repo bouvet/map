@@ -10,6 +10,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import styled from 'styled-components';
 import { useStateSelector } from '../../hooks/useRedux';
 import { Review } from './Review';
+import { MyTheme } from '../../styles/global';
 
 const drawerBleeding = 56;
 
@@ -54,16 +55,32 @@ const ImageContainer = styled.div`
     overflow-x: scroll;
     display: flex;
     gap: 10px;
-    padding: 10px 0px;
+    padding: 30px 0px 10px 0px;
+`;
+
+type ImageProp = {
+    backgroundImage: any;
+};
+
+const ImageWrapper = styled.div<ImageProp>`
+    height: 40vw;
+    padding-left: 40vw;
+    display: inline-block;
+    border-radius: 10px;
+    background-image: url(${(props) => props.backgroundImage});
+    background-repeat: none;
+    background-position: center;
+    background-size: cover;
+    white-space: nowrap;
+`;
+
+const StarWrapper = styled.div`
+    color: ${MyTheme.colors.accent};
 `;
 
 const Image = styled.img`
     height: 100px;
 `;
-
-// const Img =
-
-// const Review =
 
 export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = React.useState(true);
@@ -151,19 +168,19 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <Typography sx={{ p: 2, color: 'text.primary', fontWeight: 'bold', textAlign: 'left' }}>
                                 {locationTitle}
                             </Typography>
-                            <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }}>{stars}</Typography>
+                            <Typography sx={{ p: 2, textAlign: 'right' }}>
+                                <StarWrapper>{stars}</StarWrapper>
+                            </Typography>
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
                         <ImageContainer>
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
-                            <Image src={locationImg} alt="location" />
+                            <ImageWrapper backgroundImage={locationImg} />
+                            <ImageWrapper backgroundImage={locationImg} />
+                            <ImageWrapper backgroundImage={locationImg} />
+                            <ImageWrapper backgroundImage={locationImg} />
+                            <ImageWrapper backgroundImage={locationImg} />
+                            <ImageWrapper backgroundImage={locationImg} />
                         </ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>
