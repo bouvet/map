@@ -1,6 +1,5 @@
 import { mapActions } from '../../../store/state/map.state';
 import { AppDispatch } from '../../../store/index';
-import { generateFakeCategories, generateFakeLocations } from '../../../utils/locationData';
 import { API } from '../../../lib/api';
 
 export const mapService = {

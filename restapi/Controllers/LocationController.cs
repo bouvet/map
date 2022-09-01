@@ -49,7 +49,14 @@
 
     }
 
-    [HttpDelete]
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation(int id, UpdateLocationDto updatedLocation)
+    {
+      var response = await locationService.UpdateLocation(id, updatedLocation);
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

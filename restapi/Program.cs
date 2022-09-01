@@ -18,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
 builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -46,6 +47,12 @@ builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
+builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
+  {
+    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+  }
+));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,6 +61,8 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 //}
+
+app.UseCors("anydomain");
 
 app.UseHttpsRedirection();
 
