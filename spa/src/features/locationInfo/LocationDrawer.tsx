@@ -187,7 +187,8 @@ export const SwipeableEdgeDrawer: FC = () => {
                             name="Kjersti Giftekniv"
                             age={74}
                             rating={5}
-                            review="I meet the nicest man here! We will get married at this park, as it is something special to the both of us"
+                            review="I meet the nicest man here! We will get married at this park, 
+                            as it is something special to the both of us"
                             date="01.01.2024"
                         />
                     </ContentWrapper>

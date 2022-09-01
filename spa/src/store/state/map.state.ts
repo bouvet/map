@@ -14,7 +14,7 @@ const initialState = {
     homeMarkerFocus: false,
 };
 
-export const mapState = createSlice({
+const mapState = createSlice({
     name: 'map',
     initialState,
     reducers: {
@@ -50,4 +50,4 @@ export const mapState = createSlice({
 
 export const mapActions = mapState.actions;
 
-export default mapState.reducer;
+export const mapReducer = mapState.reducer;

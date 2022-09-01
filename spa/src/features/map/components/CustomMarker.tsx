@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { Marker } from 'react-map-gl';
 import { MyTheme } from '../../../styles/global';
 import { Location } from '../../../utils/types.d';
