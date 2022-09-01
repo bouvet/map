@@ -1,5 +1,4 @@
 import { useEffect, useState, FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';

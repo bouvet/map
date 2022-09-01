@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import mapState from './state/map.state';
-import authState from './state/auth.state';
+import { mapReducer } from './state/map.state';
+import { authReducer } from './state/auth.state';
 
 export const store = configureStore({
     reducer: {
-        map: mapState,
-        auth: authState,
+        map: mapReducer,
+        auth: authReducer,
     },
 });
 
