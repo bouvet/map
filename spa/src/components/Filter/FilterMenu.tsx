@@ -13,7 +13,7 @@ const FilterMenuWrapper = styled.div`
 const FilterMenuContent = styled.div`
     display: flex;
     gap: 10px;
-    padding: 10px;
+    padding: 20px 30px 20px 30px;
     overflow-x: scroll;
     scrollbar-width: none;
     position: relative;
