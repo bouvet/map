@@ -17,6 +17,13 @@
 
   }
 
+  public class UpdateLocationDto
+  {
+    public string Type { get; set; } = "Feature";
+    public ChangeProperties Properties { get; set; } = new ChangeProperties { };
+    public Geometry Geometry { get; set; } = new Geometry { };
+  }
+
   public class AddLoctionDto
   {
     [Required]
@@ -26,17 +33,18 @@
     public string Img { get; set; } = string.Empty;
     public int Rating { get; set; }
     [Required]
-    public double Latitude { get; set; }
-    [Required]
     public double Longitude { get; set; }
-    public List<int>? CategoryIds { get; set; }
+    [Required]
+    public double Latitude { get; set; }
+    public List<int> CategoryIds { get; set; } = new List<int>();
   }
 
   public class LocationResponseDto
   {
+    public int Id { get; set; }
     public string Type { get; set; } = "Feature";
-    public Properties? Properties { get; set; }
-    public Geometry? Geometry { get; set; }
+    public Properties Properties { get; set; } = new Properties { };
+    public Geometry Geometry { get; set; } = new Geometry { };
   }
 
   public class Properties
@@ -50,8 +58,18 @@
 
   public class Geometry
   {
-    public double[]? Coordinates { get; set; }
+    // Longitude, Latitude
+    public double[] Coordinates { get; set; } = Array.Empty<double>();
     public string Type { get; set; } = "Point";
+  }
+
+  public class ChangeProperties
+  {
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public List<int> CategoryIds { get; set; } = new List<int>();
+    public string Img { get; set; } = string.Empty;
+    public int Rating { get; set; }
   }
 }
 
