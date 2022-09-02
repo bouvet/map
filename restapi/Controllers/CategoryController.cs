@@ -80,7 +80,7 @@ namespace restapi.Controllers
     public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(int id)
     {
       var response = await categoryService.DeleteCategory(id);
-      if (response.Success)
+      if (response.StatusCode == StatusCodes.Status204NoContent)
         return StatusCode(response.StatusCode);
       return StatusCode(response.StatusCode, response);
     }
