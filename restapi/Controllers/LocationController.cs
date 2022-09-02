@@ -14,9 +14,29 @@
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetAllLocations()
     {
-            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            var response = await locationService.GetAllLocations();
-      return Ok(response);
+      var response = await locationService.GetAllLocations();
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("under-review")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetUnapprovedLocations()
+    {
+      var response = await locationService.GetLocationByStatus("Under Review");
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("approved")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetApprovedLocations()
+    {
+      var response = await locationService.GetLocationByStatus("Approved");
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("declined")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetDeclinedLocations()
+    {
+      var response = await locationService.GetLocationByStatus("Declined");
+      return StatusCode(response.StatusCode, response);
     }
 
 
@@ -25,16 +45,8 @@
     [ProducesResponseType(typeof(ServiceResponse<LocationService>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(int id)
     {
-            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            var response = await locationService.GetLocationById(id);
-      if (response.Success is true)
-      {
-        return Ok(response);
-      }
-      else
-      {
-        return NotFound(response);
-      }
+      var response = await locationService.GetLocationById(id);
+      return StatusCode(response.StatusCode, response);
     }
 
     [HttpPost]

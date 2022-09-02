@@ -1,26 +1,9 @@
 ﻿namespace restapi.Dtos
 {
-  public class LocationDto
-  {
-    public int Id { get; set; }
-    [Required]
-    public string Title { get; set; } = string.Empty;
-    [Required]
-    public string Description { get; set; } = string.Empty;
-    public string Img { get; set; } = string.Empty;
-    public int Rating { get; set; }
-    [Required]
-    public double Latitude { get; set; }
-    [Required]
-    public double Longitude { get; set; }
-    public ICollection<Category>? Categories { get; set; }
-
-  }
-
   public class UpdateLocationDto
   {
     public string Type { get; set; } = "Feature";
-    public ChangeProperties Properties { get; set; } = new ChangeProperties { };
+    public Properties Properties { get; set; } = new Properties { };
     public Geometry Geometry { get; set; } = new Geometry { };
   }
 
@@ -51,9 +34,10 @@
   {
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public List<Category> Category { get; set; } = new List<Category>();
     public string Img { get; set; } = string.Empty;
+    public string Status { get; set; } = "Under Review";
     public int Rating { get; set; }
+    public List<Category> Category { get; set; } = new List<Category>();
   }
 
   public class Geometry
@@ -67,9 +51,10 @@
   {
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public List<int> CategoryIds { get; set; } = new List<int>();
     public string Img { get; set; } = string.Empty;
+    public string Status { get; set; } = "Under Review";
     public int Rating { get; set; }
+    public List<int> CategoryIds { get; set; } = new List<int>();
   }
 }
 
@@ -82,6 +67,7 @@
       description: "",
       category: [],
       img: "",
+      status: "",
       rating: int
     },
     geometry: {
