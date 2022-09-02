@@ -49,7 +49,8 @@ namespace restapi.Services
           Description = location.Description,
           Img = location.Img,
           Rating = location.Rating,
-          Category = location.Categories
+          Category = location.Categories,
+          Status = location.Status
         };
 
 
@@ -111,7 +112,8 @@ namespace restapi.Services
             Description = location.Description,
             Img = location.Img,
             Rating = location.Rating,
-            Category = location.Categories
+            Category = location.Categories,
+            Status = location.Status
           };
 
           var transformedLocation = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
@@ -154,7 +156,8 @@ namespace restapi.Services
           Description = location.Description,
           Img = location.Img,
           Rating = location.Rating,
-          Category = location.Categories
+          Category = location.Categories,
+          Status = location.Status
         };
 
         response.Data = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
@@ -166,6 +169,48 @@ namespace restapi.Services
         response.Success = false;
         response.StatusCode = 404;
         response.Message = exception.Message;
+      }
+
+      return response;
+    }
+
+    public async Task<ServiceResponse<List<LocationResponseDto>>> GetLocationByStatus(string status)
+    {
+      var response = new ServiceResponse<List<LocationResponseDto>>();
+      try
+      {
+        var locations = await dataContext.Locations.Where(location => location.Status == status).ToListAsync();
+        var transformedLocations = new List<LocationResponseDto>();
+
+        foreach (Location location in locations)
+        {
+          var geometry = new Geometry();
+          geometry.Coordinates = new[] { location.Longitude, location.Latitude };
+
+          var properties = new Properties
+          {
+            Title = location.Title,
+            Description = location.Description,
+            Img = location.Img,
+            Rating = location.Rating,
+            Category = location.Categories,
+            Status = location.Status
+          };
+
+          var transformedLocation = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
+
+          transformedLocations.Add(transformedLocation);
+        }
+
+        response.Data = transformedLocations;
+        response.StatusCode = 200;
+        response.Success = true;
+      }
+      catch (Exception)
+      {
+        response.Data = null;
+        response.StatusCode = 500;
+        response.Message = "Something went wrong, please try again";
       }
 
       return response;
@@ -233,21 +278,27 @@ namespace restapi.Services
           location.Img = request.Properties.Img;
         }
 
+        if (!string.IsNullOrEmpty(request.Properties.Status))
+        {
+          properties.Status = request.Properties.Status;
+          location.Status = request.Properties.Status;
+        }
+
         if (request.Properties.Rating > 0)
         {
           properties.Rating = request.Properties.Rating;
           location.Rating = request.Properties.Rating;
         }
-
-        if (request.Properties.CategoryIds.Count > 0)
+        //TODO: Change from CategoryIds to Category! When client sends data there will be full Category objects!
+        if (request.Properties.Category.Count > 0)
         {
           location.Categories = new List<Category>();
-          foreach (int categoryId in request.Properties.CategoryIds)
+          foreach (Category category in request.Properties.Category)
           {
-            var category = await dataContext.Categories.FindAsync(categoryId);
-            if (category == null)
-              throw new Exception($"Category with id {categoryId} was not found");
-            location.Categories.Add(category);
+            var _category = await dataContext.Categories.FindAsync(category.Id);
+            if (_category == null)
+              throw new Exception($"Category with id {category.Id} was not found");
+            location.Categories.Add(_category);
           }
           properties.Category = location.Categories;
         }
@@ -261,13 +312,13 @@ namespace restapi.Services
 
         response.Data = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
         response.Success = true;
-        response.StatusCode = 200;
+        response.StatusCode = StatusCodes.Status200OK;
       }
       catch (Exception exception)
       {
         response.Data = null;
         response.Success = false;
-        response.StatusCode = 404;
+        response.StatusCode = StatusCodes.Status404NotFound;
         response.Message = exception.Message;
       }
 
