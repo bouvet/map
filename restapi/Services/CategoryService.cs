@@ -28,14 +28,14 @@ namespace restapi.Services
         response.StatusCode = 200;
         response.Data = categories;
         response.Success = true;
-        response.Message = "Categories fetched";
+        response.Message = "Categories fetched!";
       }
       catch (Exception)
       {
         response.StatusCode = 500;
         response.Data = null;
         response.Success = false;
-        response.Message = "Ops, something went wrong!"; // exception.Message;
+        response.Message = "Ops, something went wrong!";
       }
 
 
@@ -91,12 +91,11 @@ namespace restapi.Services
       try
       {
 
-        var existingCategory = dataContext.Categories.Where(c => c.Name == request.Name).ToList()[0];
-
-        if (existingCategory is not null)
+        var existingCategoryWithSameName = dataContext.Categories.Where(c => c.Name == request.Name).ToList();
+        if (existingCategoryWithSameName.Count() > 0)
         {
           response.StatusCode = 409;
-          throw new Exception($"Category with name {request.Name} already exist as [id: {existingCategory.Id}, name: {existingCategory.Name}, emoji: {existingCategory.Emoji}]");
+          throw new Exception($"Category with name {request.Name} already exist as [id: {existingCategoryWithSameName.First().Id}, name: {existingCategoryWithSameName.First().Name}, emoji: {existingCategoryWithSameName.First().Emoji}]");
         }
 
         var category = new Category { Name = request.Name, Emoji = request.Emoji };
@@ -186,19 +185,18 @@ namespace restapi.Services
         }
 
         var category = await dataContext.Categories.FindAsync(id);
-        var locations = dataContext.Entry(category).Collection(c => c.Locations).Query().AsEnumerable().ToList();
-
-        if (locations.Count() > 0)
-        {
-          response.StatusCode = 409;
-          response.Data = locations;
-          throw new Exception($"This category is being used in {locations.Count()} locations");
-        }
-
         if (category is null)
         {
           response.StatusCode = 404;
           throw new Exception($"Category with id {id} not Found");
+        }
+
+        var locationsWhereCategoryIsUsed = dataContext.Entry(category).Collection(c => c.Locations).Query().AsEnumerable().ToList();
+        if (locationsWhereCategoryIsUsed.Count() > 0)
+        {
+          response.StatusCode = 409;
+          response.Data = locationsWhereCategoryIsUsed;
+          throw new Exception($"This category is being used in {locationsWhereCategoryIsUsed.Count()} locations");
         }
 
         dataContext.Categories.Remove(category);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Filters;
@@ -24,7 +25,6 @@ namespace restapi.Controllers
     [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(SwaggerExampleListCategory500))]
     public async Task<ActionResult<ServiceResponse<List<Category>>>> GetAllCategories()
     {
-      HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
       var response = await categoryService.GetAllCategories();
       return StatusCode(response.StatusCode, response);
     }
@@ -38,7 +38,6 @@ namespace restapi.Controllers
     [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(SwaggerExampleListCategory400))]
     public async Task<ActionResult<ServiceResponse<Category>>> GetCategory(int id)
     {
-      HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
       var response = await categoryService.GetCategory(id);
       return StatusCode(response.StatusCode, response);
     }
