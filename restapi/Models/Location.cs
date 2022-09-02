@@ -13,6 +13,7 @@
     public double Longitude { get; set; }
     [Required]
     public double Latitude { get; set; }
+    public string Status { get; set; } = "Under Review";
     public List<Category> Categories { get; set; } = new List<Category>();
   }
 }
