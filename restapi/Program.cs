@@ -7,7 +7,7 @@ global using restapi.Models;
 global using restapi.Interfaces;
 global using restapi.Services;
 global using restapi.Dtos;
-using Swashbuckle.AspNetCore.Filters;
+global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
@@ -21,13 +21,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleCategory>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory404>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory500>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory400>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Delete>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Post>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample200OK>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample201Created>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample500InternalServerError>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryDeleteExample409Conflict>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.ListCategoryExample200OK>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample400BadRequest>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryPostExample409Conflict>();
 builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
 

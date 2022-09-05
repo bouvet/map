@@ -129,8 +129,6 @@ namespace restapi.Services
         dataContext.Categories.Remove(category);
         await dataContext.SaveChangesAsync();
 
-        // var categories = await dataContext.Categories.ToListAsync();
-
         return GetCategoryServiceResponse<Object>(StatusCodes.Status204NoContent, msg: "Successfully Deleted!", null);
       }
       catch (Exception)
