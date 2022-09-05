@@ -8,7 +8,9 @@
     [Required]
     public string Description { get; set; } = string.Empty;
     public string Img { get; set; } = string.Empty;
-    public int Rating { get; set; }
+    [MinLength(1)]
+    [MaxLength(5)]
+    public float Rating { get; set; }
     [Required]
     public double Longitude { get; set; }
     [Required]
