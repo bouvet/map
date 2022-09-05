@@ -81,7 +81,7 @@ const Parkname = styled.p`
 
 const Rating = styled.div`
     width: 100%;
-    color: ${MyTheme.colors.accent};
+    color: ${MyTheme.colors.darkbase};
 `;
 
 const Bodytext = styled.div`

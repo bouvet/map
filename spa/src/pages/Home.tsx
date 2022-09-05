@@ -19,6 +19,8 @@ export const Home: FC = () => {
     const dispatch = useStateDispatch();
     const handleBackClick = () => {
         dispatch(mapActions.setHomeMarkerFocus(false));
+        dispatch(mapActions.setPopupVisibility(false));
+        dispatch(mapActions.setSelectedMarker(''));
     };
 
     return (
