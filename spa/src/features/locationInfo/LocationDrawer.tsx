@@ -8,6 +8,9 @@ import Box from '@mui/material/Box';
 import { Button, Modal, Typography } from '@mui/material';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Rating from '@mui/material/Rating';
+import AddAPhoto from '@mui/icons-material/AddAPhoto';
+import Stack from '@mui/material/Stack';
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { RoundButton } from '../../components/Navigation/Buttons';
@@ -64,26 +67,27 @@ const Image = styled.img`
     height: 100px;
 `;
 
-const style = {
+const AddReview = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
+    height: '360px',
     transform: 'translate(-50%, -50%)',
-    width: 400,
     bgcolor: 'background.paper',
-    // border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    borderRadius: 3,
+    p: 7,
+    pt: 5,
 };
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
-      color: '#007BC0',
+        color: '#007BC0',
     },
     '& .MuiRating-iconHover': {
-      color: '#007BC0',
+        color: '#007BC0',
     },
-  });
+});
 
 export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = React.useState(true);
@@ -163,7 +167,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <SwipeableDrawer
                     anchor="bottom"
                     open={open}
-                    onClose={toggleDrawer(false)} // set to false
+                    onClose={toggleDrawer(false)}
                     onOpen={toggleDrawer(true)}
                     swipeAreaWidth={drawerBleeding}
                     disableSwipeToOpen={false}
@@ -188,7 +192,9 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <Typography sx={{ p: 2, color: 'text.primary', fontWeight: 'bold', textAlign: 'left' }}>
                                 {locationTitle}
                             </Typography>
-                            <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }}>{stars}</Typography>
+                            <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }} onClick={handleOpenAddReview}>
+                                {stars}
+                            </Typography>
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
@@ -231,38 +237,46 @@ export const SwipeableEdgeDrawer: FC = () => {
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
                         <Modal
                             open={openAddReview}
-                            // onClose={handleCloseAddReview}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
+                            // style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         >
-                            <Box sx={style}>
-                                <Box
-                                    sx={{
-                                        '& > legend': { mt: 2 },
-                                    }}
-                                >
-                                    <StyledRating
-                                        name="simple-controlled"
-                                        value={value}
-                                        onChange={(event, newValue) => {
-                                            setValue(newValue);
+                            <ClickAwayListener onClickAway={handleCloseAddReview}>
+                                <Box sx={AddReview}>
+                                    <Box
+                                        sx={{
+                                            '& > legend': { mt: 2 },
                                         }}
-                                    />
+                                    >
+                                        <Stack alignItems="center" spacing={3}>
+                                            <StyledRating
+                                                name="simple-controlled"
+                                                size="large"
+                                                value={value}
+                                                onChange={(event, newValue) => {
+                                                    setValue(newValue);
+                                                }}
+                                            />
+                                        </Stack>
+                                        <br />
+                                    </Box>
+                                    <Stack alignItems="center" spacing={3}>
+                                        <textarea rows={7} cols={30} />
+                                        <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                                            Last opp
+                                            <input hidden accept="image/*" multiple type="file" />
+                                        </Button>
+                                        <Button variant="contained" onClick={handleCloseAddReview}>
+                                            Send inn
+                                        </Button>
+                                    </Stack>
+                                    <CloseBtn
+                                        backgroundColor={MyTheme.colors.opaque}
+                                        textColor={MyTheme.colors.lightbase}
+                                        onClick={handleCloseAddReview}
+                                    >
+                                        <span className="material-symbols-outlined">close</span>
+                                    </CloseBtn>
                                 </Box>
-                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                    Legg til omtale
-                                </Typography>
-                                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                                </Typography>
-                                <CloseBtn
-                                    backgroundColor={MyTheme.colors.opaque}
-                                    textColor={MyTheme.colors.lightbase}
-                                    onClick={handleCloseAddReview}
-                                >
-                                    <span className="material-symbols-outlined">close</span>
-                                </CloseBtn>
-                            </Box>
+                            </ClickAwayListener>
                         </Modal>
                     </ContentWrapper>
                 </SwipeableDrawer>
