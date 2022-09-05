@@ -1,3 +1,5 @@
+using restapi.Dtos.Location;
+
 namespace restapi.Services
 {
   public class LocationService : ILocationService
@@ -40,10 +42,10 @@ namespace restapi.Services
         dataContext.Locations.Add(location);
         await dataContext.SaveChangesAsync();
 
-        var geometry = new Geometry();
+        var geometry = new LocationGeometryDto();
         geometry.Coordinates = new[] { location.Longitude, location.Latitude };
 
-        var properties = new Properties
+        var properties = new LocationPropertiesDto
         {
           Title = location.Title,
           Description = location.Description,
@@ -103,10 +105,10 @@ namespace restapi.Services
 
         foreach (Location location in locations)
         {
-          var geometry = new Geometry();
+          var geometry = new LocationGeometryDto();
           geometry.Coordinates = new[] { location.Longitude, location.Latitude };
 
-          var properties = new Properties
+          var properties = new LocationPropertiesDto
           {
             Title = location.Title,
             Description = location.Description,
@@ -147,10 +149,10 @@ namespace restapi.Services
           throw new Exception($"Location with id {id} was not found");
         }
 
-        var geometry = new Geometry();
+        var geometry = new LocationGeometryDto();
         geometry.Coordinates = new[] { location.Longitude, location.Latitude };
 
-        var properties = new Properties
+        var properties = new LocationPropertiesDto
         {
           Title = location.Title,
           Description = location.Description,
@@ -184,10 +186,10 @@ namespace restapi.Services
 
         foreach (Location location in locations)
         {
-          var geometry = new Geometry();
+          var geometry = new LocationGeometryDto();
           geometry.Coordinates = new[] { location.Longitude, location.Latitude };
 
-          var properties = new Properties
+          var properties = new LocationPropertiesDto
           {
             Title = location.Title,
             Description = location.Description,
@@ -219,8 +221,8 @@ namespace restapi.Services
     public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(int id, UpdateLocationDto request)
     {
       var response = new ServiceResponse<LocationResponseDto>();
-      var properties = new Properties { };
-      var geometry = new Geometry();
+      var properties = new LocationPropertiesDto { };
+      var geometry = new LocationGeometryDto();
 
       try
       {

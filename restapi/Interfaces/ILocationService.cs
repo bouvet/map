@@ -1,3 +1,4 @@
+using restapi.Dtos.Location;
 namespace restapi.Interfaces
 {
   public interface ILocationService
