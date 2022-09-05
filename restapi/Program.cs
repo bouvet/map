@@ -30,17 +30,23 @@ builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCate
 builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Post>();
 builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
-builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
 
-// var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-// builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-// var kvUri = "https://restapivault.vault.azure.net/";
-// var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-// var secretConnectionString = await client.GetSecretAsync("ConnectionString");
+if (builder.Environment.IsDevelopment())
+{
+  System.Console.WriteLine("DEVELOPMENT");
+  builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
+}
 
-// builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(secretConnectionString.Value.Value));
-
-
+if (builder.Environment.IsProduction())
+{
+  System.Console.WriteLine("PRODUCTION");
+  var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+  builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+  var kvUri = "https://restapivault.vault.azure.net/";
+  var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+  var secretConnectionString = await client.GetSecretAsync("ConnectionString");
+  builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(secretConnectionString.Value.Value));
+}
 
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -64,5 +70,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.Run();
