@@ -45,10 +45,17 @@ namespace restapi.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<ServiceResponseDto>>> DeleteLocation(int id)
+    public async Task<ActionResult<ServiceResponse<DeleteLocationDto>>> DeleteLocation(int id)
     {
       var response = await locationService.DeleteLocation(id);
-      return StatusCode(response.StatusCode, response);
+      if (response.StatusCode == 204)
+      {
+        return StatusCode(response.StatusCode);
+      }
+      else
+      {
+        return StatusCode(response.StatusCode, response);
+      }
     }
   }
 }
