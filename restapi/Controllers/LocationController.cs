@@ -20,27 +20,6 @@ namespace restapi.Controllers
       return StatusCode(response.StatusCode, response);
     }
 
-    [HttpGet("under-review")]
-    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetUnapprovedLocations()
-    {
-      var response = await locationService.GetLocationByStatus("Under Review");
-      return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpGet("approved")]
-    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetApprovedLocations()
-    {
-      var response = await locationService.GetLocationByStatus("Approved");
-      return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpGet("declined")]
-    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetDeclinedLocations()
-    {
-      var response = await locationService.GetLocationByStatus("Declined");
-      return StatusCode(response.StatusCode, response);
-    }
-
 
     [HttpGet("{id}")]
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(int id)
@@ -66,10 +45,17 @@ namespace restapi.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<ServiceResponseDto>>> DeleteLocation(int id)
+    public async Task<ActionResult<ServiceResponse<DeleteLocationDto>>> DeleteLocation(int id)
     {
       var response = await locationService.DeleteLocation(id);
-      return StatusCode(response.StatusCode, response);
+      if (response.StatusCode == 204)
+      {
+        return StatusCode(response.StatusCode);
+      }
+      else
+      {
+        return StatusCode(response.StatusCode, response);
+      }
     }
   }
 }
