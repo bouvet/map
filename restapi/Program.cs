@@ -11,6 +11,13 @@ global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Blobs;
+using Microsoft.WindowsAzure.Storage;
+using Swashbuckle.AspNetCore;
+using System.Security.AccessControl;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -58,7 +65,13 @@ builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
   }
 ));
-
+/*
+builder.Services.AddAzureClients(clientBuilder =>
+{
+  clientBuilder.AddBlobServiceClient(builder.Configuration["azureBlobStorageConnectionString:blob"], preferMsi: true);
+  clientBuilder.AddQueueServiceClient(builder.Configuration["azureBlobStorageConnectionString:queue"], preferMsi: true);
+});
+*/
 var app = builder.Build();
 
 app.UseSwagger();
