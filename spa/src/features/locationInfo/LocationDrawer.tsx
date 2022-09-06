@@ -5,11 +5,10 @@ import { Global } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
-import { Button, Modal, Typography } from '@mui/material';
+import { Button, Modal, Typography, Snackbar, Stack, Alert } from '@mui/material';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Rating from '@mui/material/Rating';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import Stack from '@mui/material/Stack';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
@@ -83,7 +82,7 @@ const AddReview = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
-    height: '360px',
+    height: '340px',
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     boxShadow: 24,
@@ -167,6 +166,26 @@ export const SwipeableEdgeDrawer: FC = () => {
     `;
 
     const [value, setValue] = useState<number | null>(0);
+    const [review, setReview] = useState('');
+
+    const handleSubmit = (event: any) => {
+        if (value === 0 || value === null) {
+            event.preventDefault();
+            alert('No rating');
+        } else {
+            event.preventDefault();
+            console.log({ value, review });
+
+            <Snackbar>
+                <Alert sx={{ width: '100%' }} onClose={() => {}}>
+                    Innsending fullført!
+                </Alert>
+            </Snackbar>;
+
+            setValue(0);
+            setReview('');
+        }
+    };
 
     return (
         <StyledEngineProvider>
@@ -251,42 +270,53 @@ export const SwipeableEdgeDrawer: FC = () => {
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
                         <Modal open={openAddReview}>
                             <ClickAwayListener onClickAway={handleCloseAddReview}>
-                                <Box sx={AddReview}>
-                                    <Box
-                                        sx={{
-                                            '& > legend': { mt: 2 },
-                                        }}
-                                    >
+                                <form onSubmit={handleSubmit}>
+                                    <Box sx={AddReview}>
+                                        <Box
+                                            sx={{
+                                                '& > legend': { mt: 2 },
+                                            }}
+                                        >
+                                            <Stack alignItems="center" spacing={3}>
+                                                <StyledRating
+                                                    name="simple-controlled"
+                                                    size="large"
+                                                    value={value}
+                                                    onChange={(event, newValue) => {
+                                                        setValue(newValue);
+                                                    }}
+                                                />
+                                            </Stack>
+                                            <br />
+                                        </Box>
                                         <Stack alignItems="center" spacing={3}>
-                                            <StyledRating
-                                                name="simple-controlled"
-                                                size="large"
-                                                value={value}
-                                                onChange={(event, newValue) => {
-                                                    setValue(newValue);
-                                                }}
+                                            <textarea
+                                                name="review"
+                                                rows={4}
+                                                cols={30}
+                                                style={{ padding: 5 }}
+                                                maxLength={120}
+                                                value={review}
+                                                onChange={(event) => setReview(event.target.value)}
                                             />
+                                            {review.length} / 120
+                                            <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                                                Last opp
+                                                <input hidden accept="image/*" multiple type="file" />
+                                            </Button>
+                                            <Button type="submit" variant="contained" onClick={handleSubmit}>
+                                                Send inn
+                                            </Button>
                                         </Stack>
-                                        <br />
+                                        <CloseBtn
+                                            backgroundColor={MyTheme.colors.opaque}
+                                            textColor={MyTheme.colors.lightbase}
+                                            onClick={handleCloseAddReview}
+                                        >
+                                            <span className="material-symbols-outlined">close</span>
+                                        </CloseBtn>
                                     </Box>
-                                    <Stack alignItems="center" spacing={3}>
-                                        <textarea rows={7} cols={30} />
-                                        <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                            Last opp
-                                            <input hidden accept="image/*" multiple type="file" />
-                                        </Button>
-                                        <Button variant="contained" onClick={handleCloseAddReview}>
-                                            Send inn
-                                        </Button>
-                                    </Stack>
-                                    <CloseBtn
-                                        backgroundColor={MyTheme.colors.opaque}
-                                        textColor={MyTheme.colors.lightbase}
-                                        onClick={handleCloseAddReview}
-                                    >
-                                        <span className="material-symbols-outlined">close</span>
-                                    </CloseBtn>
-                                </Box>
+                                </form>
                             </ClickAwayListener>
                         </Modal>
                     </ContentWrapper>
