@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import { Button, Modal, Typography } from '@mui/material';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Rating from '@mui/material/Rating';
+// eslint-disable-next-line
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import Stack from '@mui/material/Stack';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
