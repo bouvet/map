@@ -51,7 +51,7 @@ namespace restapi.Services
         response.Data = LocationResponseBuilder(location);
         response.StatusCode = 201;
         response.Success = true;
-        response.Message = "Location successfully saved!";
+        response.Message = "Location successfully added!";
 
       }
       catch (Exception exception)
@@ -78,6 +78,7 @@ namespace restapi.Services
       dataContext.Locations.Remove(location);
       await dataContext.SaveChangesAsync();
       response.Success = true;
+      response.Message = "";
       response.StatusCode = StatusCodes.Status204NoContent;
 
       return response;
@@ -98,6 +99,7 @@ namespace restapi.Services
 
       response.Data = transformedLocations;
       response.Success = true;
+      response.Message = "";
       response.StatusCode = StatusCodes.Status200OK;
 
       return response;
@@ -118,6 +120,7 @@ namespace restapi.Services
 
       response.Data = LocationResponseBuilder(location);
       response.Success = true;
+      response.Message = "";
       response.StatusCode = StatusCodes.Status200OK;
 
       return response;
@@ -218,6 +221,7 @@ namespace restapi.Services
 
         response.Data = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
         response.Success = true;
+        response.Message = "Location successfully updated!";
         response.StatusCode = StatusCodes.Status200OK;
       }
       catch (Exception)
