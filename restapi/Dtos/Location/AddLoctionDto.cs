@@ -8,6 +8,6 @@ namespace restapi.Dtos.Location
     public float Rating { get; set; }
     public double Longitude { get; set; }
     public double Latitude { get; set; }
-    public List<Category> Category { get; set; } = new List<Category>();
+    public List<String> Category { get; set; } = new List<String>();
   }
 }

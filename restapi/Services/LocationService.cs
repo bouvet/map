@@ -29,13 +29,13 @@ namespace restapi.Services
 
         if (request.Category != null && request.Category.Count > 0)
         {
-          foreach (Category category in request.Category)
+          foreach (String category in request.Category)
           {
-            var _category = await dataContext.Categories.FindAsync(category.Id);
+            var _category = await dataContext.Categories.FindAsync(Guid.Parse(category));
             if (_category == null)
             {
               response.StatusCode = StatusCodes.Status404NotFound;
-              throw new Exception($"Category '{category.Name}' was not found");
+              throw new Exception($"Category '{category}' was not found");
             }
             location.Categories.Add(_category);
           }
