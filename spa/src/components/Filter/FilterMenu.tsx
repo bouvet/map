@@ -10,7 +10,7 @@ const FilterMenuWrapper = styled.div`
     width: 100%;
 `;
 
-const FilterMenuContent = styled.div`
+export const FilterMenuContent = styled.div`
     display: flex;
     gap: 10px;
     padding: 20px 30px 20px 30px;

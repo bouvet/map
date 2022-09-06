@@ -7,6 +7,7 @@ export const MyTheme = {
         lightbase: '#FFFFFF',
         darkcolor: '#000000',
         opaque: 'rgba(0, 0, 0, 0.5)',
+        grey: '#A7A7A7',
     },
     fontFamily: {
         body: 'Open Sans, sans-serif',
@@ -16,6 +17,7 @@ export const MyTheme = {
         body: '12px',
         icon: '16px',
         header: '16px',
+        largeIcon: '24px',
     },
 };
 
