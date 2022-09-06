@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState, FC } from 'react';
-import { Map as ReactMap } from 'react-map-gl';
+// @ts-ignore
+// eslint-disable-next-line
+import { Map as ReactMap } from '!react-map-gl';
+
 import { CustomMarker } from './CustomMarker';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';

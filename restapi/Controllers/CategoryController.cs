@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Filters;
+using restapi.Swagger;
 
 namespace restapi.Controllers
 {
@@ -20,9 +21,9 @@ namespace restapi.Controllers
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(SwaggerExampleListCategory500), StatusCodes.Status500InternalServerError)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleListCategory))]
-    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(SwaggerExampleListCategory500))]
+    [ProducesResponseType(typeof(CategoryExample500InternalServerError), StatusCodes.Status500InternalServerError)]
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ListCategoryExample200OK))]
+    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(CategoryExample500InternalServerError))]
     public async Task<ActionResult<ServiceResponse<List<Category>>>> GetAllCategories()
     {
       var response = await categoryService.GetAllCategories();
@@ -33,10 +34,10 @@ namespace restapi.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleCategory))]
-    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(SwaggerExampleListCategory404))]
-    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(SwaggerExampleListCategory400))]
-    public async Task<ActionResult<ServiceResponse<Category>>> GetCategory(int id)
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(CategoryExample200OK))]
+    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(CategoryExample404NotFound))]
+    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(CategoryExample400BadRequest))]
+    public async Task<ActionResult<ServiceResponse<Category>>> GetCategory(Guid id)
     {
       var response = await categoryService.GetCategory(id);
       return StatusCode(response.StatusCode, response);
@@ -45,10 +46,10 @@ namespace restapi.Controllers
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(SwaggerExampleListCategory500), StatusCodes.Status500InternalServerError)]
-    [SwaggerResponseExample(StatusCodes.Status201Created, typeof(SwaggerExampleCategory201))]
-    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(SwaggerExampleListCategory500))]
-    [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(SwaggerExampleListCategory409Post))]
+    [ProducesResponseType(typeof(CategoryExample500InternalServerError), StatusCodes.Status500InternalServerError)]
+    [SwaggerResponseExample(StatusCodes.Status201Created, typeof(CategoryExample201Created))]
+    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(CategoryExample500InternalServerError))]
+    [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(CategoryPostExample409Conflict))]
     public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory(CategoryDto category)
     {
       var response = await categoryService.AddCategory(category);
@@ -60,10 +61,10 @@ namespace restapi.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(SwaggerExampleCategory))]
-    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(SwaggerExampleListCategory404))]
-    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(SwaggerExampleListCategory400))]
-    public async Task<ActionResult<ServiceResponse<List<Category>>>> UpdateCategory(int id, CategoryDto request)
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ListCategoryExample200OK))]
+    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(CategoryExample404NotFound))]
+    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(CategoryExample400BadRequest))]
+    public async Task<ActionResult<ServiceResponse<List<Category>>>> UpdateCategory(Guid id, CategoryDto request)
     {
       var response = await categoryService.UpdateCategory(id, request);
       return StatusCode(response.StatusCode, response);
@@ -74,10 +75,10 @@ namespace restapi.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(SwaggerExampleListCategory404))]
-    [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(SwaggerExampleListCategory409Delete))]
-    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(SwaggerExampleListCategory400))]
-    public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(int id)
+    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(CategoryExample404NotFound))]
+    [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(CategoryDeleteExample409Conflict))]
+    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(CategoryExample400BadRequest))]
+    public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(Guid id)
     {
       var response = await categoryService.DeleteCategory(id);
       if (response.StatusCode == StatusCodes.Status204NoContent)
