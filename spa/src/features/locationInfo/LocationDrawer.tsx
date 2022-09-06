@@ -2,12 +2,8 @@ import * as React from 'react';
 import { FC, useState, useEffect } from 'react';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { Global } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
-import Box from '@mui/material/Box';
-import { Button, Modal, Typography, Snackbar, Stack, Alert } from '@mui/material';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Rating from '@mui/material/Rating';
+import { SwipeableDrawer, Button, Modal, Box, Typography, Rating, CssBaseline, Snackbar, Stack, Alert } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import styled from 'styled-components';
@@ -171,19 +167,12 @@ export const SwipeableEdgeDrawer: FC = () => {
     const handleSubmit = (event: any) => {
         if (value === 0 || value === null) {
             event.preventDefault();
-            alert('No rating');
+            // alert('No rating'); // snackbar?
         } else {
             event.preventDefault();
-            console.log({ value, review });
-
-            <Snackbar>
-                <Alert sx={{ width: '100%' }} onClose={() => {}}>
-                    Innsending fullført!
-                </Alert>
-            </Snackbar>;
-
             setValue(0);
             setReview('');
+            // alert('Innsending fullført!'); // snackbar?
         }
     };
 
@@ -294,7 +283,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                                                 name="review"
                                                 rows={4}
                                                 cols={30}
-                                                style={{ padding: 5 }}
+                                                style={{ padding: 5, resize: 'none' }}
                                                 maxLength={120}
                                                 value={review}
                                                 onChange={(event) => setReview(event.target.value)}
@@ -319,6 +308,14 @@ export const SwipeableEdgeDrawer: FC = () => {
                                 </form>
                             </ClickAwayListener>
                         </Modal>
+                        <Stack sx={{ width: '100%' }} spacing={2}>
+                            <Alert severity="success" onClose={() => {}}>
+                                Innsending fullført!
+                            </Alert>
+                            <Alert severity="error" onClose={() => {}}>
+                                Rating mangler!
+                            </Alert>
+                        </Stack>
                     </ContentWrapper>
                 </SwipeableDrawer>
             </Root>
