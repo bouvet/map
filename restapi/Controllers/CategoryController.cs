@@ -53,6 +53,10 @@ namespace restapi.Controllers
     public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory(CategoryDto category)
     {
       var response = await categoryService.AddCategory(category);
+      if (response.StatusCode == StatusCodes.Status201Created)
+      {
+        return CreatedAtAction(nameof(GetCategory), new { id = response.Data!.Id }, response);
+      }
       return StatusCode(response.StatusCode, response);
     }
 
@@ -81,8 +85,10 @@ namespace restapi.Controllers
     public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(Guid id)
     {
       var response = await categoryService.DeleteCategory(id);
-      if (response.StatusCode == StatusCodes.Status204NoContent)
-        return StatusCode(response.StatusCode);
+      if (response.StatusCode == StatusCodes.Status204NoContent) 
+      {
+        return NoContent();
+      }
       return StatusCode(response.StatusCode, response);
     }
   }
