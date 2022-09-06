@@ -16,7 +16,6 @@ import { MyTheme } from '../../styles/global';
 import { RoundButton } from '../../components/Navigation/Buttons';
 import { useStateSelector } from '../../hooks/useRedux';
 import { Review } from './Review';
-import { MyTheme } from '../../styles/global';
 
 const drawerBleeding = 56;
 
@@ -104,10 +103,6 @@ const StyledRating = styled(Rating)({
 
 const StarWrapper = styled.div`
     color: ${MyTheme.colors.accent};
-`;
-
-const Image = styled.img`
-    height: 100px;
 `;
 
 export const SwipeableEdgeDrawer: FC = () => {
@@ -214,7 +209,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                                 {locationTitle}
                             </Typography>
                             <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }} onClick={handleOpenAddReview}>
-                                {stars}
+                                <StarWrapper>{stars}</StarWrapper>
                             </Typography>
                         </GridWrapper>
                     </StyledBox>
@@ -254,10 +249,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                             date="01.01.2024"
                         />
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
-                        <Modal
-                            open={openAddReview}
-                            // style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                        >
+                        <Modal open={openAddReview}>
                             <ClickAwayListener onClickAway={handleCloseAddReview}>
                                 <Box sx={AddReview}>
                                     <Box
