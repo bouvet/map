@@ -7,11 +7,10 @@ global using restapi.Models;
 global using restapi.Interfaces;
 global using restapi.Services;
 global using restapi.Dtos;
-using Swashbuckle.AspNetCore.Filters;
+global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,26 +20,34 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleCategory>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory404>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory500>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory400>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Delete>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.SwaggerExampleListCategory409Post>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample200OK>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample201Created>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample500InternalServerError>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryDeleteExample409Conflict>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.ListCategoryExample200OK>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample400BadRequest>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryPostExample409Conflict>();
 builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
-builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
+var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
+if (builder.Environment.IsProduction() && azureKeyVault is not null)
+{
+  System.Console.WriteLine("PRODUCTION");
 
-// var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-// builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-// var kvUri = "https://restapivault.vault.azure.net/";
-// var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-// var secretConnectionString = await client.GetSecretAsync("ConnectionString");
+  var keyVaultEndpoint = new Uri(azureKeyVault);
+  builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
-// builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(secretConnectionString.Value.Value));
+  var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+  var secretConnectionString = await client.GetSecretAsync("ConnectionString");
 
+  builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(secretConnectionString.Value.Value));
+}
 
+if (builder.Environment.IsDevelopment())
+{
+  System.Console.WriteLine("DEVELOPMENT");
+  builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
+}
 
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -64,5 +71,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.Run();

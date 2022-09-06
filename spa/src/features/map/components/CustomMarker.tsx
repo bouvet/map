@@ -1,7 +1,16 @@
 import { useEffect, useState, FC } from 'react';
-import { Marker } from 'react-map-gl';
+
+// @ts-ignore
+// eslint-disable-next-line
+import { Marker } from 'react-map-gl'; 
+import mapboxgl from 'mapbox-gl';
+
 import { MyTheme } from '../../../styles/global';
 import { Location } from '../../../utils/types.d';
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 type Props = {
     coordinates: number[];
