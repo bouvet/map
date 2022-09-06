@@ -18,12 +18,10 @@ namespace restapi.Services
       try
       {
         List<Category> categories = await dataContext.Categories.ToListAsync();
-        //return GetCategoryServiceResponse<List<Category>>(StatusCodes.Status200OK, msg: "Fetched all Categories!", data: categories);
         return new ServiceResponse<List<Category>>(StatusCodes.Status200OK, Message: "Fetched all Categories!", data: categories);
       }
       catch (Exception)
       {
-        //return GetCategoryServiceResponse<List<Category>>(StatusCodes.Status500InternalServerError);
         return new ServiceResponse<List<Category>>(StatusCode: StatusCodes.Status500InternalServerError);
       }
     }
@@ -41,16 +39,13 @@ namespace restapi.Services
 
         if (category is null)
         {
-          // return GetCategoryServiceResponse<Category>(StatusCodes.Status404NotFound, msg: $"Category with id {id} not Found");
           return new ServiceResponse<Category>(StatusCodes.Status404NotFound, Message: $"Category with id {id} not Found");
         }
 
-        // return GetCategoryServiceResponse<Category>(StatusCodes.Status200OK, msg: "Category fetched!", data: category);
         return new ServiceResponse<Category>(StatusCodes.Status200OK, Message: "Category fetched!", data: category);
       }
       catch (Exception)
       {
-        // return GetCategoryServiceResponse<Category>(StatusCodes.Status500InternalServerError);
         return new ServiceResponse<Category>(StatusCodes.Status500InternalServerError);
       }
     }
@@ -60,12 +55,9 @@ namespace restapi.Services
 
       try
       {
-        var existingCategoryWithSameName = dataContext.Categories.Where(c => c.Name == request.Name).ToList();
+        List<Category> existingCategoryWithSameName = dataContext.Categories.Where(c => c.Name == request.Name).ToList();
         if (existingCategoryWithSameName.Count() > 0)
         {
-          /*return GetCategoryServiceResponse<Category>(StatusCodes.Status409Conflict,
-                                        data: existingCategoryWithSameName.First(),
-                                        msg: $"Category with name {request.Name} already exist as [id: {existingCategoryWithSameName.First().Id}, name: {existingCategoryWithSameName.First().Name}, emoji: {existingCategoryWithSameName.First().Emoji}]");*/
           return new ServiceResponse<Category>(StatusCodes.Status409Conflict,
                                         data: existingCategoryWithSameName.First(),
                                         Message: $"Category with name {request.Name} already exist as [id: {existingCategoryWithSameName.First().Id}, name: {existingCategoryWithSameName.First().Name}, emoji: {existingCategoryWithSameName.First().Emoji}]");
@@ -76,12 +68,10 @@ namespace restapi.Services
         dataContext.Categories.Add(category);
         await dataContext.SaveChangesAsync();
 
-        // return GetCategoryServiceResponse<Category>(StatusCodes.Status201Created, data: category, msg: "Category Added!");
         return new ServiceResponse<Category>(StatusCodes.Status201Created, data: category, Message: "Category Added!");
       }
       catch (Exception)
       {
-        //return GetCategoryServiceResponse<Category>(StatusCodes.Status500InternalServerError);
         return new ServiceResponse<Category>(StatusCodes.Status500InternalServerError);
       }
     }
@@ -99,7 +89,6 @@ namespace restapi.Services
 
         if (category == null)
         {
-          // return GetCategoryServiceResponse<Category>(StatusCodes.Status404NotFound, msg: $"Category with id {id} not Found");
           return new ServiceResponse<Category>(StatusCodes.Status404NotFound, Message: $"Category with id {id} not Found");
         }
 
@@ -107,12 +96,10 @@ namespace restapi.Services
         category.Emoji = request.Emoji;
         await dataContext.SaveChangesAsync();
 
-        // return GetCategoryServiceResponse<Category>(StatusCodes.Status200OK, data: category, msg: "Category Updated!");
         return new ServiceResponse<Category>(StatusCodes.Status200OK, data: category, Message: "Category Updated!");
       }
       catch (Exception)
       {
-        // return GetCategoryServiceResponse<Category>(StatusCodes.Status500InternalServerError);
         return new ServiceResponse<Category>(StatusCodes.Status500InternalServerError);
       }
     }
@@ -131,54 +118,24 @@ namespace restapi.Services
         var category = await dataContext.Categories.FindAsync(id);
         if (category is null)
         {
-          // return GetCategoryServiceResponse<Object>(StatusCodes.Status404NotFound, msg: $"Category with id {id} not Found");
           return new ServiceResponse<object>(StatusCodes.Status404NotFound, Message: $"Category with id {id} not Found");
         }
 
         var locationsWhereCategoryIsUsed = dataContext.Entry(category).Collection(c => c.Locations).Query().AsEnumerable().ToList();
         if (locationsWhereCategoryIsUsed.Count() > 0)
         {
-          // return GetCategoryServiceResponse<Object>(StatusCodes.Status409Conflict, data: locationsWhereCategoryIsUsed, msg: $"This category is being used in {locationsWhereCategoryIsUsed.Count()} locations");
           return new ServiceResponse<object>(StatusCodes.Status409Conflict, data: locationsWhereCategoryIsUsed, Message: $"This category is being used in {locationsWhereCategoryIsUsed.Count()} locations");
         }
 
         dataContext.Categories.Remove(category);
         await dataContext.SaveChangesAsync();
 
-        // return GetCategoryServiceResponse<Object>(StatusCodes.Status204NoContent, msg: "Successfully Deleted!", null);
         return new ServiceResponse<object>(StatusCodes.Status204NoContent, Message: $"Category {category.Name} Deleted!");
       }
       catch (Exception)
       {
-        // return GetCategoryServiceResponse<Object>(StatusCodes.Status500InternalServerError);
         return new ServiceResponse<object>(StatusCodes.Status500InternalServerError);
       }
     }
-
-    // private ServiceResponse<T> GetCategoryServiceResponse<T>(int statusCode, String msg = "", T? data = default(T))
-    // {
-    //   var response = new ServiceResponse<T>();
-    //   response.StatusCode = statusCode;
-    //   response.Data = data;
-    //   response.Message = msg;
-
-    //   // code 200-299
-    //   if (response.StatusCode >= 200 && response.StatusCode < 300)
-    //   {
-    //     response.Data = data;
-    //     response.Success = true;
-    //   }
-    //   if (statusCode >= 300)
-    //   {
-    //     response.Success = false;
-    //   }
-
-    //   if (statusCode == StatusCodes.Status500InternalServerError)
-    //   {
-    //     response.Message = "Ops! something went wrong!";
-    //   }
-
-    //   return response;
-    // }
   }
 }
