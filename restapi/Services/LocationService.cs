@@ -123,33 +123,6 @@ namespace restapi.Services
       return response;
     }
 
-    public async Task<ServiceResponse<List<LocationResponseDto>>> GetLocationByStatus(string status)
-    {
-      var response = new ServiceResponse<List<LocationResponseDto>>();
-      try
-      {
-        var locations = await dataContext.Locations.Where(location => location.Status == status).ToListAsync();
-        var transformedLocations = new List<LocationResponseDto>();
-
-        foreach (Location location in locations)
-        {
-          var transformedLocation = LocationResponseBuilder(location);
-
-          transformedLocations.Add(transformedLocation);
-        }
-
-        response.Data = transformedLocations;
-        response.StatusCode = StatusCodes.Status200OK;
-        response.Success = true;
-      }
-      catch (Exception)
-      {
-        return response;
-      }
-
-      return response;
-    }
-
     public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(int id, UpdateLocationDto request)
     {
       var response = new ServiceResponse<LocationResponseDto>();
