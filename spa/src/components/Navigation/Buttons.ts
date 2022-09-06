@@ -1,8 +1,10 @@
+import { FC } from 'react';
 import styled from 'styled-components';
+import { MyTheme } from '../../styles/global';
 
 interface ButtonStylingProps {
-    backgroundColor: string;
-    textColor: string;
+    backgroundColor?: string;
+    textColor?: string;
 }
 
 /** Round button with required arguments for color of background and text
@@ -31,4 +33,13 @@ export const BackButton = styled(RoundButton)`
     z-index: 20000;
     top: 10px;
     left: 10px;
+`;
+
+interface IconColorProp {
+    color: string;
+}
+
+export const GoogleIcon = styled.span<IconColorProp>`
+    color: ${(props) => props.color};
+    font-weight: 400;
 `;
