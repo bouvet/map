@@ -8,7 +8,7 @@ export const mapService = {
             try {
                 // console.log('mapservice 2')
                 dispatch(mapActions.setLoading(true));
-                const categories = await API.get('/Category');
+                const categories = await API.get('/Categories');
                 const locations = await API.get('/Location');
                 console.log(locations.data.data);
                 dispatch(mapActions.setCategories(categories.data.data));
