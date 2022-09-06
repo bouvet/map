@@ -11,7 +11,6 @@ global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -30,22 +29,24 @@ builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExampl
 builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryPostExample409Conflict>();
 builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
+var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
+if (builder.Environment.IsProduction() && azureKeyVault is not null)
+{
+  System.Console.WriteLine("PRODUCTION");
+
+  var keyVaultEndpoint = new Uri(azureKeyVault);
+  builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+
+  var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+  var secretConnectionString = await client.GetSecretAsync("ConnectionString");
+
+  builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(secretConnectionString.Value.Value));
+}
 
 if (builder.Environment.IsDevelopment())
 {
   System.Console.WriteLine("DEVELOPMENT");
   builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration["ConnectionString"]));
-}
-
-if (builder.Environment.IsProduction())
-{
-  System.Console.WriteLine("PRODUCTION");
-  var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-  builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-  var kvUri = "https://restapivault.vault.azure.net/";
-  var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-  var secretConnectionString = await client.GetSecretAsync("ConnectionString");
-  builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(secretConnectionString.Value.Value));
 }
 
 builder.Services.AddScoped<ILocationService, LocationService>();

@@ -147,12 +147,11 @@ namespace restapi.Services
       // code 200-299
       if (response.StatusCode >= 200 && response.StatusCode < 300)
       {
-        response.Data = (T?)data;
+        response.Data = data;
         response.Success = true;
       }
       if (statusCode >= 300)
       {
-        response.Data = default(T);
         response.Success = false;
       }
 
