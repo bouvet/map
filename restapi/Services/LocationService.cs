@@ -64,7 +64,7 @@ namespace restapi.Services
       return response;
     }
 
-    public async Task<ServiceResponse<DeleteLocationDto>> DeleteLocation(int id)
+    public async Task<ServiceResponse<DeleteLocationDto>> DeleteLocation(Guid id)
     {
       var response = new ServiceResponse<DeleteLocationDto>();
 
@@ -103,7 +103,7 @@ namespace restapi.Services
       return response;
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> GetLocationById(int id)
+    public async Task<ServiceResponse<LocationResponseDto>> GetLocationById(Guid id)
     {
       var response = new ServiceResponse<LocationResponseDto>();
 
@@ -123,7 +123,7 @@ namespace restapi.Services
       return response;
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(int id, UpdateLocationDto request)
+    public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(Guid id, UpdateLocationDto request)
     {
       var response = new ServiceResponse<LocationResponseDto>();
       var properties = new LocationPropertiesDto { };

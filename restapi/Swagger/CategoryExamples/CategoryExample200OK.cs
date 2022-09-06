@@ -13,7 +13,7 @@ namespace restapi.Swagger
       {
         Data = new Category
         {
-          Id = 1,
+          Id = new Guid(),
           Name = "Fotball",
           Emoji = "⚽"
         },

@@ -2,7 +2,8 @@
 {
   public class Location
   {
-    public int Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = new Guid();
     [Required]
     public string Title { get; set; } = string.Empty;
     [Required]
