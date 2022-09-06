@@ -14,13 +14,13 @@ namespace restapi.Swagger
         Data = new List<Category> {
                     new Category
                     {
-                        Id = 1,
+                        Id = new Guid(),
                         Name = "Fotball",
                         Emoji = "⚽"
                     },
                     new Category
                     {
-                        Id = 2,
+                        Id = new Guid(),
                         Name = "Tennis",
                         Emoji = "🎾"
                     }

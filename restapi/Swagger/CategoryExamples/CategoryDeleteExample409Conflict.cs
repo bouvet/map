@@ -14,7 +14,7 @@ namespace restapi.Swagger
         Data = new List<Location> {
                     new Location
                     {
-                        Id = 1,
+                        Id = new Guid(),
                         Title = "park",
                         Description = "park description",
                         Img = "example.com",
@@ -24,7 +24,7 @@ namespace restapi.Swagger
                         Categories = new List<Category> {
                                 new Category
                                 {
-                                    Id = 1,
+                                    Id = new Guid(),
                                     Name = "Fotball",
                                     Emoji = "⚽"
                                 }

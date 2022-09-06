@@ -26,14 +26,14 @@ namespace restapi.Services
       }
     }
 
-    public async Task<ServiceResponse<Category>> GetCategory(int id)
+    public async Task<ServiceResponse<Category>> GetCategory(Guid id)
     {
       try
       {
-        if (id < 1)
+        /*if (id < 1)
         {
           return GetCategoryServiceResponse<Category>(StatusCodes.Status400BadRequest, msg: $"id {id} is not valid, please use a positive integer value");
-        }
+        }*/
 
         var category = await dataContext.Categories.FindAsync(id);
 
@@ -77,14 +77,14 @@ namespace restapi.Services
       }
     }
 
-    public async Task<ServiceResponse<Category>> UpdateCategory(int id, CategoryDto request)
+    public async Task<ServiceResponse<Category>> UpdateCategory(Guid id, CategoryDto request)
     {
       try
       {
-        if (id < 1)
-        {
-          return GetCategoryServiceResponse<Category>(StatusCodes.Status400BadRequest, msg: $"id {id} is not valid, please use a positive integer value");
-        }
+        // if (id < 1)
+        // {
+        //   return GetCategoryServiceResponse<Category>(StatusCodes.Status400BadRequest, msg: $"id {id} is not valid, please use a positive integer value");
+        // }
 
         var category = await dataContext.Categories.FindAsync(id);
 
@@ -105,14 +105,16 @@ namespace restapi.Services
       }
     }
 
-    public async Task<ServiceResponse<Object>> DeleteCategory(int id)
+    public async Task<ServiceResponse<Object>> DeleteCategory(Guid id)
     {
       try
       {
+        /*
         if (id < 1)
         {
           return GetCategoryServiceResponse<Object>(StatusCodes.Status400BadRequest, msg: $"id {id} is not valid, please use a positive integer value");
         }
+        */
 
         var category = await dataContext.Categories.FindAsync(id);
         if (category is null)

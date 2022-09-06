@@ -2,7 +2,8 @@ namespace restapi
 {
   public class Category
   {
-    public int? Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = new Guid();
 
     public string Name { get; set; } = "new category";
 

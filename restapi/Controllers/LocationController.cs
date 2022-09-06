@@ -22,7 +22,7 @@ namespace restapi.Controllers
 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(int id)
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(Guid id)
     {
       var response = await locationService.GetLocationById(id);
       return StatusCode(response.StatusCode, response);
@@ -38,14 +38,14 @@ namespace restapi.Controllers
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation(int id, UpdateLocationDto updatedLocation)
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation(Guid id, UpdateLocationDto updatedLocation)
     {
       var response = await locationService.UpdateLocation(id, updatedLocation);
       return StatusCode(response.StatusCode, response);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<DeleteLocationDto>>> DeleteLocation(int id)
+    public async Task<ActionResult<ServiceResponse<DeleteLocationDto>>> DeleteLocation(Guid id)
     {
       var response = await locationService.DeleteLocation(id);
       if (response.StatusCode == 204)
