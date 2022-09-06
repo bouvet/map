@@ -64,9 +64,9 @@ namespace restapi.Services
       return response;
     }
 
-    public async Task<ServiceResponse<ServiceResponseDto>> DeleteLocation(int id)
+    public async Task<ServiceResponse<DeleteLocationDto>> DeleteLocation(int id)
     {
-      var response = new ServiceResponse<ServiceResponseDto>();
+      var response = new ServiceResponse<DeleteLocationDto>();
 
       var location = await dataContext.Locations.FindAsync(id);
       if (location is null)
@@ -78,7 +78,7 @@ namespace restapi.Services
       dataContext.Locations.Remove(location);
       await dataContext.SaveChangesAsync();
       response.Success = true;
-      response.StatusCode = StatusCodes.Status200OK;
+      response.StatusCode = StatusCodes.Status204NoContent;
 
       return response;
     }
@@ -119,33 +119,6 @@ namespace restapi.Services
       response.Data = LocationResponseBuilder(location);
       response.Success = true;
       response.StatusCode = StatusCodes.Status200OK;
-
-      return response;
-    }
-
-    public async Task<ServiceResponse<List<LocationResponseDto>>> GetLocationByStatus(string status)
-    {
-      var response = new ServiceResponse<List<LocationResponseDto>>();
-      try
-      {
-        var locations = await dataContext.Locations.Where(location => location.Status == status).ToListAsync();
-        var transformedLocations = new List<LocationResponseDto>();
-
-        foreach (Location location in locations)
-        {
-          var transformedLocation = LocationResponseBuilder(location);
-
-          transformedLocations.Add(transformedLocation);
-        }
-
-        response.Data = transformedLocations;
-        response.StatusCode = StatusCodes.Status200OK;
-        response.Success = true;
-      }
-      catch (Exception)
-      {
-        return response;
-      }
 
       return response;
     }
