@@ -15,7 +15,28 @@
     public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetAllLocations()
     {
       var response = await locationService.GetAllLocations();
-      return Ok(response);
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("under-review")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetUnapprovedLocations()
+    {
+      var response = await locationService.GetLocationByStatus("Under Review");
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("approved")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetApprovedLocations()
+    {
+      var response = await locationService.GetLocationByStatus("Approved");
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("declined")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetDeclinedLocations()
+    {
+      var response = await locationService.GetLocationByStatus("Declined");
+      return StatusCode(response.StatusCode, response);
     }
 
 
@@ -25,14 +46,7 @@
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(int id)
     {
       var response = await locationService.GetLocationById(id);
-      if (response.Success is true)
-      {
-        return Ok(response);
-      }
-      else
-      {
-        return NotFound(response);
-      }
+      return StatusCode(response.StatusCode, response);
     }
 
     [HttpPost]
@@ -47,7 +61,14 @@
 
     }
 
-    [HttpDelete]
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation(int id, UpdateLocationDto updatedLocation)
+    {
+      var response = await locationService.UpdateLocation(id, updatedLocation);
+      return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
