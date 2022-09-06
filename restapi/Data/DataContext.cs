@@ -8,9 +8,9 @@ namespace restapi.Data
     {
       modelBuilder.Entity<Location>().Navigation(location => location.Categories).AutoInclude();
     }
-
-    public DbSet<Location> Locations { get; set; }
-    public DbSet<Category> Categories { get; set; }
+    
+    public DbSet<Location> Locations { get; set; } = null!;
+    public DbSet<Category> Categories { get; set; } = null!;
   }
 
 
