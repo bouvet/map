@@ -69,7 +69,7 @@ namespace restapi.Services
         dataContext.Categories.Add(category);
         await dataContext.SaveChangesAsync();
 
-        return GetCategoryServiceResponse<Category>(StatusCodes.Status200OK, data: category, msg: "Category Added!");
+        return GetCategoryServiceResponse<Category>(StatusCodes.Status201Created, data: category, msg: "Category Added!");
       }
       catch (Exception)
       {
