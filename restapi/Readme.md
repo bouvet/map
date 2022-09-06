@@ -1,5 +1,5 @@
 # Optimus internal project
 
-- [x] Category class
-- [x] Location class
-- [ ] Review class
+[Link for deployed production version](https://verdenventer.azurewebsites.net/swagger/index.html)
+
+For more information please visit the [Backend Wiki page](https://github.com/bouvet/map/wiki/Backend)

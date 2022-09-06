@@ -2,11 +2,13 @@ namespace restapi
 {
   public class Category
   {
-    public int Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = new Guid();
 
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = "new category";
 
-    public string Emoji { get; set; } = string.Empty;
+    public string Emoji { get; set; } = "😀";
+
     [JsonIgnore]
     public List<Location> Locations { get; set; } = new List<Location>();
 
