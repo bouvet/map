@@ -1,22 +1,13 @@
-import * as React from 'react';
 import { FC, useState, useEffect } from 'react';
-import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { Global } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
+import { SwipeableDrawer, Button, Box, Typography, CssBaseline } from '@mui/material';
+import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
-import Box from '@mui/material/Box';
-import { Button, Modal, Typography } from '@mui/material';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Rating from '@mui/material/Rating';
-// eslint-disable-next-line
-import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import Stack from '@mui/material/Stack';
-import ClickAwayListener from '@mui/base/ClickAwayListener';
 import styled from 'styled-components';
-import { MyTheme } from '../../styles/global';
-import { RoundButton } from '../../components/Navigation/Buttons';
-import { useStateSelector } from '../../hooks/useRedux';
+import { MyTheme } from '../../../styles/global';
+import { useStateSelector } from '../../../hooks/useRedux';
 import { Review } from './Review';
+import { ReviewModal } from './ReviewModal';
 
 const drawerBleeding = 56;
 
@@ -80,34 +71,12 @@ const ImageWrapper = styled.div<ImageProp>`
     white-space: nowrap;
 `;
 
-const AddReview = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    height: '360px',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    borderRadius: 3,
-    p: 7,
-    pt: 5,
-};
-
-const StyledRating = styled(Rating)({
-    '& .MuiRating-iconFilled': {
-        color: '#007BC0',
-    },
-    '& .MuiRating-iconHover': {
-        color: '#007BC0',
-    },
-});
-
 const StarWrapper = styled.div`
     color: ${MyTheme.colors.accent};
 `;
 
 export const SwipeableEdgeDrawer: FC = () => {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -116,6 +85,12 @@ export const SwipeableEdgeDrawer: FC = () => {
     const locationImg = currentlySelectedLocation.properties.img;
 
     let rating = locationRating;
+
+    const [openAddReview, setOpenAddReview] = useState(false);
+    const handleOpenAddReview = () => setOpenAddReview(true);
+    const handleCloseAddReview = () => {
+        setOpenAddReview(false);
+    };
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -151,23 +126,6 @@ export const SwipeableEdgeDrawer: FC = () => {
         }
         setStars(temp);
     }, [rating]);
-
-    const [openAddReview, setOpenAddReview] = React.useState(false);
-    const handleOpenAddReview = () => setOpenAddReview(true);
-    const handleCloseAddReview = () => setOpenAddReview(false);
-
-    const CloseBtn = styled(RoundButton)`
-        position: absolute;
-        height: 40px;
-        width: 40px;
-        top: 10px;
-        left: 10px;
-        &:active {
-            background-color: ${MyTheme.colors.darkbase};
-        }
-    `;
-
-    const [value, setValue] = useState<number | null>(0);
 
     return (
         <StyledEngineProvider>
@@ -225,68 +183,14 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <b>Omtaler</b>
                         </ContentContainer>
                         <Review
-                            name="Ola Nordman"
-                            age={24}
-                            rating={3}
-                            review="This park truly is average :) perfect for me!"
-                            date="24.12.2012"
-                        />
-                        <Review
                             name="Ola Svenskman"
                             age={222}
                             rating={1}
                             review="This park is not even close to the quality we expect in sweden! Alt for Norje, under Sverje..."
                             date="17.05.1814"
                         />
-                        <Review
-                            name="Kjersti Giftekniv"
-                            age={74}
-                            rating={5}
-                            review="I meet the nicest man here! We will get married at this park, 
-                            as it is something special to the both of us"
-                            date="01.01.2024"
-                        />
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
-                        <Modal open={openAddReview}>
-                            <ClickAwayListener onClickAway={handleCloseAddReview}>
-                                <Box sx={AddReview}>
-                                    <Box
-                                        sx={{
-                                            '& > legend': { mt: 2 },
-                                        }}
-                                    >
-                                        <Stack alignItems="center" spacing={3}>
-                                            <StyledRating
-                                                name="simple-controlled"
-                                                size="large"
-                                                value={value}
-                                                onChange={(event, newValue) => {
-                                                    setValue(newValue);
-                                                }}
-                                            />
-                                        </Stack>
-                                        <br />
-                                    </Box>
-                                    <Stack alignItems="center" spacing={3}>
-                                        <textarea rows={7} cols={30} />
-                                        <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                            Last opp
-                                            <input hidden accept="image/*" multiple type="file" />
-                                        </Button>
-                                        <Button variant="contained" onClick={handleCloseAddReview}>
-                                            Send inn
-                                        </Button>
-                                    </Stack>
-                                    <CloseBtn
-                                        backgroundColor={MyTheme.colors.opaque}
-                                        textColor={MyTheme.colors.lightbase}
-                                        onClick={handleCloseAddReview}
-                                    >
-                                        <span className="material-symbols-outlined">close</span>
-                                    </CloseBtn>
-                                </Box>
-                            </ClickAwayListener>
-                        </Modal>
+                        <ReviewModal open={openAddReview} close={handleCloseAddReview} />
                     </ContentWrapper>
                 </SwipeableDrawer>
             </Root>
