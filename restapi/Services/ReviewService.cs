@@ -10,55 +10,54 @@ namespace restapi.Services
     }
     public async Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto newReview)
     {
-      var response = new ServiceResponse<ReviewResponseDto> { };
-      try
+
+      if (newReview.Rating > 5)
       {
-        if (newReview.Rating > 5)
-        {
-          response.StatusCode = StatusCodes.Status400BadRequest;
-          response.Message = "Rating can't be higher than 5";
-          return response;
-        }
-        var location = await dataContext.Locations.FindAsync(newReview.LocationId);
-        if (location == null)
-        {
-          response.StatusCode = StatusCodes.Status400BadRequest;
-          response.Message = "Adding review failed, please try again";
-          return response;
-        }
-
-        var review = new Review
-        {
-          Rating = newReview.Rating,
-        };
-
-        if (!string.IsNullOrEmpty(newReview.Text))
-        {
-          review.Text = newReview.Text;
-        }
-
-        review.LocationId = newReview.LocationId;
-
-        dataContext.Reviews.Add(review);
-        await dataContext.SaveChangesAsync();
-
-        response.Data = ReviewResponseBuilder(review);
-        response.Success = true;
-        response.Message = "Review successfully created!";
-        response.StatusCode = StatusCodes.Status201Created;
-
+        return new ServiceResponse<ReviewResponseDto>
+        (
+          StatusCodes.Status400BadRequest,
+          data: null,
+          Message: "Rating can't be higher than 5"
+        );
       }
-      catch (System.Exception)
+
+      var location = await dataContext.Locations.FindAsync(newReview.LocationId);
+
+      if (location == null)
       {
-        return response;
+        return new ServiceResponse<ReviewResponseDto>
+        (
+          StatusCodes.Status400BadRequest,
+          data: null,
+          Message: "Adding review failed, please try again"
+        );
       }
-      return response;
+
+      var review = new Review
+      {
+        Rating = newReview.Rating,
+      };
+
+      if (!string.IsNullOrEmpty(newReview.Text))
+      {
+        review.Text = newReview.Text;
+      }
+
+      review.LocationId = newReview.LocationId;
+
+      dataContext.Reviews.Add(review);
+      await dataContext.SaveChangesAsync();
+
+      return new ServiceResponse<ReviewResponseDto>
+      (
+        StatusCodes.Status201Created,
+        data: ReviewResponseBuilder(review),
+        Message: "Review successfully created!"
+      );
     }
 
     public async Task<ServiceResponse<List<ReviewResponseDto>>> GetReviews(Guid locationId)
     {
-      var response = new ServiceResponse<List<ReviewResponseDto>> { };
-
       List<Review> reviews;
 
       if (locationId == Guid.Empty)
@@ -71,38 +70,41 @@ namespace restapi.Services
       }
 
       var reviewResponseList = new List<ReviewResponseDto> { };
+
       foreach (Review review in reviews)
       {
         reviewResponseList.Add(ReviewResponseBuilder(review));
       }
-      response.Data = reviewResponseList;
-      response.StatusCode = StatusCodes.Status200OK;
-      response.Success = true;
-      response.Message = "";
-      return response;
+
+      return new ServiceResponse<List<ReviewResponseDto>>
+        (
+          StatusCodes.Status200OK,
+          data: reviewResponseList
+        );
     }
 
     public async Task<ServiceResponse<ReviewResponseDto>> UpdateReview(Guid reviewId, UpdateReviewDto request)
     {
-
-      var response = new ServiceResponse<ReviewResponseDto> { };
-
       if (reviewId == Guid.Empty)
       {
-        response.Message = "ReviewId must be provided";
-        response.StatusCode = StatusCodes.Status400BadRequest;
-        response.Success = false;
-        return response;
+        return new ServiceResponse<ReviewResponseDto>
+          (
+            StatusCodes.Status400BadRequest,
+            data: null,
+            Message: "ReviewId must be provided"
+          );
       }
 
       var review = await dataContext.Reviews.FindAsync(reviewId);
 
       if (review == null)
       {
-        response.Message = "Review not found, please try again";
-        response.StatusCode = StatusCodes.Status400BadRequest;
-        response.Success = false;
-        return response;
+        return new ServiceResponse<ReviewResponseDto>
+          (
+            StatusCodes.Status400BadRequest,
+            data: null,
+            Message: "Review not found, please try again"
+          );
       }
 
       if (!string.IsNullOrEmpty(request.Text))
@@ -129,33 +131,38 @@ namespace restapi.Services
 
       await dataContext.SaveChangesAsync();
 
-      response.Data = ReviewResponseBuilder(review);
-      response.StatusCode = StatusCodes.Status200OK;
-      response.Message = "Review successfully updated!";
-      response.Success = true;
-
-      return response;
+      return new ServiceResponse<ReviewResponseDto>
+                (
+                  StatusCodes.Status200OK,
+                  data: ReviewResponseBuilder(review),
+                  Message: "Review successfully updated!"
+                );
 
     }
 
     public async Task<ServiceResponse<DeleteReviewDto>> DeleteReview(Guid id)
     {
       var review = await dataContext.Reviews.FindAsync(id);
-      var response = new ServiceResponse<DeleteReviewDto> { };
+
       if (review == null)
       {
-        response.Message = "Review was not found, please try again";
-        response.StatusCode = StatusCodes.Status404NotFound;
-        return response;
+        return new ServiceResponse<DeleteReviewDto>
+                (
+                  StatusCodes.Status404NotFound,
+                  data: null,
+                  Message: "Review was not found, please try again"
+                );
       }
 
       dataContext.Reviews.Remove(review);
       await dataContext.SaveChangesAsync();
 
-      response.Message = "Review successfully deleted!";
-      response.Success = true;
-      response.StatusCode = 204;
-      return response;
+      return new ServiceResponse<DeleteReviewDto>
+              (
+                StatusCodes.Status204NoContent,
+                data: null,
+                Message: "Review successfully deleted!"
+              );
     }
 
     private ReviewResponseDto ReviewResponseBuilder(Review review)
