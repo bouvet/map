@@ -16,6 +16,7 @@ namespace restapi.Data
     public DbSet<Location> Locations { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Review> Reviews { get; set; }
+    public DbSet<User> Users { get; set; }
   }
 
 

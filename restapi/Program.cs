@@ -51,6 +51,7 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
