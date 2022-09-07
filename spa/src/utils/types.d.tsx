@@ -69,6 +69,7 @@ export interface Location {
     pinColor?: string;
 }
 
+
 export interface NewLocation {
     title: string;
     description: string;
@@ -82,4 +83,11 @@ export interface NewLocation {
 export interface LatLong {
     lat: number;
     long: number;
+}
+
+export interface Review {
+    [index: string]: any;
+    rating: number;
+    review: string;
+
 }
