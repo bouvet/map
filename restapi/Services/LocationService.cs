@@ -1,5 +1,3 @@
-using restapi.Dtos.Location;
-
 namespace restapi.Services
 {
   public class LocationService : ILocationService
@@ -88,7 +86,7 @@ namespace restapi.Services
     {
       var response = new ServiceResponse<List<LocationResponseDto>>();
 
-      var locations = await dataContext.Locations.ToListAsync();
+      var locations = await dataContext.Locations.Include("Reviews").ToListAsync();
       var transformedLocations = new List<LocationResponseDto>();
 
       foreach (Location location in locations)
