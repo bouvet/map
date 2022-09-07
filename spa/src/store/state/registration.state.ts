@@ -6,7 +6,7 @@ const initialState = {
     currentTitle: '',
     currentDescription: '',
     currentCategories: [] as string[],
-    currentImage: '',
+    currentImage: {} as File,
 };
 
 const registrationState = createSlice({
@@ -25,7 +25,7 @@ const registrationState = createSlice({
         setCurrentCategories(state, action: { payload: string[]; type: string }) {
             state.currentCategories = action.payload;
         },
-        setCurrentImage(state, action: { payload: string; type: string }) {
+        setCurrentImage(state, action: { payload: File; type: string }) {
             state.currentImage = action.payload;
         },
     },

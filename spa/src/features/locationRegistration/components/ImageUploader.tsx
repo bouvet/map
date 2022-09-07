@@ -41,7 +41,7 @@ export const ImageUploader: FC = () => {
         if (image) {
             const imageUrl = URL.createObjectURL(image);
             setImageUrl(imageUrl);
-            dispatch(registrationActions.setCurrentImage(imageUrl));
+            dispatch(registrationActions.setCurrentImage(image));
         }
     }, [image]);
 
