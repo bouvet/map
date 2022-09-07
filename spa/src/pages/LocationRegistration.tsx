@@ -13,16 +13,17 @@ import {
     RegistrationContentWrapper,
     RegistrationHeader,
 } from '../features/locationRegistration/components/Common';
+import { ImageUploader } from '../features/locationRegistration/components/ImageUploader';
 import { Information } from '../features/locationRegistration/components/Information';
 import { CenterPin, MapView } from '../features/locationRegistration/components/Location';
-import { mapService } from '../features/map';
+import { locationServices } from '../features/locationRegistration/services/location.services';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { registrationActions } from '../store/state/registration.state';
 import { MyTheme } from '../styles/global';
 import { NewLocation } from '../utils/types.d';
 
 export const LocationRegistration: FC = () => {
-    const { currentMapCenter, currentTitle, currentDescription, currentCategories } = useStateSelector((state) => state.registration);
+    const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector((state) => state.registration);
     const [pageIndex, setPageIndex] = useState(0);
 
     const navigate = useNavigate();
@@ -39,9 +40,9 @@ export const LocationRegistration: FC = () => {
                 latitude: currentMapCenter.lat,
                 rating: 0,
                 category: currentCategories,
+                img: currentImage,
             };
-            console.log(currentCategories);
-            dispatch(mapService.postLocation(newLocation));
+            dispatch(locationServices.postLocation(newLocation));
             handleRedirect();
             dispatch(registrationActions.setCurrentDescription(''));
             dispatch(registrationActions.setCurrentTitle(''));
@@ -100,6 +101,7 @@ export const LocationRegistration: FC = () => {
                     </RegistrationButtonWrapper>
                 )}
                 {pageIndex === 1 && <Information />}
+                {pageIndex === 2 && <ImageUploader />}
             </RegistrationContentWrapper>
         </>
     );

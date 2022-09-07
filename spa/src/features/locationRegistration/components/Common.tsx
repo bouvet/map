@@ -87,6 +87,10 @@ export const RegistrationButton = styled(ButtonStyle)`
     z-index: 10;
 `;
 
+export const RemoveButton = styled(RegistrationButton)`
+    bottom: 70px;
+`;
+
 export const RegistrationButtonRight = styled(RegistrationButton)`
     position: relative;
     margin-left: 10px;
