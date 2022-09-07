@@ -27,12 +27,17 @@ namespace restapi.Services
           Rating = request.Rating,
         };
 
+        Console.WriteLine(location.Img);
+        Console.WriteLine(location.Img);
+
+
         if (request.Img != null)
         {
           CloudBlockBlob blob = await BlobService.UploadFile(location.Id, request.Img);
           location.Img = blob.Uri.ToString();
         }
-
+        Console.WriteLine(location.Img);
+        Console.WriteLine(location.Img);
         if (request.Category != null && request.Category.Count > 0)
         {
           foreach (Guid category in request.Category)
