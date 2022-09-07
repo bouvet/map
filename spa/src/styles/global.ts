@@ -8,6 +8,7 @@ export const MyTheme = {
         darkcolor: '#000000',
         opaque: 'rgba(0, 0, 0, 0.5)',
         grey: '#A7A7A7',
+        alert: '#D32F2F',
     },
     fontFamily: {
         body: 'Open Sans, sans-serif',

@@ -219,9 +219,6 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <ImageWrapper backgroundImage={locationImg} />
                             <ImageWrapper backgroundImage={locationImg} />
                             <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
                         </ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>

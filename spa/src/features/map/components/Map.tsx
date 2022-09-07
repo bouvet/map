@@ -88,7 +88,8 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
             style={{ width: '100%', height: '100%', margin: 0, padding: 0 }}
             mapboxAccessToken={MAPBOX_TOKEN}
         >
-            {selectedFilterCategory &&
+            {!addingLocation &&
+                selectedFilterCategory &&
                 filteredLocations.map((locaction) => (
                     <CustomMarker
                         key={locaction.id}
@@ -98,7 +99,8 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
                         selectedMarker={selectedMarker}
                     />
                 ))}
-            {!selectedFilterCategory &&
+            {!addingLocation &&
+                !selectedFilterCategory &&
                 locations.map((locaction) => (
                     <CustomMarker
                         key={locaction.id}
