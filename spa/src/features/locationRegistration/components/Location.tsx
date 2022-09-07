@@ -62,7 +62,7 @@ export const MapView: FC = () => (
     <MapWrapper>
         <EmojiButton text="Min plassering" emoji="📍" />
         <div className="registration-container">
-            <ReactMapGL />
+            <ReactMapGL addingLocation />
         </div>
     </MapWrapper>
 );
