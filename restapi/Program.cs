@@ -10,13 +10,6 @@ global using restapi.Dtos;
 global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using System;
-using Microsoft.Extensions.Azure;
-using Azure.Storage.Blobs;
-using Microsoft.WindowsAzure.Storage;
-using Swashbuckle.AspNetCore;
-using System.Security.AccessControl;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +51,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 
 builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>

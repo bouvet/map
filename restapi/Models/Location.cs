@@ -18,5 +18,7 @@
     public double Latitude { get; set; }
     public string Status { get; set; } = "Under Review";
     public List<Category> Categories { get; set; } = new List<Category>();
+    [JsonIgnore]
+    public List<Review> Reviews { get; set; } = new List<Review>();
   }
 }

@@ -1,6 +1,6 @@
 namespace restapi.Dtos
 {
-  public class DeleteLocationDto
+  public class DeleteReviewDto
   {
 
   }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using restapi.Dtos.Location;
 using Azure.Storage.Blobs;
 using Microsoft.WindowsAzure.Storage;
@@ -6,6 +7,9 @@ using Azure.Identity;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace restapi.Controllers
+=======
+﻿namespace restapi.Controllers
+>>>>>>> 8fbc76536c19cd74ea736f67c9ee20b8e0dcd6a1
 {
   [ApiController]
   [Route("api/[controller]")]
