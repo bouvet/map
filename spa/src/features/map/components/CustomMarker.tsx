@@ -26,7 +26,7 @@ export const CustomMarker: FC<Props> = ({ coordinates, onClickHandler, selectedM
         if (selectedMarker === locaction.properties.title) {
             setColor(MyTheme.colors.accent);
         } else {
-            setColor(MyTheme.colors.darkcolor);
+            setColor(MyTheme.colors.darkbase);
         }
     }, [selectedMarker, locaction.properties.title]);
 
