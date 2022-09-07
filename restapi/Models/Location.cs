@@ -1,4 +1,5 @@
-﻿namespace restapi.Models
+﻿using System.Runtime.InteropServices;
+namespace restapi.Models
 {
   public class Location
   {

@@ -9,6 +9,7 @@ namespace restapi.Data
       modelBuilder.Entity<Review>().HasOne(r => r.Location).WithMany(l => l.Reviews);
 
       modelBuilder.Entity<Location>().Navigation(location => location.Categories).AutoInclude();
+
       modelBuilder.Entity<Location>().Navigation(location => location.Reviews).AutoInclude();
 
     }
