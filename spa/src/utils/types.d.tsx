@@ -88,6 +88,6 @@ export interface LatLong {
 export interface Review {
     [index: string]: any;
     rating: number;
-    review: string;
-
+    text?: string;
+    locationId: string;
 }
