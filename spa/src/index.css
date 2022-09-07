@@ -12,6 +12,10 @@
   display: none;  /* Safari and Chrome */
 }
 
-.container {
-    height: 100vh;
+.home-container {
+  height: 100vh;
+}
+
+.registration-container {
+    height: calc(100vh - 200px);
 }
