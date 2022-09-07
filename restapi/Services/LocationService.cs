@@ -19,13 +19,14 @@ namespace restapi.Services
       {
         Location location = new Location
         {
+          Id = Guid.NewGuid(),
           Title = request.Title,
           Description = request.Description,
           Longitude = request.Longitude,
           Latitude = request.Latitude,
           Rating = request.Rating,
         };
-        Console.WriteLine("location id is " + location.Id);
+
         if (request.Img != null)
         {
           CloudBlockBlob blob = await BlobService.UploadFile(location.Id, request.Img);

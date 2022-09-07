@@ -14,18 +14,17 @@ namespace restapi.Services
     static public async Task<CloudBlockBlob> UploadFile(Guid id, IFormFile uploadFile)
     {
       // todo check if valid id for location
-
       var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
       var keyVaultEndpoint = new Uri(azureKeyVault!);
       var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
 
-      string systemFileName = id.ToString();
+      string blobFileName = id.ToString();
       var blobstorageconnection = await client.GetSecretAsync("azureBlobStorageConnectionString");
 
       CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(blobstorageconnection.Value.Value);
       CloudBlobClient blobStorageClient = azureCloudStorageAccount.CreateCloudBlobClient();
       CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference("images");
-      CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(systemFileName);
+      CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(blobFileName);
       blockBlob.Properties.ContentType = uploadFile.ContentType;
       await using (var data = uploadFile.OpenReadStream())
       {
