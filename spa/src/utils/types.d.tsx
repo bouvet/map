@@ -68,3 +68,9 @@ export interface Location {
     /** @param pinColor mapbox pin color variable */
     pinColor?: string;
 }
+
+export interface Review {
+    [index: string]: any;
+    rating: number;
+    review: string;
+}

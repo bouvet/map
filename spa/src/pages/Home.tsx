@@ -7,7 +7,7 @@ import { Popup, PopupCard } from '../components/Popup/Popup';
 import { ReactMapGL } from '../features/map';
 import { useStateSelector, useStateDispatch } from '../hooks/useRedux';
 import { useFilterEvent } from '../utils/filterLogic';
-import { SwipeableEdgeDrawer } from '../features/locationInfo/LocationDrawer';
+import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
