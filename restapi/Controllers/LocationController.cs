@@ -1,15 +1,11 @@
-<<<<<<< HEAD
-﻿using restapi.Dtos.Location;
+﻿using System.Net.Http;
+
 using Azure.Storage.Blobs;
 using Microsoft.WindowsAzure.Storage;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Identity;
 using Microsoft.WindowsAzure.Storage.Blob;
-
 namespace restapi.Controllers
-=======
-﻿namespace restapi.Controllers
->>>>>>> 8fbc76536c19cd74ea736f67c9ee20b8e0dcd6a1
 {
   [ApiController]
   [Route("api/[controller]")]
@@ -41,9 +37,23 @@ namespace restapi.Controllers
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation(AddLoctionDto newLocation)
     {
       var response = await locationService.AddLocation(newLocation);
-
+      if (response.StatusCode == StatusCodes.Status201Created)
+      {
+        return CreatedAtAction(nameof(GetLocationById), new { id = response.Data!.Id }, response);
+      }
       return StatusCode(response.StatusCode, response);
 
+    }
+
+    [HttpPost("UploadFile")]
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocationWithImage([FromForm] AddLoctionDto newLocation)
+    {
+      var response = await locationService.AddLocation(newLocation);
+      if (response.StatusCode == StatusCodes.Status201Created)
+      {
+        return CreatedAtAction(nameof(GetLocationById), new { id = response.Data!.Id }, response);
+      }
+      return StatusCode(response.StatusCode, response);
     }
 
     [HttpPut("{id}")]
@@ -67,36 +77,13 @@ namespace restapi.Controllers
       }
     }
 
-    [HttpPost(nameof(UploadFile))]
-    public async Task<IActionResult> UploadFile(IFormFile files)
-    {
+    // [HttpPost("{id}/" + nameof(UploadFile))]
+    // public async Task<IActionResult> UploadFile(Guid id, IFormFile files)
+    // {
+    //   CloudBlockBlob response = await BlobService.UploadFile(id, files);
+    //   return Ok(response.Uri.ToString());
 
-      var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
-      var keyVaultEndpoint = new Uri(azureKeyVault);
-
-      var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
-
-
-      string systemFileName = files.FileName;
-      var blobstorageconnection = await client.GetSecretAsync("azureBlobStorageConnectionString");
-
-      // Retrieve storage account from connection string.    
-      CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(blobstorageconnection.Value.Value);
-      // Create the blob client.    
-      CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
-      // Retrieve a reference to a container.    
-      CloudBlobContainer container = blobClient.GetContainerReference("images");
-      // This also does not make a service call; it only creates a local object.    
-      CloudBlockBlob blockBlob = container.GetBlockBlobReference(systemFileName);
-      await using (var data = files.OpenReadStream())
-      {
-        await blockBlob.UploadFromStreamAsync(data);
-      }
-
-      ServiceResponse<object> response = new ServiceResponse<object> { };
-      response.Data = blockBlob;
-      return StatusCode(200, response);
-    }
+    // }
 
 
 

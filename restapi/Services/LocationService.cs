@@ -1,3 +1,5 @@
+using Microsoft.WindowsAzure.Storage.Blob;
+
 namespace restapi.Services
 {
   public class LocationService : ILocationService
@@ -15,25 +17,31 @@ namespace restapi.Services
 
       try
       {
-        var location = new Location
+        Location location = new Location
         {
           Title = request.Title,
           Description = request.Description,
-          Img = request.Img,
           Longitude = request.Longitude,
           Latitude = request.Latitude,
           Rating = request.Rating,
         };
+        Console.WriteLine("location id is " + location.Id);
+        if (request.Img != null)
+        {
+          CloudBlockBlob blob = await BlobService.UploadFile(location.Id, request.Img);
+          location.Img = blob.Uri.ToString();
+        }
 
         if (request.Category != null && request.Category.Count > 0)
         {
-          foreach (String category in request.Category)
+          foreach (Guid category in request.Category)
           {
-            var _category = await dataContext.Categories.FindAsync(Guid.Parse(category));
+            var _category = await dataContext.Categories.FindAsync(category);
             if (_category == null)
             {
-              response.StatusCode = StatusCodes.Status404NotFound;
-              throw new Exception($"Category '{category}' was not found");
+              // response.StatusCode = StatusCodes.Status404NotFound;
+              // throw new Exception($"Category '{category}' was not found");
+              return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"Category '{category}' was not found");
             }
             location.Categories.Add(_category);
           }
@@ -46,11 +54,11 @@ namespace restapi.Services
         dataContext.Locations.Add(location);
         await dataContext.SaveChangesAsync();
 
-        response.Data = LocationResponseBuilder(location);
-        response.StatusCode = 201;
-        response.Success = true;
-        response.Message = "Location successfully added!";
-
+        // response.Data = LocationResponseBuilder(location);
+        // response.StatusCode = StatusCodes.Status201Created;
+        // response.Success = true;
+        // response.Message = "Location successfully added!";
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status201Created, "Location successfully added!", data: LocationResponseBuilder(location));
       }
       catch (Exception exception)
       {
