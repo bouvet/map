@@ -1,4 +1,4 @@
-namespace restapi.Dtos.Location
+namespace restapi.Dtos
 {
   public class LocationGeometryDto
   {

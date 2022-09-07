@@ -1,6 +1,4 @@
-﻿using restapi.Dtos.Location;
-
-namespace restapi.Controllers
+﻿namespace restapi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]

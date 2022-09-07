@@ -10,7 +10,6 @@ global using restapi.Dtos;
 global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -51,6 +50,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 
 builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
