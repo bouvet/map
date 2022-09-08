@@ -1,3 +1,5 @@
+using Microsoft.WindowsAzure.Storage.Blob;
+
 namespace restapi.Services
 {
   public class ReviewService : IReviewService
@@ -45,7 +47,13 @@ namespace restapi.Services
 
       review.LocationId = newReview.LocationId;
 
-      dataContext.Reviews.Add(review);
+      if (newReview.Image is not null)
+      {
+        CloudBlockBlob blob = await BlobService.UploadFile(review.Id, newReview.Image);
+        review.Image = blob.Uri.ToString();
+      }
+
+      await dataContext.Reviews.AddAsync(review);
       await dataContext.SaveChangesAsync();
 
       return new ServiceResponse<ReviewResponseDto>
@@ -97,7 +105,7 @@ namespace restapi.Services
 
       var review = await dataContext.Reviews.FindAsync(reviewId);
 
-      if (review == null)
+      if (review is null)
       {
         return new ServiceResponse<ReviewResponseDto>
           (
@@ -125,6 +133,12 @@ namespace restapi.Services
       if (request.Rating > 0)
       {
         review.Rating = request.Rating;
+      }
+
+      if (request.Image is not null)
+      {
+        CloudBlockBlob blob = await BlobService.UploadFile(review.Id, request.Image);
+        review.Image = blob.Uri.ToString();
       }
 
       review.Updated = DateTime.Now;
@@ -175,6 +189,7 @@ namespace restapi.Services
         Rating = review.Rating,
         Status = review.Status,
         Text = review.Text,
+        Image = review.Image,
         LocationId = review.LocationId
       };
     }
