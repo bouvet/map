@@ -8,6 +8,7 @@ import { MyTheme } from '../../../styles/global';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { Review } from './Review';
 import { ReviewModal } from './ReviewModal';
+import { StarRating } from '../../../components/StarRating/StarRating';
 
 const drawerBleeding = 56;
 
@@ -71,10 +72,6 @@ const ImageWrapper = styled.div<ImageProp>`
     white-space: nowrap;
 `;
 
-const StarWrapper = styled.div`
-    color: ${MyTheme.colors.accent};
-`;
-
 export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = useState(true);
 
@@ -84,8 +81,6 @@ export const SwipeableEdgeDrawer: FC = () => {
     const locationRating = currentlySelectedLocation.properties.rating;
     const locationImg = currentlySelectedLocation.properties.img;
 
-    let rating = locationRating;
-
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
     const handleCloseAddReview = () => {
@@ -94,38 +89,7 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
-        console.log(newOpen);
     };
-
-    const [stars, setStars] = useState([<span key="rating" />]);
-
-    if (rating) {
-        if (rating > 5) {
-            // eslint-disable-next-line no-param-reassign
-            rating = 5;
-        } else if (rating < 1) {
-            // eslint-disable-next-line no-param-reassign
-            rating = 1;
-        }
-    }
-    useEffect(() => {
-        const temp: any[] = [];
-        for (let i = 0; i < rating; i += 1) {
-            temp.push(
-                <span key={`${i.toString()}solid`} className="material-icons">
-                    star
-                </span>,
-            );
-        }
-        for (let i = 0; i < 5 - rating; i += 1) {
-            temp.push(
-                <span key={`${i.toString()}outlined`} className="material-symbols-outlined">
-                    star
-                </span>,
-            );
-        }
-        setStars(temp);
-    }, [rating]);
 
     return (
         <StyledEngineProvider>
@@ -168,7 +132,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                                 {locationTitle}
                             </Typography>
                             <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }} onClick={handleOpenAddReview}>
-                                <StarWrapper>{stars}</StarWrapper>
+                                <StarRating rating={locationRating} color={MyTheme.colors.accent} sizePx={MyTheme.fontSize.largeIcon} />
                             </Typography>
                         </GridWrapper>
                     </StyledBox>

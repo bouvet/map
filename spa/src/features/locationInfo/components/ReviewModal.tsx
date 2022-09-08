@@ -143,3 +143,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
         </Modal>
     );
 };
+function locationinfoService(locationinfoService: any) {
+    throw new Error('Function not implemented.');
+}
+
