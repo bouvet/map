@@ -37,7 +37,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
                 text: review,
                 locationId: currentlySelectedLocation.id,
             };
-            dispatch(locationinfoServices.postReview(payload))
+            dispatch(locationinfoServices.postReview(payload));
             event.preventDefault();
             setOpenSuccessMessage(true);
             setValue(0);
@@ -49,7 +49,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
         position: 'absolute' as 'absolute',
         top: '50%',
         left: '50%',
-        height: '340px',
+        zIndex: '1301',
         width: '94%',
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
@@ -143,7 +143,3 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
         </Modal>
     );
 };
-function locationinfoService(locationinfoService: any) {
-    throw new Error('Function not implemented.');
-}
-
