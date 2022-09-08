@@ -55,6 +55,10 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 
+builder.Services.AddResponseCompression(options =>
+{
+  options.EnableForHttps = true;
+});
 builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
   {
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
@@ -72,6 +76,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseResponseCompression();
 app.UseCors("anydomain");
 
 app.UseHttpsRedirection();
