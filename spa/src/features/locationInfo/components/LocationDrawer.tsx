@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { Global } from '@emotion/react';
-import { SwipeableDrawer, Button, Box, Typography, CssBaseline } from '@mui/material';
+import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import styled from 'styled-components';
@@ -91,6 +91,10 @@ export const SwipeableEdgeDrawer: FC = () => {
     const handleCloseAddReview = () => {
         setOpenAddReview(false);
     };
+
+    const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
+    const handleOpenSuccessMessage = () => setOpenSuccessMessage(true);
+    const handleCloseSuccessMessage = () => setOpenSuccessMessage(false);
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -190,7 +194,15 @@ export const SwipeableEdgeDrawer: FC = () => {
                             date="17.05.1814"
                         />
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
-                        <ReviewModal open={openAddReview} close={handleCloseAddReview} />
+                        <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
+                        <Snackbar
+                            open={openSuccessMessage}
+                            autoHideDuration={3000}
+                            onClose={handleCloseSuccessMessage}
+                            sx={{ display: 'inline' }}
+                        >
+                            <Alert severity="success">Innsending fullført!</Alert>
+                        </Snackbar>
                     </ContentWrapper>
                 </SwipeableDrawer>
             </Root>
