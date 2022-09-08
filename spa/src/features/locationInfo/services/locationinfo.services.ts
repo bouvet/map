@@ -1,5 +1,6 @@
+import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store/index';
-import { Review } from '../../../lib/api';
+import { Review } from '../../../utils/types.d';
 
 export const locationinfoServices = {
     postReview(payload: Review) {

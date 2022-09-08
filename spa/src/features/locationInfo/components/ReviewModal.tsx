@@ -4,6 +4,9 @@ import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { RoundButton } from '../../../components/Navigation/Buttons';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { locationinfoServices } from '../services/locationinfo.services';
+import { Review } from '../../../utils/types.d';
 
 interface ReviewProps {
     open: boolean;
@@ -15,6 +18,9 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
     const [review, setReview] = useState('');
 
     const handleCloseAddReview = () => close();
+    const dispatch = useStateDispatch();
+
+    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
     const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
 
@@ -26,6 +32,12 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
             event.preventDefault();
             setOpenErrorMessage(true);
         } else {
+            const payload: Review = {
+                rating: value,
+                text: review,
+                locationId: currentlySelectedLocation.id,
+            };
+            dispatch(locationinfoServices.postReview(payload));
             event.preventDefault();
             setOpenSuccessMessage(true);
             setValue(0);
@@ -37,7 +49,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
         position: 'absolute' as 'absolute',
         top: '50%',
         left: '50%',
-        height: '340px',
+        zIndex: '1301',
         width: '94%',
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
@@ -131,3 +143,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
         </Modal>
     );
 };
+function locationinfoService(locationinfoService: any) {
+    throw new Error('Function not implemented.');
+}
+

@@ -30,7 +30,7 @@ export const RoundButton = styled.div<ButtonStylingProps>`
 `;
 
 export const BackButton = styled(RoundButton)`
-    z-index: 20000;
+    z-index: 1300;
     top: 10px;
     left: 10px;
 `;
