@@ -11,9 +11,10 @@ import { Review } from '../../../utils/types.d';
 interface ReviewProps {
     open: boolean;
     close: Function;
+    success: Function;
 }
 
-export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
+export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [value, setValue] = useState<number | null>(0);
     const [review, setReview] = useState('');
 
@@ -22,7 +23,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
-    const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
+    const handleOpenSuccessMessage = () => success();
 
     const [openErrorMessage, setOpenErrorMessage] = useState(false);
     const handleCloseErrorMessage = () => setOpenErrorMessage(false);
@@ -39,7 +40,8 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
             };
             dispatch(locationinfoServices.postReview(payload));
             event.preventDefault();
-            setOpenSuccessMessage(true);
+            handleCloseAddReview();
+            handleOpenSuccessMessage();
             setValue(0);
             setReview('');
         }
@@ -120,15 +122,13 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
                                 Send inn
                             </Button>
                         </Stack>
-                        <Snackbar open={openSuccessMessage} sx={{ display: 'inline' }}>
-                            <Alert severity="success" onClose={handleCloseAddReview}>
-                                Innsending fullført!
-                            </Alert>
-                        </Snackbar>
-                        <Snackbar open={openErrorMessage} sx={{ display: 'inline' }}>
-                            <Alert severity="error" onClose={handleCloseErrorMessage}>
-                                Rating mangler!
-                            </Alert>
+                        <Snackbar
+                            open={openErrorMessage}
+                            autoHideDuration={3000}
+                            onClose={handleCloseErrorMessage}
+                            sx={{ display: 'inline' }}
+                        >
+                            <Alert severity="error">Rating mangler!</Alert>
                         </Snackbar>
                         <CloseBtn
                             backgroundColor={MyTheme.colors.opaque}
