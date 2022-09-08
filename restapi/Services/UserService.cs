@@ -12,7 +12,6 @@ namespace restapi.Services
 
     public async Task<ServiceResponse<User>> AddUser(AddUserDto newUser)
     {
-      var response = new ServiceResponse<User> { };
       var user = new User { Name = newUser.Name };
 
       if (!string.IsNullOrEmpty(newUser.Address))
@@ -38,60 +37,62 @@ namespace restapi.Services
       dataContext.Users.Add(user);
       await dataContext.SaveChangesAsync();
 
-      response.Data = user;
-      response.Message = "User successfully added!";
-      response.StatusCode = StatusCodes.Status201Created;
-      response.Success = true;
-
-      return response;
+      return new ServiceResponse<User>
+              (
+                StatusCodes.Status201Created,
+                data: user,
+                Message: "User successfully added!"
+              );
     }
 
     public async Task<ServiceResponse<DeleteUserDto>> DeleteUser(Guid id)
     {
-      var response = new ServiceResponse<DeleteUserDto> { };
       var user = await dataContext.Users.FindAsync(id);
 
       if (user == null)
       {
-        response.Data = null;
-        response.Message = "User was not found!";
-        response.StatusCode = StatusCodes.Status400BadRequest;
-        return response;
+        return new ServiceResponse<DeleteUserDto>
+              (
+                StatusCodes.Status404NotFound,
+                data: null,
+                Message: "User was not found!"
+              );
       }
 
       dataContext.Users.Remove(user);
       await dataContext.SaveChangesAsync();
 
-      response.Data = null;
-      response.StatusCode = StatusCodes.Status200OK;
-      response.Message = "User successfully Deleted!";
-      response.Success = true;
-
-      return response;
+      return new ServiceResponse<DeleteUserDto>
+              (
+                StatusCodes.Status204NoContent,
+                data: null,
+                Message: "User successfully Deleted!"
+              );
     }
 
     public async Task<ServiceResponse<List<User>>> GetUsers()
     {
-      var response = new ServiceResponse<List<User>> { };
       var users = await dataContext.Users.ToListAsync();
-      response.Data = users;
-      response.Message = "";
-      response.Success = true;
-      response.StatusCode = StatusCodes.Status200OK;
-      return response;
+
+      return new ServiceResponse<List<User>>
+              (
+                StatusCodes.Status200OK,
+                data: users
+              );
     }
 
     public async Task<ServiceResponse<User>> UpdateUser(Guid id, UpdateUserDto updatedUser)
     {
-      var response = new ServiceResponse<User> { };
       var user = await dataContext.Users.FindAsync(id);
 
       if (user == null)
       {
-        response.Data = null;
-        response.Message = "User was not found!";
-        response.StatusCode = StatusCodes.Status400BadRequest;
-        return response;
+        return new ServiceResponse<User>
+              (
+                StatusCodes.Status404NotFound,
+                data: null,
+                Message: "User was not found!"
+              );
       }
 
       if (!string.IsNullOrEmpty(updatedUser.Name))
@@ -121,12 +122,12 @@ namespace restapi.Services
 
       await dataContext.SaveChangesAsync();
 
-      response.Data = user;
-      response.StatusCode = StatusCodes.Status200OK;
-      response.Message = "User successfully updated!";
-      response.Success = true;
-
-      return response;
+      return new ServiceResponse<User>
+            (
+              StatusCodes.Status200OK,
+              data: user,
+              Message: "User successfully updated!"
+            );
     }
   }
 }
