@@ -12,7 +12,7 @@ namespace restapi.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> AddReview(AddReviewDto newReview)
+    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> AddReview([FromForm] AddReviewDto newReview)
     {
       var response = await reviewService.AddReview(newReview);
       return StatusCode(response.StatusCode, response);
