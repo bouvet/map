@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { RoundButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { locationinfoServices } from '../services/locationinfo.services';
-import { Review } from '../../../utils/types.d';
+import { reviewServices } from '../services/locationinfo.services';
+import { ReviewType } from '../../../utils/types.d';
 
 interface ReviewProps {
     open: boolean;
@@ -33,12 +33,12 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
             event.preventDefault();
             setOpenErrorMessage(true);
         } else {
-            const payload: Review = {
+            const payload: ReviewType = {
                 rating: value,
                 text: review,
                 locationId: currentlySelectedLocation.id,
             };
-            dispatch(locationinfoServices.postReview(payload));
+            dispatch(reviewServices.postReview(payload));
             event.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
