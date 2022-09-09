@@ -1,3 +1,4 @@
+using System.Net.Security;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace restapi.Services
@@ -140,8 +141,8 @@ namespace restapi.Services
     public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(Guid id, UpdateLocationDto request)
     {
       // var response = new ServiceResponse<LocationResponseDto>();
-      var properties = new LocationPropertiesDto { };
-      var geometry = new LocationGeometryDto();
+      // var properties = new LocationPropertiesDto { };
+      // var geometry = new LocationGeometryDto();
 
       try
       {
@@ -155,59 +156,78 @@ namespace restapi.Services
           return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, Message: $"Location with id {id} was not found");
         }
 
-        if (request.Geometry.Coordinates.Length > 2)
+        if (request.Geometry.Coordinates != Array.Empty<double>())
         {
-          // response.StatusCode = StatusCodes.Status400BadRequest;
-          // return response;
-          return new ServiceResponse<LocationResponseDto>(StatusCodes.Status400BadRequest, Message: "both longitude and latatitude is required");
+          if (request.Geometry.Coordinates.Length != 2)
+          {
+            // response.StatusCode = StatusCodes.Status400BadRequest;
+            // return response;
+            return new ServiceResponse<LocationResponseDto>(StatusCodes.Status400BadRequest, Message: "too many or too few args given; use long,lat in coordinates");
+          }
+
+
+          if (request.Geometry.Coordinates[0] > 0)
+          {
+            location.Longitude = request.Geometry.Coordinates[0];
+          }
+
+          if (request.Geometry.Coordinates[1] > 0)
+          {
+            location.Latitude = request.Geometry.Coordinates[1];
+          }
+
+          // // [5.5345, 0]
+          // if (request.Geometry.Coordinates[0] > 0 && request.Geometry.Coordinates[1] == 0)
+          // {
+          //   location.Longitude = request.Geometry.Coordinates[0];
+          // }
+
+          // // [0, 58.2342]
+          // if (request.Geometry.Coordinates[0] == 0 && request.Geometry.Coordinates[1] > 0)
+          // {
+          //   location.Latitude = request.Geometry.Coordinates[1];
+          // }
+
+          // // [5.2342, 58.3242]
+          // if (request.Geometry.Coordinates[1] > 0 && request.Geometry.Coordinates[1] > 0)
+          // {
+          //   location.Longitude = request.Geometry.Coordinates[0];
+          //   location.Latitude = request.Geometry.Coordinates[1];
+          // }
+
         }
-
-        // [5.5345, 0]
-        if (request.Geometry.Coordinates[0] > 0 && request.Geometry.Coordinates[1] == 0)
-          location.Longitude = request.Geometry.Coordinates[0];
-
-        // [0, 58.2342]
-        if (request.Geometry.Coordinates[0] == 0 && request.Geometry.Coordinates[1] > 0)
-          location.Latitude = request.Geometry.Coordinates[1];
-
-        // [5.2342, 58.3242]
-        if (request.Geometry.Coordinates[1] > 0 && request.Geometry.Coordinates[1] > 0)
-        {
-          location.Longitude = request.Geometry.Coordinates[0];
-          location.Latitude = request.Geometry.Coordinates[1];
-        }
-
-        geometry.Coordinates = new[] { location.Longitude, location.Latitude };
+        // geometry.Coordinates = new[] { location.Longitude, location.Latitude };
 
         if (!string.IsNullOrEmpty(request.Properties.Title))
         {
-          properties.Title = request.Properties.Title;
           location.Title = request.Properties.Title;
         }
+        // properties.Title = location.Title;
+
 
         if (!string.IsNullOrEmpty(request.Properties.Description))
         {
-          properties.Description = request.Properties.Description;
           location.Description = request.Properties.Description;
         }
+        // properties.Description = location.Description;
 
         if (!string.IsNullOrEmpty(request.Properties.Img))
         {
-          properties.Img = request.Properties.Img;
           location.Img = request.Properties.Img;
         }
+        // properties.Img = location.Img;
 
         if (!string.IsNullOrEmpty(request.Properties.Status))
         {
-          properties.Status = request.Properties.Status;
           location.Status = request.Properties.Status;
         }
+        // properties.Status = location.Status;
 
         if (request.Properties.Rating > 0)
         {
-          properties.Rating = request.Properties.Rating;
           location.Rating = request.Properties.Rating;
         }
+        // properties.Rating = location.Rating;
 
         if (request.Properties.Category.Count > 0)
         {
@@ -223,7 +243,7 @@ namespace restapi.Services
             }
             location.Categories.Add(_category);
           }
-          properties.Category = location.Categories;
+          // properties.Category = location.Categories;
         }
         else
         {
@@ -237,13 +257,14 @@ namespace restapi.Services
         // response.Success = true;
         // response.Message = "Location successfully updated!";
         // response.StatusCode = StatusCodes.Status200OK;
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, Message: "Location successfully updated!", data: new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties });
+        //return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, Message: "Location successfully updated!", data: new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties });
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, Message: "Location successfully updated!", data: LocationResponseBuilder(location));
 
       }
-      catch (Exception)
+      catch (Exception e)
       {
         // return response;
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status500InternalServerError);
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status500InternalServerError, Message: e.Message);
       }
 
       // return response;
