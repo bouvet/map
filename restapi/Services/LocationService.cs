@@ -131,34 +131,11 @@ namespace restapi.Services
           }
         }
 
-        // if (!string.IsNullOrEmpty(request.Properties.Title))
-        // {
-        //   location.Title = request.Properties.Title;
-        // }
-        // if (!string.IsNullOrEmpty(request.Properties.Description))
-        // {
-        //   location.Description = request.Properties.Description;
-        // }
-        // if (!string.IsNullOrEmpty(request.Properties.Img))
-        // {
-        //   location.Img = request.Properties.Img;
-        // }
-        // if (!string.IsNullOrEmpty(request.Properties.Status))
-        // {
-        //   location.Status = request.Properties.Status;
-        // }
-
-
         Func<string, string, string> assign = (string a, string b) => string.IsNullOrEmpty(b) ? a : b;
         location.Title = assign(location.Title, request.Properties.Title);
         location.Description = assign(location.Description, request.Properties.Description);
         location.Img = assign(location.Img, request.Properties.Img);
         location.Status = assign(location.Status, request.Properties.Status);
-
-        // location.Title = string.IsNullOrEmpty(request.Properties.Title) ? location.Title : request.Properties.Title;
-        // location.Description = string.IsNullOrEmpty(request.Properties.Description) ? location.Description : request.Properties.Description;
-        // location.Img = string.IsNullOrEmpty(request.Properties.Img) ? location.Img : request.Properties.Img;
-        // location.Status = string.IsNullOrEmpty(request.Properties.Status) ? location.Status : request.Properties.Status;
 
         // TODO: remove rating from update dto when using db stored procedure.
         if (request.Properties.Rating > 0)
@@ -169,14 +146,14 @@ namespace restapi.Services
 
         if (request.Properties.Category != null && request.Properties.Category.Count > 0)
         {
-          foreach (Guid category in request.Properties.Category)
+          foreach (Guid categoryId in request.Properties.Category)
           {
-            var _category = await dataContext.Categories.FindAsync(category);
-            if (_category == null)
+            var category = await dataContext.Categories.FindAsync(categoryId);
+            if (category == null)
             {
-              return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"Category '{category}' was not found");
+              return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"Category '{categoryId}' was not found");
             }
-            location.Categories.Add(_category);
+            location.Categories.Add(category);
           }
         }
         else
