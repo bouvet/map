@@ -112,7 +112,7 @@ export const SwipeableEdgeDrawer: FC = () => {
     useEffect(() => {
         if (currentReviews) {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
-                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image}>{item.image}</ImageWrapper> : null,
+                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
             );
             setImageList(temp);
         }
