@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const registrationState = createSlice({
-    name: 'map',
+    name: 'registration',
     initialState,
     reducers: {
         setCurrentMapCenter(state, action: { payload: LatLong; type: string }) {

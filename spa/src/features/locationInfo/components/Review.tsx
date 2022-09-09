@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
+import 'moment/locale/nb';
 
 /**
  * @param name @type string
@@ -37,11 +39,13 @@ const Rating = styled.div`
     justify-content: right;
 `;
 
+moment.locale('nb');
+
 export const Review: FC<ReviewProps> = ({ name, age, date, rating, review }) => (
     <ReviewWrapper>
         <ReviewHeader>
             <ReviewerInfo>
-                {name}, {age} år. {date}
+                {name}, {age} år. {moment(date).format('L')}
             </ReviewerInfo>
             <Rating>{rating}/5</Rating>
         </ReviewHeader>
