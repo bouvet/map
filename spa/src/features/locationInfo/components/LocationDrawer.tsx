@@ -57,7 +57,7 @@ const ImageContainer = styled.div`
 `;
 
 type ImageProp = {
-    backgroundImage: any;
+    backgroundImage: string;
 };
 
 const ImageWrapper = styled.div<ImageProp>`
@@ -65,7 +65,7 @@ const ImageWrapper = styled.div<ImageProp>`
     padding-left: 40vw;
     display: inline-block;
     border-radius: 10px;
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${({ backgroundImage }) => backgroundImage});
     background-repeat: none;
     background-position: center;
     background-size: cover;
