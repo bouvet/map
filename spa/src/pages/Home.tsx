@@ -12,11 +12,14 @@ import { SwipeableEdgeDrawer } from '../features/locationInfo/components/Locatio
 import { BackButton, GoogleIcon, RoundButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
+import { Category } from '../utils/types.d';
 
 export const Home: FC = () => {
     useFilterEvent();
     const { popUpIsVisible, categories, currentlySelectedLocation, homeMarkerFocus } = useStateSelector((state) => state.map);
-    const mappedFilter = categories.map((item: any) => <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} />);
+    const mappedFilter = categories.map((item: Category) =>
+        item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
+    );
     const dispatch = useStateDispatch();
     const handleBackClick = () => {
         dispatch(mapActions.setHomeMarkerFocus(false));
