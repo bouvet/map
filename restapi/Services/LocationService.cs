@@ -13,7 +13,7 @@ namespace restapi.Services
 
     public async Task<ServiceResponse<LocationResponseDto>> AddLocation(AddLoctionDto request)
     {
-      var response = new ServiceResponse<LocationResponseDto> { };
+      // var response = new ServiceResponse<LocationResponseDto> { };
 
       try
       {
@@ -61,39 +61,41 @@ namespace restapi.Services
         // response.Message = "Location successfully added!";
         return new ServiceResponse<LocationResponseDto>(StatusCodes.Status201Created, "Location successfully added!", data: LocationResponseBuilder(location));
       }
-      catch (Exception exception)
+      catch (Exception)
       {
-        response.Data = null;
-        response.Success = false;
-        response.Message = exception.Message;
+        // response.Data = null;
+        // response.Success = false;
+        // response.Message = exception.Message;
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status500InternalServerError);
       }
 
-      return response;
+      // return response;
     }
 
     public async Task<ServiceResponse<DeleteLocationDto>> DeleteLocation(Guid id)
     {
-      var response = new ServiceResponse<DeleteLocationDto>();
+      // var response = new ServiceResponse<DeleteLocationDto>();
 
       var location = await dataContext.Locations.FindAsync(id);
       if (location is null)
       {
-        response.StatusCode = 404;
-        response.Message = "Location was not found!";
-        return response;
+        // response.StatusCode = 404;
+        // response.Message = "Location was not found!";
+        // return response;
+        return new ServiceResponse<DeleteLocationDto>(StatusCodes.Status404NotFound, Message: $"Location with id {id} was not found");
       }
       dataContext.Locations.Remove(location);
       await dataContext.SaveChangesAsync();
-      response.Success = true;
-      response.Message = "";
-      response.StatusCode = StatusCodes.Status204NoContent;
-
-      return response;
+      // response.Success = true;
+      // response.Message = "";
+      // response.StatusCode = StatusCodes.Status204NoContent;
+      // return response;
+      return new ServiceResponse<DeleteLocationDto>(StatusCodes.Status204NoContent);
     }
 
     public async Task<ServiceResponse<List<LocationResponseDto>>> GetAllLocations()
     {
-      var response = new ServiceResponse<List<LocationResponseDto>>();
+      // var response = new ServiceResponse<List<LocationResponseDto>>();
 
       var locations = await dataContext.Locations.Include("Reviews").ToListAsync();
       var transformedLocations = new List<LocationResponseDto>();
@@ -104,38 +106,40 @@ namespace restapi.Services
         transformedLocations.Add(transformedLocation);
       }
 
-      response.Data = transformedLocations;
-      response.Success = true;
-      response.Message = "";
-      response.StatusCode = StatusCodes.Status200OK;
+      // response.Data = transformedLocations;
+      // response.Success = true;
+      // response.Message = "";
+      // response.StatusCode = StatusCodes.Status200OK;
+      return new ServiceResponse<List<LocationResponseDto>>(StatusCodes.Status200OK, data: transformedLocations);
 
-      return response;
+      // return response;
     }
 
     public async Task<ServiceResponse<LocationResponseDto>> GetLocationById(Guid id)
     {
-      var response = new ServiceResponse<LocationResponseDto>();
+      // var response = new ServiceResponse<LocationResponseDto>();
 
       var location = await dataContext.Locations.FindAsync(id);
 
       if (location is null)
       {
-        response.Message = $"Location with id {id} was not found";
-        response.StatusCode = StatusCodes.Status404NotFound;
-        return response;
+        // response.Message = $"Location with id {id} was not found";
+        // response.StatusCode = StatusCodes.Status404NotFound;
+        // return response;
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, Message: $"Location with id {id} was not found");
       }
 
-      response.Data = LocationResponseBuilder(location);
-      response.Success = true;
-      response.Message = "";
-      response.StatusCode = StatusCodes.Status200OK;
-
-      return response;
+      // response.Data = LocationResponseBuilder(location);
+      // response.Success = true;
+      // response.Message = "";
+      // response.StatusCode = StatusCodes.Status200OK;
+      // return response;
+      return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, data: LocationResponseBuilder(location));
     }
 
     public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(Guid id, UpdateLocationDto request)
     {
-      var response = new ServiceResponse<LocationResponseDto>();
+      // var response = new ServiceResponse<LocationResponseDto>();
       var properties = new LocationPropertiesDto { };
       var geometry = new LocationGeometryDto();
 
@@ -145,15 +149,17 @@ namespace restapi.Services
 
         if (location is null)
         {
-          response.Message = "Location was not found";
-          response.StatusCode = StatusCodes.Status404NotFound;
-          return response;
+          // response.Message = "Location was not found";
+          // response.StatusCode = StatusCodes.Status404NotFound;
+          // return response;
+          return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, Message: $"Location with id {id} was not found");
         }
 
         if (request.Geometry.Coordinates.Length > 2)
         {
-          response.StatusCode = StatusCodes.Status400BadRequest;
-          return response;
+          // response.StatusCode = StatusCodes.Status400BadRequest;
+          // return response;
+          return new ServiceResponse<LocationResponseDto>(StatusCodes.Status400BadRequest, Message: "both longitude and latatitude is required");
         }
 
         // [5.5345, 0]
@@ -212,7 +218,8 @@ namespace restapi.Services
             var _category = await dataContext.Categories.FindAsync(category.Id);
             if (_category == null)
             {
-              throw new Exception($"Category was not found");
+              // throw new Exception($"Category was not found");
+              return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"Category with id {category.Id} was not found");
             }
             location.Categories.Add(_category);
           }
@@ -226,17 +233,20 @@ namespace restapi.Services
 
         await dataContext.SaveChangesAsync();
 
-        response.Data = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
-        response.Success = true;
-        response.Message = "Location successfully updated!";
-        response.StatusCode = StatusCodes.Status200OK;
+        // response.Data = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
+        // response.Success = true;
+        // response.Message = "Location successfully updated!";
+        // response.StatusCode = StatusCodes.Status200OK;
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, Message: "Location successfully updated!", data: new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties });
+
       }
       catch (Exception)
       {
-        return response;
+        // return response;
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status500InternalServerError);
       }
 
-      return response;
+      // return response;
     }
 
     private LocationResponseDto LocationResponseBuilder(Location location)
