@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -57,7 +57,7 @@ const ImageContainer = styled.div`
 `;
 
 type ImageProp = {
-    backgroundImage: string;
+    backgroundImage: string | undefined;
 };
 
 const ImageWrapper = styled.div<ImageProp>`
@@ -150,13 +150,6 @@ export const SwipeableEdgeDrawer: FC = () => {
                         <ContentContainer>
                             <b>Omtaler</b>
                         </ContentContainer>
-                        <Review
-                            name="Ola Svenskman"
-                            age={222}
-                            rating={1}
-                            review="This park is not even close to the quality we expect in sweden! Alt for Norje, under Sverje..."
-                            date="17.05.1814"
-                        />
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
                         <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
                         <Snackbar

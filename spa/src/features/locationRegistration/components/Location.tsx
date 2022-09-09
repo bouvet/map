@@ -17,6 +17,7 @@ interface ButtonContentProps {
 interface ButtonColorProps {
     background: string;
     text: string;
+    disabled?: boolean;
 }
 
 export const ButtonStyle = styled.div<ButtonColorProps>`
@@ -28,7 +29,7 @@ export const ButtonStyle = styled.div<ButtonColorProps>`
     font-size: ${MyTheme.fontSize.icon};
     padding: 5px 10px;
     border-radius: 27px;
-    background-color: ${(props) => props.background};
+    background-color: ${({ disabled }) => (!disabled ? ({ background }) => background : MyTheme.colors.grey)};
     color: ${(props) => props.text};
     display: inline-flex;
     align-items: center;

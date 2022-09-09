@@ -1,3 +1,4 @@
+import { defaultMaxListeners } from 'events';
 import { FC, useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleIcon } from '../components/Navigation/Buttons';
@@ -23,13 +24,20 @@ import { MyTheme } from '../styles/global';
 import { NewLocation } from '../utils/types.d';
 
 export const LocationRegistration: FC = () => {
-    const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector((state) => state.registration);
+    const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector(
+        (state) => state.registration,
+    );
     const [pageIndex, setPageIndex] = useState(0);
 
     const navigate = useNavigate();
     const dispatch = useStateDispatch();
 
-    const handleRedirect = useCallback(() => navigate('/', { replace: true }), [navigate]);
+    const handleRedirect = useCallback(() => {
+        navigate('/', { replace: true });
+        dispatch(registrationActions.setCurrentDescription(''));
+        dispatch(registrationActions.setCurrentTitle(''));
+        dispatch(registrationActions.setCurrentCategories([]));
+    }, [navigate]);
 
     const handleForwardClick = () => {
         if (pageIndex === 2) {
@@ -78,9 +86,19 @@ export const LocationRegistration: FC = () => {
                     <>
                         <MapView />
                         <CenterPin>📍</CenterPin>
-                        <RegistrationButton text={MyTheme.colors.lightbase} background={MyTheme.colors.accent} onClick={handleForwardClick}>
-                            Velg punkt
-                        </RegistrationButton>
+                        {currentMapCenter.lat ? (
+                            <RegistrationButton
+                                text={MyTheme.colors.lightbase}
+                                background={MyTheme.colors.accent}
+                                onClick={handleForwardClick}
+                            >
+                                Velg punkt
+                            </RegistrationButton>
+                        ) : (
+                            <RegistrationButton disabled text={MyTheme.colors.lightbase} background={MyTheme.colors.accent}>
+                                Velg punkt
+                            </RegistrationButton>
+                        )}
                     </>
                 ) : (
                     <RegistrationButtonWrapper>
