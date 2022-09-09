@@ -79,6 +79,8 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     const [reviewList, setReviewList]: any = useState([]);
 
+    const [imageList, setImageList]: any = useState([]);
+
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -102,6 +104,15 @@ export const SwipeableEdgeDrawer: FC = () => {
                 ) : null,
             );
             setReviewList(temp);
+        }
+    }, [currentReviews]);
+
+    useEffect(() => {
+        if (currentReviews) {
+            const temp = currentReviews.map((item: ReviewTypeGet) =>
+                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image}>{item.image}</ImageWrapper> : null,
+            );
+            setImageList(temp);
         }
     }, [currentReviews]);
 
@@ -165,11 +176,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
-                        <ImageContainer>
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                        </ImageContainer>
+                        <ImageContainer>{imageList && imageList}</ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>
                             <b>Omtaler</b>
