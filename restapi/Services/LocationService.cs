@@ -131,11 +131,11 @@ namespace restapi.Services
           }
         }
 
-        Func<string, string, string> assign = (string a, string b) => string.IsNullOrEmpty(b) ? a : b;
-        location.Title = assign(location.Title, request.Properties.Title);
-        location.Description = assign(location.Description, request.Properties.Description);
-        location.Img = assign(location.Img, request.Properties.Img);
-        location.Status = assign(location.Status, request.Properties.Status);
+        Func<string, string, string> assignNoEmpty = (string oldValue, string newValue) => string.IsNullOrEmpty(newValue) ? oldValue : newValue;
+        location.Title = assignNoEmpty(location.Title, request.Properties.Title);
+        location.Description = assignNoEmpty(location.Description, request.Properties.Description);
+        location.Img = assignNoEmpty(location.Img, request.Properties.Img);
+        location.Status = assignNoEmpty(location.Status, request.Properties.Status);
 
         // TODO: remove rating from update dto when using db stored procedure.
         if (request.Properties.Rating > 0)
