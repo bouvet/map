@@ -63,7 +63,6 @@ const ExpandBtn = styled(RoundButton)`
     width: 40px;
     top: 10px;
     right: 10px;
-    //box-shadow: none;
 `;
 
 const PopupContent = styled.div`
@@ -71,11 +70,12 @@ const PopupContent = styled.div`
     padding: 10px;
     border-radius: 0px 10px 10px 0px;
     justify-content: left;
-    overflow: hidden;
+    overflow: scroll; // hidden
 `;
 
 const Parkname = styled.p`
     font-weight: bolder;
+    padding-right: 50px;
     margin: 0px;
     font-size: ${MyTheme.fontSize.header};
 `;

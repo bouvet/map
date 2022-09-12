@@ -15,7 +15,7 @@ const ImageUploaderWrapper = styled.div`
     justify-content: center;
 `;
 
-const Img = styled.img`
+export const Img = styled.img`
     max-width: 80%;
     max-height: 40vh;
 `;

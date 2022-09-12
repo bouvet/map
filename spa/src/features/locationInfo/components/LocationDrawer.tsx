@@ -81,7 +81,6 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     const [imageList, setImageList]: any = useState([]);
 
-
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -116,7 +115,6 @@ export const SwipeableEdgeDrawer: FC = () => {
             setImageList(temp);
         }
     }, [currentReviews]);
-
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
