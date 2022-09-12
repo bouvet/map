@@ -15,7 +15,7 @@ const ImageUploaderWrapper = styled.div`
     justify-content: center;
 `;
 
-const Img = styled.img`
+export const Img = styled.img`
     max-width: 80%;
     max-height: 40vh;
 `;
@@ -26,7 +26,7 @@ export const ImageUploader: FC = () => {
 
     const dispatch = useStateDispatch();
 
-    const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
         if (files) {
             setImage(files[0]);
@@ -35,7 +35,7 @@ export const ImageUploader: FC = () => {
 
     const removeImage = () => {
         setImage(undefined);
-    }
+    };
 
     useEffect(() => {
         if (image) {
@@ -56,7 +56,7 @@ export const ImageUploader: FC = () => {
                 </>
             :
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                    <input hidden accept="image/*" type="file" onChange={(event) => onImageChange(event)} />
+                    <input hidden accept="image/*" type="file" onChange={(event) => handleImageChange(event)} />
                     Last opp
                 </Button>
             }

@@ -85,7 +85,7 @@ namespace restapi.Controllers
     public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(Guid id)
     {
       var response = await categoryService.DeleteCategory(id);
-      if (response.StatusCode == StatusCodes.Status204NoContent) 
+      if (response.StatusCode == StatusCodes.Status204NoContent)
       {
         return NoContent();
       }

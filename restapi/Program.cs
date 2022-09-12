@@ -10,6 +10,7 @@ global using restapi.Dtos;
 global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using restapi.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,13 +21,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample200OK>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample201Created>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample500InternalServerError>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryDeleteExample409Conflict>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.ListCategoryExample200OK>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryExample400BadRequest>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<restapi.Swagger.CategoryPostExample409Conflict>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample200OK>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample201Created>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample500InternalServerError>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryDeleteExample409Conflict>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<ListCategoryExample200OK>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample400BadRequest>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryPostExample409Conflict>();
 builder.Services.AddSwaggerGen(c => { c.ExampleFilters(); });
 
 var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
@@ -55,6 +56,10 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 
+builder.Services.AddResponseCompression(options =>
+{
+  options.EnableForHttps = true;
+});
 builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
   {
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
@@ -69,9 +74,13 @@ builder.Services.AddAzureClients(clientBuilder =>
 */
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (builder.Environment.IsDevelopment())
+{
+  app.UseSwagger();
+  app.UseSwaggerUI();
+}
 
+app.UseResponseCompression();
 app.UseCors("anydomain");
 
 app.UseHttpsRedirection();

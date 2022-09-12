@@ -5,10 +5,12 @@ import { StyledEngineProvider, styled as materialStyled } from '@mui/material/st
 import { grey } from '@mui/material/colors';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
-import { useStateSelector } from '../../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { Review } from './Review';
 import { ReviewModal } from './ReviewModal';
 import { StarRating } from '../../../components/StarRating/StarRating';
+import { reviewServices } from '../services/locationinfo.services';
+import { ReviewTypeGet } from '../../../utils/types.d';
 
 const drawerBleeding = 56;
 
@@ -46,6 +48,8 @@ const ContentContainer = styled.div`
 const GridWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    word-break: break-word;
+    hyphens: auto;
 `;
 
 const ImageContainer = styled.div`
@@ -75,11 +79,44 @@ const ImageWrapper = styled.div<ImageProp>`
 export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = useState(true);
 
+    const [reviewList, setReviewList]: any = useState([]);
+
+    const [imageList, setImageList]: any = useState([]);
+
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
+    const { currentReviews } = useStateSelector((state) => state.review);
     const locationTitle = currentlySelectedLocation.properties.title;
     const locationDescription = currentlySelectedLocation.properties.description;
     const locationRating = currentlySelectedLocation.properties.rating;
     const locationImg = currentlySelectedLocation.properties.img;
+    const { id } = currentlySelectedLocation;
+
+    const dispatch = useStateDispatch();
+
+    useEffect(() => {
+        dispatch(reviewServices.getReviews(id));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (currentReviews) {
+            const temp = currentReviews.map((item: ReviewTypeGet) =>
+                item.text ? (
+                    <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
+                ) : null,
+            );
+            setReviewList(temp);
+        }
+    }, [currentReviews]);
+
+    useEffect(() => {
+        if (currentReviews) {
+            const temp = currentReviews.map((item: ReviewTypeGet) =>
+                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
+            );
+            setImageList(temp);
+        }
+    }, [currentReviews]);
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
@@ -141,15 +178,12 @@ export const SwipeableEdgeDrawer: FC = () => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
-                        <ImageContainer>
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                        </ImageContainer>
+                        <ImageContainer>{imageList && imageList}</ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>
                             <b>Omtaler</b>
                         </ContentContainer>
+                        {reviewList && reviewList}
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
                         <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
                         <Snackbar
