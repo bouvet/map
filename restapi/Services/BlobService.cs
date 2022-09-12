@@ -12,14 +12,9 @@ namespace restapi.Services
     {
       var streamFromUpload = new MemoryStream();
       await uploadFile.CopyToAsync(streamFromUpload);
-
       var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
+      SKData webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, 50);
 
-      SKData webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, 1);
-
-
-
-      // todo check if valid id for location
       var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
       var keyVaultEndpoint = new Uri(azureKeyVault!);
       var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
@@ -32,12 +27,6 @@ namespace restapi.Services
       CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference("images");
       await imageBlobContainer.CreateIfNotExistsAsync();
       CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(blobFileName);
-
-
-      //await using (var data = uploadFile.OpenReadStream())
-      //{
-      //  await blockBlob.UploadFromStreamAsync(data);
-      //}
 
       blockBlob.Properties.ContentType = "image/webp";
       await blockBlob.UploadFromStreamAsync(webpImage.AsStream());
