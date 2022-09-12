@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -81,7 +81,6 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     const [imageList, setImageList]: any = useState([]);
 
-
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -108,7 +107,6 @@ export const SwipeableEdgeDrawer: FC = () => {
         }
     }, [currentReviews]);
 
-
     useEffect(() => {
         if (currentReviews) {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
@@ -117,7 +115,6 @@ export const SwipeableEdgeDrawer: FC = () => {
             setImageList(temp);
         }
     }, [currentReviews]);
-
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
