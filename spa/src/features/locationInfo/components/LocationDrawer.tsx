@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -107,7 +107,6 @@ export const SwipeableEdgeDrawer: FC = () => {
             setReviewList(temp);
         }
     }, [currentReviews]);
-
 
     useEffect(() => {
         if (currentReviews) {
