@@ -26,7 +26,7 @@ namespace restapi.Models
         this.Success = false;
       }
 
-      if (StatusCode == StatusCodes.Status500InternalServerError)
+      if (StatusCode == StatusCodes.Status500InternalServerError && string.IsNullOrEmpty(Message))
       {
         this.Message = "Ops! something went wrong!";
       }

@@ -11,11 +11,7 @@
    -khtml-user-select: none; /* Konqueror HTML */
      -moz-user-select: none; /* Old versions of Firefox */
       -ms-user-select: none; /* Internet Explorer/Edge */
-<<<<<<< HEAD
-          user-select: none; /* Non-prefixed version, currently
-=======
           user-select: none; /* Non-prefixed version, currently */
->>>>>>> f89e168187a211b696ed0835070ce50497ed9c81
 }
 
 input, textarea {

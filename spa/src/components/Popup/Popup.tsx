@@ -78,11 +78,8 @@ const Parkname = styled.p`
     padding-right: 50px;
     margin: 0px;
     font-size: ${MyTheme.fontSize.header};
-<<<<<<< HEAD
-=======
     word-break: break-word;
     hyphens: auto;
->>>>>>> f89e168187a211b696ed0835070ce50497ed9c81
 `;
 
 const Bodytext = styled.div`

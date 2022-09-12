@@ -183,10 +183,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                         <ContentContainer>
                             <b>Omtaler</b>
                         </ContentContainer>
-<<<<<<< HEAD
-=======
                         {reviewList && reviewList}
->>>>>>> f89e168187a211b696ed0835070ce50497ed9c81
                         <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
                         <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
                         <Snackbar

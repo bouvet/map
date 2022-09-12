@@ -37,6 +37,7 @@ namespace restapi.Services
 
       var review = new Review
       {
+        Id = Guid.NewGuid(),
         Rating = newReview.Rating,
       };
 
@@ -181,6 +182,10 @@ namespace restapi.Services
 
     private ReviewResponseDto ReviewResponseBuilder(Review review)
     {
+
+      string azureBlobStorageServer = ".blob.core.windows.net";
+      string azureCDNserver = ".azureedge.net";
+
       return new ReviewResponseDto
       {
         Id = review.Id,
@@ -189,7 +194,7 @@ namespace restapi.Services
         Rating = review.Rating,
         Status = review.Status,
         Text = review.Text,
-        Image = review.Image,
+        Image = review.Image.Replace(azureBlobStorageServer, azureCDNserver),
         LocationId = review.LocationId
       };
     }
