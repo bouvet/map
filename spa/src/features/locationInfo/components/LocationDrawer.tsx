@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -88,7 +88,6 @@ export const SwipeableEdgeDrawer: FC = () => {
     const locationTitle = currentlySelectedLocation.properties.title;
     const locationDescription = currentlySelectedLocation.properties.description;
     const locationRating = currentlySelectedLocation.properties.rating;
-    const locationImg = currentlySelectedLocation.properties.img;
     const { id } = currentlySelectedLocation;
 
     const dispatch = useStateDispatch();
