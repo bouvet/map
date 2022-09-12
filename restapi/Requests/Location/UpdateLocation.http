@@ -1,0 +1,45 @@
+@devhost=https://localhost:7130
+@prodhost=https://verdenventer.azurewebsites.net
+@id=f2048041-4d45-405e-a81e-0f08ca699125
+
+PUT {{devhost}}/api/locations/{{id}}
+Content-Type: application/json
+
+{
+  "properties": {
+    "title": "A title",
+    "description": "A description",
+    "status": "Under Review",
+    "category": [
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    ]
+  },
+  "geometry": {
+    "coordinates": [
+      5.1234,
+      58.1234
+    ]
+  }
+}
+
+###
+
+PUT {{prodhost}}/api/locations/{{id}}
+Content-Type: application/json
+
+{
+  "properties": {
+    "title": "A title",
+    "description": "A description",
+    "status": "Under Review",
+    "category": [
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    ]
+  },
+  "geometry": {
+    "coordinates": [
+      5.1234,
+      58.1234
+    ]
+  }
+}
