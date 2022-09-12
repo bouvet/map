@@ -1,0 +1,21 @@
+@devhost=https://localhost:7130
+@prodhost=https://verdenventer.azurewebsites.net
+@id=b08edce2-cfd9-409e-d70f-08da94be4d2a
+
+PUT {{devhost}}/api/categories/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Fotball",
+  "emoji": "⚽"
+}
+
+###
+
+PUT {{prodhost}}/api/categories/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Fotball23",
+  "emoji": "⚽"
+}

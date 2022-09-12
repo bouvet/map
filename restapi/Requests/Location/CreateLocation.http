@@ -1,0 +1,29 @@
+@devhost=https://localhost:7130
+@prodhost=https://verdenventer.azurewebsites.net
+
+
+POST {{devhost}}/api/locations
+Content-Type: multipart/form-data
+
+{
+  "title": "A title",
+  "description": "A description",
+  "rating": "5",
+  "longitude": 5.1234,
+  "latitude": 58.1234,
+  "category": ["0d870839-a74d-4293-2124-08da8fe1d9b8"]
+}
+
+###
+
+POST {{prodhost}}/api/locations
+Content-Type: multipart/form-data
+
+{
+  "title": "A title",
+  "description": "A description",
+  "rating": "5",
+  "longitude": 5.1234,
+  "latitude": 58.1234,
+  "category": ["0d870839-a74d-4293-2124-08da8fe1d9b8"]
+}
