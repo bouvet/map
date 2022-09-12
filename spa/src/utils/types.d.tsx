@@ -72,7 +72,7 @@ export interface Location {
 export interface NewLocation {
     title: string;
     description: string;
-    image?: File;
+    img?: File;
     rating?: number;
     longitude: number;
     latitude: number;
