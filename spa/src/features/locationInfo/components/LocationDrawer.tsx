@@ -48,6 +48,8 @@ const ContentContainer = styled.div`
 const GridWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    word-break: break-word;
+    hyphens: auto;
 `;
 
 const ImageContainer = styled.div`

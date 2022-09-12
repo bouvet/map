@@ -22,7 +22,13 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [image, setImage] = useState<File | undefined>(undefined);
     const [imageUrl, setImageUrl] = useState('');
 
-    const handleCloseAddReview = () => close();
+    const handleCloseAddReview = () => {
+        close();
+        setValue(0);
+        setReview('');
+        setImage(undefined);
+        setImageUrl('');
+    };
     const dispatch = useStateDispatch();
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
@@ -59,10 +65,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
             event.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
-            setValue(0);
-            setReview('');
-            setImage(undefined);
-            setImageUrl('');
         }
     };
 
