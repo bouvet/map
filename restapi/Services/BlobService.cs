@@ -24,6 +24,7 @@ namespace restapi.Services
       CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(blobstorageconnection.Value.Value);
       CloudBlobClient blobStorageClient = azureCloudStorageAccount.CreateCloudBlobClient();
       CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference("images");
+      await imageBlobContainer.CreateIfNotExistsAsync();
       CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(blobFileName);
       blockBlob.Properties.ContentType = uploadFile.ContentType;
       await using (var data = uploadFile.OpenReadStream())
