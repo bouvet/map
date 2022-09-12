@@ -67,7 +67,7 @@ const ImageWrapper = styled.div<ImageProp>`
     padding-left: 40vw;
     display: inline-block;
     border-radius: 10px;
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${({ backgroundImage }) => backgroundImage});
     background-repeat: none;
     background-position: center;
     background-size: cover;
@@ -112,7 +112,7 @@ export const SwipeableEdgeDrawer: FC = () => {
     useEffect(() => {
         if (currentReviews) {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
-                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image}>{item.image}</ImageWrapper> : null,
+                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
             );
             setImageList(temp);
         }
