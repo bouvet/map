@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Alert, Box, Button, ClickAwayListener, Modal, Rating, Snackbar, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { RoundButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { ReviewType } from '../../../utils/types.d';
+import { Img } from '../../locationRegistration/components/ImageUploader';
 
 interface ReviewProps {
     open: boolean;
@@ -18,6 +19,9 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
+    const [image, setImage] = useState<File | undefined>(undefined);
+    const [imageUrl, setImageUrl] = useState('');
+
     const handleCloseAddReview = () => close();
     const dispatch = useStateDispatch();
 
@@ -27,6 +31,20 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
 
     const [openErrorMessage, setOpenErrorMessage] = useState(false);
     const handleCloseErrorMessage = () => setOpenErrorMessage(false);
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { files } = event.target;
+        if (files) {
+            setImage(files[0]);
+        }
+    };
+
+    useEffect(() => {
+        if (image) {
+            const imageUrl = URL.createObjectURL(image);
+            setImageUrl(imageUrl);
+        }
+    });
 
     const handleSubmit = (event: any) => {
         if (value === 0 || value === null) {
@@ -38,12 +56,17 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                 text: review,
                 locationId: currentlySelectedLocation.id,
             };
+            if (image) {
+                payload.image = image;
+            }
             dispatch(reviewServices.postReview(payload));
             event.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
             setValue(0);
             setReview('');
+            setImage(undefined);
+            setImageUrl('');
         }
     };
 
@@ -114,10 +137,14 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 onChange={(event) => setReview(event.target.value)}
                             />
                             {review.length} / 120
-                            <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                Last opp
-                                <input hidden accept="image/*" multiple type="file" />
-                            </Button>
+                            {image ? (
+                                <Img src={imageUrl} alt="blobb" />
+                            ) : (
+                                <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                                    Last opp
+                                    <input hidden accept="image/*" multiple type="file" onChange={(event) => handleImageChange(event)} />
+                                </Button>
+                            )}
                             {!value ? (
                                 <Button disabled type="submit" variant="contained">
                                     Send inn
