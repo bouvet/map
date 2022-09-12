@@ -10,10 +10,12 @@ namespace restapi.Services
   {
     static public async Task<CloudBlockBlob> UploadFile(Guid id, IFormFile uploadFile)
     {
+      int compressedImageQuality = 50;
+
       var streamFromUpload = new MemoryStream();
       await uploadFile.CopyToAsync(streamFromUpload);
       var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
-      SKData webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, 50);
+      SKData webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, compressedImageQuality);
 
       var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
       var keyVaultEndpoint = new Uri(azureKeyVault!);
