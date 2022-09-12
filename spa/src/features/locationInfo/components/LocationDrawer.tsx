@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -48,6 +48,8 @@ const ContentContainer = styled.div`
 const GridWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    word-break: break-word;
+    hyphens: auto;
 `;
 
 const ImageContainer = styled.div`
