@@ -1,6 +1,4 @@
-import { FC } from 'react';
 import styled from 'styled-components';
-import { MyTheme } from '../../styles/global';
 
 interface ButtonStylingProps {
     backgroundColor?: string;

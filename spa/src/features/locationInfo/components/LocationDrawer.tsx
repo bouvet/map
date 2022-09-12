@@ -59,7 +59,7 @@ const ImageContainer = styled.div`
 `;
 
 type ImageProp = {
-    backgroundImage: any;
+    backgroundImage: string | undefined;
 };
 
 const ImageWrapper = styled.div<ImageProp>`
@@ -80,7 +80,6 @@ export const SwipeableEdgeDrawer: FC = () => {
     const [reviewList, setReviewList]: any = useState([]);
 
     const [imageList, setImageList]: any = useState([]);
-
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
@@ -108,7 +107,6 @@ export const SwipeableEdgeDrawer: FC = () => {
         }
     }, [currentReviews]);
 
-
     useEffect(() => {
         if (currentReviews) {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
@@ -117,7 +115,6 @@ export const SwipeableEdgeDrawer: FC = () => {
             setImageList(temp);
         }
     }, [currentReviews]);
-
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);

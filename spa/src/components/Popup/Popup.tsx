@@ -80,11 +80,6 @@ const Parkname = styled.p`
     font-size: ${MyTheme.fontSize.header};
 `;
 
-const Rating = styled.div`
-    width: 100%;
-    color: ${MyTheme.colors.darkbase};
-`;
-
 const Bodytext = styled.div`
     justify-content: left;
     margin: 5px 0px;
@@ -138,7 +133,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                     <ExpandLink />
                 </ExpandBtn>
                 <Parkname>{name}</Parkname>
-                <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx={MyTheme.fontSize.icon}/>
+                <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx={MyTheme.fontSize.icon} />
                 <Bodytext>
                     {displayedDescription} <ReadMoreLink onClick={handleClickShowLocationPage}> les mer</ReadMoreLink>
                 </Bodytext>
