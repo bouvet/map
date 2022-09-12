@@ -22,7 +22,13 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [image, setImage] = useState<File | undefined>(undefined);
     const [imageUrl, setImageUrl] = useState('');
 
-    const handleCloseAddReview = () => close();
+    const handleCloseAddReview = () => {
+        close();
+        setValue(0);
+        setReview('');
+        setImage(undefined);
+        setImageUrl('');
+    };
     const dispatch = useStateDispatch();
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
@@ -63,10 +69,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
             event.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
-            setValue(0);
-            setReview('');
-            setImage(undefined);
-            setImageUrl('');
         }
     };
 
@@ -155,14 +157,14 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 </Button>
                             )}
                         </Stack>
-                        <Snackbar
+                        {/* <Snackbar
                             open={openErrorMessage}
                             autoHideDuration={3000}
                             onClose={handleCloseErrorMessage}
-                            sx={{ display: 'inline' }}
+                            sx={{ display: 'block' }}
                         >
                             <Alert severity="error">Rating mangler!</Alert>
-                        </Snackbar>
+                        </Snackbar> */}
                         <CloseBtn
                             backgroundColor={MyTheme.colors.opaque}
                             textColor={MyTheme.colors.lightbase}
