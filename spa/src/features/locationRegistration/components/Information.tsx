@@ -49,11 +49,19 @@ export const Information: FC = () => {
     const { currentTitle, currentDescription } = useStateSelector((state) => state.registration);
 
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(registrationActions.setCurrentTitle(event.target.value));
+        if (event.target.value === ' ') {
+            dispatch(registrationActions.setCurrentTitle(''));
+        } else {
+            dispatch(registrationActions.setCurrentTitle(event.target.value));
+        }
     };
 
     const handleChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(registrationActions.setCurrentDescription(event.target.value));
+        if (event.target.value === ' ') {
+            dispatch(registrationActions.setCurrentDescription(''));
+        } else {
+            dispatch(registrationActions.setCurrentDescription(event.target.value));
+        }
     };
 
     return (
@@ -63,7 +71,7 @@ export const Information: FC = () => {
                     Navn på lokasjon:
                     <RequiredStar />
                 </Label>
-                <Input onChange={handleChangeName} value={currentTitle} />
+                <Input onChange={handleChangeName} value={currentTitle} maxLength={30}/>
             </InputWrapper>
             <CategorySelectWrapper>
                 <Label>
@@ -77,7 +85,8 @@ export const Information: FC = () => {
                     Beskriv stedet:
                     <RequiredStar />
                 </Label>
-                <TextArea onChange={handleChangeDescription} value={currentDescription} />
+                <TextArea onChange={handleChangeDescription} value={currentDescription} maxLength={200} />
+                {currentDescription.length}/200
             </InputWrapper>
         </InformationWrapper>
     );
