@@ -178,15 +178,19 @@ namespace restapi.Services
       var geometry = new LocationGeometryDto();
       geometry.Coordinates = new[] { location.Longitude, location.Latitude };
 
+      string azureBlobStorageServer = ".blob.core.windows.net";
+      string azureCDNserver = ".azureedge.net";
+
       var properties = new LocationPropertiesDto
       {
         Title = location.Title,
         Description = location.Description,
-        Img = location.Img,
+        Img = location.Img.Replace(azureBlobStorageServer, azureCDNserver),
         Rating = location.Rating,
         Category = location.Categories,
         Status = location.Status
       };
+
       var response = new LocationResponseDto { Id = location.Id, Geometry = geometry, Properties = properties };
       return response;
     }
