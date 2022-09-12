@@ -44,7 +44,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
             const imageUrl = URL.createObjectURL(image);
             setImageUrl(imageUrl);
         }
-    });
+    }, [image]);
 
     const handleSubmit = (event: any) => {
         if (value === 0 || value === null) {
