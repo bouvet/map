@@ -34,6 +34,7 @@ export const ButtonStyle = styled.div<ButtonColorProps>`
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: ${({ disabled }) => disabled && 'not-allowed'};
 `;
 
 const ButtonEmoji = styled.span`

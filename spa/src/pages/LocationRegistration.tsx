@@ -1,12 +1,9 @@
-import { defaultMaxListeners } from 'events';
-import { FC, useCallback, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { GoogleIcon } from '../components/Navigation/Buttons';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     BackButtonRegistration,
     PageHeader,
     ProgressBar,
-    ProgressElement,
     RegistrationButton,
     RegistrationButtonLeft,
     RegistrationButtonRight,
@@ -32,11 +29,19 @@ export const LocationRegistration: FC = () => {
     const navigate = useNavigate();
     const dispatch = useStateDispatch();
 
-    const handleRedirect = useCallback(() => {
-        navigate('/', { replace: true });
+    const handleClearData = () => {
+        const emptyFile = {} as File;
         dispatch(registrationActions.setCurrentDescription(''));
         dispatch(registrationActions.setCurrentTitle(''));
         dispatch(registrationActions.setCurrentCategories([]));
+        dispatch(registrationActions.setCurrentImage(emptyFile));
+    };
+
+    useEffect(() => handleClearData(), []);
+
+    const handleRedirect = useCallback(() => {
+        navigate('/', { replace: true });
+        handleClearData();
     }, [navigate]);
 
     const handleForwardClick = () => {
@@ -52,9 +57,10 @@ export const LocationRegistration: FC = () => {
             };
             dispatch(locationServices.postLocation(newLocation));
             handleRedirect();
-            dispatch(registrationActions.setCurrentDescription(''));
-            dispatch(registrationActions.setCurrentTitle(''));
-            dispatch(registrationActions.setCurrentCategories([]));
+        } else if (pageIndex === 1) {
+            if (currentTitle && currentDescription && currentCategories[0]) {
+                setPageIndex(pageIndex + 1);
+            }
         } else {
             setPageIndex(pageIndex + 1);
         }
@@ -67,19 +73,9 @@ export const LocationRegistration: FC = () => {
     return (
         <>
             <RegistrationHeader>
-                <BackButtonRegistration backgroundColor={MyTheme.colors.opaque}>
-                    <Link to="/">
-                        <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
-                            arrow_back
-                        </GoogleIcon>
-                    </Link>
-                </BackButtonRegistration>
+                <BackButtonRegistration />
                 <PageHeader>Legg til treningssted</PageHeader>
-                <ProgressBar>
-                    <ProgressElement completed={pageIndex >= 0} icon="add_location" />
-                    <ProgressElement completed={pageIndex >= 1} icon="edit_note" />
-                    <ProgressElement completed={pageIndex >= 2} icon="add_photo_alternate" />
-                </ProgressBar>
+                <ProgressBar pageIndex={pageIndex} />
             </RegistrationHeader>
             <RegistrationContentWrapper>
                 {pageIndex === 0 ? (
@@ -109,13 +105,27 @@ export const LocationRegistration: FC = () => {
                         >
                             Tilbake
                         </RegistrationButtonLeft>
-                        <RegistrationButtonRight
-                            text={MyTheme.colors.lightbase}
-                            background={MyTheme.colors.accent}
-                            onClick={handleForwardClick}
-                        >
-                            {pageIndex === 1 ? 'Videre' : 'Fullfør'}
-                        </RegistrationButtonRight>
+
+                        {pageIndex === 1 && (
+                            <RegistrationButtonRight
+                                text={MyTheme.colors.lightbase}
+                                background={MyTheme.colors.accent}
+                                disabled={!(currentTitle && currentCategories[0] && currentDescription)}
+                                onClick={handleForwardClick}
+                            >
+                                Videre
+                            </RegistrationButtonRight>
+                        )}
+
+                        {pageIndex === 2 && (
+                            <RegistrationButtonRight
+                                text={MyTheme.colors.lightbase}
+                                background={MyTheme.colors.accent}
+                                onClick={handleForwardClick}
+                            >
+                                Fullfør
+                            </RegistrationButtonRight>
+                        )}
                     </RegistrationButtonWrapper>
                 )}
                 {pageIndex === 1 && <Information />}

@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { FilterButton, RegisterButton } from '../../../components/Filter/Buttons';
+import { RequiredStar } from '../../../components/Common/RequiredStar';
+import {  RegisterButton } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
@@ -45,6 +46,7 @@ export const Information: FC = () => {
     ));
 
     const dispatch = useDispatch();
+    const { currentTitle, currentDescription } = useStateSelector((state) => state.registration);
 
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(registrationActions.setCurrentTitle(event.target.value));
@@ -57,16 +59,25 @@ export const Information: FC = () => {
     return (
         <InformationWrapper>
             <InputWrapper>
-                <Label>Navn på lokasjon:</Label>
-                <Input onChange={handleChangeName} />
+                <Label>
+                    Navn på lokasjon:
+                    <RequiredStar />
+                </Label>
+                <Input onChange={handleChangeName} value={currentTitle} />
             </InputWrapper>
             <CategorySelectWrapper>
-                <Label>Velg kategorier:</Label>
+                <Label>
+                    Velg kategorier:
+                    <RequiredStar />
+                </Label>
             </CategorySelectWrapper>
             <FilterMenuContent>{mappedFilter}</FilterMenuContent>
             <InputWrapper>
-                <Label>Beskriv stedet:</Label>
-                <TextArea onChange={handleChangeDescription} />
+                <Label>
+                    Beskriv stedet:
+                    <RequiredStar />
+                </Label>
+                <TextArea onChange={handleChangeDescription} value={currentDescription} />
             </InputWrapper>
         </InformationWrapper>
     );
