@@ -53,7 +53,7 @@ export const LocationRegistration: FC = () => {
                 latitude: currentMapCenter.lat,
                 rating: 0,
                 category: currentCategories,
-                img: currentImage,
+                image: currentImage,
             };
             dispatch(locationServices.postLocation(newLocation));
             handleRedirect();
