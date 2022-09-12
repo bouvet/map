@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -59,7 +59,7 @@ const ImageContainer = styled.div`
 `;
 
 type ImageProp = {
-    backgroundImage: any;
+    backgroundImage: string | undefined;
 };
 
 const ImageWrapper = styled.div<ImageProp>`
@@ -67,7 +67,7 @@ const ImageWrapper = styled.div<ImageProp>`
     padding-left: 40vw;
     display: inline-block;
     border-radius: 10px;
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${({ backgroundImage }) => backgroundImage});
     background-repeat: none;
     background-position: center;
     background-size: cover;
@@ -78,6 +78,9 @@ export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = useState(true);
 
     const [reviewList, setReviewList]: any = useState([]);
+
+    const [imageList, setImageList]: any = useState([]);
+
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
@@ -104,6 +107,17 @@ export const SwipeableEdgeDrawer: FC = () => {
             setReviewList(temp);
         }
     }, [currentReviews]);
+
+
+    useEffect(() => {
+        if (currentReviews) {
+            const temp = currentReviews.map((item: ReviewTypeGet) =>
+                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
+            );
+            setImageList(temp);
+        }
+    }, [currentReviews]);
+
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
@@ -165,11 +179,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
-                        <ImageContainer>
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                            <ImageWrapper backgroundImage={locationImg} />
-                        </ImageContainer>
+                        <ImageContainer>{imageList && imageList}</ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>
                             <b>Omtaler</b>

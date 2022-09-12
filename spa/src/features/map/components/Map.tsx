@@ -26,10 +26,19 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const { locations, filteredLocations, selectedFilterCategory, selectedMarker } = useStateSelector((state) => state.map);
 
+    const { currentMapCenter } = useStateSelector((state) => state.registration);
+
     const dispatch = useStateDispatch();
 
     useEffect(() => {
         dispatch(mapService.getLocations());
+        if (addingLocation && currentMapCenter.lat) {
+            setViewState({
+                longitude: currentMapCenter.long,
+                latitude: currentMapCenter.lat,
+                zoom: 11,
+            });
+        }
     }, [dispatch]);
 
     const mapRef = useRef(null);

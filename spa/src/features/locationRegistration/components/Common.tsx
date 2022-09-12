@@ -1,6 +1,7 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton } from '../../../components/Navigation/Buttons';
+import { BackButton, GoogleIcon } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { ButtonStyle } from './Location';
 
@@ -8,11 +9,21 @@ interface ProgessCompletionProp {
     completed: boolean;
 }
 
-export const BackButtonRegistration = styled(BackButton)`
+export const BackButtonRegistrationWrapper = styled(BackButton)`
     position: fixed;
     top: 10px;
     left: 10px;
 `;
+
+export const BackButtonRegistration: FC = () => (
+    <BackButtonRegistrationWrapper backgroundColor={MyTheme.colors.opaque}>
+        <Link to="/">
+            <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+                arrow_back
+            </GoogleIcon>
+        </Link>
+    </BackButtonRegistrationWrapper>
+);
 
 export const RegistrationHeader = styled.div`
     width: 100%;
@@ -34,7 +45,7 @@ export const PageHeader = styled.h1`
     font-weight: normal;
 `;
 
-export const ProgressBar = styled.div`
+export const ProgressBarWrapper = styled.div`
     width: 90%;
     height: 70px;
     margin: 40px 5% 0px 5%;
@@ -105,3 +116,15 @@ export const RegistrationButtonWrapper = styled.div`
     position: absolute;
     bottom: 0px;
 `;
+
+interface ProgressBarProps {
+    pageIndex: number;
+}
+
+export const ProgressBar: FC<ProgressBarProps> = ({ pageIndex }) => (
+    <ProgressBarWrapper>
+        <ProgressElement completed={pageIndex >= 0} icon="add_location" />
+        <ProgressElement completed={pageIndex >= 1} icon="edit_note" />
+        <ProgressElement completed={pageIndex >= 2} icon="add_photo_alternate" />
+    </ProgressBarWrapper>
+);

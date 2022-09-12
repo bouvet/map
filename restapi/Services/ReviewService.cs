@@ -37,6 +37,7 @@ namespace restapi.Services
 
       var review = new Review
       {
+        Id = Guid.NewGuid(),
         Rating = newReview.Rating,
       };
 

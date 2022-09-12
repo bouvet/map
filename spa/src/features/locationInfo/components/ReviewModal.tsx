@@ -15,7 +15,7 @@ interface ReviewProps {
 }
 
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
-    const [value, setValue] = useState<number | null>(0);
+    const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
     const handleCloseAddReview = () => close();
@@ -118,9 +118,15 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 Last opp
                                 <input hidden accept="image/*" multiple type="file" />
                             </Button>
-                            <Button type="submit" variant="contained" onClick={handleSubmit}>
-                                Send inn
-                            </Button>
+                            {!value ? (
+                                <Button disabled type="submit" variant="contained">
+                                    Send inn
+                                </Button>
+                            ) : (
+                                <Button type="submit" variant="contained" onClick={handleSubmit}>
+                                    Send inn
+                                </Button>
+                            )}
                         </Stack>
                         <Snackbar
                             open={openErrorMessage}
