@@ -40,7 +40,7 @@ export interface Properties {
     category: Array<Category>;
 
     /** @param img string with image data */
-    img?: string;
+    img: string;
 
     /** @param rating number to indicate star rating on park */
     rating: number;
