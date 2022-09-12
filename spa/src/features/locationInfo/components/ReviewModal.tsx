@@ -1,12 +1,13 @@
-import { FC, useState } from 'react';
-import { Alert, Box, Button, ClickAwayListener, Modal, Rating, Snackbar, Stack } from '@mui/material';
+import React, { FC, useEffect, useState } from 'react';
+import { Box, Button, ClickAwayListener, Modal, Rating, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { RoundButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { locationinfoServices } from '../services/locationinfo.services';
-import { Review } from '../../../utils/types.d';
+import { reviewServices } from '../services/locationinfo.services';
+import { ReviewType } from '../../../utils/types.d';
+import { Img } from '../../locationRegistration/components/ImageUploader';
 
 interface ReviewProps {
     open: boolean;
@@ -15,35 +16,55 @@ interface ReviewProps {
 }
 
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
-    const [value, setValue] = useState<number | null>(0);
+    const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
-    const handleCloseAddReview = () => close();
+    const [image, setImage] = useState<File | undefined>(undefined);
+    const [imageUrl, setImageUrl] = useState('');
+
+    const handleCloseAddReview = () => {
+        close();
+        setValue(0);
+        setReview('');
+        setImage(undefined);
+        setImageUrl('');
+    };
     const dispatch = useStateDispatch();
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
     const handleOpenSuccessMessage = () => success();
 
-    const [openErrorMessage, setOpenErrorMessage] = useState(false);
-    const handleCloseErrorMessage = () => setOpenErrorMessage(false);
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { files } = event.target;
+        if (files) {
+            setImage(files[0]);
+        }
+    };
 
-    const handleSubmit = (event: any) => {
+    useEffect(() => {
+        if (image) {
+            const imageUrl = URL.createObjectURL(image);
+            setImageUrl(imageUrl);
+        }
+    }, [image]);
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
             event.preventDefault();
-            setOpenErrorMessage(true);
         } else {
-            const payload: Review = {
+            const payload: ReviewType = {
                 rating: value,
                 text: review,
                 locationId: currentlySelectedLocation.id,
             };
-            dispatch(locationinfoServices.postReview(payload));
+            if (image) {
+                payload.image = image;
+            }
+            dispatch(reviewServices.postReview(payload));
             event.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
-            setValue(0);
-            setReview('');
         }
     };
 
@@ -84,7 +105,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     return (
         <Modal open={open}>
             <ClickAwayListener onClickAway={handleCloseAddReview}>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(event) => handleSubmit(event)}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{
@@ -114,22 +135,24 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 onChange={(event) => setReview(event.target.value)}
                             />
                             {review.length} / 120
-                            <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                Last opp
-                                <input hidden accept="image/*" multiple type="file" />
-                            </Button>
-                            <Button type="submit" variant="contained" onClick={handleSubmit}>
-                                Send inn
-                            </Button>
+                            {image ? (
+                                <Img src={imageUrl} alt="blobb" />
+                            ) : (
+                                <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                                    Last opp
+                                    <input hidden accept="image/*" multiple type="file" onChange={(event) => handleImageChange(event)} />
+                                </Button>
+                            )}
+                            {!value ? (
+                                <Button disabled variant="contained">
+                                    Send inn
+                                </Button>
+                            ) : (
+                                <Button type="submit" variant="contained">
+                                    Send inn
+                                </Button>
+                            )}
                         </Stack>
-                        <Snackbar
-                            open={openErrorMessage}
-                            autoHideDuration={3000}
-                            onClose={handleCloseErrorMessage}
-                            sx={{ display: 'inline' }}
-                        >
-                            <Alert severity="error">Rating mangler!</Alert>
-                        </Snackbar>
                         <CloseBtn
                             backgroundColor={MyTheme.colors.opaque}
                             textColor={MyTheme.colors.lightbase}

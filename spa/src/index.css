@@ -11,8 +11,22 @@
    -khtml-user-select: none; /* Konqueror HTML */
      -moz-user-select: none; /* Old versions of Firefox */
       -ms-user-select: none; /* Internet Explorer/Edge */
+<<<<<<< HEAD
           user-select: none; /* Non-prefixed version, currently
+=======
+          user-select: none; /* Non-prefixed version, currently */
+>>>>>>> f89e168187a211b696ed0835070ce50497ed9c81
 }
+
+input, textarea {
+  -webkit-touch-callout: text; /* iOS Safari */
+  -webkit-user-select: text; /* Safari */
+   -khtml-user-select: text; /* Konqueror HTML */
+     -moz-user-select: text; /* Old versions of Firefox */
+      -ms-user-select: text; /* Internet Explorer/Edge */
+          user-select: text; /* Non-prefixed version, currently */
+}
+
 
 *::-webkit-scrollbar { 
   display: none;  /* Safari and Chrome */
