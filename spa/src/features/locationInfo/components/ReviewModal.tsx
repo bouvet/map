@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Alert, Box, Button, ClickAwayListener, Modal, Rating, Snackbar, Stack } from '@mui/material';
+import { Box, Button, ClickAwayListener, Modal, Rating, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
@@ -22,15 +22,18 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [image, setImage] = useState<File | undefined>(undefined);
     const [imageUrl, setImageUrl] = useState('');
 
-    const handleCloseAddReview = () => close();
+    const handleCloseAddReview = () => {
+        close();
+        setValue(0);
+        setReview('');
+        setImage(undefined);
+        setImageUrl('');
+    };
     const dispatch = useStateDispatch();
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
     const handleOpenSuccessMessage = () => success();
-
-    const [openErrorMessage, setOpenErrorMessage] = useState(false);
-    const handleCloseErrorMessage = () => setOpenErrorMessage(false);
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
@@ -46,10 +49,9 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     }, [image]);
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
             event.preventDefault();
-            setOpenErrorMessage(true);
         } else {
             const payload: ReviewType = {
                 rating: value,
@@ -63,10 +65,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
             event.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
-            setValue(0);
-            setReview('');
-            setImage(undefined);
-            setImageUrl('');
         }
     };
 
@@ -107,7 +105,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     return (
         <Modal open={open}>
             <ClickAwayListener onClickAway={handleCloseAddReview}>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(event) => handleSubmit(event)}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{
@@ -146,23 +144,15 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 </Button>
                             )}
                             {!value ? (
-                                <Button disabled type="submit" variant="contained">
+                                <Button disabled variant="contained">
                                     Send inn
                                 </Button>
                             ) : (
-                                <Button type="submit" variant="contained" onClick={handleSubmit}>
+                                <Button type="submit" variant="contained">
                                     Send inn
                                 </Button>
                             )}
                         </Stack>
-                        <Snackbar
-                            open={openErrorMessage}
-                            autoHideDuration={3000}
-                            onClose={handleCloseErrorMessage}
-                            sx={{ display: 'inline' }}
-                        >
-                            <Alert severity="error">Rating mangler!</Alert>
-                        </Snackbar>
                         <CloseBtn
                             backgroundColor={MyTheme.colors.opaque}
                             textColor={MyTheme.colors.lightbase}

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using SkiaSharp;
 
 namespace restapi.Services
 {
@@ -13,7 +10,13 @@ namespace restapi.Services
   {
     static public async Task<CloudBlockBlob> UploadFile(Guid id, IFormFile uploadFile)
     {
-      // todo check if valid id for location
+      int compressedImageQuality = 50;
+
+      var streamFromUpload = new MemoryStream();
+      await uploadFile.CopyToAsync(streamFromUpload);
+      var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
+      SKData webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, compressedImageQuality);
+
       var azureKeyVault = Environment.GetEnvironmentVariable("VaultUri");
       var keyVaultEndpoint = new Uri(azureKeyVault!);
       var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
@@ -24,12 +27,11 @@ namespace restapi.Services
       CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(blobstorageconnection.Value.Value);
       CloudBlobClient blobStorageClient = azureCloudStorageAccount.CreateCloudBlobClient();
       CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference("images");
+      await imageBlobContainer.CreateIfNotExistsAsync();
       CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(blobFileName);
-      blockBlob.Properties.ContentType = uploadFile.ContentType;
-      await using (var data = uploadFile.OpenReadStream())
-      {
-        await blockBlob.UploadFromStreamAsync(data);
-      }
+
+      blockBlob.Properties.ContentType = "image/webp";
+      await blockBlob.UploadFromStreamAsync(webpImage.AsStream());
 
       return blockBlob;
     }

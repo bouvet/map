@@ -70,7 +70,7 @@ const PopupContent = styled.div`
     padding: 10px;
     border-radius: 0px 10px 10px 0px;
     justify-content: left;
-    overflow: scroll; // hidden
+    overflow: hidden;
 `;
 
 const Parkname = styled.p`
@@ -78,6 +78,8 @@ const Parkname = styled.p`
     padding-right: 50px;
     margin: 0px;
     font-size: ${MyTheme.fontSize.header};
+    word-break: break-word;
+    hyphens: auto;
 `;
 
 const Bodytext = styled.div`
@@ -114,7 +116,11 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     const [displayedDescription, setDisplayedDescription] = useState('');
 
     useEffect(() => {
-        setDisplayedDescription(`${description.slice(0, 100)}...`);
+        if (description.length > 50) {
+            setDisplayedDescription(`${description.slice(0, 50)}... `);
+        } else {
+            setDisplayedDescription(`${description.slice(0, 50)}`);
+        }
     }, [description]);
 
     return (
@@ -135,7 +141,8 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 <Parkname>{name}</Parkname>
                 <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx={MyTheme.fontSize.icon} />
                 <Bodytext>
-                    {displayedDescription} <ReadMoreLink onClick={handleClickShowLocationPage}> les mer</ReadMoreLink>
+                    {displayedDescription}
+                    <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 80 && 'les mer'}</ReadMoreLink>
                 </Bodytext>
             </PopupContent>
         </PopupWrapper>

@@ -48,6 +48,8 @@ const ContentContainer = styled.div`
 const GridWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    word-break: break-word;
+    hyphens: auto;
 `;
 
 const ImageContainer = styled.div`
@@ -86,7 +88,6 @@ export const SwipeableEdgeDrawer: FC = () => {
     const locationTitle = currentlySelectedLocation.properties.title;
     const locationDescription = currentlySelectedLocation.properties.description;
     const locationRating = currentlySelectedLocation.properties.rating;
-    const locationImg = currentlySelectedLocation.properties.img;
     const { id } = currentlySelectedLocation;
 
     const dispatch = useStateDispatch();
