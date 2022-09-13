@@ -24,6 +24,7 @@ export const LocationRegistration: FC = () => {
     const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector(
         (state) => state.registration,
     );
+
     const [pageIndex, setPageIndex] = useState(0);
 
     const navigate = useNavigate();
@@ -37,11 +38,13 @@ export const LocationRegistration: FC = () => {
         dispatch(registrationActions.setCurrentImage(emptyFile));
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => handleClearData(), []);
 
     const handleRedirect = useCallback(() => {
         navigate('/', { replace: true });
         handleClearData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     const handleForwardClick = () => {
@@ -70,6 +73,28 @@ export const LocationRegistration: FC = () => {
         setPageIndex(pageIndex - 1);
     };
 
+    const handleGetLocation = () => {
+        console.log('isClicked');
+        if ('geolocation' in navigator) {
+            setLocationFromUserLocation();
+        } else {
+            console.log('Not availale');
+        }
+    };
+
+    const setLocationFromUserLocation = () => {
+        console.log('isGettingLocation');
+        navigator.geolocation.getCurrentPosition(function (position) {
+            dispatch(
+                registrationActions.setCurrentUserLocation({
+                    lat: position.coords.latitude,
+                    long: position.coords.longitude,
+                }),
+            );
+            dispatch(registrationActions.setHasUserLocation(true));
+        });
+    };
+
     return (
         <>
             <RegistrationHeader>
@@ -80,7 +105,7 @@ export const LocationRegistration: FC = () => {
             <RegistrationContentWrapper>
                 {pageIndex === 0 ? (
                     <>
-                        <MapView />
+                        <MapView handleClick={handleGetLocation} />
                         <CenterPin>📍</CenterPin>
                         {currentMapCenter.lat ? (
                             <RegistrationButton

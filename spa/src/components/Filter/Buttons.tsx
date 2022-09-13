@@ -5,6 +5,7 @@ import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { registrationActions } from '../../store/state/registration.state';
+import { Img } from '../../features/locationRegistration/components/ImageUploader';
 
 interface FilterButtonToggledProps {
     clicked: boolean;
