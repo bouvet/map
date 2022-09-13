@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { ReactMapGL } from '../../map';
@@ -12,6 +12,7 @@ const MapWrapper = styled.div`
 interface ButtonContentProps {
     text: string;
     emoji: string;
+    onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 interface ButtonColorProps {
@@ -20,8 +21,28 @@ interface ButtonColorProps {
     disabled?: boolean;
 }
 
-export const ButtonStyle = styled.div<ButtonColorProps>`
+export const ButtonStyle = styled.button<ButtonColorProps>`
     position: absolute;
+    border: none;
+    top: 10px;
+    left: 5px;
+    z-index: 10;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    height: 27px;
+    font-size: ${MyTheme.fontSize.icon};
+    padding: 18px 10px;
+    border-radius: 27px;
+    background-color: ${({ disabled }) => (!disabled ? ({ background }) => background : MyTheme.colors.grey)};
+    color: ${(props) => props.text};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: ${({ disabled }) => disabled && 'not-allowed'};
+`;
+
+export const ButtonStyleDiv = styled.div<ButtonColorProps>`
+    position: absolute;
+    border: none;
     top: 10px;
     z-index: 10;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
@@ -53,16 +74,20 @@ export const CenterPin = styled.span`
     font-size: ${MyTheme.fontSize.largeIcon};
 `;
 
-export const EmojiButton: FC<ButtonContentProps> = ({ text, emoji }) => (
-    <ButtonStyle text={MyTheme.colors.darkbase} background={MyTheme.colors.lightbase}>
+export const EmojiButton: FC<ButtonContentProps> = ({ text, emoji, onClick }) => (
+    <ButtonStyle text={MyTheme.colors.darkbase} background={MyTheme.colors.lightbase} type="button" onClick={onClick}>
         <ButtonEmoji>{emoji}</ButtonEmoji>
         <ButtonName>{text}</ButtonName>
     </ButtonStyle>
 );
 
-export const MapView: FC = () => (
+interface MapViewProp {
+    handleClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+}
+
+export const MapView: FC<MapViewProp> = ({ handleClick }) => (
     <MapWrapper>
-        <EmojiButton text="Min plassering" emoji="📍" />
+        <EmojiButton text="Min plassering" emoji="📍" onClick={handleClick} />
         <div className="registration-container">
             <ReactMapGL addingLocation />
         </div>
