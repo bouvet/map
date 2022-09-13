@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { RequiredStar } from '../../../components/Common/RequiredStar';
-import {  RegisterButton } from '../../../components/Filter/Buttons';
+import { RegisterButton } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
@@ -71,7 +71,7 @@ export const Information: FC = () => {
                     Navn på lokasjon:
                     <RequiredStar />
                 </Label>
-                <Input onChange={handleChangeName} value={currentTitle} maxLength={30}/>
+                <Input onChange={handleChangeName} value={currentTitle} maxLength={30} />
             </InputWrapper>
             <CategorySelectWrapper>
                 <Label>

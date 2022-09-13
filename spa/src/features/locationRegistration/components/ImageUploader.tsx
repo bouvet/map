@@ -43,23 +43,24 @@ export const ImageUploader: FC = () => {
             setImageUrl(imageUrl);
             dispatch(registrationActions.setCurrentImage(image));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [image]);
 
     return (
         <ImageUploaderWrapper>
-            {image ?
+            {image ? (
                 <>
                     <Img src={imageUrl} alt="blobb" />
                     <RemoveButton background={MyTheme.colors.alert} text={MyTheme.colors.lightbase} onClick={removeImage}>
                         Remove
                     </RemoveButton>
                 </>
-            :
+            ) : (
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
                     <input hidden accept="image/*" type="file" onChange={(event) => handleImageChange(event)} />
                     Last opp
                 </Button>
-            }
+            )}
         </ImageUploaderWrapper>
     );
 };
