@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Button, ClickAwayListener, Modal, Rating, Stack } from '@mui/material';
+import { Box, Button, ClickAwayListener, Modal, Rating, Stack, IconButton } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
+import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { RoundButton } from '../../../components/Navigation/Buttons';
@@ -40,6 +41,10 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         if (files) {
             setImage(files[0]);
         }
+    };
+
+    const removeImage = () => {
+        setImage(undefined);
     };
 
     useEffect(() => {
@@ -142,7 +147,12 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                             />
                             {review.length} / 120
                             {image ? (
-                                <Img src={imageUrl} alt="blobb" />
+                                <>
+                                    <Img src={imageUrl} alt="blobb" />
+                                    <IconButton aria-label="delete">
+                                        <DeleteIcon onClick={removeImage} />
+                                    </IconButton>
+                                </>
                             ) : (
                                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
                                     Last opp
