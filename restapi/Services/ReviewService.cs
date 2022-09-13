@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace restapi.Services
@@ -56,6 +57,7 @@ namespace restapi.Services
 
       await dataContext.Reviews.AddAsync(review);
       await dataContext.SaveChangesAsync();
+      await updateLocationRating(review.LocationId);
 
       return new ServiceResponse<ReviewResponseDto>
       (
@@ -145,6 +147,7 @@ namespace restapi.Services
       review.Updated = DateTime.Now;
 
       await dataContext.SaveChangesAsync();
+      await updateLocationRating(review.LocationId);
 
       return new ServiceResponse<ReviewResponseDto>
                 (
@@ -171,6 +174,7 @@ namespace restapi.Services
 
       dataContext.Reviews.Remove(review);
       await dataContext.SaveChangesAsync();
+      await updateLocationRating(review.LocationId);
 
       return new ServiceResponse<DeleteReviewDto>
               (
@@ -193,10 +197,21 @@ namespace restapi.Services
         Updated = review.Updated,
         Rating = review.Rating,
         Status = review.Status,
-        Text = review.Text,
+        Text = review.Text ?? "",
         Image = review.Image.Replace(azureBlobStorageServer, azureCDNserver),
         LocationId = review.LocationId
       };
+    }
+
+    private async Task updateLocationRating(Guid LocationId)
+    {
+      Location? location = await dataContext.Locations.FindAsync(LocationId);
+      if (location is null) { return; }
+
+      List<float> allReviewsForLocation = await dataContext.Reviews.Where(l => LocationId == l.LocationId).Select(l => l.Rating).ToListAsync();
+      location.Rating = (float)Math.Round((decimal)allReviewsForLocation.Average(), 1);
+
+      await dataContext.SaveChangesAsync();
     }
   }
 }
