@@ -8,10 +8,16 @@ export const mapService = {
             try {
                 // console.log('mapservice 2')
                 dispatch(mapActions.setLoading(true));
-                const categories = await API.get('/Categories');
+
                 const locations = await API.get('/Locations');
-                dispatch(mapActions.setCategories(categories.data.data));
                 dispatch(mapActions.loadLocations(locations.data.data));
+
+                const categoriesWithLocations = await API.get('/Categories/inUse');
+                dispatch(mapActions.setCategoriesWithLocations(categoriesWithLocations.data.data));
+
+                const categories = await API.get('/Categories');
+                dispatch(mapActions.setCategories(categories.data.data));
+
                 dispatch(mapActions.setLoading(false));
             } catch (error) {
                 // TODO: Push error to error state

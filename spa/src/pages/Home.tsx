@@ -16,8 +16,8 @@ import { Category } from '../utils/types.d';
 
 export const Home: FC = () => {
     useFilterEvent();
-    const { popUpIsVisible, categories, currentlySelectedLocation, homeMarkerFocus } = useStateSelector((state) => state.map);
-    const mappedFilter = categories.map((item: Category) =>
+    const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus } = useStateSelector((state) => state.map);
+    const mappedFilter = categoriesWithLocations.map((item: Category) =>
         item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
     );
     const dispatch = useStateDispatch();
@@ -52,12 +52,14 @@ export const Home: FC = () => {
                 <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
                     <PopupCard>
                         {popUpIsVisible && (
-                            <Popup
-                                name={currentlySelectedLocation.properties.title}
-                                description={currentlySelectedLocation.properties.description}
-                                rating={currentlySelectedLocation.properties.rating}
-                                image={currentlySelectedLocation.properties.img}
-                            />
+                            <>
+                                <Popup
+                                    name={currentlySelectedLocation.properties.title}
+                                    description={currentlySelectedLocation.properties.description}
+                                    rating={currentlySelectedLocation.properties.rating}
+                                    image={currentlySelectedLocation.properties.img}
+                                />
+                            </>
                         )}
                     </PopupCard>
                 </Slide>

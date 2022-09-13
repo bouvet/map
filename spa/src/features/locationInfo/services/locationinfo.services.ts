@@ -1,4 +1,3 @@
-import { useStateDispatch } from '../../../hooks/useRedux';
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store/index';
 import { reviewActions } from '../../../store/state/review.state';
