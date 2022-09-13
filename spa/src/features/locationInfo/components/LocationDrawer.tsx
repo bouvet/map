@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Global } from '@emotion/react';
-import { SwipeableDrawer, Button, Box, Typography, CssBaseline, Snackbar, Alert } from '@mui/material';
+import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import styled from 'styled-components';
@@ -180,12 +180,12 @@ export const SwipeableEdgeDrawer: FC = () => {
                     >
                         <Puller />
                         <GridWrapper>
-                            <Typography sx={{ p: 2, color: 'text.primary', fontWeight: 'bold', textAlign: 'left' }}>
+                            <StyledBox sx={{ p: 2, color: 'text.primary', fontWeight: 'bold', textAlign: 'left' }}>
                                 {locationTitle}
-                            </Typography>
-                            <Typography sx={{ p: 2, color: 'text.primary', textAlign: 'right' }} onClick={handleOpenAddReview}>
+                            </StyledBox>
+                            <StyledBox sx={{ p: 2, color: 'text.primary', textAlign: 'right' }} onClick={handleOpenAddReview}>
                                 <StarRating rating={locationRating} color={MyTheme.colors.accent} sizePx={MyTheme.fontSize.largeIcon} />
-                            </Typography>
+                            </StyledBox>
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>

@@ -9,6 +9,7 @@ const initialState = {
     selectedFilterCategory: '',
     selectedMarker: '',
     categories: [] as Category[],
+    categoriesWithLocations: [] as Category[],
     popUpIsVisible: false,
     currentlySelectedLocation: {} as Location,
     homeMarkerFocus: false,
@@ -41,6 +42,9 @@ const mapState = createSlice({
         },
         setCategories(state, action: { payload: Category[]; type: string }) {
             state.categories = action.payload;
+        },
+        setCategoriesWithLocations(state, action: { payload: Category[]; type: string }) {
+            state.categoriesWithLocations = action.payload;
         },
         setHomeMarkerFocus(state, action: { payload: boolean; type: string }) {
             state.homeMarkerFocus = action.payload;
