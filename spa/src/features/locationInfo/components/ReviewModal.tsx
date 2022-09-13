@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Button, ClickAwayListener, Modal, Rating, Stack } from '@mui/material';
+import { Box, Button, ClickAwayListener, Modal, Rating, Stack, IconButton } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
+import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { RoundButton } from '../../../components/Navigation/Buttons';
@@ -42,12 +43,22 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
+    const removeImage = () => {
+        setImage(undefined);
+    };
+
     useEffect(() => {
         if (image) {
             const imageUrl = URL.createObjectURL(image);
             setImageUrl(imageUrl);
         }
     }, [image]);
+
+    const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (event.target.value !== ' ') {
+            setReview(event.target.value);
+        }
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
@@ -132,11 +143,16 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 style={{ padding: 5, resize: 'none' }}
                                 maxLength={120}
                                 value={review}
-                                onChange={(event) => setReview(event.target.value)}
+                                onChange={(event) => handleReviewChange(event)}
                             />
                             {review.length} / 120
                             {image ? (
-                                <Img src={imageUrl} alt="blobb" />
+                                <>
+                                    <Img src={imageUrl} alt="blobb" />
+                                    <IconButton aria-label="delete">
+                                        <DeleteIcon onClick={removeImage} />
+                                    </IconButton>
+                                </>
                             ) : (
                                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
                                     Last opp

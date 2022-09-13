@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -80,9 +80,7 @@ export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = useState(true);
 
     const [reviewList, setReviewList]: any = useState([]);
-
     const [imageList, setImageList]: any = useState([]);
-
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -104,7 +102,9 @@ export const SwipeableEdgeDrawer: FC = () => {
                     <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
                 ) : null,
             );
-            setReviewList(temp);
+            if (typeof temp === 'object') {
+                setReviewList(temp);
+            }
         }
     }, [currentReviews]);
 
@@ -113,7 +113,19 @@ export const SwipeableEdgeDrawer: FC = () => {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
                 item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
             );
-            setImageList(temp);
+            console.log(typeof temp);
+            if (typeof temp === 'object') {
+                setImageList(temp);
+                if (currentlySelectedLocation.properties.img) {
+                    const mainImg = (
+                        <ImageWrapper
+                            key={currentlySelectedLocation.properties.title}
+                            backgroundImage={currentlySelectedLocation.properties.img}
+                        />
+                    );
+                    setImageList((imageList: any) => [mainImg, ...imageList]);
+                }
+            }
         }
     }, [currentReviews]);
 
