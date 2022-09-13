@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -58,7 +59,15 @@ export const LocationRegistration: FC = () => {
                 category: currentCategories,
                 img: currentImage,
             };
-            dispatch(locationServices.postLocation(newLocation));
+            const formData = new FormData();
+            formData.append('title', currentTitle);
+            formData.append('description', currentDescription);
+            formData.append('longitude', JSON.stringify(currentMapCenter.long));
+            formData.append('latitude', JSON.stringify(currentMapCenter.lat));
+            currentCategories.map((x) => formData.append('category', x));
+            formData.append('img', currentImage);
+
+            dispatch(locationServices.postLocation(formData));
             handleRedirect();
         } else if (pageIndex === 1) {
             if (currentTitle && currentDescription && currentCategories[0]) {
