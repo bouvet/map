@@ -12,6 +12,22 @@ namespace restapi.Services
       this.dataContext = dataContext;
     }
 
+    public async Task<ServiceResponse<List<Category>>> GetAllCategoriesInUse()
+    {
+      var allCategories = await dataContext.Categories.ToListAsync();
+      var locations = await dataContext.Locations.ToListAsync();
+
+      // var locationsWithCategory = locations.Where(x => (x.Categories.Exists(x => x.Id == categoryId) || (Guid.Empty == categoryId)));
+
+      var categoriesInUse = allCategories.Where(cat => locations.Exists(loc => loc.Categories.Exists(locCat => locCat.Id == cat.Id))).ToList();
+
+      if (categoriesInUse.Count() < 1)
+      {
+        return new ServiceResponse<List<Category>>(StatusCodes.Status404NotFound, "no category in use");
+      }
+
+      return new ServiceResponse<List<Category>>(StatusCodes.Status200OK, Message: "Fetched all Categories in use!", data: categoriesInUse);
+    }
     public async Task<ServiceResponse<List<Category>>> GetAllCategories()
     {
 

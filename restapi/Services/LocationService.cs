@@ -2,6 +2,7 @@ using System.Reflection.Emit;
 using System.Linq;
 using System.Net.Security;
 using Microsoft.WindowsAzure.Storage.Blob;
+using GeoCoordinatePortable;
 
 namespace restapi.Services
 {
@@ -102,6 +103,29 @@ namespace restapi.Services
       return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, data: LocationResponseBuilder(location));
     }
 
+    public async Task<ServiceResponse<LocationResponseDto>> GetClosestLocation(double latitude, double longitude, Guid categoryId)
+    {
+      var locations = await dataContext.Locations.ToListAsync();
+      var _category = await dataContext.Categories.FindAsync(categoryId);
+
+
+      var coord = new GeoCoordinate(latitude, longitude);
+
+      Console.WriteLine(categoryId + " is " + (categoryId == Guid.Empty));
+
+      var locationsWithCategory = locations.Where(x => (x.Categories.Exists(x => x.Id == categoryId) || (Guid.Empty == categoryId)));
+      if (locationsWithCategory.Count() < 1)
+      {
+        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"no locations with category id {categoryId}");
+      }
+      var nearest = locationsWithCategory.Select(x => new GeoCoordinate(x.Latitude, x.Longitude))
+                      .OrderBy(x => x.GetDistanceTo(coord))
+                      .First();
+
+      var nearestLocation = locations.Where(l => l.Latitude == nearest.Latitude && l.Longitude == nearest.Longitude);
+      return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, data: LocationResponseBuilder(nearestLocation.First()));
+    }
+
     public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(Guid id, UpdateLocationDto request)
     {
       try
@@ -172,6 +196,7 @@ namespace restapi.Services
       }
 
     }
+
 
     private LocationResponseDto LocationResponseBuilder(Location location)
     {
