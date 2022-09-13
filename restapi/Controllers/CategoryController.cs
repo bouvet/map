@@ -30,6 +30,17 @@ namespace restapi.Controllers
       return StatusCode(response.StatusCode, response);
     }
 
+    [HttpGet("inUse")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CategoryExample500InternalServerError), StatusCodes.Status500InternalServerError)]
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ListCategoryExample200OK))]
+    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(CategoryExample500InternalServerError))]
+    public async Task<ActionResult<ServiceResponse<List<Category>>>> GetAllCategoriesInUse()
+    {
+      var response = await categoryService.GetAllCategoriesInUse();
+      return StatusCode(response.StatusCode, response);
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
