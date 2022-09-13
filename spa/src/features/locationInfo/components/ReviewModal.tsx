@@ -49,6 +49,12 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     }, [image]);
 
+    const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (event.target.value !== ' ') {
+            setReview(event.target.value);
+        }
+    };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
             event.preventDefault();
@@ -132,7 +138,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 style={{ padding: 5, resize: 'none' }}
                                 maxLength={120}
                                 value={review}
-                                onChange={(event) => setReview(event.target.value)}
+                                onChange={(event) => handleReviewChange(event)}
                             />
                             {review.length} / 120
                             {image ? (
