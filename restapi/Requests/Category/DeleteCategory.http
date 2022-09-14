@@ -1,7 +1,7 @@
-@devhost=https://localhost:7130
+@devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
 
-@id=abb0929d-bee3-41d2-d710-08da94be4d2a
+@id=b96f5471-4e3a-4256-2c0c-08da96149036
 
 DELETE {{devhost}}/api/categories/{{id}}
 

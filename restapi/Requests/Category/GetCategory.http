@@ -1,7 +1,7 @@
-@devhost=https://localhost:7130
+@devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
 
-@id=abb0929d-bee3-41d2-d710-08da94be4d2a
+@id=0d870839-a74d-4293-2124-08da8fe1d9b8
 
 GET {{devhost}}/api/categories/{{id}}
 

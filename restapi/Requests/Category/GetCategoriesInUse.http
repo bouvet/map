@@ -1,8 +1,8 @@
 @devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
 
-GET {{devhost}}/api/locations
+GET {{devhost}}/api/categories/inuse
 
 ###
 
-GET {{prodhost}}/api/locations
+GET {{prodhost}}/api/categories/inuse
