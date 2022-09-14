@@ -19,9 +19,8 @@ namespace restapi.Services
         return new ServiceResponse<ReviewResponseDto>
         (
           StatusCodes.Status400BadRequest,
-          data: null,
-          Message: "Rating can't be higher than 5"
-        );
+          Message: "Rating can't be higher than 5",
+          data: null);
       }
 
       var location = await dataContext.Locations.FindAsync(newReview.LocationId);
@@ -31,15 +30,17 @@ namespace restapi.Services
         return new ServiceResponse<ReviewResponseDto>
         (
           StatusCodes.Status400BadRequest,
-          data: null,
-          Message: "Adding review failed, please try again"
-        );
+          Message: "Adding review failed, please try again",
+          data: null);
       }
+
+      var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
 
       var review = new Review
       {
         Id = Guid.NewGuid(),
         Rating = newReview.Rating,
+        Created = currentTime
       };
 
       if (!string.IsNullOrEmpty(newReview.Text))
@@ -57,14 +58,13 @@ namespace restapi.Services
 
       await dataContext.Reviews.AddAsync(review);
       await dataContext.SaveChangesAsync();
-      await updateLocationRating(review.LocationId);
+      await UpdateLocationRating(review.LocationId);
 
       return new ServiceResponse<ReviewResponseDto>
       (
         StatusCodes.Status201Created,
-        data: ReviewResponseBuilder(review),
-        Message: "Review successfully created!"
-      );
+        Message: "Review successfully created!",
+        data: ReviewResponseBuilder(review));
     }
 
     public async Task<ServiceResponse<List<ReviewResponseDto>>> GetReviews(Guid locationId)
@@ -101,9 +101,8 @@ namespace restapi.Services
         return new ServiceResponse<ReviewResponseDto>
           (
             StatusCodes.Status400BadRequest,
-            data: null,
-            Message: "ReviewId must be provided"
-          );
+            Message: "ReviewId must be provided",
+            data: null);
       }
 
       var review = await dataContext.Reviews.FindAsync(reviewId);
@@ -113,9 +112,8 @@ namespace restapi.Services
         return new ServiceResponse<ReviewResponseDto>
           (
             StatusCodes.Status400BadRequest,
-            data: null,
-            Message: "Review not found, please try again"
-          );
+            Message: "Review not found, please try again",
+            data: null);
       }
 
       if (!string.IsNullOrEmpty(request.Text))
@@ -144,17 +142,16 @@ namespace restapi.Services
         review.Image = blob.Uri.ToString();
       }
 
-      review.Updated = DateTime.Now;
+      review.Updated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
 
       await dataContext.SaveChangesAsync();
-      await updateLocationRating(review.LocationId);
+      await UpdateLocationRating(review.LocationId);
 
       return new ServiceResponse<ReviewResponseDto>
                 (
                   StatusCodes.Status200OK,
-                  data: ReviewResponseBuilder(review),
-                  Message: "Review successfully updated!"
-                );
+                  Message: "Review successfully updated!",
+                  data: ReviewResponseBuilder(review));
 
     }
 
@@ -167,28 +164,26 @@ namespace restapi.Services
         return new ServiceResponse<DeleteReviewDto>
                 (
                   StatusCodes.Status404NotFound,
-                  data: null,
-                  Message: "Review was not found, please try again"
-                );
+                  Message: "Review was not found, please try again",
+                  data: null);
       }
 
       dataContext.Reviews.Remove(review);
       await dataContext.SaveChangesAsync();
-      await updateLocationRating(review.LocationId);
+      await UpdateLocationRating(review.LocationId);
 
       return new ServiceResponse<DeleteReviewDto>
               (
                 StatusCodes.Status204NoContent,
-                data: null,
-                Message: "Review successfully deleted!"
-              );
+                Message: "Review successfully deleted!",
+                data: null);
     }
 
-    private ReviewResponseDto ReviewResponseBuilder(Review review)
+    private static ReviewResponseDto ReviewResponseBuilder(Review review)
     {
 
-      string azureBlobStorageServer = ".blob.core.windows.net";
-      string azureCDNserver = ".azureedge.net";
+      const string azureBlobStorageServer = ".blob.core.windows.net";
+      const string azureCDNserver = ".azureedge.net";
 
       return new ReviewResponseDto
       {
@@ -203,7 +198,7 @@ namespace restapi.Services
       };
     }
 
-    private async Task updateLocationRating(Guid LocationId)
+    private async Task UpdateLocationRating(Guid LocationId)
     {
       Location? location = await dataContext.Locations.FindAsync(LocationId);
       if (location is null) { return; }

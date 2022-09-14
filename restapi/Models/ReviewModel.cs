@@ -9,8 +9,8 @@ namespace restapi.Models
     [Required]
     public float Rating { get; set; }
     public string Image { get; set; } = string.Empty;
-    public DateTime Created { get; set; } = DateTime.Now;
-    public DateTime? Updated { get; set; }
+    public DateTime Created { get; set; }
+    public DateTime Updated { get; set; }
 
     public Guid LocationId { get; set; }
     public Location? Location { get; set; }
