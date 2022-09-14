@@ -1,10 +1,7 @@
-﻿using System.Net.Http;
+﻿using GeoCoordinatePortable;
+using restapi.Data;
+using restapi.Models;
 
-using Azure.Storage.Blobs;
-using Microsoft.WindowsAzure.Storage;
-using Azure.Security.KeyVault.Secrets;
-using Azure.Identity;
-using Microsoft.WindowsAzure.Storage.Blob;
 namespace restapi.Controllers
 {
   [ApiController]
@@ -25,6 +22,12 @@ namespace restapi.Controllers
       return StatusCode(response.StatusCode, response);
     }
 
+    [HttpGet("{latitude}&{longitude}/category")]
+    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetClosestLocation(double latitude, double longitude, Guid category)
+    {
+      var response = await locationService.GetClosestLocation(latitude, longitude, category);
+      return StatusCode(response.StatusCode, response);
+    }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(Guid id)

@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -24,6 +25,7 @@ export const LocationRegistration: FC = () => {
     const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector(
         (state) => state.registration,
     );
+
     const [pageIndex, setPageIndex] = useState(0);
 
     const navigate = useNavigate();
@@ -37,11 +39,13 @@ export const LocationRegistration: FC = () => {
         dispatch(registrationActions.setCurrentImage(emptyFile));
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => handleClearData(), []);
 
     const handleRedirect = useCallback(() => {
         navigate('/', { replace: true });
         handleClearData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     const handleForwardClick = () => {
@@ -55,7 +59,15 @@ export const LocationRegistration: FC = () => {
                 category: currentCategories,
                 img: currentImage,
             };
-            dispatch(locationServices.postLocation(newLocation));
+            const formData = new FormData();
+            formData.append('title', currentTitle);
+            formData.append('description', currentDescription);
+            formData.append('longitude', JSON.stringify(currentMapCenter.long));
+            formData.append('latitude', JSON.stringify(currentMapCenter.lat));
+            currentCategories.map((x) => formData.append('category', x));
+            formData.append('img', currentImage);
+
+            dispatch(locationServices.postLocation(formData));
             handleRedirect();
         } else if (pageIndex === 1) {
             if (currentTitle && currentDescription && currentCategories[0]) {
@@ -70,6 +82,28 @@ export const LocationRegistration: FC = () => {
         setPageIndex(pageIndex - 1);
     };
 
+    const handleGetLocation = () => {
+        console.log('isClicked');
+        if ('geolocation' in navigator) {
+            setLocationFromUserLocation();
+        } else {
+            console.log('Not availale');
+        }
+    };
+
+    const setLocationFromUserLocation = () => {
+        console.log('isGettingLocation');
+        navigator.geolocation.getCurrentPosition(function (position) {
+            dispatch(
+                registrationActions.setCurrentUserLocation({
+                    lat: position.coords.latitude,
+                    long: position.coords.longitude,
+                }),
+            );
+            dispatch(registrationActions.setHasUserLocation(true));
+        });
+    };
+
     return (
         <>
             <RegistrationHeader>
@@ -80,7 +114,7 @@ export const LocationRegistration: FC = () => {
             <RegistrationContentWrapper>
                 {pageIndex === 0 ? (
                     <>
-                        <MapView />
+                        <MapView handleClick={handleGetLocation} />
                         <CenterPin>📍</CenterPin>
                         {currentMapCenter.lat ? (
                             <RegistrationButton

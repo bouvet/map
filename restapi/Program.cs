@@ -74,11 +74,11 @@ builder.Services.AddAzureClients(clientBuilder =>
 */
 var app = builder.Build();
 
-if (builder.Environment.IsDevelopment())
-{
+//if (builder.Environment.IsDevelopment())
+//{
   app.UseSwagger();
   app.UseSwaggerUI();
-}
+//}
 
 app.UseResponseCompression();
 app.UseCors("anydomain");

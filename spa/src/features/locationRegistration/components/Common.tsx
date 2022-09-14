@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BackButton, GoogleIcon } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
-import { ButtonStyle } from './Location';
+import { ButtonStyle, ButtonStyleDiv } from './Location';
 
 interface ProgessCompletionProp {
     completed: boolean;
@@ -89,7 +89,7 @@ export const ProgressElement: FC<ProgessProps> = ({ completed, icon }) => (
     </ProgressElementWrapper>
 );
 
-export const RegistrationButton = styled(ButtonStyle)`
+export const RegistrationButton = styled(ButtonStyleDiv)`
     position: absolute;
     bottom: 20px;
     top: auto;

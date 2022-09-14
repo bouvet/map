@@ -15,6 +15,10 @@ namespace restapi.Controllers
     public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> AddReview([FromForm] AddReviewDto newReview)
     {
       var response = await reviewService.AddReview(newReview);
+      if (response.StatusCode == StatusCodes.Status201Created)
+      {
+        return CreatedAtAction(nameof(GetAllReviews), new { LocationId = response.Data!.LocationId }, response);
+      }
       return StatusCode(response.StatusCode, response);
     }
 
