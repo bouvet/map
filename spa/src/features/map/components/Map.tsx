@@ -32,7 +32,6 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     useEffect(() => {
         dispatch(mapService.getLocations());
-        console.log(currentMapCenter);
         if (currentMapCenter.lat) {
             setViewState({
                 longitude: currentMapCenter.long,
