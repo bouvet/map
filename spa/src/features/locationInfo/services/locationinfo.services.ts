@@ -8,7 +8,10 @@ export const reviewServices = {
     postReview(payload: ReviewType) {
         return async (dispatch: AppDispatch) => {
             try {
-                await API.post('/Reviews', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
+                const response = await API.post('/Reviews', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
+                const requestUrl = `/Reviews?locationId=${response.data.data.locationId}`;
+                const reviews: ReviewTypeGet[] = await (await API.get(requestUrl)).data.data;
+                dispatch(reviewActions.setCurrentReviews(reviews));
             } catch (error) {
                 // TODO: Push error to error state
                 console.error(error);
