@@ -1,4 +1,4 @@
-@devhost=https://localhost:7130
+@devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
 
 
@@ -6,7 +6,7 @@ POST {{devhost}}/api/categories
 Content-Type: application/json
 
 {
-  "name": "Fotball",
+  "name": "slettmeg",
   "emoji": "⚽"
 }
 
