@@ -69,16 +69,6 @@ export interface Location {
     pinColor?: string;
 }
 
-export interface NewLocation {
-    title: string;
-    description: string;
-    img?: File;
-    rating?: number;
-    longitude: number;
-    latitude: number;
-    category?: string[];
-}
-
 export interface LatLong {
     lat: number;
     long: number;

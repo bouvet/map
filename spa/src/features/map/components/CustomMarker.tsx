@@ -19,12 +19,12 @@ export const CustomMarker: FC<Props> = ({ coordinates, onClickHandler, selectedM
     const [color, setColor] = useState(MyTheme.colors.darkbase);
 
     useEffect(() => {
-        if (selectedMarker === locaction.properties.title) {
+        if (selectedMarker === locaction.id) {
             setColor(MyTheme.colors.accent);
         } else {
             setColor(MyTheme.colors.darkbase);
         }
-    }, [selectedMarker, locaction.properties.title]);
+    }, [selectedMarker, locaction.id]);
 
     return (
         <Marker longitude={coordinates[0]} latitude={coordinates[1]} onClick={() => onClickHandler(locaction)} anchor="bottom">

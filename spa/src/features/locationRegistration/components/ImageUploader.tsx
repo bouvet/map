@@ -43,8 +43,7 @@ export const ImageUploader: FC = () => {
             setImageUrl(imageUrl);
             dispatch(registrationActions.setCurrentImage(image));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [image]);
+    }, [image, dispatch]);
 
     return (
         <ImageUploaderWrapper>

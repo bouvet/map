@@ -18,7 +18,6 @@ import { locationServices } from '../features/locationRegistration/services/loca
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { registrationActions } from '../store/state/registration.state';
 import { MyTheme } from '../styles/global';
-import { NewLocation } from '../utils/types.d';
 
 export const LocationRegistration: FC = () => {
     const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector(
@@ -49,15 +48,6 @@ export const LocationRegistration: FC = () => {
 
     const handleForwardClick = () => {
         if (pageIndex === 2) {
-            const newLocation: NewLocation = {
-                title: currentTitle,
-                description: currentDescription,
-                longitude: currentMapCenter.long,
-                latitude: currentMapCenter.lat,
-                rating: 0,
-                category: currentCategories,
-                img: currentImage,
-            };
             const formData = new FormData();
             formData.append('title', currentTitle);
             formData.append('description', currentDescription);
@@ -65,7 +55,6 @@ export const LocationRegistration: FC = () => {
             formData.append('latitude', JSON.stringify(currentMapCenter.lat));
             currentCategories.map((x) => formData.append('category', x));
             formData.append('img', currentImage);
-
             dispatch(locationServices.postLocation(formData));
             handleRedirect();
         } else if (pageIndex === 1) {

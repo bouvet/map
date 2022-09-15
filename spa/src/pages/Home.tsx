@@ -11,11 +11,15 @@ import { SwipeableEdgeDrawer } from '../features/locationInfo/components/Locatio
 import { BackButton, GoogleIcon, RoundButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
-import { Category } from '../utils/types.d';
+import { Category, LatLong } from '../utils/types.d';
+import { EmojiButton } from '../features/locationRegistration/components/Location';
+import { locationServices } from '../features/locationRegistration/services/location.services';
 
 export const Home: FC = () => {
     useFilterEvent();
-    const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus } = useStateSelector((state) => state.map);
+    const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus, selectedFilterCategory } =
+        useStateSelector((state) => state.map);
+    const { currentUserLocation } = useStateSelector((state) => state.registration);
     const mappedFilter = categoriesWithLocations.map((item: Category) =>
         item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
     );
@@ -26,10 +30,28 @@ export const Home: FC = () => {
         dispatch(mapActions.setSelectedMarker(''));
     };
 
+    const handleLocationClick = () => {
+        if (currentUserLocation.lat) {
+            dispatch(locationServices.getClosestLocation(currentUserLocation, selectedFilterCategory));
+        } else {
+            console.log('isGettingLocation');
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const userLocation: LatLong = {
+                    lat: position.coords.latitude,
+                    long: position.coords.longitude,
+                };
+                dispatch(locationServices.getClosestLocation(userLocation, selectedFilterCategory));
+            });
+        }
+    };
+
     return (
         <div className="App">
             {!homeMarkerFocus ? (
-                <FilterMenu>{mappedFilter}</FilterMenu>
+                <>
+                    <FilterMenu>{mappedFilter}</FilterMenu>
+                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="5px" />
+                </>
             ) : (
                 <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleBackClick}>
                     <span className="material-symbols-outlined">arrow_back</span>
