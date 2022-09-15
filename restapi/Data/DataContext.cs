@@ -11,14 +11,11 @@ namespace restapi.Data
       modelBuilder.Entity<Location>().Navigation(location => location.Categories).AutoInclude();
 
       modelBuilder.Entity<Location>().Navigation(location => location.Reviews).AutoInclude();
-
     }
 
-    public DbSet<Location> Locations { get; set; }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Review> Reviews { get; set; }
-    public DbSet<User> Users { get; set; }
+    public DbSet<Location> Locations => Set<Location>();
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Review> Reviews => Set<Review>();
+    public DbSet<User> Users => Set<User>();
   }
-
-
 }

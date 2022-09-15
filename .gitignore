@@ -1,3 +1,6 @@
 [Dd]ebug/
 .vs/
 .vscode
+restapi/Properties/serviceDependencies.json
+restapi/Properties/serviceDependencies.optimus-verden-venter - Zip Deploy.json
+restapi/Properties/ServiceDependencies/optimus-verden-venter - Zip Deploy/*
