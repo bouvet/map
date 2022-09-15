@@ -1,11 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { StringDecoder } from 'string_decoder';
 import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { registrationActions } from '../../store/state/registration.state';
-import { Img } from '../../features/locationRegistration/components/ImageUploader';
 
 interface FilterButtonToggledProps {
     clicked: boolean;

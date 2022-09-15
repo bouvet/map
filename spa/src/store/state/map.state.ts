@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import { Category, Location } from '../../utils/types.d';
 
 const initialState = {

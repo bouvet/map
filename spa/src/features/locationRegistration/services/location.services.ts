@@ -1,5 +1,4 @@
 import { API } from '../../../lib/api';
-import { NewLocation } from '../../../utils/types.d';
 
 export const locationServices = {
     postLocation(payload: any) {
