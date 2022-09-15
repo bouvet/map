@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -92,8 +92,7 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     useEffect(() => {
         dispatch(reviewServices.getReviews(id));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [id, dispatch]);
 
     useEffect(() => {
         if (currentReviews) {
@@ -127,7 +126,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 }
             }
         }
-    }, [currentReviews]);
+    }, [currentReviews, currentlySelectedLocation.properties.img, currentlySelectedLocation.properties.title]);
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);

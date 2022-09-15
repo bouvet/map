@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react';
+import { useEffect, useState, FC, useCallback } from 'react';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
@@ -115,13 +115,16 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
 
     const [displayedDescription, setDisplayedDescription] = useState('');
 
-    useEffect(() => {
+    const discriptionCallback = useCallback(() => {
+        setDisplayedDescription(`${description.slice(0, 50)}`);
         if (description.length > 50) {
-            setDisplayedDescription(`${description.slice(0, 50)}... `);
-        } else {
-            setDisplayedDescription(`${description.slice(0, 50)}`);
+            setDisplayedDescription((d) => `${d}... `);
         }
     }, [description]);
+
+    useEffect(() => {
+        discriptionCallback();
+    }, [discriptionCallback]);
 
     return (
         <PopupWrapper>
@@ -142,7 +145,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx={MyTheme.fontSize.icon} />
                 <Bodytext>
                     {displayedDescription}
-                    <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 80 && 'les mer'}</ReadMoreLink>
+                    <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 50 && 'les mer'}</ReadMoreLink>
                 </Bodytext>
             </PopupContent>
         </PopupWrapper>

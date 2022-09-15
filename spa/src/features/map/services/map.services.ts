@@ -6,7 +6,6 @@ export const mapService = {
     getLocations() {
         return async (dispatch: AppDispatch) => {
             try {
-                // console.log('mapservice 2')
                 dispatch(mapActions.setLoading(true));
 
                 const locations = await API.get('/Locations');

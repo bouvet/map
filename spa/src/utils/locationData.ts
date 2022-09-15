@@ -12,7 +12,7 @@ export function applyFilterLocationOnCategory(locations: Location[], category: s
 
     for (let i = 0; i < locations.length; i += 1) {
         for (let j = 0; j < locations[i].properties.category.length; j += 1) {
-            if (locations[i].properties.category[j].name === category) {
+            if (locations[i].properties.category[j].id === category) {
                 filterLocations.push(locations[i]);
             }
         }

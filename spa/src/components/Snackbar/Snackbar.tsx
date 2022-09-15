@@ -15,10 +15,6 @@ interface SnackbarProps {
 export const CustomizedSnackbars: FC<SnackbarProps> = ({ severity, message }) => {
     const [open, setOpen] = React.useState(true);
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
