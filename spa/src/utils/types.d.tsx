@@ -3,7 +3,7 @@
 // export type Category = typeof category[number];
 
 export interface Category {
-    [index: string]: any;
+    [index: string]: string;
     emoji: string;
     name: string;
 }
