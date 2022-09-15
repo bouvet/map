@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BackButton, GoogleIcon } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
-import { ButtonStyle, ButtonStyleDiv } from './Location';
+import { ButtonStyleDiv } from './Location';
 
 interface ProgessCompletionProp {
     completed: boolean;

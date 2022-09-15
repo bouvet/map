@@ -1,11 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { StringDecoder } from 'string_decoder';
 import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { registrationActions } from '../../store/state/registration.state';
-import { Img } from '../../features/locationRegistration/components/ImageUploader';
 
 interface FilterButtonToggledProps {
     clicked: boolean;
@@ -48,22 +46,22 @@ export const FilterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }) 
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        if (selectedFilterCategory === text) {
+        if (selectedFilterCategory === id) {
             setSelect(true);
         } else {
             setSelect(false);
         }
-    }, [selectedFilterCategory, text]);
+    }, [selectedFilterCategory, id]);
 
-    const updateGlobalStateForSelectedCategory = (activity: string) => {
-        dispatch(mapActions.setSelectedFilterCategory(activity));
+    const updateGlobalStateForSelectedCategory = (category: string) => {
+        dispatch(mapActions.setSelectedFilterCategory(category));
         dispatch(mapActions.setSelectedMarker(''));
         dispatch(mapActions.setPopupVisibility(false));
     };
 
     const handleClickFilterButton = () => {
         if (!select) {
-            updateGlobalStateForSelectedCategory(text);
+            updateGlobalStateForSelectedCategory(id);
         } else {
             updateGlobalStateForSelectedCategory('');
         }
