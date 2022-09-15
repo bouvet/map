@@ -3,8 +3,8 @@
 
 @id=5a2936d2-a958-4e6c-84ea-abb0bdfddcec
 
-DELETE {{devhost}}/api/locations/{{id}}
+DELETE {{devhost}}/api/reviews/{{id}}
 
 ###
 
-DELETE {{prodhost}}/api/locations/{{id}}
+DELETE {{prodhost}}/api/reviews/{{id}}

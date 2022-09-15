@@ -1,4 +1,4 @@
-@devhost=https://localhost:7130
+@devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
 
 GET {{devhost}}/api/categories

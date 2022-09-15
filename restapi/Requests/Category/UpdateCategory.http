@@ -1,6 +1,6 @@
-@devhost=https://localhost:7130
+@devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
-@id=b08edce2-cfd9-409e-d70f-08da94be4d2a
+@id=0d870839-a74d-4293-2124-08da8fe1d9b8
 
 PUT {{devhost}}/api/categories/{{id}}
 Content-Type: application/json
