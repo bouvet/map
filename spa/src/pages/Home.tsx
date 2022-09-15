@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import Slide from '@mui/material/Slide';
-
 import { Link } from 'react-router-dom';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';

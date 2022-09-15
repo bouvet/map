@@ -101,9 +101,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                     <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
                 ) : null,
             );
-            if (typeof temp === 'object') {
-                setReviewList(temp);
-            }
+            setReviewList(temp);
         }
     }, [currentReviews]);
 
