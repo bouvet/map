@@ -162,7 +162,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <SwipeableDrawer
                     anchor="bottom"
                     open={open}
-                    onClose={handleCloseDrawer}
+                    onClose={openAddReview ? toggleDrawer(false) : toggleDrawer(true)}
                     onOpen={toggleDrawer(true)}
                     swipeAreaWidth={drawerBleeding}
                     disableSwipeToOpen={false}
