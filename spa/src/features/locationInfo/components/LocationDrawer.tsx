@@ -11,6 +11,7 @@ import { ReviewModal } from './ReviewModal';
 import { StarRating } from '../../../components/StarRating/StarRating';
 import { reviewServices } from '../services/locationinfo.services';
 import { ReviewTypeGet } from '../../../utils/types.d';
+import { mapActions } from '../../../store/state/map.state';
 
 const drawerBleeding = 56;
 
@@ -140,6 +141,12 @@ export const SwipeableEdgeDrawer: FC = () => {
         setOpen(newOpen);
     };
 
+    const handleCloseDrawer = () => {
+        dispatch(mapActions.setHomeMarkerFocus(false));
+        dispatch(mapActions.setPopupVisibility(false));
+        dispatch(mapActions.setSelectedMarker(''));
+    };
+
     return (
         <StyledEngineProvider>
             <Root>
@@ -155,7 +162,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <SwipeableDrawer
                     anchor="bottom"
                     open={open}
-                    onClose={toggleDrawer(false)}
+                    onClose={handleCloseDrawer}
                     onOpen={toggleDrawer(true)}
                     swipeAreaWidth={drawerBleeding}
                     disableSwipeToOpen={false}
