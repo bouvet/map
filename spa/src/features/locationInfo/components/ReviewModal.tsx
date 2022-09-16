@@ -16,6 +16,40 @@ interface ReviewProps {
     success: Function;
 }
 
+const AddReview = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    zIndex: '1301',
+    width: '94%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: 3,
+    p: 7,
+    pt: 5,
+};
+
+const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+        color: '#007BC0',
+    },
+    '& .MuiRating-iconHover': {
+        color: '#007BC0',
+    },
+});
+
+const CloseBtn = styled(RoundButton)`
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 10px;
+    left: 10px;
+    &:active {
+        background-color: ${MyTheme.colors.darkbase};
+    }
+`;
+
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
@@ -79,106 +113,80 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
-    const AddReview = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        zIndex: '1301',
-        width: '94%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        boxShadow: 24,
-        borderRadius: 3,
-        p: 7,
-        pt: 5,
-    };
-
-    const StyledRating = styled(Rating)({
-        '& .MuiRating-iconFilled': {
-            color: '#007BC0',
-        },
-        '& .MuiRating-iconHover': {
-            color: '#007BC0',
-        },
-    });
-
-    const CloseBtn = styled(RoundButton)`
-        position: absolute;
-        height: 40px;
-        width: 40px;
-        top: 10px;
-        left: 10px;
-        &:active {
-            background-color: ${MyTheme.colors.darkbase};
-        }
-    `;
-
     return (
         <Modal open={open}>
-            <ClickAwayListener onClickAway={handleCloseAddReview}>
-                <form onSubmit={(event) => handleSubmit(event)}>
-                    <Box sx={AddReview}>
-                        <Box
-                            sx={{
-                                '& > legend': { mt: 2 },
-                            }}
-                        >
+            <>
+                <ClickAwayListener onClickAway={handleCloseAddReview}>
+                    <form onSubmit={(event) => handleSubmit(event)}>
+                        <Box sx={AddReview}>
+                            <Box
+                                sx={{
+                                    '& > legend': { mt: 2 },
+                                }}
+                            >
+                                <Stack alignItems="center" spacing={3}>
+                                    <StyledRating
+                                        name="simple-controlled"
+                                        size="large"
+                                        value={value}
+                                        onChange={(event, newValue) => {
+                                            setValue(newValue);
+                                        }}
+                                    />
+                                </Stack>
+                                <br />
+                            </Box>
                             <Stack alignItems="center" spacing={3}>
-                                <StyledRating
-                                    name="simple-controlled"
-                                    size="large"
-                                    value={value}
-                                    onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                    }}
+                                <textarea
+                                    name="review"
+                                    rows={4}
+                                    cols={30}
+                                    style={{ padding: 5, resize: 'none' }}
+                                    maxLength={120}
+                                    value={review}
+                                    onChange={(event) => handleReviewChange(event)}
                                 />
+                                {review.length} / 120
+                                {image ? (
+                                    <>
+                                        <Img src={imageUrl} alt="blobb" />
+                                        <IconButton aria-label="delete">
+                                            <DeleteIcon onClick={removeImage} />
+                                        </IconButton>
+                                    </>
+                                ) : (
+                                    <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                                        Last opp
+                                        <input
+                                            hidden
+                                            accept="image/*"
+                                            multiple
+                                            type="file"
+                                            onChange={(event) => handleImageChange(event)}
+                                        />
+                                    </Button>
+                                )}
+                                {!value ? (
+                                    <Button disabled variant="contained">
+                                        Send inn
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" variant="contained">
+                                        Send inn
+                                    </Button>
+                                )}
                             </Stack>
-                            <br />
+                            <CloseBtn
+                                backgroundColor={MyTheme.colors.opaque}
+                                textColor={MyTheme.colors.lightbase}
+                                onClick={handleCloseAddReview}
+                            >
+                                <span className="material-symbols-outlined">close</span>
+                            </CloseBtn>
                         </Box>
-                        <Stack alignItems="center" spacing={3}>
-                            <textarea
-                                name="review"
-                                rows={4}
-                                cols={30}
-                                style={{ padding: 5, resize: 'none' }}
-                                maxLength={120}
-                                value={review}
-                                onChange={(event) => handleReviewChange(event)}
-                            />
-                            {review.length} / 120
-                            {image ? (
-                                <>
-                                    <Img src={imageUrl} alt="blobb" />
-                                    <IconButton aria-label="delete">
-                                        <DeleteIcon onClick={removeImage} />
-                                    </IconButton>
-                                </>
-                            ) : (
-                                <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                    Last opp
-                                    <input hidden accept="image/*" multiple type="file" onChange={(event) => handleImageChange(event)} />
-                                </Button>
-                            )}
-                            {!value ? (
-                                <Button disabled variant="contained">
-                                    Send inn
-                                </Button>
-                            ) : (
-                                <Button type="submit" variant="contained">
-                                    Send inn
-                                </Button>
-                            )}
-                        </Stack>
-                        <CloseBtn
-                            backgroundColor={MyTheme.colors.opaque}
-                            textColor={MyTheme.colors.lightbase}
-                            onClick={handleCloseAddReview}
-                        >
-                            <span className="material-symbols-outlined">close</span>
-                        </CloseBtn>
-                    </Box>
-                </form>
-            </ClickAwayListener>
+                    </form>
+                </ClickAwayListener>
+            </>
         </Modal>
     );
 };
