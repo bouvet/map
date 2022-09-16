@@ -16,6 +16,40 @@ interface ReviewProps {
     success: Function;
 }
 
+const AddReview = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    zIndex: '1301',
+    width: '94%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: 3,
+    p: 7,
+    pt: 5,
+};
+
+const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+        color: '#007BC0',
+    },
+    '& .MuiRating-iconHover': {
+        color: '#007BC0',
+    },
+});
+
+const CloseBtn = styled(RoundButton)`
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 10px;
+    left: 10px;
+    &:active {
+        background-color: ${MyTheme.colors.darkbase};
+    }
+`;
+
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
@@ -79,48 +113,9 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
-    const AddReview = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        zIndex: '1301',
-        width: '94%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        boxShadow: 24,
-        borderRadius: 3,
-        p: 7,
-        pt: 5,
-    };
-
-    const StyledRating = styled(Rating)({
-        '& .MuiRating-iconFilled': {
-            color: '#007BC0',
-        },
-        '& .MuiRating-iconHover': {
-            color: '#007BC0',
-        },
-    });
-
-    const CloseBtn = styled(RoundButton)`
-        position: absolute;
-        height: 40px;
-        width: 40px;
-        top: 10px;
-        left: 10px;
-        &:active {
-            background-color: ${MyTheme.colors.darkbase};
-        }
-    `;
-
-    const Backdrop = styled.div`
-        height: 100vh;
-        width: 100%;
-    `;
-
     return (
         <Modal open={open}>
-            <Backdrop>
+            <>
                 <ClickAwayListener onClickAway={handleCloseAddReview}>
                     <form onSubmit={(event) => handleSubmit(event)}>
                         <Box sx={AddReview}>
@@ -191,7 +186,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                         </Box>
                     </form>
                 </ClickAwayListener>
-            </Backdrop>
+            </>
         </Modal>
     );
 };
