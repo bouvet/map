@@ -6,7 +6,7 @@ const initialState = {
     currentTitle: '',
     currentDescription: '',
     currentCategories: [] as string[],
-    currentImage: {} as File,
+    currentImage: '' as string,
     currentUserLocation: {} as LatLong,
     hasUserLocation: false,
 };
@@ -27,7 +27,7 @@ const registrationState = createSlice({
         setCurrentCategories(state, action: { payload: string[]; type: string }) {
             state.currentCategories = action.payload;
         },
-        setCurrentImage(state, action: { payload: File; type: string }) {
+        setCurrentImage(state, action: { payload: string; type: string }) {
             state.currentImage = action.payload;
         },
         setCurrentUserLocation(state, action: { payload: LatLong; type: string }) {

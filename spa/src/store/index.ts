@@ -11,6 +11,7 @@ export const store = configureStore({
         registration: registrationReducer,
         review: reviewReducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type AppState = ReturnType<typeof store.getState>;

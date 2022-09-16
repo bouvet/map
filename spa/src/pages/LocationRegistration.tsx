@@ -30,11 +30,10 @@ export const LocationRegistration: FC = () => {
     const dispatch = useStateDispatch();
 
     const handleClearData = () => {
-        const emptyFile = {} as File;
         dispatch(registrationActions.setCurrentDescription(''));
         dispatch(registrationActions.setCurrentTitle(''));
         dispatch(registrationActions.setCurrentCategories([]));
-        dispatch(registrationActions.setCurrentImage(emptyFile));
+        dispatch(registrationActions.setCurrentImage(''));
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +45,7 @@ export const LocationRegistration: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
-    const handleForwardClick = () => {
+    const handleForwardClick = async () => {
         if (pageIndex === 2) {
             const formData = new FormData();
             formData.append('title', currentTitle);
@@ -54,8 +53,13 @@ export const LocationRegistration: FC = () => {
             formData.append('longitude', JSON.stringify(currentMapCenter.long));
             formData.append('latitude', JSON.stringify(currentMapCenter.lat));
             currentCategories.map((x) => formData.append('category', x));
-            formData.append('img', currentImage);
-            dispatch(locationServices.postLocation(formData));
+
+            const response = await fetch(currentImage);
+            const buffer = await response.arrayBuffer();
+            const file = new File([buffer], currentImage, { type: 'image' });
+
+            formData.append('img', file);
+            await dispatch(locationServices.postLocation(formData));
             handleRedirect();
         } else if (pageIndex === 1) {
             if (currentTitle && currentDescription && currentCategories[0]) {
