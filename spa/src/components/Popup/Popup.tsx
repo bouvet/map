@@ -1,4 +1,4 @@
-import { useEffect, useState, FC, useCallback } from 'react';
+import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
@@ -37,6 +37,7 @@ const PopupWrapper = styled.div`
 
 const PopupImage = styled.div<PopUpImageProp>`
     background: url(${(props) => props.imageURL});
+    background-color: ${MyTheme.colors.grey};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -113,18 +114,10 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
         dispatch(mapActions.setHomeMarkerFocus(true));
     };
 
-    const [displayedDescription, setDisplayedDescription] = useState('');
-
-    const discriptionCallback = useCallback(() => {
-        setDisplayedDescription(`${description.slice(0, 50)}`);
-        if (description.length > 50) {
-            setDisplayedDescription((d) => `${d}... `);
-        }
+    const displayedDescription = useMemo(() => {
+        if (description.length <= 50) return description;
+        return `${description.slice(0, 50)}... `;
     }, [description]);
-
-    useEffect(() => {
-        discriptionCallback();
-    }, [discriptionCallback]);
 
     return (
         <PopupWrapper>

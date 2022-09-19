@@ -106,6 +106,7 @@ export const SwipeableEdgeDrawer: FC = () => {
         }
     }, [currentReviews]);
 
+    // Sets images for review images
     useEffect(() => {
         if (currentReviews) {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
