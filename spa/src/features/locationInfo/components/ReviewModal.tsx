@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Button, ClickAwayListener, Modal, Rating, Stack, IconButton } from '@mui/material';
+import { Box, Button, Modal, Rating, Stack, IconButton } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
@@ -48,6 +48,12 @@ const CloseBtn = styled(RoundButton)`
     &:active {
         background-color: ${MyTheme.colors.darkbase};
     }
+`;
+
+const Backdrop = styled.div`
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
 `;
 
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
@@ -116,76 +122,69 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     return (
         <Modal open={open}>
             <>
-                <ClickAwayListener onClickAway={handleCloseAddReview}>
-                    <form onSubmit={(event) => handleSubmit(event)}>
-                        <Box sx={AddReview}>
-                            <Box
-                                sx={{
-                                    '& > legend': { mt: 2 },
-                                }}
-                            >
-                                <Stack alignItems="center" spacing={3}>
-                                    <StyledRating
-                                        name="simple-controlled"
-                                        size="large"
-                                        value={value}
-                                        onChange={(event, newValue) => {
-                                            setValue(newValue);
-                                        }}
-                                    />
-                                </Stack>
-                                <br />
-                            </Box>
+                <Backdrop onClick={handleCloseAddReview} />
+                <form onSubmit={(event) => handleSubmit(event)}>
+                    <Box sx={AddReview}>
+                        <Box
+                            sx={{
+                                '& > legend': { mt: 2 },
+                            }}
+                        >
                             <Stack alignItems="center" spacing={3}>
-                                <textarea
-                                    name="review"
-                                    rows={4}
-                                    cols={30}
-                                    style={{ padding: 5, resize: 'none' }}
-                                    maxLength={120}
-                                    value={review}
-                                    onChange={(event) => handleReviewChange(event)}
+                                <StyledRating
+                                    name="simple-controlled"
+                                    size="large"
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                    }}
                                 />
-                                {review.length} / 120
-                                {image ? (
-                                    <>
-                                        <Img src={imageUrl} alt="blobb" />
-                                        <IconButton aria-label="delete">
-                                            <DeleteIcon onClick={removeImage} />
-                                        </IconButton>
-                                    </>
-                                ) : (
-                                    <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                        Last opp
-                                        <input
-                                            hidden
-                                            accept="image/*"
-                                            multiple
-                                            type="file"
-                                            onChange={(event) => handleImageChange(event)}
-                                        />
-                                    </Button>
-                                )}
-                                {!value ? (
-                                    <Button disabled variant="contained">
-                                        Send inn
-                                    </Button>
-                                ) : (
-                                    <Button type="submit" variant="contained">
-                                        Send inn
-                                    </Button>
-                                )}
                             </Stack>
-                            <CloseBtn
-                                backgroundColor={MyTheme.colors.opaque}
-                                textColor={MyTheme.colors.lightbase}
-                                onClick={handleCloseAddReview}
-                            >
-                                <span className="material-symbols-outlined">close</span>
-                            </CloseBtn>
+                            <br />
                         </Box>
-                    </form>
-                </ClickAwayListener>
+                        <Stack alignItems="center" spacing={3}>
+                            <textarea
+                                name="review"
+                                rows={4}
+                                cols={30}
+                                style={{ padding: 5, resize: 'none' }}
+                                maxLength={120}
+                                value={review}
+                                onChange={(event) => handleReviewChange(event)}
+                            />
+                            {review.length} / 120
+                            {image ? (
+                                <>
+                                    <Img src={imageUrl} alt="blobb" />
+                                    <IconButton aria-label="delete">
+                                        <DeleteIcon onClick={removeImage} />
+                                    </IconButton>
+                                </>
+                            ) : (
+                                <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                                    Last opp
+                                    <input hidden accept="image/*" multiple type="file" onChange={(event) => handleImageChange(event)} />
+                                </Button>
+                            )}
+                            {!value ? (
+                                <Button disabled variant="contained">
+                                    Send inn
+                                </Button>
+                            ) : (
+                                <Button type="submit" variant="contained">
+                                    Send inn
+                                </Button>
+                            )}
+                        </Stack>
+                        <CloseBtn
+                            backgroundColor={MyTheme.colors.opaque}
+                            textColor={MyTheme.colors.lightbase}
+                            onClick={handleCloseAddReview}
+                        >
+                            <span className="material-symbols-outlined">close</span>
+                        </CloseBtn>
+                    </Box>
+                </form>
             </>
         </Modal>
     );

@@ -111,7 +111,6 @@ export const SwipeableEdgeDrawer: FC = () => {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
                 item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
             );
-            console.log(typeof temp);
             if (typeof temp === 'object') {
                 setImageList(temp);
                 if (currentlySelectedLocation.properties.img) {
@@ -129,9 +128,7 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
-    const handleCloseAddReview = () => {
-        setOpenAddReview(false);
-    };
+    const handleCloseAddReview = () => setOpenAddReview(false);
 
     const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
     const handleOpenSuccessMessage = () => setOpenSuccessMessage(true);
@@ -162,7 +159,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <SwipeableDrawer
                     anchor="bottom"
                     open={open}
-                    onClose={openAddReview ? toggleDrawer(false) : toggleDrawer(true)}
+                    onClose={handleCloseDrawer}
                     onOpen={toggleDrawer(true)}
                     swipeAreaWidth={drawerBleeding}
                     disableSwipeToOpen={false}
