@@ -56,7 +56,12 @@ export const ImageUploader: FC = () => {
                 </>
             ) : (
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                    <input hidden accept="image/*" type="file" onChange={(event) => handleImageChange(event)} />
+                    <input
+                        hidden
+                        accept="image/png, image/jpeg, image/webp, image/jpg"
+                        type="file"
+                        onChange={(event) => handleImageChange(event)}
+                    />
                     Last opp
                 </Button>
             )}

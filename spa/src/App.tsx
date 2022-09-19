@@ -4,6 +4,7 @@ import { Home } from './pages/Home';
 import { LocationInfo } from './pages/LocationInfo';
 import { Login } from './pages/Login';
 import { LocationRegistration } from './pages/LocationRegistration';
+import { CustomizedSnackbars } from './components/Snackbar/Snackbar';
 
 const App = () => (
     <Router>
@@ -13,6 +14,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/location-registration" element={<LocationRegistration />} />
         </Routes>
+        <CustomizedSnackbars />
     </Router>
 );
 

@@ -1,23 +1,23 @@
-import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
-import { mapActions } from '../../../store/state/map.state';
 import { LatLong } from '../../../utils/types.d';
 
 export const locationServices = {
     postLocation(payload: FormData) {
         return async (dispatch: AppDispatch) => {
             try {
-                const postResponse = await API.post('/Locations', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
-                const dispatch = useStateDispatch();
+                const postResponse = await API.post('/Locations', payload, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+                console.log(postResponse);
                 if (postResponse.data.success) {
-                    const { locations } = useStateSelector((state) => state.map);
-                    const getResponse = await API.get(`/Locations/${postResponse.data.id}`);
-                    dispatch(mapActions.loadLocations([...locations, getResponse.data.data]));
+                    return true;
                 }
+                return false;
             } catch (error) {
                 // TODO: Push error to error state
-                console.error(error);
+                console.error('error:', error);
+                return false;
             }
         };
     },
@@ -28,23 +28,16 @@ export const locationServices = {
                 console.log(userLocation);
                 console.log(selectedFilterCategory);
                 if (selectedFilterCategory) {
-                    const response = await API.post(
+                    const response = await API.get(
                         `/Locations/${userLocation.lat}&${userLocation.long}/category?category=${selectedFilterCategory}`,
-                        {},
-                        { headers: { 'Content-Type': 'multipart/form-data' } },
                     );
-                    console.log(response);
-                } else {
-                    const response = await API.post(
-                        `/Locations/${userLocation.lat}&${userLocation.long}/category`,
-                        {},
-                        { headers: { 'Content-Type': 'multipart/form-data' } },
-                    );
-                    console.log(response);
+                    return response;
                 }
+                const response = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}/category`);
+                return response;
             } catch (error) {
                 // TODO: Push error to error state
-                console.error(error);
+                return error;
             }
         };
     },

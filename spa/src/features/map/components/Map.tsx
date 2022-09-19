@@ -55,7 +55,6 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const onMapLoad = useCallback(
         (evt: any) => {
-            console.log(typeof evt);
             if (mapRef.current) {
                 // @ts-ignore
                 mapRef.current.on('move', () => {
