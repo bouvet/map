@@ -37,7 +37,7 @@ namespace restapi.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation([FromForm] AddLoctionDto newLocation)
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation([FromForm] AddLocationDto newLocation)
     {
       var response = await locationService.AddLocation(newLocation);
       if (response.StatusCode == StatusCodes.Status201Created)
@@ -45,19 +45,7 @@ namespace restapi.Controllers
         return CreatedAtAction(nameof(GetLocationById), new { id = response.Data!.Id }, response);
       }
       return StatusCode(response.StatusCode, response);
-
     }
-    /*
-        [HttpPost("UploadFile")]
-        public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocationWithImage([FromForm] AddLoctionDto newLocation)
-        {
-          var response = await locationService.AddLocation(newLocation);
-          if (response.StatusCode == StatusCodes.Status201Created)
-          {
-            return CreatedAtAction(nameof(GetLocationById), new { id = response.Data!.Id }, response);
-          }
-          return StatusCode(response.StatusCode, response);
-        }*/
 
     [HttpPut("{id}")]
     public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation(Guid id, UpdateLocationDto updatedLocation)

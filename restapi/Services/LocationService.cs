@@ -15,7 +15,7 @@ namespace restapi.Services
       this.dataContext = dataContext;
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> AddLocation(AddLoctionDto request)
+    public async Task<ServiceResponse<LocationResponseDto>> AddLocation(AddLocationDto request)
     {
       try
       {
