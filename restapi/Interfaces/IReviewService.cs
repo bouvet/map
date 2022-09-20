@@ -2,9 +2,9 @@ namespace restapi.Interfaces
 {
   public interface IReviewService
   {
-    Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto newReview);
+    Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto request);
     Task<ServiceResponse<List<ReviewResponseDto>>> GetReviews(Guid locationId);
-    Task<ServiceResponse<ReviewResponseDto>> UpdateReview(Guid reviewId, UpdateReviewDto request);
+    Task<ServiceResponse<ReviewResponseDto>> UpdateReview(UpdateReviewDto request);
     Task<ServiceResponse<DeleteReviewDto>> DeleteReview(Guid id);
   }
 }

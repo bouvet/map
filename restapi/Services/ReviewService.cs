@@ -10,10 +10,10 @@ namespace restapi.Services
     {
       this.dataContext = dataContext;
     }
-    public async Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto newReview)
+    public async Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto request)
     {
 
-      if (newReview.Rating > 5)
+      if (request.Rating > 5)
       {
         return new ServiceResponse<ReviewResponseDto>
         (
@@ -22,7 +22,7 @@ namespace restapi.Services
           data: null);
       }
 
-      var location = await dataContext.Locations.FindAsync(newReview.LocationId);
+      var location = await dataContext.Locations.FindAsync(request.LocationId);
 
       if (location == null)
       {
@@ -38,20 +38,20 @@ namespace restapi.Services
       var review = new Review
       {
         Id = Guid.NewGuid(),
-        Rating = newReview.Rating,
+        Rating = request.Rating,
         Created = currentTime
       };
 
-      if (!string.IsNullOrEmpty(newReview.Text))
+      if (!string.IsNullOrEmpty(request.Text))
       {
-        review.Text = newReview.Text;
+        review.Text = request.Text;
       }
 
-      review.LocationId = newReview.LocationId;
+      review.LocationId = request.LocationId;
 
-      if (newReview.Image is not null)
+      if (request.Image is not null)
       {
-        CloudBlockBlob blob = await BlobService.UploadFile(newReview.Image);
+        CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
         review.Image = blob.Uri.ToString();
       }
 
@@ -93,9 +93,9 @@ namespace restapi.Services
         );
     }
 
-    public async Task<ServiceResponse<ReviewResponseDto>> UpdateReview(Guid reviewId, UpdateReviewDto request)
+    public async Task<ServiceResponse<ReviewResponseDto>> UpdateReview(UpdateReviewDto request)
     {
-      if (reviewId == Guid.Empty)
+      if (request.Id == Guid.Empty)
       {
         return new ServiceResponse<ReviewResponseDto>
           (
@@ -104,7 +104,7 @@ namespace restapi.Services
             data: null);
       }
 
-      var review = await dataContext.Reviews.FindAsync(reviewId);
+      var review = await dataContext.Reviews.FindAsync(request.Id);
 
       if (review is null)
       {
@@ -125,9 +125,9 @@ namespace restapi.Services
         review.Status = request.Status;
       }
 
-      if (request.LocationId != Guid.Empty)
+      if (request.LocationId is not null)
       {
-        review.LocationId = request.LocationId;
+        review.LocationId = (Guid)request.LocationId;
       }
 
       if (request.Rating > 0)
@@ -150,8 +150,8 @@ namespace restapi.Services
                 (
                   StatusCodes.Status200OK,
                   Message: "Review successfully updated!",
-                  data: ReviewResponseBuilder(review));
-
+                  data: ReviewResponseBuilder(review)
+                );
     }
 
     public async Task<ServiceResponse<DeleteReviewDto>> DeleteReview(Guid id)
