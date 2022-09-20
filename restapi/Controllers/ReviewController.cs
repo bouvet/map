@@ -12,12 +12,12 @@ namespace restapi.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> AddReview([FromForm] AddReviewDto newReview)
+    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> AddReview([FromForm] AddReviewDto request)
     {
-      var response = await reviewService.AddReview(newReview);
+      var response = await reviewService.AddReview(request);
       if (response.StatusCode == StatusCodes.Status201Created)
       {
-        return CreatedAtAction(nameof(GetAllReviews), new { LocationId = response.Data!.LocationId }, response);
+        return CreatedAtAction(nameof(GetAllReviews), new { response.Data!.LocationId }, response);
       }
       return StatusCode(response.StatusCode, response);
     }
@@ -29,10 +29,10 @@ namespace restapi.Controllers
       return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> UpdateReview(Guid id, UpdateReviewDto request)
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> UpdateReview([FromForm] UpdateReviewDto request)
     {
-      var response = await reviewService.UpdateReview(id, request);
+      var response = await reviewService.UpdateReview(request);
       return StatusCode(response.StatusCode, response);
     }
 

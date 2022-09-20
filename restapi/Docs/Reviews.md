@@ -1,3 +1,5 @@
+# Reviews
+
 - [Reviews](#reviews)
   - [Create Review](#create-review)
     - [Create Review Request](#create-review-request)
@@ -6,13 +8,12 @@
     - [Get Reviews Request](#get-reviews-request)
     - [Get Reviews Response](#get-reviews-response)
   - [Update Review](#update-review)
-    - [🚧Update Review Request](#update-review-request)
-    - [🚧Update Review Response](#update-review-response)
+    - [Update Review Request](#update-review-request)
+    - [Update Review Response](#update-review-response)
   - [Delete Review](#delete-review)
     - [Delete Review Request](#delete-review-request)
     - [Delete Review Response](#delete-review-response)
 
-# Reviews
 
 ## Create Review
 
@@ -26,18 +27,14 @@ Content-Type: multipart/form-data
 ```yml
 Required fields:
   - rating
-  - text
   - locationId
 ```
 
-```json
-// JSON example but the API requires multipart/form-data!
-{
-  "rating": 3,
-  "text": "",
-  "image":, // image file
-  "locationId": ""
-}
+```multipart/form-data
+rating = 3
+text = ""
+image = file
+locationId = 9fbf46b3-c5a5-450a-9b28-1a3167e2625a
 ```
 
 ### Create Review Response
@@ -53,14 +50,14 @@ Location: {{host}}/api/reviews/{{id}}
 ```json
 {
   "data": {
-    "id": "b656f242-0a12-4343-bf0b-74139a008aae",
+    "id": "181f3f0b-a7da-4553-b4d2-e019f9355a5f",
     "status": "Under Review",
-    "text": "some text",
+    "text": "",
     "rating": 3,
     "image": "",
-    "created": "2022-09-13T10:19:50.8030294+02:00",
+    "created": "2022-09-20T10:13:58.6285696",
     "updated": null,
-    "locationId": "e4ea896b-f1e2-4d8f-5a00-08da8fe37d95"
+    "locationId": "9fbf46b3-c5a5-450a-9b28-1a3167e2625a"
   },
   "success": true,
   "statusCode": 201,
@@ -103,36 +100,49 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
 
 ## Update Review
 
-### 🚧Update Review Request
-
-> 📢 `This needs to be updated! Both docs and code.`
-> 📢 `Endpoint needs to accept multipart/form-data`
-> 📢 `To be able to upload new image.`
+### Update Review Request
 
 ```js
-PUT {{host}}/api/reviews/{{id}}
-Content-Type: application/json
+PUT {{host}}/api/reviews
+Content-Type: multipart/form-data
 ```
 
-```json
-// JSON example but the API requires multipart/form-data!
-{
-  "status": "string",
-  "text": "string",
-  "rating": 0,
-  "image": "string",
-  "locationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-}
+```yml
+Required fields:
+  - id
 ```
 
-### 🚧Update Review Response
+```multipart/form-data
+id = 181f3f0b-a7da-4553-b4d2-e019f9355a5f
+status = ""
+text = ""
+rating = 3
+image = file
+locationId = 9fbf46b3-c5a5-450a-9b28-1a3167e2625a
+```
+
+### Update Review Response
 
 ```js
 200 OK
 ```
 
 ```json
-
+{
+  "data": {
+    "id": "181f3f0b-a7da-4553-b4d2-e019f9355a5f",
+    "status": "Under Review",
+    "text": "",
+    "rating": 3,
+    "image": "https://optimusblobs.azureedge.net/images/cdbe914a-88fa-4b94-8a77-b714375c2331",
+    "created": "2022-09-20T10:13:58.6285696",
+    "updated": "2022-09-20T10:38:34.9841325",
+    "locationId": "9c3bd097-5606-4865-a14c-30c076a5a35c"
+  },
+  "success": true,
+  "statusCode": 200,
+  "message": "Review successfully updated!"
+}
 ```
 
 ## Delete Review
