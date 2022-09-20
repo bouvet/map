@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react';
+import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
@@ -37,6 +37,7 @@ const PopupWrapper = styled.div`
 
 const PopupImage = styled.div<PopUpImageProp>`
     background: url(${(props) => props.imageURL});
+    background-color: ${MyTheme.colors.grey};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -113,14 +114,9 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
         dispatch(mapActions.setHomeMarkerFocus(true));
     };
 
-    const [displayedDescription, setDisplayedDescription] = useState('');
-
-    useEffect(() => {
-        if (description.length > 50) {
-            setDisplayedDescription(`${description.slice(0, 50)}... `);
-        } else {
-            setDisplayedDescription(`${description.slice(0, 50)}`);
-        }
+    const displayedDescription = useMemo(() => {
+        if (description.length <= 50) return description;
+        return `${description.slice(0, 50)}... `;
     }, [description]);
 
     return (
@@ -142,7 +138,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx={MyTheme.fontSize.icon} />
                 <Bodytext>
                     {displayedDescription}
-                    <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 80 && 'les mer'}</ReadMoreLink>
+                    <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 50 && 'les mer'}</ReadMoreLink>
                 </Bodytext>
             </PopupContent>
         </PopupWrapper>

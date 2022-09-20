@@ -41,10 +41,9 @@ export const ImageUploader: FC = () => {
         if (image) {
             const imageUrl = URL.createObjectURL(image);
             setImageUrl(imageUrl);
-            dispatch(registrationActions.setCurrentImage(image));
+            dispatch(registrationActions.setCurrentImage(imageUrl));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [image]);
+    }, [image, dispatch]);
 
     return (
         <ImageUploaderWrapper>
@@ -57,7 +56,12 @@ export const ImageUploader: FC = () => {
                 </>
             ) : (
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                    <input hidden accept="image/*" type="file" onChange={(event) => handleImageChange(event)} />
+                    <input
+                        hidden
+                        accept="image/png, image/jpeg, image/webp, image/jpg"
+                        type="file"
+                        onChange={(event) => handleImageChange(event)}
+                    />
                     Last opp
                 </Button>
             )}

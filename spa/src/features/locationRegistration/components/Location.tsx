@@ -13,19 +13,29 @@ interface ButtonContentProps {
     text: string;
     emoji: string;
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    top?: string;
+    bottom?: string;
+    right?: string;
+    left?: string;
 }
 
 interface ButtonColorProps {
     background: string;
     text: string;
     disabled?: boolean;
+    top?: string;
+    bottom?: string;
+    right?: string;
+    left?: string;
 }
 
 export const ButtonStyle = styled.button<ButtonColorProps>`
     position: absolute;
     border: none;
-    top: 10px;
-    left: 5px;
+    top: ${({ top }) => top};
+    left: ${({ left }) => left};
+    bottom: ${({ bottom }) => bottom};
+    right: ${({ right }) => right};
     z-index: 10;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     height: 27px;
@@ -74,8 +84,25 @@ export const CenterPin = styled.span`
     font-size: ${MyTheme.fontSize.largeIcon};
 `;
 
-export const EmojiButton: FC<ButtonContentProps> = ({ text, emoji, onClick }) => (
-    <ButtonStyle text={MyTheme.colors.darkbase} background={MyTheme.colors.lightbase} type="button" onClick={onClick}>
+export const EmojiButton: FC<ButtonContentProps> = ({
+    text,
+    emoji,
+    onClick,
+    top = 'default',
+    bottom = 'default',
+    right = 'default',
+    left = 'default',
+}) => (
+    <ButtonStyle
+        text={MyTheme.colors.darkbase}
+        background={MyTheme.colors.lightbase}
+        type="button"
+        onClick={onClick}
+        top={top}
+        bottom={bottom}
+        right={right}
+        left={left}
+    >
         <ButtonEmoji>{emoji}</ButtonEmoji>
         <ButtonName>{text}</ButtonName>
     </ButtonStyle>
@@ -87,7 +114,7 @@ interface MapViewProp {
 
 export const MapView: FC<MapViewProp> = ({ handleClick }) => (
     <MapWrapper>
-        <EmojiButton text="Min plassering" emoji="📍" onClick={handleClick} />
+        <EmojiButton text="Min plassering" emoji="📍" onClick={handleClick} top="10px" left="5px" />
         <div className="registration-container">
             <ReactMapGL addingLocation />
         </div>

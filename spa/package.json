@@ -5,7 +5,6 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@faker-js/faker": "^7.4.0",
     "@mui/base": "^5.0.0-alpha.95",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.2",

@@ -27,19 +27,17 @@ interface StarRatingProps {
 export const StarRating: FC<StarRatingProps> = ({ rating = 0, color = '#000000', sizePx = '16px' }) => {
     const [stars, setStars] = useState([<span key="rating" />]);
     const ratingRest: number = rating % 1;
+    let ratingInt: number = Math.floor(rating);
 
-    if (rating) {
-        if (rating > 5) {
-            // eslint-disable-next-line no-param-reassign
-            rating = 5;
-        } else if (rating < 1) {
-            // eslint-disable-next-line no-param-reassign
-            rating = 1;
-        }
+    if (rating > 5) {
+        ratingInt = 5;
+    } else if (rating < 0) {
+        ratingInt = 0;
     }
+
     useEffect(() => {
         const temp: any[] = [];
-        for (let i = 0; i < Math.floor(rating); i += 1) {
+        for (let i = 0; i < ratingInt; i += 1) {
             temp.push(
                 <Span sizePx={sizePx} key={`${i.toString()}solid`} className="material-icons">
                     star
@@ -62,7 +60,7 @@ export const StarRating: FC<StarRatingProps> = ({ rating = 0, color = '#000000',
             );
         }
         setStars(temp);
-    }, [rating, sizePx]);
+    }, [rating, sizePx, ratingRest, ratingInt]);
 
     return <Rating color={color}>{stars}</Rating>;
 };

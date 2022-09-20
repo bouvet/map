@@ -255,7 +255,6 @@ status = ""
 category = ""
 longitude = <number> (5.xxxx)
 latitude = <number> (58.xxxx)
-
 ```
 
 ### 🚧Update Location Response

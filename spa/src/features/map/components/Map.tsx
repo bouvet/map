@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useRef, useState, FC } from 'react';
-// @ts-ignore
-// eslint-disable-next-line
-import { Map as ReactMap } from '!react-map-gl';
-
+import { Map as ReactMap } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
-
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapService } from '../services/map.services';
 import { LatLong, Location } from '../../../utils/types.d';
@@ -30,25 +26,20 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const dispatch = useStateDispatch();
 
-    useEffect(() => {
-        dispatch(mapService.getLocations());
-        console.log(currentMapCenter);
+    const setViewStateCurrentMapCenter = useCallback(() => {
         if (currentMapCenter.lat) {
-            setViewState({
-                longitude: currentMapCenter.long,
-                latitude: currentMapCenter.lat,
-                zoom: 11,
-            });
+            setViewState({ zoom: 13, longitude: currentMapCenter.long, latitude: currentMapCenter.lat });
         }
     }, []);
 
     useEffect(() => {
+        dispatch(mapService.getLocations());
+        setViewStateCurrentMapCenter();
+    }, [dispatch, setViewStateCurrentMapCenter]);
+
+    useEffect(() => {
         if (currentUserLocation.lat && hasUserLocation) {
-            setViewState({
-                longitude: currentUserLocation.long,
-                latitude: currentUserLocation.lat,
-                zoom: 13,
-            });
+            setViewState((prevState) => ({ ...prevState, longitude: currentUserLocation.long, latitude: currentUserLocation.lat }));
             const updateLocation: LatLong = {
                 lat: currentUserLocation.lat,
                 long: currentUserLocation.long,
@@ -58,50 +49,38 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         return () => {
             dispatch(registrationActions.setHasUserLocation(false));
         };
-    }, [currentUserLocation]);
+    }, [currentUserLocation, dispatch, hasUserLocation]);
 
     const mapRef = useRef(null);
 
-    const onMapLoad = useCallback((evt: any) => {
-        if (mapRef.current) {
-            // @ts-ignore
-            mapRef.current.on('move', () => {
-                setViewState(evt.viewState);
-            });
-            // @ts-ignore
-            mapRef.current.on('moveend', () => {
+    const onMapLoad = useCallback(
+        (evt: any) => {
+            if (mapRef.current) {
                 // @ts-ignore
-                const currentCenter = mapRef.current.getCenter();
-                const currentCenterObj: LatLong = {
-                    long: currentCenter.lng,
-                    lat: currentCenter.lat,
-                };
-                dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
-            });
-        }
-    }, []);
+                mapRef.current.on('move', () => {
+                    setViewState(evt.viewState);
+                });
+                // @ts-ignore
+                mapRef.current.on('moveend', () => {
+                    // @ts-ignore
+                    const currentCenter = mapRef.current.getCenter();
+                    const currentCenterObj: LatLong = {
+                        long: currentCenter.lng,
+                        lat: currentCenter.lat,
+                    };
+                    dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
+                });
+            }
+        },
+        [dispatch],
+    );
 
     const onClickHandler = (location: Location) => {
-        if (selectedMarker === location.properties.title) {
+        if (selectedMarker === location.id) {
             dispatch(mapActions.setSelectedMarker(''));
             dispatch(mapActions.setPopupVisibility(false));
-            // dispatch(mapActions.setCurrentlySelectedLocation());
-            if (mapRef.current) {
-                setViewState({
-                    latitude: location.geometry.coordinates[1],
-                    longitude: location.geometry.coordinates[0],
-                    zoom: 12,
-                });
-            }
         } else {
-            dispatch(mapActions.setSelectedMarker(location.properties.title));
-            if (mapRef.current) {
-                setViewState({
-                    latitude: location.geometry.coordinates[1],
-                    longitude: location.geometry.coordinates[0],
-                    zoom: 14,
-                });
-            }
+            dispatch(mapActions.setSelectedMarker(location.id));
             dispatch(mapActions.setPopupVisibility(true));
             dispatch(mapActions.setCurrentlySelectedLocation(location));
         }
