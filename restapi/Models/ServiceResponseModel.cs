@@ -1,5 +1,5 @@
 
-namespace restapi.Models
+namespace VerdenVenter.Models
 {
   public class ServiceResponse<T>
   {

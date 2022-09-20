@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace restapi.Swagger
+namespace VerdenVenter.Swagger
 {
   public class CategoryDeleteExample409Conflict : IExamplesProvider<ServiceResponse<List<Location>>>
   {

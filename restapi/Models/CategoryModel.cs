@@ -1,4 +1,4 @@
-namespace restapi
+namespace VerdenVenter
 {
   public class Category
   {

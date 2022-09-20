@@ -1,8 +1,8 @@
-namespace restapi.Controllers
+using ErrorOr;
+
+namespace VerdenVenter.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class ReviewsController : ControllerBase
+  public class ReviewsController : ApiController
   {
     private readonly IReviewService reviewService;
 
@@ -12,42 +12,67 @@ namespace restapi.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> AddReview([FromForm] AddReviewDto request)
+    public async Task<IActionResult> AddReview([FromForm] AddReviewDto request)
     {
-      var response = await reviewService.AddReview(request);
-      if (response.StatusCode == StatusCodes.Status201Created)
-      {
-        return CreatedAtAction(nameof(GetAllReviews), new { response.Data!.LocationId }, response);
-      }
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<ReviewResponseDto> addReviewResult = await reviewService.AddReview(request);
+
+      return addReviewResult.Match(
+        addReviewResult => CreatedAtGetReview(addReviewResult),
+        errors => Problem(errors)
+      );
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetReview(Guid id)
+    {
+      ErrorOr<ReviewResponseDto> getReviewResult = await reviewService.GetReview(id);
+
+      return getReviewResult.Match(
+        review => Ok(review),
+        errors => Problem(errors)
+      );
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<ReviewResponseDto>>>> GetAllReviews(Guid locationId)
+    public async Task<IActionResult> GetAllReviews(Guid locationId)
     {
-      var response = await reviewService.GetReviews(locationId);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<List<ReviewResponseDto>> getReviewsResult = await reviewService.GetReviews(locationId);
+
+      return getReviewsResult.Match(
+        reviews => Ok(reviews),
+        errors => Problem(errors)
+      );
     }
 
     [HttpPut]
-    public async Task<ActionResult<ServiceResponse<ReviewResponseDto>>> UpdateReview([FromForm] UpdateReviewDto request)
+    public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewDto request)
     {
-      var response = await reviewService.UpdateReview(request);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Updated> updateReviewResult = await reviewService.UpdateReview(request);
+
+      return updateReviewResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<DeleteReviewDto>>> DeleteReview(Guid id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteReview(Guid id)
     {
-      var response = await reviewService.DeleteReview(id);
-      if (response.StatusCode == 204)
-      {
-        return StatusCode(response.StatusCode);
-      }
-      else
-      {
-        return StatusCode(response.StatusCode, response);
-      }
+      ErrorOr<Deleted> deleteReviewResult = await reviewService.DeleteReview(id);
+
+      return deleteReviewResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
+    }
+
+    private CreatedAtActionResult CreatedAtGetReview(ReviewResponseDto review)
+    {
+      return CreatedAtAction(
+          actionName: nameof(GetReview),
+          routeValues: new { id = review.Id },
+          value: review
+        );
     }
   }
 }

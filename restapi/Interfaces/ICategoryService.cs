@@ -1,4 +1,4 @@
-﻿namespace restapi.Interfaces
+﻿namespace VerdenVenter.Interfaces
 {
   public interface ICategoryService
   {

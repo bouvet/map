@@ -4,7 +4,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using SkiaSharp;
 
-namespace restapi.Services
+namespace VerdenVenter.Services
 {
   static public class BlobService
   {

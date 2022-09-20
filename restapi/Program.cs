@@ -2,15 +2,15 @@ global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
 global using System.Text.Json.Serialization;
 global using Microsoft.AspNetCore.Mvc;
-global using restapi.Data;
-global using restapi.Models;
-global using restapi.Interfaces;
-global using restapi.Services;
-global using restapi.Dtos;
+global using VerdenVenter.Data;
+global using VerdenVenter.Models;
+global using VerdenVenter.Interfaces;
+global using VerdenVenter.Services;
+global using VerdenVenter.Dtos;
 global using Swashbuckle.AspNetCore.Filters;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using restapi.Swagger;
+using VerdenVenter.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,33 +58,25 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddResponseCompression(options =>
-{
-  options.EnableForHttps = true;
-});
+builder.Services.AddResponseCompression(options => options.EnableForHttps = true);
 
-builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build =>
-  {
-    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-  }
+builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build => build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
 ));
 
 var app = builder.Build();
 
-app.UseCors("anydomain");
+{
+  app.UseCors("anydomain");
 
-app.UseSwagger();
-app.UseSwaggerUI();
+  app.UseSwagger();
+  app.UseSwaggerUI();
 
-app.UseResponseCompression();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
-app.Run();
+  app.UseResponseCompression();
+  app.UseExceptionHandler("/error");
+  app.UseHttpsRedirection();
+  app.UseAuthorization();
+  app.MapControllers();
+  app.UseDefaultFiles();
+  app.UseStaticFiles();
+  app.Run();
+}

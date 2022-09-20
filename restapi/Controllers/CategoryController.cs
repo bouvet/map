@@ -1,13 +1,7 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Swashbuckle.AspNetCore.Filters;
-using restapi.Swagger;
+﻿using VerdenVenter.Swagger;
 
-namespace restapi.Controllers
+namespace VerdenVenter.Controllers
 {
-  // [Route("api/[controller]")]
   [Route("api/Categories")]
   [ApiController]
   public class CategoryController : ControllerBase

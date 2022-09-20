@@ -1,6 +1,6 @@
 @devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
-@locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
+@locationId=9c3bd097-5606-4865-a14c-30c076a5a35d
 
 GET {{devhost}}/api/reviews
 

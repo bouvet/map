@@ -1,4 +1,4 @@
-﻿namespace restapi.Services
+﻿namespace VerdenVenter.Services
 {
   public class CategoryService : ICategoryService
   {

@@ -1,7 +1,7 @@
 using Microsoft.WindowsAzure.Storage.Blob;
 using GeoCoordinatePortable;
 
-namespace restapi.Services
+namespace VerdenVenter.Services
 {
   public class LocationService : ILocationService
   {

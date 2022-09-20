@@ -1,4 +1,4 @@
-namespace restapi.Controllers
+namespace VerdenVenter.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]

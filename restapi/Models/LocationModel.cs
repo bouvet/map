@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-namespace restapi.Models
+namespace VerdenVenter.Models
 {
   public class Location
   {

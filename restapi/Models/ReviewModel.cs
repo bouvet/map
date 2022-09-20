@@ -1,7 +1,10 @@
-namespace restapi.Models
+namespace VerdenVenter.Models
 {
   public class Review
   {
+    public const int MinRatingValue = 1;
+    public const int MaxRatingValue = 5;
+
     [Key]
     public Guid Id { get; set; } = new Guid();
     public string Status { get; set; } = "Under Review";
