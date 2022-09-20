@@ -15,7 +15,7 @@ interface ReviewProps {
     age?: number;
     date: string;
     rating: number;
-    review: string;
+    review?: string;
 }
 
 const ReviewWrapper = styled.div`
