@@ -21,16 +21,17 @@ const Span = styled.span<StarSize>`
 interface StarRatingProps {
     rating: number;
     color?: string;
-    sizePx: string;
+    sizePx?: string;
 }
 
 export const StarRating: FC<StarRatingProps> = ({ rating = 0, color = '#000000', sizePx = '16px' }) => {
     const [stars, setStars] = useState([<span key="rating" />]);
     const ratingRest: number = rating % 1;
     let ratingInt: number = Math.floor(rating);
+    const MAXSTARS = 5;
 
-    if (rating > 5) {
-        ratingInt = 5;
+    if (rating > MAXSTARS) {
+        ratingInt = MAXSTARS;
     } else if (rating < 0) {
         ratingInt = 0;
     }
@@ -44,7 +45,7 @@ export const StarRating: FC<StarRatingProps> = ({ rating = 0, color = '#000000',
                 </Span>,
             );
         }
-        if (ratingRest > 0.5) {
+        if (ratingRest >= 0.5) {
             temp.push(
                 <Span sizePx={sizePx} key="half" className="material-symbols-outlined">
                     star_half
@@ -52,7 +53,7 @@ export const StarRating: FC<StarRatingProps> = ({ rating = 0, color = '#000000',
             );
         }
         const tempLength = temp.length;
-        for (let i = 0; i < 5 - tempLength; i += 1) {
+        for (let i = 0; i < MAXSTARS - tempLength; i += 1) {
             temp.push(
                 <Span sizePx={sizePx} key={`${i.toString()}outlined`} className="material-symbols-outlined">
                     star
