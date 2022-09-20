@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReviewTypeGet } from '../../utils/types.d';
 
 const initialState = {
@@ -9,7 +9,7 @@ const reviewState = createSlice({
     name: 'review',
     initialState,
     reducers: {
-        setCurrentReviews(state, action: { payload: ReviewTypeGet[]; type: string }) {
+        setCurrentReviews(state, action: PayloadAction<ReviewTypeGet[]>) {
             state.currentReviews = action.payload;
         },
     },

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -11,6 +11,7 @@ import { ReviewModal } from './ReviewModal';
 import { StarRating } from '../../../components/StarRating/StarRating';
 import { reviewServices } from '../services/locationinfo.services';
 import { ReviewTypeGet } from '../../../utils/types.d';
+import { mapActions } from '../../../store/state/map.state';
 
 const drawerBleeding = 56;
 
@@ -92,8 +93,7 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     useEffect(() => {
         dispatch(reviewServices.getReviews(id));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [id, dispatch]);
 
     useEffect(() => {
         if (currentReviews) {
@@ -102,18 +102,16 @@ export const SwipeableEdgeDrawer: FC = () => {
                     <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
                 ) : null,
             );
-            if (typeof temp === 'object') {
-                setReviewList(temp);
-            }
+            setReviewList(temp);
         }
     }, [currentReviews]);
 
+    // Sets images for review images
     useEffect(() => {
         if (currentReviews) {
             const temp = currentReviews.map((item: ReviewTypeGet) =>
                 item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
             );
-            console.log(typeof temp);
             if (typeof temp === 'object') {
                 setImageList(temp);
                 if (currentlySelectedLocation.properties.img) {
@@ -127,13 +125,11 @@ export const SwipeableEdgeDrawer: FC = () => {
                 }
             }
         }
-    }, [currentReviews]);
+    }, [currentReviews, currentlySelectedLocation.properties.img, currentlySelectedLocation.properties.title]);
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
-    const handleCloseAddReview = () => {
-        setOpenAddReview(false);
-    };
+    const handleCloseAddReview = () => setOpenAddReview(false);
 
     const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
     const handleOpenSuccessMessage = () => setOpenSuccessMessage(true);
@@ -141,6 +137,12 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
+    };
+
+    const handleCloseDrawer = () => {
+        dispatch(mapActions.setHomeMarkerFocus(false));
+        dispatch(mapActions.setPopupVisibility(false));
+        dispatch(mapActions.setSelectedMarker(''));
     };
 
     return (
@@ -158,7 +160,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 <SwipeableDrawer
                     anchor="bottom"
                     open={open}
-                    onClose={toggleDrawer(false)}
+                    onClose={handleCloseDrawer}
                     onOpen={toggleDrawer(true)}
                     swipeAreaWidth={drawerBleeding}
                     disableSwipeToOpen={false}

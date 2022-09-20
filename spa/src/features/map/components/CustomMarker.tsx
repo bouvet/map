@@ -1,10 +1,6 @@
 import { useEffect, useState, FC } from 'react';
-
-// @ts-ignore
-// eslint-disable-next-line
-import { Marker } from 'react-map-gl'; 
+import { Marker } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
-
 import { MyTheme } from '../../../styles/global';
 import { Location } from '../../../utils/types.d';
 
@@ -14,7 +10,7 @@ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 
 type Props = {
     coordinates: number[];
-    onClickHandler: (obj: any) => void;
+    onClickHandler: (obj: Location) => void;
     locaction: Location;
     selectedMarker: string;
 };
@@ -23,12 +19,12 @@ export const CustomMarker: FC<Props> = ({ coordinates, onClickHandler, selectedM
     const [color, setColor] = useState(MyTheme.colors.darkbase);
 
     useEffect(() => {
-        if (selectedMarker === locaction.properties.title) {
+        if (selectedMarker === locaction.id) {
             setColor(MyTheme.colors.accent);
         } else {
             setColor(MyTheme.colors.darkbase);
         }
-    }, [selectedMarker, locaction.properties.title]);
+    }, [selectedMarker, locaction.id]);
 
     return (
         <Marker longitude={coordinates[0]} latitude={coordinates[1]} onClick={() => onClickHandler(locaction)} anchor="bottom">

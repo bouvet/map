@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Button, ClickAwayListener, Modal, Rating, Stack, IconButton } from '@mui/material';
+import { Box, Button, Modal, Rating, Stack, IconButton } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
@@ -15,6 +15,46 @@ interface ReviewProps {
     close: Function;
     success: Function;
 }
+
+const AddReview = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    zIndex: '1301',
+    width: '94%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: 3,
+    p: 7,
+    pt: 5,
+};
+
+const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+        color: '#007BC0',
+    },
+    '& .MuiRating-iconHover': {
+        color: '#007BC0',
+    },
+});
+
+const CloseBtn = styled(RoundButton)`
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 10px;
+    left: 10px;
+    &:active {
+        background-color: ${MyTheme.colors.darkbase};
+    }
+`;
+
+const Backdrop = styled.div`
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+`;
 
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const [value, setValue] = useState<number | null>(null);
@@ -79,43 +119,10 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
-    const AddReview = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        zIndex: '1301',
-        width: '94%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        boxShadow: 24,
-        borderRadius: 3,
-        p: 7,
-        pt: 5,
-    };
-
-    const StyledRating = styled(Rating)({
-        '& .MuiRating-iconFilled': {
-            color: '#007BC0',
-        },
-        '& .MuiRating-iconHover': {
-            color: '#007BC0',
-        },
-    });
-
-    const CloseBtn = styled(RoundButton)`
-        position: absolute;
-        height: 40px;
-        width: 40px;
-        top: 10px;
-        left: 10px;
-        &:active {
-            background-color: ${MyTheme.colors.darkbase};
-        }
-    `;
-
     return (
         <Modal open={open}>
-            <ClickAwayListener onClickAway={handleCloseAddReview}>
+            <>
+                <Backdrop onClick={handleCloseAddReview} />
                 <form onSubmit={(event) => handleSubmit(event)}>
                     <Box sx={AddReview}>
                         <Box
@@ -178,7 +185,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                         </CloseBtn>
                     </Box>
                 </form>
-            </ClickAwayListener>
+            </>
         </Modal>
     );
 };

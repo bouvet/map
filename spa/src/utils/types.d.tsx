@@ -3,7 +3,7 @@
 // export type Category = typeof category[number];
 
 export interface Category {
-    [index: string]: any;
+    [index: string]: string;
     emoji: string;
     name: string;
 }
@@ -67,16 +67,6 @@ export interface Location {
 
     /** @param pinColor mapbox pin color variable */
     pinColor?: string;
-}
-
-export interface NewLocation {
-    title: string;
-    description: string;
-    img?: File;
-    rating?: number;
-    longitude: number;
-    latitude: number;
-    category?: string[];
 }
 
 export interface LatLong {
