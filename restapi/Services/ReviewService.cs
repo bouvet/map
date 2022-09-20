@@ -1,4 +1,3 @@
-using System.Runtime.Intrinsics.X86;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace restapi.Services
@@ -52,7 +51,7 @@ namespace restapi.Services
 
       if (newReview.Image is not null)
       {
-        CloudBlockBlob blob = await BlobService.UploadFile(review.Id, newReview.Image);
+        CloudBlockBlob blob = await BlobService.UploadFile(newReview.Image);
         review.Image = blob.Uri.ToString();
       }
 
@@ -80,7 +79,7 @@ namespace restapi.Services
         reviews = await dataContext.Reviews.Where(l => locationId == l.LocationId).ToListAsync();
       }
 
-      var reviewResponseList = new List<ReviewResponseDto> { };
+      var reviewResponseList = new List<ReviewResponseDto>();
 
       foreach (Review review in reviews)
       {
@@ -138,7 +137,7 @@ namespace restapi.Services
 
       if (request.Image is not null)
       {
-        CloudBlockBlob blob = await BlobService.UploadFile(review.Id, request.Image);
+        CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
         review.Image = blob.Uri.ToString();
       }
 

@@ -4,6 +4,5 @@ namespace restapi.Dtos
   {
     // Longitude, Latitude
     public double[] Coordinates { get; set; } = Array.Empty<double>();
-    public string Type { get; set; } = "Point";
   }
 }

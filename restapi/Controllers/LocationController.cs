@@ -1,8 +1,4 @@
-﻿using GeoCoordinatePortable;
-using restapi.Data;
-using restapi.Models;
-
-namespace restapi.Controllers
+﻿namespace restapi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
@@ -37,9 +33,9 @@ namespace restapi.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation([FromForm] AddLocationDto newLocation)
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation([FromForm] AddLocationDto request)
     {
-      var response = await locationService.AddLocation(newLocation);
+      var response = await locationService.AddLocation(request);
       if (response.StatusCode == StatusCodes.Status201Created)
       {
         return CreatedAtAction(nameof(GetLocationById), new { id = response.Data!.Id }, response);
@@ -47,10 +43,10 @@ namespace restapi.Controllers
       return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation(Guid id, UpdateLocationDto updatedLocation)
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation([FromForm] UpdateLocationDto request)
     {
-      var response = await locationService.UpdateLocation(id, updatedLocation);
+      var response = await locationService.UpdateLocation(request);
       return StatusCode(response.StatusCode, response);
     }
 
@@ -67,16 +63,5 @@ namespace restapi.Controllers
         return StatusCode(response.StatusCode, response);
       }
     }
-
-    // [HttpPost("{id}/" + nameof(UploadFile))]
-    // public async Task<IActionResult> UploadFile(Guid id, IFormFile files)
-    // {
-    //   CloudBlockBlob response = await BlobService.UploadFile(id, files);
-    //   return Ok(response.Uri.ToString());
-
-    // }
-
-
-
   }
 }

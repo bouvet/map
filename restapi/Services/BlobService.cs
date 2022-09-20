@@ -8,29 +8,39 @@ namespace restapi.Services
 {
   static public class BlobService
   {
-    static public async Task<CloudBlockBlob> UploadFile(Guid id, IFormFile uploadFile)
+    static public async Task<CloudBlockBlob> UploadFile(IFormFile image)
     {
-      const int compressedImageQuality = 50;
-
-      var streamFromUpload = new MemoryStream();
-      await uploadFile.CopyToAsync(streamFromUpload);
-      var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
-      SKData webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, compressedImageQuality);
+      SKData webpImage = await ConvertImageToWebp(image, 50);
 
       SecretClient client = GetKeyVaultClient();
 
-      var blobStorageConnection = await client.GetSecretAsync("azureBlobStorageConnectionString");
+      CloudBlobContainer imageBlobContainer = await GetImageBlobContainer(client);
 
+      CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(Guid.NewGuid().ToString());
+
+      blockBlob.Properties.ContentType = "image/webp";
+
+      await blockBlob.UploadFromStreamAsync(webpImage.AsStream());
+
+      return blockBlob;
+    }
+
+    private static async Task<CloudBlobContainer> GetImageBlobContainer(SecretClient client)
+    {
+      var blobStorageConnection = await client.GetSecretAsync("azureBlobStorageConnectionString");
       CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(blobStorageConnection.Value.Value);
       CloudBlobClient blobStorageClient = azureCloudStorageAccount.CreateCloudBlobClient();
       CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference("images");
       await imageBlobContainer.CreateIfNotExistsAsync();
-      CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(id.ToString());
+      return imageBlobContainer;
+    }
 
-      blockBlob.Properties.ContentType = "image/webp";
-      await blockBlob.UploadFromStreamAsync(webpImage.AsStream());
-
-      return blockBlob;
+    private static async Task<SKData> ConvertImageToWebp(IFormFile uploadFile, int compressedImageQuality)
+    {
+      var streamFromUpload = new MemoryStream();
+      await uploadFile.CopyToAsync(streamFromUpload);
+      var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
+      return SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, compressedImageQuality);
     }
 
     private static SecretClient GetKeyVaultClient()

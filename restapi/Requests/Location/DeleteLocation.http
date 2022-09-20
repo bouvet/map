@@ -1,7 +1,7 @@
 @devhost=https://localhost:7107
 @prodhost=https://verdenventer.azurewebsites.net
 
-@id=5a2936d2-a958-4e6c-84ea-abb0bdfddcec
+@id=b9f1e59d-651e-466e-8df5-56535976c920
 
 DELETE {{devhost}}/api/locations/{{id}}
 
