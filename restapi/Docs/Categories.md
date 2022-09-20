@@ -1,3 +1,5 @@
+# Categories
+
 - [Categories](#categories)
   - [Get Categories](#get-categories)
     - [Get Categories Request](#get-categories-request)
@@ -18,8 +20,6 @@
     - [Delete Category Request](#delete-category-request)
     - [Delete Category Response](#delete-category-response)
 
-# Categories
-
 ## Get Categories
 
 ### Get Categories Request
@@ -35,15 +35,18 @@ GET {{host}}/api/categories
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-      "name": "Fotball",
-      "emoji": "⚽"
-    },
-  ]
-}
+[
+  {
+    "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
+    "name": "Fotball",
+    "emoji": "⚽"
+  },
+  {
+    "id": "60c951f3-d233-442b-7883-08da9ad92895",
+    "name": "Basketball",
+    "emoji": "\uD83C\uDFC0"
+  }
+]
 ```
 
 ## Create Category
@@ -80,14 +83,9 @@ Location: {{host}}/api/Categories/{{id}}
 
 ```json
 {
-  "data": {
-    "id": "b08edce2-cfd9-409e-d70f-08da94be4d2a",
-    "name": "Fotball",
-    "emoji": "⚽"
-  },
-  "success": true,
-  "statusCode": 201,
-  "message": "Category Added!"
+  "id": "735fbdfd-ab84-4cc8-ddbf-08da9b08fa95",
+  "name": "Styrke",
+  "emoji": "\uD83D\uDCAA"
 }
 ```
 
@@ -106,15 +104,18 @@ GET {{host}}/api/categories/InUse
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-      "name": "Fotball",
-      "emoji": "⚽"
-    },
-  ]
-}
+[
+  {
+    "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
+    "name": "Fotball",
+    "emoji": "⚽"
+  },
+  {
+    "id": "60c951f3-d233-442b-7883-08da9ad92895",
+    "name": "Basketball",
+    "emoji": "\uD83C\uDFC0"
+  }
+]
 ```
 
 ## Get Category
@@ -133,14 +134,9 @@ GET {{host}}/api/categories/{{id}}
 
 ```json
 {
-  "data": {
-    "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-    "name": "Fotball",
-    "emoji": "⚽"
-  },
-  "success": true,
-  "statusCode": 200,
-  "message": "Category fetched!"
+  "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
+  "name": "Fotball",
+  "emoji": "⚽"
 }
 ```
 
@@ -161,7 +157,7 @@ Required fields:
 
 ```json
 {
-  "name": "Fotball!",
+  "name": "Fotball",
   "emoji": "⚽"
 }
 ```
@@ -169,20 +165,7 @@ Required fields:
 ### Update Category Response
 
 ```js
-200 OK
-```
-
-```json
-{
-  "data": {
-    "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-    "name": "Fotball",
-    "emoji": "⚽"
-  },
-  "success": true,
-  "statusCode": 200,
-  "message": "Category Updated!"
-}
+204 No Content
 ```
 
 ## Delete Category

@@ -6,8 +6,8 @@ POST {{devhost}}/api/categories
 Content-Type: application/json
 
 {
-  "name": "Basketball",
-  "emoji": "🏀"
+  "name": "Styrke",
+  "emoji": "💪"
 }
 
 ###

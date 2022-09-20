@@ -1,100 +1,89 @@
-﻿using VerdenVenter.Swagger;
+﻿using ErrorOr;
 
 namespace VerdenVenter.Controllers
 {
-  [Route("api/Categories")]
-  [ApiController]
-  public class CategoryController : ControllerBase
+  public class CategoriesController : ApiController
   {
     private readonly ICategoryService categoryService;
 
-    public CategoryController(ICategoryService categoryService)
+    public CategoriesController(ICategoryService categoryService)
     {
       this.categoryService = categoryService;
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(CategoryExample500InternalServerError), StatusCodes.Status500InternalServerError)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ListCategoryExample200OK))]
-    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(CategoryExample500InternalServerError))]
-    public async Task<ActionResult<ServiceResponse<List<Category>>>> GetAllCategories()
+    public async Task<IActionResult> GetCategories()
     {
-      var response = await categoryService.GetAllCategories();
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<List<Category>> getCategoriesResult = await categoryService.GetCategories();
+
+      return getCategoriesResult.Match(
+        categories => Ok(categories),
+        errors => Problem(errors)
+      );
     }
 
     [HttpGet("inUse")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(CategoryExample500InternalServerError), StatusCodes.Status500InternalServerError)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ListCategoryExample200OK))]
-    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(CategoryExample500InternalServerError))]
-    public async Task<ActionResult<ServiceResponse<List<Category>>>> GetAllCategoriesInUse()
+    public async Task<IActionResult> GetCategoriesInUse()
     {
-      var response = await categoryService.GetAllCategoriesInUse();
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<List<Category>> getCategoriesInUseResult = await categoryService.GetCategoriesInUse();
+
+      return getCategoriesInUseResult.Match(
+        categories => Ok(categories),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(CategoryExample200OK))]
-    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(CategoryExample404NotFound))]
-    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(CategoryExample400BadRequest))]
-    public async Task<ActionResult<ServiceResponse<Category>>> GetCategory(Guid id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetCategory(Guid id)
     {
-      var response = await categoryService.GetCategory(id);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Category> getCategoryResult = await categoryService.GetCategory(id);
+
+      return getCategoryResult.Match(
+        category => Ok(category),
+        errors => Problem(errors)
+      );
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(CategoryExample500InternalServerError), StatusCodes.Status500InternalServerError)]
-    [SwaggerResponseExample(StatusCodes.Status201Created, typeof(CategoryExample201Created))]
-    [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(CategoryExample500InternalServerError))]
-    [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(CategoryPostExample409Conflict))]
-    public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory(CategoryDto category)
+    public async Task<IActionResult> AddCategory(CategoryDto category)
     {
-      var response = await categoryService.AddCategory(category);
-      if (response.StatusCode == StatusCodes.Status201Created)
-      {
-        return CreatedAtAction(nameof(GetCategory), new { id = response.Data!.Id }, response);
-      }
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Category> createCategoryResult = await categoryService.AddCategory(category);
+
+      return createCategoryResult.Match(
+        category => CreatedAtGetCategory(category),
+        errors => Problem(errors)
+      );
     }
 
-
-    [HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ListCategoryExample200OK))]
-    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(CategoryExample404NotFound))]
-    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(CategoryExample400BadRequest))]
-    public async Task<ActionResult<ServiceResponse<List<Category>>>> UpdateCategory(Guid id, CategoryDto request)
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateCategory(Guid id, CategoryDto request)
     {
-      var response = await categoryService.UpdateCategory(id, request);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Updated> updateCategoryResult = await categoryService.UpdateCategory(id, request);
+
+      return updateCategoryResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(CategoryExample404NotFound))]
-    [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(CategoryDeleteExample409Conflict))]
-    [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(CategoryExample400BadRequest))]
-    public async Task<ActionResult<ServiceResponse<Object>>> DeleteCategory(Guid id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteCategory(Guid id)
     {
-      var response = await categoryService.DeleteCategory(id);
-      if (response.StatusCode == StatusCodes.Status204NoContent)
-      {
-        return NoContent();
-      }
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Deleted> deleteCategoryResult = await categoryService.DeleteCategory(id);
+
+      return deleteCategoryResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
+    }
+
+    private CreatedAtActionResult CreatedAtGetCategory(Category category)
+    {
+      return CreatedAtAction(
+          actionName: nameof(GetCategory),
+          routeValues: new { id = category.Id },
+          value: category
+        );
     }
   }
 }

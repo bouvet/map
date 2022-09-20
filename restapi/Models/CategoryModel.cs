@@ -1,7 +1,10 @@
-namespace VerdenVenter
+namespace VerdenVenter.Models
 {
   public class Category
   {
+    public const int MinNameLength = 2;
+    public const int MaxNameLength = 15;
+
     [Key]
     public Guid Id { get; set; } = new Guid();
 

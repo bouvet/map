@@ -1,4 +1,7 @@
-﻿namespace VerdenVenter.Services
+﻿using ErrorOr;
+using VerdenVenter.ServiceErrors;
+
+namespace VerdenVenter.Services
 {
   public class CategoryService : ICategoryService
   {
@@ -9,128 +12,118 @@
       this.dataContext = dataContext;
     }
 
-    public async Task<ServiceResponse<List<Category>>> GetAllCategoriesInUse()
+    public async Task<ErrorOr<List<Category>>> GetCategoriesInUse()
     {
       var allCategories = await dataContext.Categories.ToListAsync();
       var locations = await dataContext.Locations.ToListAsync();
 
-      // var locationsWithCategory = locations.Where(x => (x.Categories.Exists(x => x.Id == categoryId) || (Guid.Empty == categoryId)));
-
-      var categoriesInUse = allCategories.Where(cat => locations.Exists(loc => loc.Categories.Exists(locCat => locCat.Id == cat.Id))).ToList();
-
-      if (categoriesInUse.Count < 1)
-      {
-        return new ServiceResponse<List<Category>>(StatusCodes.Status404NotFound, "no category in use");
-      }
-
-      return new ServiceResponse<List<Category>>(StatusCodes.Status200OK, Message: "Fetched all Categories in use!", data: categoriesInUse);
+      return allCategories.Where(cat => locations.Exists(loc => loc.Categories.Exists(locCat => locCat.Id == cat.Id))).ToList();
     }
-    public async Task<ServiceResponse<List<Category>>> GetAllCategories()
+    public async Task<ErrorOr<List<Category>>> GetCategories()
     {
-
-      try
-      {
-        List<Category> categories = await dataContext.Categories.ToListAsync();
-        return new ServiceResponse<List<Category>>(StatusCodes.Status200OK, Message: "Fetched all Categories!", data: categories);
-      }
-      catch (Exception)
-      {
-        return new ServiceResponse<List<Category>>(StatusCode: StatusCodes.Status500InternalServerError);
-      }
+      return await dataContext.Categories.ToListAsync();
     }
 
-    public async Task<ServiceResponse<Category>> GetCategory(Guid id)
+    public async Task<ErrorOr<Category>> GetCategory(Guid id)
     {
-      try
-      {
-        var category = await dataContext.Categories.FindAsync(id);
+      var category = await dataContext.Categories.FindAsync(id);
 
-        if (category is null)
-        {
-          return new ServiceResponse<Category>(StatusCodes.Status404NotFound, Message: $"Category with id {id} not Found");
-        }
-
-        return new ServiceResponse<Category>(StatusCodes.Status200OK, Message: "Category fetched!", data: category);
-      }
-      catch (Exception)
+      if (category is null)
       {
-        return new ServiceResponse<Category>(StatusCodes.Status500InternalServerError);
+        return Errors.Category.NotFound;
       }
+
+      return category;
     }
 
-    public async Task<ServiceResponse<Category>> AddCategory(CategoryDto request)
+    public async Task<ErrorOr<Category>> AddCategory(CategoryDto request)
     {
-      try
+      List<Error> errors = new();
+
+      List<Category> existingCategoryWithSameName = dataContext.Categories.Where(c => c.Name == request.Name).ToList();
+
+      if (existingCategoryWithSameName.Count > 0)
       {
-        List<Category> existingCategoryWithSameName = dataContext.Categories.Where(c => c.Name == request.Name).ToList();
-        if (existingCategoryWithSameName.Count > 0)
-        {
-          return new ServiceResponse<Category>(StatusCodes.Status409Conflict,
-                                        Message: $"Category with name {request.Name} already exist as [id: {existingCategoryWithSameName[0].Id}, name: {existingCategoryWithSameName[0].Name}, emoji: {existingCategoryWithSameName[0].Emoji}]",
-                                        data: existingCategoryWithSameName[0]);
-        }
-
-        var category = new Category { Name = request.Name, Emoji = request.Emoji };
-
-        dataContext.Categories.Add(category);
-        await dataContext.SaveChangesAsync();
-
-        return new ServiceResponse<Category>(StatusCodes.Status201Created, Message: "Category Added!", data: category);
+        errors.Add(Errors.Category.AlreadyExists);
       }
-      catch (Exception)
+
+      if (request.Name.Length is < Category.MinNameLength or > Category.MaxNameLength)
       {
-        return new ServiceResponse<Category>(StatusCodes.Status500InternalServerError);
+        errors.Add(Errors.Category.InvalidName);
       }
+
+      if (string.IsNullOrEmpty(request.Emoji))
+      {
+        errors.Add(Errors.Category.InvalidEmoji);
+      }
+
+      if (errors.Count > 0)
+      {
+        return errors;
+      }
+
+      var category = new Category { Name = request.Name, Emoji = request.Emoji };
+
+      dataContext.Categories.Add(category);
+      await dataContext.SaveChangesAsync();
+
+      return category;
     }
 
-    public async Task<ServiceResponse<Category>> UpdateCategory(Guid id, CategoryDto request)
+    public async Task<ErrorOr<Updated>> UpdateCategory(Guid id, CategoryDto request)
     {
-      try
+      List<Error> errors = new();
+
+      var category = await dataContext.Categories.FindAsync(id);
+
+      if (category == null)
       {
-        var category = await dataContext.Categories.FindAsync(id);
-
-        if (category == null)
-        {
-          return new ServiceResponse<Category>(StatusCodes.Status404NotFound, Message: $"Category with id {id} not Found");
-        }
-
-        category.Name = request.Name;
-        category.Emoji = request.Emoji;
-        await dataContext.SaveChangesAsync();
-
-        return new ServiceResponse<Category>(StatusCodes.Status200OK, Message: "Category Updated!", data: category);
+        return Errors.Category.NotFound;
       }
-      catch (Exception)
+
+      if (request.Name.Length is < Category.MinNameLength or > Category.MaxNameLength)
       {
-        return new ServiceResponse<Category>(StatusCodes.Status500InternalServerError);
+        errors.Add(Errors.Category.InvalidName);
       }
+
+      if (string.IsNullOrEmpty(request.Emoji))
+      {
+        errors.Add(Errors.Category.InvalidEmoji);
+      }
+
+      if (errors.Count > 0)
+      {
+        return errors;
+      }
+
+      category.Name = request.Name;
+      category.Emoji = request.Emoji;
+
+      await dataContext.SaveChangesAsync();
+
+      return Result.Updated;
     }
 
-    public async Task<ServiceResponse<Object>> DeleteCategory(Guid id)
+    public async Task<ErrorOr<Deleted>> DeleteCategory(Guid id)
     {
-      try
+      var category = await dataContext.Categories.FindAsync(id);
+
+      if (category is null)
       {
-        var category = await dataContext.Categories.FindAsync(id);
-        if (category is null)
-        {
-          return new ServiceResponse<object>(StatusCodes.Status404NotFound, Message: $"Category with id {id} not Found");
-        }
-
-        var locationsWhereCategoryIsUsed = dataContext.Entry(category).Collection(c => c.Locations).Query().AsEnumerable().ToList();
-        if (locationsWhereCategoryIsUsed.Count > 0)
-        {
-          return new ServiceResponse<object>(StatusCodes.Status409Conflict, Message: $"This category is being used in {locationsWhereCategoryIsUsed.Count} locations", data: locationsWhereCategoryIsUsed);
-        }
-
-        dataContext.Categories.Remove(category);
-        await dataContext.SaveChangesAsync();
-
-        return new ServiceResponse<object>(StatusCodes.Status204NoContent, Message: $"Category {category.Name} Deleted!");
+        return Errors.Category.NotFound;
       }
-      catch (Exception)
+
+      var locationsWhereCategoryIsUsed = dataContext.Entry(category).Collection(c => c.Locations).Query().AsEnumerable().ToList();
+
+      if (locationsWhereCategoryIsUsed.Count > 0)
       {
-        return new ServiceResponse<object>(StatusCodes.Status500InternalServerError);
+        return Errors.Category.UsedByLocations;
       }
+
+      dataContext.Categories.Remove(category);
+      await dataContext.SaveChangesAsync();
+
+      return Result.Deleted;
     }
   }
 }
