@@ -1,3 +1,5 @@
+# Locations
+
 - [Locations](#locations)
   - [Get Locations](#get-locations)
     - [Get Locations Request](#get-locations-request)
@@ -12,13 +14,11 @@
     - [Get Location Request](#get-location-request)
     - [Get Location Response](#get-location-response)
   - [Update Location](#update-location)
-    - [🚧Update Location Request](#update-location-request)
+    - [Update Location Request](#update-location-request)
     - [🚧Update Location Response](#update-location-response)
   - [Delete Location](#delete-location)
     - [Delete Location Request](#delete-location-request)
     - [Delete Location Response](#delete-location-response)
-
-# Locations
 
 ## Get Locations
 
@@ -239,37 +239,22 @@ GET {{host}}/api/locations/{{id}}
 
 ## Update Location
 
-### 🚧Update Location Request
-
-> 📢 `This needs to be updated! Both docs and code.`
-> 📢 `Endpoint needs to accept multipart/form-data`
-> 📢 `To be able to upload new image.`
+### Update Location Request
 
 ```js
-PUT {{host}}/api/locations/{{id}}
-Content-Type: application/json
+PUT {{host}}/api/locations
+Content-Type: multipart/form-data
 ```
 
-```yml
-Required fields:
-  - title
-  - description
-  - longitude
-  - latitude
-  - category
-```
+```multipart/form-data
 
-```json
-// JSON example but the API requires multipart/form-data!
-{
-  "title": "A title",
-  "description": "A description",
-  "img": "",
-  "rating": "5",
-  "longitude": 5.1234,
-  "latitude": 58.1234,
-  "category": ["0d870839-a74d-4293-2124-08da8fe1d9b8"]
-}
+title = ""
+description = ""
+Img = file
+status = ""
+category = ""
+longitude = <number> (5.xxxx)
+latitude = <number> (58.xxxx)
 ```
 
 ### 🚧Update Location Response
@@ -279,7 +264,35 @@ Required fields:
 ```
 
 ```json
-
+{
+  "data": {
+    "id": "9c3bd097-5606-4865-a14c-30c076a5a35c",
+    "type": "Feature",
+    "properties": {
+      "title": "A title!",
+      "description": "a Description",
+      "img": "https://optimusblobs.azureedge.net/images/e52b16c5-6a97-4f1b-a113-7df09f6bb7f4",
+      "status": "Under Review",
+      "rating": 3,
+      "category": [
+        {
+          "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
+          "name": "Fotball",
+          "emoji": "⚽"
+        }
+      ]
+    },
+    "geometry": {
+      "coordinates": [
+        5.736110748915053,
+        58.88192994269119
+      ]
+    }
+  },
+  "success": true,
+  "statusCode": 200,
+  "message": "Location successfully updated!"
+}
 ```
 
 ## Delete Location
