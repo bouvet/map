@@ -1,8 +1,8 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
-@latitude=58.1234
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 @longitude=5.1234
-@category=0d870839-a74d-4293-2124-08da8fe1d9b8
+@latitude=58.1234
+@category=3e061bac-93c0-46b9-a502-08da96e466d8
 
 
 GET {{devhost}}/api/locations/{{latitude}}&{{longitude}}/category

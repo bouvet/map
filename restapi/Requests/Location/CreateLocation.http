@@ -1,6 +1,7 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 
+### Dev host without image
 
 POST {{devhost}}/api/locations
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -8,36 +9,59 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
-A title
+A new title!
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="description"
 
-A description
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="rating"
-
-3
+A very long description as it needs 20 chars
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="longitude"
 
-5.1234
+5.3454362342
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="latitude"
 
-58.1234
+58.2345346547
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-3e061bac-93c0-46b9-a502-08da96e466d8
+60c951f3-d233-442b-7883-08da9ad92895
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Dev host with image
+
+POST {{devhost}}/api/locations
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="img"; filename="park.png"
+Content-Disposition: form-data; name="title"
+
+A new title!
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+A very long description as it needs 20 chars
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="longitude"
+
+5.12343456345
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="latitude"
+
+58.1234546546
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="category"
+
+60c951f3-d233-442b-7883-08da9ad92895
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="park.png"
 Content-Type: image/png
 
 < ./park.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
-###
+### Prod host without image
 
 POST {{prodhost}}/api/locations
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -45,29 +69,52 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
-A title
+A new title!
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="description"
 
-A description
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="rating"
-
-3
+A very long description as it needs 20 chars
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="longitude"
 
-5.1234
+5.3454362342
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="latitude"
 
-58.1234
+58.2345346547
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-3e061bac-93c0-46b9-a502-08da96e466d8
+60c951f3-d233-442b-7883-08da9ad92895
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Prod host with image
+
+POST {{prodhost}}/api/locations
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="img"; filename="park.png"
+Content-Disposition: form-data; name="title"
+
+A new title!
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+A very long description as it needs 20 chars
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="longitude"
+
+5.12343456345
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="latitude"
+
+58.1234546546
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="category"
+
+60c951f3-d233-442b-7883-08da9ad92895
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="park.png"
 Content-Type: image/png
 
 < ./park.png

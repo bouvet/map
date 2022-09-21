@@ -1,4 +1,6 @@
+using ErrorOr;
 using Microsoft.WindowsAzure.Storage.Blob;
+using restapi.ServiceErrors;
 
 namespace restapi.Services
 {
@@ -10,27 +12,21 @@ namespace restapi.Services
     {
       this.dataContext = dataContext;
     }
-    public async Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto request)
-    {
 
-      if (request.Rating > 5)
+    public async Task<ErrorOr<ReviewResponseDto>> AddReview(AddReviewDto request)
+    {
+      List<Error> errors = new();
+
+      if (request.Rating is < Review.MinRatingValue or > Review.MaxRatingValue)
       {
-        return new ServiceResponse<ReviewResponseDto>
-        (
-          StatusCodes.Status400BadRequest,
-          Message: "Rating can't be higher than 5",
-          data: null);
+        errors.Add(Errors.Review.InvalidRating);
       }
 
       var location = await dataContext.Locations.FindAsync(request.LocationId);
 
-      if (location == null)
+      if (location is null)
       {
-        return new ServiceResponse<ReviewResponseDto>
-        (
-          StatusCodes.Status400BadRequest,
-          Message: "Adding review failed, please try again",
-          data: null);
+        errors.Add(Errors.Review.LocationNotFound);
       }
 
       var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
@@ -49,6 +45,11 @@ namespace restapi.Services
 
       review.LocationId = request.LocationId;
 
+      if (errors.Count > 0)
+      {
+        return errors;
+      }
+
       if (request.Image is not null)
       {
         CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
@@ -59,14 +60,22 @@ namespace restapi.Services
       await dataContext.SaveChangesAsync();
       await UpdateLocationRating(review.LocationId);
 
-      return new ServiceResponse<ReviewResponseDto>
-      (
-        StatusCodes.Status201Created,
-        Message: "Review successfully created!",
-        data: ReviewResponseBuilder(review));
+      return MapToReviewResponseDto(review);
     }
 
-    public async Task<ServiceResponse<List<ReviewResponseDto>>> GetReviews(Guid locationId)
+    public async Task<ErrorOr<ReviewResponseDto>> GetReview(Guid id)
+    {
+      var review = await dataContext.Reviews.FindAsync(id);
+
+      if (review is null)
+      {
+        return Errors.Review.NotFound;
+      }
+
+      return MapToReviewResponseDto(review);
+    }
+
+    public async Task<ErrorOr<List<ReviewResponseDto>>> GetReviews(Guid locationId)
     {
       List<Review> reviews;
 
@@ -83,36 +92,26 @@ namespace restapi.Services
 
       foreach (Review review in reviews)
       {
-        reviewResponseList.Add(ReviewResponseBuilder(review));
+        reviewResponseList.Add(MapToReviewResponseDto(review));
       }
 
-      return new ServiceResponse<List<ReviewResponseDto>>
-        (
-          StatusCodes.Status200OK,
-          data: reviewResponseList
-        );
+      return reviewResponseList;
     }
 
-    public async Task<ServiceResponse<ReviewResponseDto>> UpdateReview(UpdateReviewDto request)
+    public async Task<ErrorOr<Updated>> UpdateReview(UpdateReviewDto request)
     {
+      List<Error> errors = new();
+
       if (request.Id == Guid.Empty)
       {
-        return new ServiceResponse<ReviewResponseDto>
-          (
-            StatusCodes.Status400BadRequest,
-            Message: "ReviewId must be provided",
-            data: null);
+        return Errors.Review.InvalidId;
       }
 
       var review = await dataContext.Reviews.FindAsync(request.Id);
 
       if (review is null)
       {
-        return new ServiceResponse<ReviewResponseDto>
-          (
-            StatusCodes.Status400BadRequest,
-            Message: "Review not found, please try again",
-            data: null);
+        return Errors.Review.NotFound;
       }
 
       if (!string.IsNullOrEmpty(request.Text))
@@ -132,7 +131,14 @@ namespace restapi.Services
 
       if (request.Rating > 0)
       {
-        review.Rating = request.Rating;
+        if (request.Rating is < Review.MinRatingValue or > Review.MaxRatingValue)
+        {
+          errors.Add(Errors.Review.InvalidRating);
+        }
+        else
+        {
+          review.Rating = request.Rating;
+        }
       }
 
       if (request.Image is not null)
@@ -146,39 +152,26 @@ namespace restapi.Services
       await dataContext.SaveChangesAsync();
       await UpdateLocationRating(review.LocationId);
 
-      return new ServiceResponse<ReviewResponseDto>
-                (
-                  StatusCodes.Status200OK,
-                  Message: "Review successfully updated!",
-                  data: ReviewResponseBuilder(review)
-                );
+      return Result.Updated;
     }
 
-    public async Task<ServiceResponse<DeleteReviewDto>> DeleteReview(Guid id)
+    public async Task<ErrorOr<Deleted>> DeleteReview(Guid id)
     {
       var review = await dataContext.Reviews.FindAsync(id);
 
       if (review == null)
       {
-        return new ServiceResponse<DeleteReviewDto>
-                (
-                  StatusCodes.Status404NotFound,
-                  Message: "Review was not found, please try again",
-                  data: null);
+        return Errors.Review.NotFound;
       }
 
       dataContext.Reviews.Remove(review);
       await dataContext.SaveChangesAsync();
       await UpdateLocationRating(review.LocationId);
 
-      return new ServiceResponse<DeleteReviewDto>
-              (
-                StatusCodes.Status204NoContent,
-                Message: "Review successfully deleted!",
-                data: null);
+      return Result.Deleted;
     }
 
-    private static ReviewResponseDto ReviewResponseBuilder(Review review)
+    private static ReviewResponseDto MapToReviewResponseDto(Review review)
     {
 
       const string azureBlobStorageServer = ".blob.core.windows.net";

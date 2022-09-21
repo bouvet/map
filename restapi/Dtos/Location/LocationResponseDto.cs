@@ -5,7 +5,7 @@ namespace restapi.Dtos
     [Key]
     public Guid Id { get; set; } = new Guid();
     public string Type { get; set; } = "Feature";
-    public LocationPropertiesDto Properties { get; set; } = new LocationPropertiesDto { };
-    public LocationGeometryDto Geometry { get; set; } = new LocationGeometryDto { };
+    public LocationPropertiesDto Properties { get; set; } = new LocationPropertiesDto();
+    public LocationGeometryDto Geometry { get; set; } = new LocationGeometryDto();
   }
 }

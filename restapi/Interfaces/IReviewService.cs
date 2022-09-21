@@ -1,10 +1,13 @@
+using ErrorOr;
+
 namespace restapi.Interfaces
 {
   public interface IReviewService
   {
-    Task<ServiceResponse<ReviewResponseDto>> AddReview(AddReviewDto request);
-    Task<ServiceResponse<List<ReviewResponseDto>>> GetReviews(Guid locationId);
-    Task<ServiceResponse<ReviewResponseDto>> UpdateReview(UpdateReviewDto request);
-    Task<ServiceResponse<DeleteReviewDto>> DeleteReview(Guid id);
+    Task<ErrorOr<ReviewResponseDto>> AddReview(AddReviewDto request);
+    Task<ErrorOr<ReviewResponseDto>> GetReview(Guid id);
+    Task<ErrorOr<List<ReviewResponseDto>>> GetReviews(Guid locationId);
+    Task<ErrorOr<Updated>> UpdateReview(UpdateReviewDto request);
+    Task<ErrorOr<Deleted>> DeleteReview(Guid id);
   }
 }

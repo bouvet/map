@@ -12,8 +12,8 @@ using restapi.Data;
 namespace restapi.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20220920081100_reviewdate")]
-  partial class reviewdate
+  [Migration("20220921075309_locationchange")]
+  partial class locationchange
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
@@ -39,7 +39,7 @@ namespace restapi.Migrations
             b.ToTable("CategoryLocation");
           });
 
-      modelBuilder.Entity("restapi.Category", b =>
+      modelBuilder.Entity("VerdenVenter.Models.Category", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -58,7 +58,7 @@ namespace restapi.Migrations
             b.ToTable("Categories");
           });
 
-      modelBuilder.Entity("restapi.Models.Location", b =>
+      modelBuilder.Entity("VerdenVenter.Models.Location", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace restapi.Migrations
                       .IsRequired()
                       .HasColumnType("nvarchar(max)");
 
-            b.Property<string>("Img")
+            b.Property<string>("Image")
                       .IsRequired()
                       .HasColumnType("nvarchar(max)");
 
@@ -79,7 +79,6 @@ namespace restapi.Migrations
                       .HasColumnType("float");
 
             b.Property<float>("Rating")
-                      .HasMaxLength(5)
                       .HasColumnType("real");
 
             b.Property<string>("Status")
@@ -95,7 +94,7 @@ namespace restapi.Migrations
             b.ToTable("Locations");
           });
 
-      modelBuilder.Entity("restapi.Models.Review", b =>
+      modelBuilder.Entity("VerdenVenter.Models.Review", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -131,7 +130,7 @@ namespace restapi.Migrations
             b.ToTable("Reviews");
           });
 
-      modelBuilder.Entity("restapi.Models.User", b =>
+      modelBuilder.Entity("VerdenVenter.Models.User", b =>
           {
             b.Property<Guid>("Id")
                       .ValueGeneratedOnAdd()
@@ -162,22 +161,22 @@ namespace restapi.Migrations
 
       modelBuilder.Entity("CategoryLocation", b =>
           {
-            b.HasOne("restapi.Category", null)
+            b.HasOne("VerdenVenter.Models.Category", null)
                       .WithMany()
                       .HasForeignKey("CategoriesId")
                       .OnDelete(DeleteBehavior.Cascade)
                       .IsRequired();
 
-            b.HasOne("restapi.Models.Location", null)
+            b.HasOne("VerdenVenter.Models.Location", null)
                       .WithMany()
                       .HasForeignKey("LocationsId")
                       .OnDelete(DeleteBehavior.Cascade)
                       .IsRequired();
           });
 
-      modelBuilder.Entity("restapi.Models.Review", b =>
+      modelBuilder.Entity("VerdenVenter.Models.Review", b =>
           {
-            b.HasOne("restapi.Models.Location", "Location")
+            b.HasOne("VerdenVenter.Models.Location", "Location")
                       .WithMany("Reviews")
                       .HasForeignKey("LocationId")
                       .OnDelete(DeleteBehavior.Cascade)
@@ -186,7 +185,7 @@ namespace restapi.Migrations
             b.Navigation("Location");
           });
 
-      modelBuilder.Entity("restapi.Models.Location", b =>
+      modelBuilder.Entity("VerdenVenter.Models.Location", b =>
           {
             b.Navigation("Reviews");
           });

@@ -1,16 +1,18 @@
-namespace restapi
+namespace restapi.Models;
+
+public class Category
 {
-  public class Category
-  {
-    [Key]
-    public Guid Id { get; set; } = new Guid();
+  public const int MinNameLength = 2;
+  public const int MaxNameLength = 15;
 
-    public string Name { get; set; } = "new category";
+  [Key]
+  public Guid Id { get; set; } = new Guid();
 
-    public string Emoji { get; set; } = "😀";
+  public string Name { get; set; } = "new category";
 
-    [JsonIgnore]
-    public List<Location> Locations { get; set; } = new List<Location>();
+  public string Emoji { get; set; } = "😀";
 
-  }
+  [JsonIgnore]
+  public List<Location> Locations { get; set; } = new List<Location>();
+
 }

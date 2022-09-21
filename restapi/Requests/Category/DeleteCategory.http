@@ -1,7 +1,7 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 
-@id=b96f5471-4e3a-4256-2c0c-08da96149036
+@id=735fbdfd-ab84-4cc8-ddbf-08da9b08fa95
 
 DELETE {{devhost}}/api/categories/{{id}}
 

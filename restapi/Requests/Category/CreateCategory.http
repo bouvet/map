@@ -1,13 +1,13 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 
 
 POST {{devhost}}/api/categories
 Content-Type: application/json
 
 {
-  "name": "Basketball",
-  "emoji": "🏀"
+  "name": "Styrke",
+  "emoji": "💪"
 }
 
 ###

@@ -1,8 +1,8 @@
-﻿namespace restapi.Controllers
+﻿using ErrorOr;
+
+namespace restapi.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class LocationsController : ControllerBase
+  public class LocationsController : ApiController
   {
     private readonly ILocationService locationService;
 
@@ -12,56 +12,78 @@
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetAllLocations()
+    public async Task<IActionResult> GetLocations()
     {
-      var response = await locationService.GetAllLocations();
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<List<LocationResponseDto>> getLocationsResult = await locationService.GetLocations();
+
+      return getLocationsResult.Match(
+        locations => Ok(locations),
+        errors => Problem(errors)
+      );
     }
 
     [HttpGet("{latitude}&{longitude}/category")]
-    public async Task<ActionResult<ServiceResponse<List<LocationResponseDto>>>> GetClosestLocation(double latitude, double longitude, Guid category)
+    public async Task<IActionResult> GetClosestLocation(double latitude, double longitude, Guid category)
     {
-      var response = await locationService.GetClosestLocation(latitude, longitude, category);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<LocationResponseDto> getClosestLocationResult = await locationService.GetClosestLocation(latitude, longitude, category);
+
+      return getClosestLocationResult.Match(
+        location => Ok(location),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> GetLocationById(Guid id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetLocationById(Guid id)
     {
-      var response = await locationService.GetLocationById(id);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<LocationResponseDto> getLocationByIdResult = await locationService.GetLocationById(id);
+
+      return getLocationByIdResult.Match(
+        location => Ok(location),
+        errors => Problem(errors)
+      );
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> AddLocation([FromForm] AddLocationDto request)
+    public async Task<IActionResult> AddLocation([FromForm] AddLocationDto request)
     {
-      var response = await locationService.AddLocation(request);
-      if (response.StatusCode == StatusCodes.Status201Created)
-      {
-        return CreatedAtAction(nameof(GetLocationById), new { id = response.Data!.Id }, response);
-      }
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<LocationResponseDto> addLocationResult = await locationService.AddLocation(request);
+
+      return addLocationResult.Match(
+        location => CreatedAtGetLocation(location),
+        errors => Problem(errors)
+      );
     }
 
     [HttpPut]
-    public async Task<ActionResult<ServiceResponse<LocationResponseDto>>> UpdateLocation([FromForm] UpdateLocationDto request)
+    public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationDto request)
     {
-      var response = await locationService.UpdateLocation(request);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Updated> updateLocationResult = await locationService.UpdateLocation(request);
+
+      return updateLocationResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<DeleteLocationDto>>> DeleteLocation(Guid id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteLocation(Guid id)
     {
-      var response = await locationService.DeleteLocation(id);
-      if (response.StatusCode == 204)
-      {
-        return StatusCode(response.StatusCode);
-      }
-      else
-      {
-        return StatusCode(response.StatusCode, response);
-      }
+      ErrorOr<Deleted> deleteLocationResult = await locationService.DeleteLocation(id);
+
+      return deleteLocationResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
+    }
+
+    private CreatedAtActionResult CreatedAtGetLocation(LocationResponseDto location)
+    {
+      return CreatedAtAction(
+          actionName: nameof(GetLocationById),
+          routeValues: new { id = location.Id },
+          value: location
+        );
     }
   }
 }

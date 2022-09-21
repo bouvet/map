@@ -15,7 +15,7 @@
     - [Get Location Response](#get-location-response)
   - [Update Location](#update-location)
     - [Update Location Request](#update-location-request)
-    - [🚧Update Location Response](#update-location-response)
+    - [Update Location Response](#update-location-response)
   - [Delete Location](#delete-location)
     - [Delete Location Request](#delete-location-request)
     - [Delete Location Response](#delete-location-response)
@@ -35,35 +35,32 @@ GET {{host}}/api/locations
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "e4ea896b-f1e2-4d8f-5a00-08da8fe37d95",
-      "type": "Feature",
-      "properties": {
-        "title": "Lura Ballbinge",
-        "description": "Veldig god ballbinge med 2 mål, god gressmatte og gjerde bak mål for de som bommer.",
-        "img": "",
-        "status": "Under Review",
-        "rating": 0,
-        "category": [
-          {
-            "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-            "name": "Fotball",
-            "emoji": "⚽"
-          }
-        ]
-      },
-      "geometry": {
-        "coordinates": [
-          5.736242,
-          58.881887
-        ],
-        "type": "Point"
-      }
+[
+  {
+    "id": "9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+    "type": "Feature",
+    "properties": {
+      "title": "Lura Ballbinge",
+      "description": "Skikkelig god ballbinge med 2 mål og nett rundt bingen",
+      "image": "https://optimusblobs.azureedge.net/images/9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+      "status": "Under Review",
+      "rating": 2,
+      "category": [
+        {
+          "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
+          "name": "Fotball",
+          "emoji": "⚽"
+        }
+      ]
     },
-  ]
-}
+    "geometry": {
+      "coordinates": [
+        5.736110748915053,
+        58.88192994269119
+      ]
+    }
+  }
+]
 ```
 
 ## Create Location
@@ -81,20 +78,15 @@ Required fields:
   - description
   - longitude
   - latitude
-  - category
 ```
 
-```json
-// JSON example but the API requires multipart/form-data!
-{
-  "title": "A title",
-  "description": "A description",
-  "img": "",
-  "rating": "5",
-  "longitude": 5.1234,
-  "latitude": 58.1234,
-  "category": ["0d870839-a74d-4293-2124-08da8fe1d9b8"]
-}
+```multipart/form-data
+title = ""
+description = ""
+image = file
+category = "60c951f3-d233-442b-7883-08da9ad92895"
+longitude = 5.1234
+latitude = 58.1234
 ```
 
 ### Create Location Response
@@ -109,28 +101,28 @@ Location: {{host}}/api/Locations/{{id}}
 
 ```json
 {
-  "data": {
-    "id": "4afc7c42-8cd9-4583-ad87-4b203776c012",
-    "type": "Feature",
-    "properties": {
-      "title": "",
-      "description": "",
-      "img": "",
-      "status": "Under Review",
-      "rating": 0,
-      "category": []
-    },
-    "geometry": {
-      "coordinates": [
-        0,
-        0
-      ],
-      "type": "Point"
-    }
+  "id": "325ee2a3-efc0-4787-a85c-c1d0f2e20a74",
+  "type": "Feature",
+  "properties": {
+    "title": "A new title!",
+    "description": "A very long description as it needs 20 chars",
+    "image": "https://optimusblobs.azureedge.net/images/dcdf5038-52fa-4789-911d-50b079a38a7a",
+    "status": "Under Review",
+    "rating": 0,
+    "category": [
+      {
+        "id": "60c951f3-d233-442b-7883-08da9ad92895",
+        "name": "Basketball",
+        "emoji": "\uD83C\uDFC0"
+      }
+    ]
   },
-  "success": true,
-  "statusCode": 201,
-  "message": "Location successfully added!"
+  "geometry": {
+    "coordinates": [
+      5.12343456345,
+      58.1234546546
+    ]
+  }
 }
 ```
 
@@ -159,34 +151,28 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
 
 ```json
 {
-  "data": {
-    "id": "f2048041-4d45-405e-a81e-0f08ca699125",
-    "type": "Feature",
-    "properties": {
-      "title": "A title",
-      "description": "A description",
-      "img": "",
-      "status": "Under Review",
-      "rating": 4,
-      "category": [
-        {
-          "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-          "name": "Fotball",
-          "emoji": "⚽"
-        }
-      ]
-    },
-    "geometry": {
-      "coordinates": [
-        5.1234,
-        58.1234
-      ],
-      "type": "Point"
-    }
+  "id": "325ee2a3-efc0-4787-a85c-c1d0f2e20a74",
+  "type": "Feature",
+  "properties": {
+    "title": "A new title!",
+    "description": "A very long description as it needs 20 chars",
+    "image": "https://optimusblobs.azureedge.net/images/dcdf5038-52fa-4789-911d-50b079a38a7a",
+    "status": "Under Review",
+    "rating": 0,
+    "category": [
+      {
+        "id": "60c951f3-d233-442b-7883-08da9ad92895",
+        "name": "Basketball",
+        "emoji": "\uD83C\uDFC0"
+      }
+    ]
   },
-  "success": true,
-  "statusCode": 200,
-  "message": ""
+  "geometry": {
+    "coordinates": [
+      5.12343456345,
+      58.1234546546
+    ]
+  }
 }
 ```
 
@@ -206,34 +192,28 @@ GET {{host}}/api/locations/{{id}}
 
 ```json
 {
-  "data": {
-    "id": "f2048041-4d45-405e-a81e-0f08ca699125",
-    "type": "Feature",
-    "properties": {
-      "title": "A title",
-      "description": "A description",
-      "img": "",
-      "status": "Under Review",
-      "rating": 4,
-      "category": [
-        {
-          "id": "0d870839-a74d-4293-2124-08da8fe1d9b8",
-          "name": "Fotball",
-          "emoji": "⚽"
-        }
-      ]
-    },
-    "geometry": {
-      "coordinates": [
-        5.1234,
-        58.1234
-      ],
-      "type": "Point"
-    }
+  "id": "9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+  "type": "Feature",
+  "properties": {
+    "title": "Lura Ballbinge",
+    "description": "Skikkelig god ballbinge med 2 mål og nett rundt bingen",
+    "image": "https://optimusblobs.azureedge.net/images/9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+    "status": "Under Review",
+    "rating": 2,
+    "category": [
+      {
+        "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
+        "name": "Fotball",
+        "emoji": "⚽"
+      }
+    ]
   },
-  "success": true,
-  "statusCode": 200,
-  "message": ""
+  "geometry": {
+    "coordinates": [
+      5.736110748915053,
+      58.88192994269119
+    ]
+  }
 }
 ```
 
@@ -247,7 +227,7 @@ Content-Type: multipart/form-data
 ```
 
 ```multipart/form-data
-
+id = ""
 title = ""
 description = ""
 Img = file
@@ -257,42 +237,10 @@ longitude = <number> (5.xxxx)
 latitude = <number> (58.xxxx)
 ```
 
-### 🚧Update Location Response
+### Update Location Response
 
 ```js
-200 OK
-```
-
-```json
-{
-  "data": {
-    "id": "9c3bd097-5606-4865-a14c-30c076a5a35c",
-    "type": "Feature",
-    "properties": {
-      "title": "A title!",
-      "description": "a Description",
-      "img": "https://optimusblobs.azureedge.net/images/e52b16c5-6a97-4f1b-a113-7df09f6bb7f4",
-      "status": "Under Review",
-      "rating": 3,
-      "category": [
-        {
-          "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
-          "name": "Fotball",
-          "emoji": "⚽"
-        }
-      ]
-    },
-    "geometry": {
-      "coordinates": [
-        5.736110748915053,
-        58.88192994269119
-      ]
-    }
-  },
-  "success": true,
-  "statusCode": 200,
-  "message": "Location successfully updated!"
-}
+204 No Content
 ```
 
 ## Delete Location

@@ -1,3 +1,5 @@
+# 🚧Users
+
 - [🚧Users](#users)
   - [Create User](#create-user)
     - [Create User Request](#create-user-request)
@@ -11,8 +13,6 @@
   - [Delete User](#delete-user)
     - [Delete User Request](#delete-user-request)
     - [Delete User Response](#delete-user-response)
-
-# 🚧Users
 
 ## Create User
 

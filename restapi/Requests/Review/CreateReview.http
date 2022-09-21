@@ -1,6 +1,6 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
-@locationId=9c3bd097-5606-4865-a14c-30c076a5a35c
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
+@locationId=9fbf46b3-c5a5-450a-9b28-1a3167e2625a
 
 POST {{devhost}}/api/reviews
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -8,7 +8,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="rating"
 
-3
+1
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
