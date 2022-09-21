@@ -6,16 +6,20 @@ using restapi.Models;
 using restapi.Dtos;
 using restapi.Data;
 using Microsoft.EntityFrameworkCore;
+using restapi.Services.AzureBlobStorage;
+using restapi.Common;
 
 namespace restapi.Services.Locations;
 
 public class LocationService : ILocationService
 {
   private readonly DataContext dataContext;
+  private readonly IAzureBlobStorageService azureBlobStorageService;
 
-  public LocationService(DataContext dataContext)
+  public LocationService(DataContext dataContext, IAzureBlobStorageService azureBlobStorageService)
   {
     this.dataContext = dataContext;
+    this.azureBlobStorageService = azureBlobStorageService;
   }
 
   public async Task<ErrorOr<LocationResponseDto>> AddLocation(AddLocationDto request)
@@ -55,10 +59,16 @@ public class LocationService : ILocationService
       location.Categories = new List<Category>();
     }
 
-    if (request.Image != null)
+    if (request.Image is not null)
     {
-      CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
-      location.Image = blob.Uri.ToString();
+      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+
+      if (fileUploadResult.IsError)
+      {
+        return Errors.AzureBlobStorage.UploadFailed;
+      }
+
+      location.Image = fileUploadResult.Value.Uri.ToString();
     }
 
     dataContext.Locations.Add(location);
@@ -169,8 +179,14 @@ public class LocationService : ILocationService
 
     if (request.Image is not null)
     {
-      CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
-      location.Image = blob.Uri.ToString();
+      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+
+      if (fileUploadResult.IsError)
+      {
+        return Errors.AzureBlobStorage.UploadFailed;
+      }
+
+      location.Image = fileUploadResult.Value.Uri.ToString();
     }
 
     await dataContext.SaveChangesAsync();
@@ -251,14 +267,11 @@ public class LocationService : ILocationService
       Coordinates = new[] { location.Longitude, location.Latitude }
     };
 
-    const string azureBlobStorageServer = ".blob.core.windows.net";
-    const string azureCDNserver = ".azureedge.net";
-
     var properties = new LocationPropertiesDto
     {
       Title = location.Title,
       Description = location.Description,
-      Image = location.Image.Replace(azureBlobStorageServer, azureCDNserver),
+      Image = location.Image.Replace(AzureSettings.AzureBlobStorageServer, AzureSettings.AzureCDNserver),
       Rating = location.Rating,
       Category = location.Categories,
       Status = location.Status

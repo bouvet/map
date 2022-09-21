@@ -1,20 +1,24 @@
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
+using restapi.Common;
 using restapi.Data;
 using restapi.Dtos;
 using restapi.Models;
 using restapi.ServiceErrors;
+using restapi.Services.AzureBlobStorage;
 
 namespace restapi.Services.Reviews;
 
 public class ReviewService : IReviewService
 {
   private readonly DataContext dataContext;
+  private readonly IAzureBlobStorageService azureBlobStorageService;
 
-  public ReviewService(DataContext dataContext)
+  public ReviewService(DataContext dataContext, IAzureBlobStorageService azureBlobStorageService)
   {
     this.dataContext = dataContext;
+    this.azureBlobStorageService = azureBlobStorageService;
   }
 
   public async Task<ErrorOr<ReviewResponseDto>> AddReview(AddReviewDto request)
@@ -56,8 +60,14 @@ public class ReviewService : IReviewService
 
     if (request.Image is not null)
     {
-      CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
-      review.Image = blob.Uri.ToString();
+      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+
+      if (fileUploadResult.IsError)
+      {
+        return Errors.AzureBlobStorage.UploadFailed;
+      }
+
+      review.Image = fileUploadResult.Value.Uri.ToString();
     }
 
     await dataContext.Reviews.AddAsync(review);
@@ -147,8 +157,14 @@ public class ReviewService : IReviewService
 
     if (request.Image is not null)
     {
-      CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
-      review.Image = blob.Uri.ToString();
+      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+
+      if (fileUploadResult.IsError)
+      {
+        return Errors.AzureBlobStorage.UploadFailed;
+      }
+
+      review.Image = fileUploadResult.Value.Uri.ToString();
     }
 
     review.Updated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
@@ -177,9 +193,6 @@ public class ReviewService : IReviewService
 
   private static ReviewResponseDto MapToReviewResponseDto(Review review)
   {
-    const string azureBlobStorageServer = ".blob.core.windows.net";
-    const string azureCDNserver = ".azureedge.net";
-
     return new ReviewResponseDto
     {
       Id = review.Id,
@@ -188,7 +201,7 @@ public class ReviewService : IReviewService
       Rating = review.Rating,
       Status = review.Status,
       Text = review.Text ?? "",
-      Image = review.Image.Replace(azureBlobStorageServer, azureCDNserver),
+      Image = review.Image.Replace(AzureSettings.AzureBlobStorageServer, AzureSettings.AzureCDNserver),
       LocationId = review.LocationId
     };
   }

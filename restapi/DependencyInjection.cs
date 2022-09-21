@@ -1,7 +1,9 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
+using restapi.Common;
 using restapi.Data;
+using restapi.Services.AzureBlobStorage;
 using restapi.Services.Categories;
 using restapi.Services.Locations;
 using restapi.Services.Reviews;
@@ -11,8 +13,15 @@ namespace restapi;
 
 public static class DependencyInjection
 {
-  public static async Task<IServiceCollection> AddDependenciesAsync(this IServiceCollection services, IWebHostEnvironment environment, ConfigurationManager configuration)
+  public static async Task<IServiceCollection> AddDependenciesAsync(
+    this IServiceCollection services,
+    IWebHostEnvironment environment,
+    ConfigurationManager configuration
+  )
+
   {
+    services.Configure<AzureSettings>(configuration.GetSection(AzureSettings.SectionName));
+
     if (environment.IsProduction())
     {
       Console.WriteLine("APPLICATION RUNNING IN PRODUCTION MODE");
@@ -43,6 +52,7 @@ public static class DependencyInjection
     services.AddScoped<ICategoryService, CategoryService>();
     services.AddScoped<IReviewService, ReviewService>();
     services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
 
     services.AddResponseCompression(options => options.EnableForHttps = true);
 
