@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, ReactElement, useCallback } from 'react';
 import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
@@ -80,8 +80,8 @@ const ImageWrapper = styled.div<ImageProp>`
 export const SwipeableEdgeDrawer: FC = () => {
     const [open, setOpen] = useState(true);
 
-    const [reviewList, setReviewList]: any = useState([]);
-    const [imageList, setImageList]: any = useState([]);
+    const [reviewList, setReviewList] = useState<ReactElement[]>([]);
+    const [imageList, setImageList] = useState<ReactElement[]>([]);
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
     const locationTitle = currentlySelectedLocation.properties.title;
@@ -95,37 +95,36 @@ export const SwipeableEdgeDrawer: FC = () => {
         dispatch(reviewServices.getReviews(id));
     }, [id, dispatch]);
 
-    useEffect(() => {
+    const updateCurrentReviewsCallback = useCallback(() => {
         if (currentReviews) {
-            const temp = currentReviews.map((item: ReviewTypeGet) =>
-                item.text ? (
+            const temp = currentReviews
+                .filter((item) => item.text)
+                .map((item: ReviewTypeGet) => (
                     <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
-                ) : null,
-            );
+                ));
             setReviewList(temp);
         }
-    }, [currentReviews]);
+    }, [currentReviews, setReviewList]);
 
-    // Sets images for review images
-    useEffect(() => {
+    const updateCurrentImageCallback = useCallback(() => {
         if (currentReviews) {
-            const temp = currentReviews.map((item: ReviewTypeGet) =>
-                item.image ? <ImageWrapper key={item.id} backgroundImage={item.image} /> : null,
-            );
-            if (typeof temp === 'object') {
-                setImageList(temp);
-                if (currentlySelectedLocation.properties.img) {
-                    const mainImg = (
-                        <ImageWrapper
-                            key={currentlySelectedLocation.properties.title}
-                            backgroundImage={currentlySelectedLocation.properties.img}
-                        />
-                    );
-                    setImageList((imageList: any) => [mainImg, ...imageList]);
-                }
+            const temp = currentReviews
+                .filter((item) => item.image)
+                .map((item: ReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.image} />);
+            setImageList(temp);
+            if (currentlySelectedLocation.properties.img) {
+                const mainImg = <ImageWrapper key="b" backgroundImage={currentlySelectedLocation.properties.img} />;
+                setImageList((imageList: any) => [mainImg, ...imageList]);
             }
         }
-    }, [currentReviews, currentlySelectedLocation.properties.img, currentlySelectedLocation.properties.title]);
+    }, [currentReviews, currentlySelectedLocation.properties.img]);
+
+    useEffect(() => {
+        updateCurrentReviewsCallback();
+        updateCurrentImageCallback();
+    }, [updateCurrentReviewsCallback, updateCurrentImageCallback]);
+
+    // Sets images for review images
 
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
