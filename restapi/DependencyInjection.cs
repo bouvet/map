@@ -1,3 +1,7 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.EntityFrameworkCore;
+using restapi.Data;
 using restapi.Services.Categories;
 using restapi.Services.Locations;
 using restapi.Services.Reviews;
@@ -7,8 +11,32 @@ namespace restapi;
 
 public static class DependencyInjection
 {
-  public static IServiceCollection AddDependencies(this IServiceCollection services)
+  public static async Task<IServiceCollection> AddDependenciesAsync(this IServiceCollection services, IWebHostEnvironment environment, ConfigurationManager configuration)
   {
+    if (environment.IsProduction())
+    {
+      Console.WriteLine("APPLICATION RUNNING IN PRODUCTION MODE");
+
+      var azureKeyVault = Environment.GetEnvironmentVariable("KeyVaultUri");
+
+      var keyVaultEndpoint = new Uri(azureKeyVault!);
+
+      configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+
+      var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+
+      var DbConnectionString = await secretClient.GetSecretAsync("DbConnectionString");
+
+      services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
+    }
+
+    if (environment.IsDevelopment())
+    {
+      Console.WriteLine("APPLICATION RUNNING IN DEVELOPMENT MODE");
+
+      services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration["Dev:DbConnectionString"]));
+    }
+
     services.AddControllers();
 
     services.AddScoped<ILocationService, LocationService>();
