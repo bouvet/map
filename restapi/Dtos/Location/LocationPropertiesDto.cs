@@ -1,3 +1,5 @@
+using restapi.Models;
+
 namespace restapi.Dtos
 {
   public class LocationPropertiesDto

@@ -1,4 +1,7 @@
-﻿namespace restapi.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace restapi.Controllers;
+
 public class ErrorsController : ControllerBase
 {
   [Route("/error")]

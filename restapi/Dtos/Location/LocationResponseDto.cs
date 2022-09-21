@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace restapi.Dtos
 {
   public class LocationResponseDto

@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using restapi.Models;
+
 namespace restapi.Data
 {
   public class DataContext : DbContext

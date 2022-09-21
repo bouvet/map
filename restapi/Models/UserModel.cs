@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace restapi.Models;
 
 public class User
