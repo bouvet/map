@@ -12,6 +12,7 @@ namespace restapi.Services
     {
       this.dataContext = dataContext;
     }
+
     public async Task<ErrorOr<ReviewResponseDto>> AddReview(AddReviewDto request)
     {
       List<Error> errors = new();
@@ -172,7 +173,6 @@ namespace restapi.Services
 
     private static ReviewResponseDto MapToReviewResponseDto(Review review)
     {
-
       const string azureBlobStorageServer = ".blob.core.windows.net";
       const string azureCDNserver = ".azureedge.net";
 
