@@ -2,14 +2,9 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import 'moment/locale/nb';
+import { StarRating } from '../../../components/StarRating/StarRating';
+import { MyTheme } from '../../../styles/global';
 
-/**
- * @param name @type string
- * @param age @type number
- * @param date @type string
- * @param rating @type number
- * @param review @type string
- */
 interface ReviewProps {
     name: string;
     age?: number;
@@ -28,12 +23,16 @@ const ReviewHeader = styled.div`
     grid-template-columns: 2fr 1fr;
 `;
 
-const ReviewerInfo = styled.div`
+const ReviewerWrapper = styled.div`
     font-style: italic;
     font-weight: bolder;
 `;
 
-const Rating = styled.div`
+const ReviewerInfo = styled.div`
+    width: 100%;
+`;
+
+const Date = styled.div`
     width: 100%;
     display: flex;
     justify-content: right;
@@ -44,10 +43,13 @@ moment.locale('nb');
 export const Review: FC<ReviewProps> = ({ name, age, date, rating, review }) => (
     <ReviewWrapper>
         <ReviewHeader>
-            <ReviewerInfo>
-                {name}, {age} år. {moment(date).format('L')}
-            </ReviewerInfo>
-            <Rating>{rating}/5</Rating>
+            <ReviewerWrapper>
+                <ReviewerInfo>
+                    {name}, {age} år
+                </ReviewerInfo>
+                <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx="14px" />
+            </ReviewerWrapper>
+            <Date>{moment(date).format('L')}</Date>
         </ReviewHeader>
         <span>{review}</span>
     </ReviewWrapper>
