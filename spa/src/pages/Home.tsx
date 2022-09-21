@@ -35,7 +35,7 @@ export const Home: FC = () => {
             dispatch(locationServices.getClosestLocation(currentUserLocation, selectedFilterCategory));
         } else {
             console.log('isGettingLocation');
-            navigator.geolocation.getCurrentPosition(function (position) {
+            navigator.geolocation.getCurrentPosition((position) => {
                 const userLocation: LatLong = {
                     lat: position.coords.latitude,
                     long: position.coords.longitude,

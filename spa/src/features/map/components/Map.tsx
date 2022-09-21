@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, FC } from 'react';
+import { useCallback, useEffect, useRef, useState, FC, MutableRefObject } from 'react';
 import { Map as ReactMap } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -28,9 +28,9 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const setViewStateCurrentMapCenter = useCallback(() => {
         if (currentMapCenter.lat) {
-            setViewState({ zoom: 13, longitude: currentMapCenter.long, latitude: currentMapCenter.lat });
+            setViewState((prevState) => ({ ...prevState, longitude: currentMapCenter.long, latitude: currentMapCenter.lat }));
         }
-    }, []);
+    }, [currentMapCenter.lat, currentMapCenter.long]);
 
     useEffect(() => {
         dispatch(mapService.getLocations());
@@ -51,14 +51,14 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         };
     }, [currentUserLocation, dispatch, hasUserLocation]);
 
-    const mapRef = useRef(null);
+    const mapRef: MutableRefObject<null> = useRef(null);
 
     const onMapLoad = useCallback(
-        (evt: any) => {
+        (event: any) => {
             if (mapRef.current) {
                 // @ts-ignore
                 mapRef.current.on('move', () => {
-                    setViewState(evt.viewState);
+                    setViewState(event.viewState);
                 });
                 // @ts-ignore
                 mapRef.current.on('moveend', () => {

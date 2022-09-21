@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Category, Location } from '../../utils/types.d';
 
 const initialState = {
@@ -18,34 +18,34 @@ const mapState = createSlice({
     name: 'map',
     initialState,
     reducers: {
-        setLoading(state, action: { payload: boolean; type: string }) {
+        setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
         },
-        loadLocations(state, action: { payload: Location[]; type: string }) {
+        loadLocations(state, action: PayloadAction<Location[]>) {
             state.locations = action.payload;
         },
-        setFilteredLocations(state, action: { payload: Location[]; type: string }) {
+        setFilteredLocations(state, action: PayloadAction<Location[]>) {
             state.filteredLocations = action.payload;
         },
-        setSelectedFilterCategory(state, action: { payload: string; type: string }) {
+        setSelectedFilterCategory(state, action: PayloadAction<string>) {
             state.selectedFilterCategory = action.payload;
         },
-        setSelectedMarker(state, action: { payload: string; type: string }) {
+        setSelectedMarker(state, action: PayloadAction<string>) {
             state.selectedMarker = action.payload;
         },
-        setPopupVisibility(state, action: { payload: boolean; type: string }) {
+        setPopupVisibility(state, action: PayloadAction<boolean>) {
             state.popUpIsVisible = action.payload;
         },
-        setCurrentlySelectedLocation(state, action: { payload: Location; type: string }) {
+        setCurrentlySelectedLocation(state, action: PayloadAction<Location>) {
             state.currentlySelectedLocation = action.payload;
         },
-        setCategories(state, action: { payload: Category[]; type: string }) {
+        setCategories(state, action: PayloadAction<Category[]>) {
             state.categories = action.payload;
         },
-        setCategoriesWithLocations(state, action: { payload: Category[]; type: string }) {
+        setCategoriesWithLocations(state, action: PayloadAction<Category[]>) {
             state.categoriesWithLocations = action.payload;
         },
-        setHomeMarkerFocus(state, action: { payload: boolean; type: string }) {
+        setHomeMarkerFocus(state, action: PayloadAction<boolean>) {
             state.homeMarkerFocus = action.payload;
         },
     },
