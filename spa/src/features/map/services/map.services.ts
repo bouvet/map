@@ -8,14 +8,14 @@ export const mapService = {
             try {
                 dispatch(mapActions.setLoading(true));
 
-                const locations = await API.get('/Locations');
-                dispatch(mapActions.loadLocations(locations.data.data));
+                const { data: LocationData } = await API.get('/Locations');
 
-                const categoriesWithLocations = await API.get('/Categories/inUse');
-                dispatch(mapActions.setCategoriesWithLocations(categoriesWithLocations.data.data));
+                dispatch(mapActions.loadLocations(LocationData));
 
-                const categories = await API.get('/Categories');
-                dispatch(mapActions.setCategories(categories.data.data));
+                // TODO: filter list later...
+                const { data: CategoriesData } = await API.get('/Categories');
+                dispatch(mapActions.setCategories(CategoriesData));
+                dispatch(mapActions.setCategoriesWithLocations(CategoriesData));
 
                 dispatch(mapActions.setLoading(false));
             } catch (error) {

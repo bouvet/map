@@ -113,7 +113,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                 .map((item: ReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.image} />);
             setImageList(temp);
             if (currentlySelectedLocation.properties.img) {
-                const mainImg = <ImageWrapper key="b" backgroundImage={currentlySelectedLocation.properties.img} />;
+                const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.img} />;
                 setImageList((imageList: any) => [mainImg, ...imageList]);
             }
         }
