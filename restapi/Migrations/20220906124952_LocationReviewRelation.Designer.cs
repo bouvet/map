@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using VerdenVenter.Data;
+using restapi.Data;
 
 #nullable disable
 
-namespace VerdenVenter.Migrations
+namespace restapi.Migrations
 {
   [DbContext(typeof(DataContext))]
   [Migration("20220906124952_LocationReviewRelation")]

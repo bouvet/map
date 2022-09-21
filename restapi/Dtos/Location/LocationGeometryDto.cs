@@ -1,4 +1,4 @@
-namespace VerdenVenter.Dtos
+namespace restapi.Dtos
 {
   public class LocationGeometryDto
   {

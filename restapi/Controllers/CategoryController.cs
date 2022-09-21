@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 
-namespace VerdenVenter.Controllers
+namespace restapi.Controllers
 {
   public class CategoriesController : ApiController
   {

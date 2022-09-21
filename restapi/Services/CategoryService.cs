@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
-using VerdenVenter.ServiceErrors;
+using restapi.ServiceErrors;
 
-namespace VerdenVenter.Services
+namespace restapi.Services
 {
   public class CategoryService : ICategoryService
   {

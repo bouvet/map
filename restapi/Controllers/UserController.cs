@@ -1,8 +1,8 @@
-namespace VerdenVenter.Controllers
+using ErrorOr;
+
+namespace restapi.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class UsersController : ControllerBase
+  public class UsersController : ApiController
   {
     private readonly UserService userService;
 
@@ -12,31 +12,67 @@ namespace VerdenVenter.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<User>>> AddUser(AddUserDto newUser)
+    public async Task<IActionResult> AddUser(AddUserDto newUser)
     {
-      var response = await userService.AddUser(newUser);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<User> addUserResult = await userService.AddUser(newUser);
+
+      return addUserResult.Match(
+        user => CreatedAtGetUser(user),
+        errors => Problem(errors)
+      );
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<User>>>> GetUsers()
+    public async Task<IActionResult> GetUsers()
     {
-      var response = await userService.GetUsers();
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<List<User>> getUsersResult = await userService.GetUsers();
+
+      return getUsersResult.Match(
+        users => Ok(users),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ServiceResponse<User>>> UpdateUser(Guid id, UpdateUserDto updatedUser)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetUser(Guid id)
     {
-      var response = await userService.UpdateUser(id, updatedUser);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<User> getUserResult = await userService.GetUser(id);
+
+      return getUserResult.Match(
+        user => Ok(user),
+        errors => Problem(errors)
+      );
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<DeleteUserDto>>> DeleteUser(Guid id)
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
     {
-      var response = await userService.DeleteUser(id);
-      return StatusCode(response.StatusCode, response);
+      ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
+
+      return updateUserResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+      ErrorOr<Deleted> deleteUserResult = await userService.DeleteUser(id);
+
+      return deleteUserResult.Match(
+        _ => NoContent(),
+        errors => Problem(errors)
+      );
+    }
+
+    private CreatedAtActionResult CreatedAtGetUser(User user)
+    {
+      return CreatedAtAction(
+          actionName: nameof(GetUser),
+          routeValues: new { id = user.Id },
+          value: user
+        );
     }
   }
 }

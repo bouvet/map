@@ -1,5 +1,5 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 @locationId=9c3bd097-5606-4865-a14c-30c076a5a35d
 
 GET {{devhost}}/api/reviews

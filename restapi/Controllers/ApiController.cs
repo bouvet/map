@@ -1,7 +1,7 @@
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace VerdenVenter.Controllers;
+namespace restapi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

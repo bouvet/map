@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace VerdenVenter.ServiceErrors;
+namespace restapi.ServiceErrors;
 
 public static partial class Errors
 {

@@ -1,5 +1,5 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 @id=735fbdfd-ab84-4cc8-ddbf-08da9b08fa95
 
 PUT {{devhost}}/api/categories/{{id}}

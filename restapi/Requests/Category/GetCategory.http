@@ -1,5 +1,5 @@
 @devhost=https://localhost:7107
-@prodhost=https://verdenventer.azurewebsites.net
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
 
 @id=3e061bac-93c0-46b9-a502-08da96e466d8
 

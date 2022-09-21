@@ -1,4 +1,4 @@
-﻿namespace VerdenVenter.Controllers;
+﻿namespace restapi.Controllers;
 public class ErrorsController : ControllerBase
 {
   [Route("/error")]

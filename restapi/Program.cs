@@ -2,30 +2,19 @@ global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
 global using System.Text.Json.Serialization;
 global using Microsoft.AspNetCore.Mvc;
-global using VerdenVenter.Data;
-global using VerdenVenter.Models;
-global using VerdenVenter.Interfaces;
-global using VerdenVenter.Services;
-global using VerdenVenter.Dtos;
-global using Swashbuckle.AspNetCore.Filters;
+global using restapi.Data;
+global using restapi.Models;
+global using restapi.Interfaces;
+global using restapi.Services;
+global using restapi.Dtos;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using VerdenVenter.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample200OK>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample201Created>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample500InternalServerError>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryDeleteExample409Conflict>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<ListCategoryExample200OK>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryExample400BadRequest>();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<CategoryPostExample409Conflict>();
-builder.Services.AddSwaggerGen(c => c.ExampleFilters());
+builder.Services.AddSwaggerGen();
 
 var azureKeyVault = Environment.GetEnvironmentVariable("KeyVaultUri");
 
@@ -60,8 +49,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddResponseCompression(options => options.EnableForHttps = true);
 
-builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build => build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
-));
+builder.Services.AddCors(policy => policy.AddPolicy("anydomain", build => build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()));
 
 var app = builder.Build();
 
@@ -71,8 +59,8 @@ var app = builder.Build();
   app.UseSwagger();
   app.UseSwaggerUI();
 
-  app.UseResponseCompression();
   app.UseExceptionHandler("/error");
+  app.UseResponseCompression();
   app.UseHttpsRedirection();
   app.UseAuthorization();
   app.MapControllers();

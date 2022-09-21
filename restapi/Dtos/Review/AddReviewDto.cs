@@ -1,5 +1,5 @@
 using System.Runtime.InteropServices;
-namespace VerdenVenter.Dtos
+namespace restapi.Dtos
 {
   public class AddReviewDto
   {

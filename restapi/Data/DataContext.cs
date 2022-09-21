@@ -1,4 +1,4 @@
-namespace VerdenVenter.Data
+namespace restapi.Data
 {
   public class DataContext : DbContext
   {

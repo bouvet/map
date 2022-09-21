@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VerdenVenter.Migrations
+namespace restapi.Migrations
 {
   public partial class ReviewUpdate : Migration
   {

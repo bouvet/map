@@ -1,7 +1,9 @@
 using Microsoft.WindowsAzure.Storage.Blob;
 using GeoCoordinatePortable;
+using ErrorOr;
+using restapi.ServiceErrors;
 
-namespace VerdenVenter.Services
+namespace restapi.Services
 {
   public class LocationService : ILocationService
   {
@@ -12,95 +14,98 @@ namespace VerdenVenter.Services
       this.dataContext = dataContext;
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> AddLocation(AddLocationDto request)
+    public async Task<ErrorOr<LocationResponseDto>> AddLocation(AddLocationDto request)
     {
-      try
-      {
-        var location = new Location
-        {
-          Id = Guid.NewGuid(),
-          Title = request.Title,
-          Description = request.Description,
-          Longitude = request.Longitude,
-          Latitude = request.Latitude,
-          Rating = request.Rating,
-        };
+      List<Error> errors = ValidateUserInput(request);
 
-        if (request.Category?.Count > 0)
+      if (errors.Count > 0)
+      {
+        return errors;
+      }
+
+      var location = new Location
+      {
+        Id = Guid.NewGuid(),
+        Title = request.Title,
+        Description = request.Description,
+        Longitude = request.Longitude,
+        Latitude = request.Latitude,
+      };
+
+      if (request.Category?.Count > 0)
+      {
+        foreach (Guid categoryId in request.Category)
         {
-          foreach (Guid categoryId in request.Category)
+          var category = await dataContext.Categories.FindAsync(categoryId);
+
+          if (category == null)
           {
-            var category = await dataContext.Categories.FindAsync(categoryId);
-            if (category == null)
-            {
-              return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"Category '{categoryId}' was not found");
-            }
-            location.Categories.Add(category);
+            return Errors.Category.NotFound;
           }
-        }
-        else
-        {
-          location.Categories = new List<Category>();
-        }
 
-        if (request.Img != null)
-        {
-          CloudBlockBlob blob = await BlobService.UploadFile(request.Img);
-          location.Img = blob.Uri.ToString();
+          location.Categories.Add(category);
         }
-
-        dataContext.Locations.Add(location);
-        await dataContext.SaveChangesAsync();
-
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status201Created, "Location successfully added!", data: LocationResponseBuilder(location));
       }
-      catch (Exception)
+      else
       {
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status500InternalServerError);
+        location.Categories = new List<Category>();
       }
+
+      if (request.Image != null)
+      {
+        CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
+        location.Image = blob.Uri.ToString();
+      }
+
+      dataContext.Locations.Add(location);
+      await dataContext.SaveChangesAsync();
+
+      return MapToLocationResponse(location);
     }
 
-    public async Task<ServiceResponse<DeleteLocationDto>> DeleteLocation(Guid id)
+    public async Task<ErrorOr<Deleted>> DeleteLocation(Guid id)
     {
       var location = await dataContext.Locations.FindAsync(id);
+
       if (location is null)
       {
-        return new ServiceResponse<DeleteLocationDto>(StatusCodes.Status404NotFound, Message: $"Location with id {id} was not found");
+        return Errors.Location.NotFound;
       }
 
       dataContext.Locations.Remove(location);
       await dataContext.SaveChangesAsync();
 
-      return new ServiceResponse<DeleteLocationDto>(StatusCodes.Status204NoContent);
+      return Result.Deleted;
     }
 
-    public async Task<ServiceResponse<List<LocationResponseDto>>> GetAllLocations()
+    public async Task<ErrorOr<List<LocationResponseDto>>> GetLocations()
     {
       var locations = await dataContext.Locations.Include("Reviews").ToListAsync();
+
       var transformedLocations = new List<LocationResponseDto>();
 
       foreach (Location location in locations)
       {
-        var transformedLocation = LocationResponseBuilder(location);
+        var transformedLocation = MapToLocationResponse(location);
         transformedLocations.Add(transformedLocation);
       }
 
-      return new ServiceResponse<List<LocationResponseDto>>(StatusCodes.Status200OK, data: transformedLocations);
+      return transformedLocations;
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> GetLocationById(Guid id)
+    public async Task<ErrorOr<LocationResponseDto>> GetLocationById(Guid id)
     {
       var location = await dataContext.Locations.FindAsync(id);
 
       if (location is null)
       {
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, Message: $"Location with id {id} was not found");
+        return Errors.Location.NotFound;
       }
 
-      return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, data: LocationResponseBuilder(location));
+      return MapToLocationResponse(location);
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> GetClosestLocation(double latitude, double longitude, Guid categoryId)
+    public async Task<ErrorOr<LocationResponseDto>> GetClosestLocation(double latitude, double longitude, Guid categoryId)
     {
       var locations = await dataContext.Locations.ToListAsync();
       var _category = await dataContext.Categories.FindAsync(categoryId);
@@ -109,66 +114,122 @@ namespace VerdenVenter.Services
 
       Console.WriteLine(categoryId + " is " + (categoryId == Guid.Empty));
 
-      var locationsWithCategory = locations.Where(x => (x.Categories.Exists(x => x.Id == categoryId) || (Guid.Empty == categoryId)));
+      var locationsWithCategory = locations.Where(x => x.Categories.Exists(x => x.Id == categoryId) || (Guid.Empty == categoryId));
+
       if (!locationsWithCategory.Any())
       {
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"no locations with category id {categoryId}");
+        return Errors.Location.NotFound;
       }
+
       var nearest = locationsWithCategory.Select(x => new GeoCoordinate(x.Latitude, x.Longitude))
                       .OrderBy(x => x.GetDistanceTo(coord))
                       .First();
 
       var nearestLocation = locations.Where(l => l.Latitude == nearest.Latitude && l.Longitude == nearest.Longitude);
-      return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, data: LocationResponseBuilder(nearestLocation.First()));
+
+      return MapToLocationResponse(nearestLocation.First());
     }
 
-    public async Task<ServiceResponse<LocationResponseDto>> UpdateLocation(UpdateLocationDto request)
+    public async Task<ErrorOr<Updated>> UpdateLocation(UpdateLocationDto request)
     {
-      try
+      var location = await dataContext.Locations.FindAsync(request.Id);
+
+      if (location is null)
       {
-        var location = await dataContext.Locations.FindAsync(request.Id);
+        return Errors.Location.NotFound;
+      }
 
-        if (location is null)
+      ErrorOr<Location> mapUpdatedLocationResult = MapUpdatedLocation(location, request);
+
+      if (mapUpdatedLocationResult.IsError)
+      {
+        return mapUpdatedLocationResult.Errors;
+      }
+
+      if (request.Category?.Count > 0)
+      {
+        location.Categories = new List<Category>();
+
+        foreach (Guid categoryId in request.Category)
         {
-          return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, Message: $"Location with id {request.Id} was not found");
-        }
+          var category = await dataContext.Categories.FindAsync(categoryId);
 
-        location = MapUpdatedLocation(location, request);
-
-        if (request.Category?.Count > 0)
-        {
-          location.Categories = new List<Category>();
-
-          foreach (Guid categoryId in request.Category)
+          if (category == null)
           {
-            var category = await dataContext.Categories.FindAsync(categoryId);
-            if (category == null)
-            {
-              return new ServiceResponse<LocationResponseDto>(StatusCodes.Status404NotFound, $"Category '{categoryId}' was not found");
-            }
-
-            location.Categories.Add(category);
+            return Errors.Category.NotFound;
           }
+
+          location.Categories.Add(category);
         }
-
-        if (request.Img is not null)
-        {
-          CloudBlockBlob blob = await BlobService.UploadFile(request.Img);
-          location.Img = blob.Uri.ToString();
-        }
-
-        await dataContext.SaveChangesAsync();
-
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status200OK, Message: "Location successfully updated!", data: LocationResponseBuilder(location));
       }
-      catch (Exception)
+
+      if (request.Image is not null)
       {
-        return new ServiceResponse<LocationResponseDto>(StatusCodes.Status500InternalServerError);
+        CloudBlockBlob blob = await BlobService.UploadFile(request.Image);
+        location.Image = blob.Uri.ToString();
       }
+
+      await dataContext.SaveChangesAsync();
+
+      return Result.Updated;
     }
 
-    private static Location MapUpdatedLocation(Location location, UpdateLocationDto request)
+    private static List<Error> ValidateUserInput(AddLocationDto request)
     {
+      List<Error> errors = new();
+
+      if (request.Title.Length is < Location.MinTitleLength or > Location.MaxTitleLength)
+      {
+        errors.Add(Errors.Location.InvalidTitle);
+      }
+
+      if (request.Description.Length is < Location.MinDescriptionLength or > Location.MaxDescriptionLength)
+      {
+        errors.Add(Errors.Location.InvalidDescription);
+      }
+
+      if (request.Longitude is < Location.MinLongitudeValue or > Location.MaxLongitudeValue)
+      {
+        errors.Add(Errors.Location.InvalidLongitude);
+      }
+
+      if (request.Latitude is < Location.MinLatitudeValue or > Location.MaxLatitudeValue)
+      {
+        errors.Add(Errors.Location.InvalidLatitude);
+      }
+
+      return errors;
+    }
+
+    private static ErrorOr<Location> MapUpdatedLocation(Location location, UpdateLocationDto request)
+    {
+      List<Error> errors = new();
+
+      if (request.Title.Length is < Location.MinTitleLength or > Location.MaxTitleLength)
+      {
+        errors.Add(Errors.Location.InvalidTitle);
+      }
+
+      if (request.Description.Length is < Location.MinDescriptionLength or > Location.MaxDescriptionLength)
+      {
+        errors.Add(Errors.Location.InvalidDescription);
+      }
+
+      if (request.Longitude is > 0 && request.Longitude is < Location.MinLongitudeValue or > Location.MaxLongitudeValue)
+      {
+        errors.Add(Errors.Location.InvalidLongitude);
+      }
+
+      if (request.Latitude is > 0 && request.Latitude is < Location.MinLatitudeValue or > Location.MaxLatitudeValue)
+      {
+        errors.Add(Errors.Location.InvalidLatitude);
+      }
+
+      if (errors.Count > 0)
+      {
+        return errors;
+      }
+
       location.Title = string.IsNullOrEmpty(request.Title) ? location.Title : request.Title;
       location.Description = string.IsNullOrEmpty(request.Description) ? location.Description : request.Description;
       location.Status = string.IsNullOrEmpty(request.Status) ? location.Status : request.Status;
@@ -179,7 +240,7 @@ namespace VerdenVenter.Services
       return location;
     }
 
-    private static LocationResponseDto LocationResponseBuilder(Location location)
+    private static LocationResponseDto MapToLocationResponse(Location location)
     {
       var geometry = new LocationGeometryDto
       {
@@ -193,7 +254,7 @@ namespace VerdenVenter.Services
       {
         Title = location.Title,
         Description = location.Description,
-        Img = location.Img.Replace(azureBlobStorageServer, azureCDNserver),
+        Image = location.Image.Replace(azureBlobStorageServer, azureCDNserver),
         Rating = location.Rating,
         Category = location.Categories,
         Status = location.Status

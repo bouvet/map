@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 
-namespace VerdenVenter.Interfaces
+namespace restapi.Interfaces
 {
   public interface ICategoryService
   {
