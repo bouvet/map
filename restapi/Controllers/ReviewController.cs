@@ -1,6 +1,6 @@
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos;
+using restapi.Dtos.Reviews;
 using restapi.Services.Reviews;
 
 namespace restapi.Controllers;

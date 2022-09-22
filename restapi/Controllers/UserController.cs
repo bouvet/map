@@ -1,6 +1,6 @@
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos;
+using restapi.Dtos.Users;
 using restapi.Models;
 using restapi.Services.Users;
 
@@ -8,17 +8,17 @@ namespace restapi.Controllers;
 
 public class UsersController : ApiController
 {
-  private readonly UserService userService;
+  private readonly IUserService userService;
 
-  public UsersController(UserService userService)
+  public UsersController(IUserService userService)
   {
     this.userService = userService;
   }
 
   [HttpPost]
-  public async Task<IActionResult> AddUser(AddUserDto newUser)
+  public async Task<IActionResult> RegisterUser(RegisterUserDto newUser)
   {
-    ErrorOr<User> addUserResult = await userService.AddUser(newUser);
+    ErrorOr<UserResponseDto> addUserResult = await userService.Register(newUser);
 
     return addUserResult.Match(
       user => CreatedAtGetUser(user),
@@ -70,7 +70,7 @@ public class UsersController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetUser(User user)
+  private CreatedAtActionResult CreatedAtGetUser(UserResponseDto user)
   {
     return CreatedAtAction(
         actionName: nameof(GetUser),

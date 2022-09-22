@@ -1,13 +1,13 @@
 using Microsoft.WindowsAzure.Storage.Blob;
 using GeoCoordinatePortable;
 using ErrorOr;
-using restapi.ServiceErrors;
 using restapi.Models;
-using restapi.Dtos;
 using restapi.Data;
 using Microsoft.EntityFrameworkCore;
 using restapi.Services.AzureBlobStorage;
 using restapi.Common;
+using restapi.Dtos.Locations;
+using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Locations;
 

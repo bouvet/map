@@ -34,6 +34,7 @@
     <PackageReference Include="SkiaSharp" Version="2.88.2" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
     <!-- <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.5" /> -->
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace restapi.ServiceErrors;
+namespace restapi.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
 {
@@ -28,7 +28,7 @@ public static partial class Errors
 
     public static Error NotFound => Error.NotFound(
       code: "Category.NotFound",
-      description: "Category with given id was not found, please try again"
+      description: "Category with given id was not found."
     );
   }
 

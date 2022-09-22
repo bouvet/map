@@ -1,5 +1,5 @@
 using ErrorOr;
-using restapi.Dtos;
+using restapi.Dtos.Locations;
 
 namespace restapi.Services.Locations;
 

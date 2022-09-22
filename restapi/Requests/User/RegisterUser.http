@@ -1,0 +1,9 @@
+@devhost=https://localhost:7107
+
+POST {{devhost}}/api/users
+Content-Type: application/json
+
+{
+  "email": "glen.sorbo@bouvet.com",
+  "password": "12345"
+}

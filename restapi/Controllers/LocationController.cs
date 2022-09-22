@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos;
+using restapi.Dtos.Locations;
 using restapi.Services.Locations;
 
 namespace restapi.Controllers;

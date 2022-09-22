@@ -1,5 +1,5 @@
 using ErrorOr;
-using restapi.Dtos;
+using restapi.Dtos.Reviews;
 
 namespace restapi.Services.Reviews;
 

@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace restapi.ServiceErrors;
+namespace restapi.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
 {
@@ -8,7 +8,7 @@ public static partial class Errors
   {
     public static Error UploadFailed => Error.Failure(
       code: "AzureBlobStorage.UploadFailed",
-      description: "Uploading file to storage failed, please try again"
+      description: "Uploading file to storage failed."
     );
   }
 }

@@ -9,6 +9,7 @@ public class AzureSettings
   public const int CompressedImageQuality = 50;
 
   public string KeyVaultUri { get; init; } = null!;
+  public string KeyVaultJwtSecret { get; init; } = null!;
   public string KeyVaultDbConnectionString { get; init; } = null!;
   public string KeyVaultBlobStorageConnectionString { get; init; } = null!;
 }

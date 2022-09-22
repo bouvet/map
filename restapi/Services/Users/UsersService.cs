@@ -1,50 +1,58 @@
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Dtos;
+using restapi.Dtos.Users;
 using restapi.Models;
-using restapi.ServiceErrors;
+using restapi.Services.Authentication;
+using restapi.ServiceUtils.ServiceErrors;
+using restapi.ServiceUtils.ServiceValidators.Common;
 
 namespace restapi.Services.Users;
 
 public class UserService : IUserService
 {
   private readonly DataContext dataContext;
+  private readonly IJwtGenerator jwtGenerator;
 
-  public UserService(DataContext dataContext)
+  public UserService(DataContext dataContext, IJwtGenerator jwtGenerator)
   {
     this.dataContext = dataContext;
+    this.jwtGenerator = jwtGenerator;
   }
 
-
-  public async Task<ErrorOr<User>> AddUser(AddUserDto newUser)
+  public async Task<ErrorOr<UserResponseDto>> Register(RegisterUserDto request)
   {
-    var user = new User { Name = newUser.Name };
-
-    if (!string.IsNullOrEmpty(newUser.Address))
+    if (!EmailValidator.IsValidEmail(request.Email))
     {
-      user.Address = newUser.Address;
+      return Errors.User.InvalidEmail;
     }
 
-    if (!string.IsNullOrEmpty(newUser.PostalArea))
+    if (request.Password.Length < User.MinPasswordLength)
     {
-      user.PostalArea = newUser.PostalArea;
+      return Errors.User.InvalidPassword;
     }
 
-    if (newUser.PostalCode > 0)
-    {
-      user.PostalCode = newUser.PostalCode;
-    }
+    // TODO: Validate user-input 
 
-    if (newUser.BirthYear > 0)
+    //! TODO: HASH PASSWORD!!!!!
+    var user = new User
     {
-      user.BirthYear = newUser.BirthYear;
-    }
+      Id = Guid.NewGuid(),
+      Email = request.Email,
+      Password = request.Password
+    };
+
+    var token = jwtGenerator.GenerateToken(user.Id, user.Email);
+
+    user.Address = string.IsNullOrEmpty(request.Address) ? "" : request.Address;
+    user.PostalArea = string.IsNullOrEmpty(request.PostalArea) ? "" : request.PostalArea;
+    user.PostalCode = request.PostalCode < 1 ? 0 : request.PostalCode;
+    user.BirthYear = request.BirthYear < 1 ? 0 : request.BirthYear;
 
     dataContext.Users.Add(user);
     await dataContext.SaveChangesAsync();
 
-    return user;
+    return MapToUserResponse(user, token);
   }
 
   public async Task<ErrorOr<Deleted>> DeleteUser(Guid id)
@@ -121,5 +129,20 @@ public class UserService : IUserService
   Task<ErrorOr<Deleted>> IUserService.DeleteUser(Guid id)
   {
     throw new NotImplementedException();
+  }
+
+  private static UserResponseDto MapToUserResponse(User user, string token)
+  {
+    return new UserResponseDto
+    {
+      Id = user.Id,
+      Email = user.Email,
+      Address = user.Address,
+      BirthYear = user.BirthYear,
+      Name = user.Name,
+      PostalArea = user.PostalArea,
+      PostalCode = user.PostalCode,
+      Token = token
+    };
   }
 }

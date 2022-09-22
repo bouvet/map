@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using restapi.Dtos;
+using restapi.Dtos.Categories;
 using restapi.Models;
 
 namespace restapi.Services.Categories;

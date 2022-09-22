@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace restapi.ServiceErrors;
+namespace restapi.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
 {
@@ -8,7 +8,7 @@ public static partial class Errors
   {
     public static Error InvalidId => Error.Validation(
      code: "Review.InvalidId",
-     description: "Provided ID is invalid, please try again"
+     description: "Provided ID is invalid."
    );
 
     public static Error InvalidRating => Error.Validation(
@@ -23,7 +23,7 @@ public static partial class Errors
 
     public static Error NotFound => Error.NotFound(
       code: "Review.NotFound",
-      description: "Review was not found, please try again"
+      description: "Review was not found."
     );
   }
 }

@@ -2,7 +2,9 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 using restapi.Common;
+using restapi.Common.Services;
 using restapi.Data;
+using restapi.Services.Authentication;
 using restapi.Services.AzureBlobStorage;
 using restapi.Services.Categories;
 using restapi.Services.Locations;
@@ -20,6 +22,7 @@ public static class DependencyInjection
   )
 
   {
+    services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
     services.Configure<AzureSettings>(configuration.GetSection(AzureSettings.SectionName));
 
     if (environment.IsProduction())
@@ -48,11 +51,14 @@ public static class DependencyInjection
 
     services.AddControllers();
 
+    services.AddSingleton<IJwtGenerator, JwtGenerator>();
+    services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+    services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
     services.AddScoped<ILocationService, LocationService>();
     services.AddScoped<ICategoryService, CategoryService>();
     services.AddScoped<IReviewService, ReviewService>();
     services.AddScoped<IUserService, UserService>();
-    services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
 
     services.AddResponseCompression(options => options.EnableForHttps = true);
 

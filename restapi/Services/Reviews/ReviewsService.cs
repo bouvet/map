@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common;
 using restapi.Data;
-using restapi.Dtos;
+using restapi.Dtos.Reviews;
 using restapi.Models;
-using restapi.ServiceErrors;
 using restapi.Services.AzureBlobStorage;
+using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Reviews;
 

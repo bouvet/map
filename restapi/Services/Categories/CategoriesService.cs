@@ -1,9 +1,9 @@
 ﻿using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Dtos;
+using restapi.Dtos.Categories;
 using restapi.Models;
-using restapi.ServiceErrors;
+using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Categories;
 

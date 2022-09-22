@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos;
+using restapi.Dtos.Categories;
 using restapi.Models;
 using restapi.Services.Categories;
 
