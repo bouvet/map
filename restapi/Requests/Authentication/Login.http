@@ -1,0 +1,9 @@
+@devhost=https://localhost:7107
+
+POST {{devhost}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "email1@gmail.com",
+  "password": "123456"
+}

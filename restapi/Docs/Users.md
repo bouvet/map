@@ -25,11 +25,15 @@ Content-Type: application/json
 
 ```yml
 Required fields:
-  - 
+  - email
+  - password (min 5 chars)
 ```
 
 ```json
-
+{
+  "email": "",
+  "password": ""
+}
 ```
 
 ### Create User Response
@@ -43,7 +47,16 @@ Location: {{host}}/api/users/{{id}}
 ```
 
 ```json
-
+{
+  "id": "",
+  "email": "",
+  "name": "",
+  "address": "",
+  "postalArea": "",
+  "token": "",
+  "postalCode": 0,
+  "birthYear": 0
+}
 ```
 
 ## Get User
@@ -51,7 +64,7 @@ Location: {{host}}/api/users/{{id}}
 ### Get User Request
 
 ```js
-GET {{host}}/api/users
+GET {{host}}/api/users/{{id}}
 ```
 
 ### Get User Response
@@ -61,7 +74,16 @@ GET {{host}}/api/users
 ```
 
 ```json
-
+{
+  "id": "",
+  "email": "",
+  "name": "",
+  "address": "",
+  "postalArea": "",
+  "token": "",
+  "postalCode": 0,
+  "birthYear": 0
+}
 ```
 
 ## Update User
