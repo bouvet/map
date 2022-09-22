@@ -156,8 +156,8 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                             {image ? (
                                 <>
                                     <Img src={imageUrl} alt="blobb" />
-                                    <IconButton aria-label="delete">
-                                        <DeleteIcon onClick={removeImage} />
+                                    <IconButton aria-label="delete" onClick={removeImage}>
+                                        <DeleteIcon />
                                     </IconButton>
                                 </>
                             ) : (
