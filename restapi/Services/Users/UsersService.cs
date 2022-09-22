@@ -1,11 +1,10 @@
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
+using restapi.Common.Services.Jwt;
 using restapi.Data;
 using restapi.Dtos.Users;
 using restapi.Models;
-using restapi.Services.Authentication;
 using restapi.ServiceUtils.ServiceErrors;
-using restapi.ServiceUtils.ServiceValidators.Common;
 
 namespace restapi.Services.Users;
 
@@ -20,71 +19,25 @@ public class UserService : IUserService
     this.jwtGenerator = jwtGenerator;
   }
 
-  public async Task<ErrorOr<UserResponseDto>> Register(RegisterUserDto request)
+  public async Task<ErrorOr<UserResponseDto>> GetUser(Guid id)
   {
-    if (!EmailValidator.IsValidEmail(request.Email))
+    var user = await dataContext.Users.FindAsync(id);
+
+    if (user is null)
     {
-      return Errors.User.InvalidEmail;
+      return Errors.User.NotFound;
     }
-
-    if (request.Password.Length < User.MinPasswordLength)
-    {
-      return Errors.User.InvalidPassword;
-    }
-
-    // TODO: Validate user-input 
-
-    //! TODO: HASH PASSWORD!!!!!
-    var user = new User
-    {
-      Id = Guid.NewGuid(),
-      Email = request.Email,
-      Password = request.Password
-    };
 
     var token = jwtGenerator.GenerateToken(user.Id, user.Email);
-
-    user.Address = string.IsNullOrEmpty(request.Address) ? "" : request.Address;
-    user.PostalArea = string.IsNullOrEmpty(request.PostalArea) ? "" : request.PostalArea;
-    user.PostalCode = request.PostalCode < 1 ? 0 : request.PostalCode;
-    user.BirthYear = request.BirthYear < 1 ? 0 : request.BirthYear;
-
-    dataContext.Users.Add(user);
-    await dataContext.SaveChangesAsync();
 
     return MapToUserResponse(user, token);
   }
 
-  public async Task<ErrorOr<Deleted>> DeleteUser(Guid id)
+  public async Task<ErrorOr<List<UserResponseDto>>> GetUsers()
   {
-    var user = await dataContext.Users.FindAsync(id);
+    var users = await dataContext.Users.ToListAsync();
 
-    if (user is null)
-    {
-      return Errors.User.NotFound;
-    }
-
-    dataContext.Users.Remove(user);
-    await dataContext.SaveChangesAsync();
-
-    return Result.Deleted;
-  }
-
-  public async Task<ErrorOr<User>> GetUser(Guid id)
-  {
-    var user = await dataContext.Users.FindAsync(id);
-
-    if (user is null)
-    {
-      return Errors.User.NotFound;
-    }
-
-    return user;
-  }
-
-  public async Task<ErrorOr<List<User>>> GetUsers()
-  {
-    return await dataContext.Users.ToListAsync();
+    return MapToUsersResponse(users);
   }
 
   public async Task<ErrorOr<Updated>> UpdateUser(Guid id, UpdateUserDto updatedUser)
@@ -95,6 +48,9 @@ public class UserService : IUserService
     {
       return Errors.User.NotFound;
     }
+
+    //! TODO: Check password match!
+    // TODO: Validate user-input
 
     if (!string.IsNullOrEmpty(updatedUser.Name))
     {
@@ -126,9 +82,19 @@ public class UserService : IUserService
     return Result.Updated;
   }
 
-  Task<ErrorOr<Deleted>> IUserService.DeleteUser(Guid id)
+  public async Task<ErrorOr<Deleted>> DeleteUser(Guid id)
   {
-    throw new NotImplementedException();
+    var user = await dataContext.Users.FindAsync(id);
+
+    if (user is null)
+    {
+      return Errors.User.NotFound;
+    }
+
+    dataContext.Users.Remove(user);
+    await dataContext.SaveChangesAsync();
+
+    return Result.Deleted;
   }
 
   private static UserResponseDto MapToUserResponse(User user, string token)
@@ -144,5 +110,26 @@ public class UserService : IUserService
       PostalCode = user.PostalCode,
       Token = token
     };
+  }
+
+  private static List<UserResponseDto> MapToUsersResponse(List<User> users)
+  {
+    List<UserResponseDto> transformedUsers = new();
+
+    foreach (User user in users)
+    {
+      transformedUsers.Add(new UserResponseDto
+      {
+        Id = user.Id,
+        Email = user.Email,
+        Address = user.Address,
+        BirthYear = user.BirthYear,
+        Name = user.Name,
+        PostalArea = user.PostalArea,
+        PostalCode = user.PostalCode,
+      });
+    }
+
+    return transformedUsers;
   }
 }

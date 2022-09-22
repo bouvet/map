@@ -4,7 +4,7 @@ using ErrorOr;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using restapi.Common;
+using restapi.Common.Services.Settings;
 using SkiaSharp;
 
 namespace restapi.Services.AzureBlobStorage;

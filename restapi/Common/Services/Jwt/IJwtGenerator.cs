@@ -1,4 +1,4 @@
-namespace restapi.Services.Authentication;
+namespace restapi.Common.Services.Jwt;
 
 public interface IJwtGenerator
 {

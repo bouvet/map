@@ -1,0 +1,10 @@
+@devhost=https://localhost:7107
+@id=46a7a71f-4190-4756-b86e-a706b6f18183
+
+PUT {{devhost}}/api/users/{{id}}
+Content-Type: application/json
+
+{
+  "email": "glen.sorbo@bouvet.com",
+  "password": "12345"
+}

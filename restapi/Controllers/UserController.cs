@@ -15,21 +15,10 @@ public class UsersController : ApiController
     this.userService = userService;
   }
 
-  [HttpPost]
-  public async Task<IActionResult> RegisterUser(RegisterUserDto newUser)
-  {
-    ErrorOr<UserResponseDto> addUserResult = await userService.Register(newUser);
-
-    return addUserResult.Match(
-      user => CreatedAtGetUser(user),
-      errors => Problem(errors)
-    );
-  }
-
   [HttpGet]
   public async Task<IActionResult> GetUsers()
   {
-    ErrorOr<List<User>> getUsersResult = await userService.GetUsers();
+    ErrorOr<List<UserResponseDto>> getUsersResult = await userService.GetUsers();
 
     return getUsersResult.Match(
       users => Ok(users),
@@ -40,7 +29,7 @@ public class UsersController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetUser(Guid id)
   {
-    ErrorOr<User> getUserResult = await userService.GetUser(id);
+    ErrorOr<UserResponseDto> getUserResult = await userService.GetUser(id);
 
     return getUserResult.Match(
       user => Ok(user),

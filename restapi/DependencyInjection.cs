@@ -1,10 +1,12 @@
+using System.Reflection;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common;
 using restapi.Common.Services;
+using restapi.Common.Services.Jwt;
+using restapi.Common.Services.Settings;
 using restapi.Data;
-using restapi.Services.Authentication;
 using restapi.Services.AzureBlobStorage;
 using restapi.Services.Categories;
 using restapi.Services.Locations;
@@ -18,13 +20,9 @@ public static class DependencyInjection
   public static async Task<IServiceCollection> AddDependenciesAsync(
     this IServiceCollection services,
     IWebHostEnvironment environment,
-    ConfigurationManager configuration
-  )
+    ConfigurationManager configuration)
 
   {
-    services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
-    services.Configure<AzureSettings>(configuration.GetSection(AzureSettings.SectionName));
-
     if (environment.IsProduction())
     {
       Console.WriteLine("APPLICATION RUNNING IN PRODUCTION MODE");
@@ -49,7 +47,10 @@ public static class DependencyInjection
       services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration["Dev:DbConnectionString"]));
     }
 
-    services.AddControllers();
+    services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+    services.Configure<AzureSettings>(configuration.GetSection(AzureSettings.SectionName));
+
+    services.AddMediatR(Assembly.GetExecutingAssembly());
 
     services.AddSingleton<IJwtGenerator, JwtGenerator>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
@@ -63,6 +64,8 @@ public static class DependencyInjection
     services.AddResponseCompression(options => options.EnableForHttps = true);
 
     services.AddCors(policy => policy.AddPolicy("any-domain", build => build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()));
+
+    services.AddControllers();
 
     return services;
   }

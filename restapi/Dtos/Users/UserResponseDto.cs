@@ -7,7 +7,7 @@ public class UserResponseDto
   public string Name { get; set; } = null!;
   public string Address { get; set; } = null!;
   public string PostalArea { get; set; } = null!;
-  public string Token { get; set; } = null!;
+  public string Token { get; set; } = string.Empty;
   public int PostalCode { get; set; }
   public int BirthYear { get; set; }
 }

@@ -1,4 +1,4 @@
-namespace restapi.Common;
+namespace restapi.Common.Services.Settings;
 
 public class AzureSettings
 {

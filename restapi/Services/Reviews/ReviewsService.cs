@@ -1,7 +1,7 @@
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
-using restapi.Common;
+using restapi.Common.Services.Settings;
 using restapi.Data;
 using restapi.Dtos.Reviews;
 using restapi.Models;
