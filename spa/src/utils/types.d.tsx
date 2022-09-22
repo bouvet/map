@@ -54,7 +54,7 @@ export interface Properties {
  */
 export interface Location {
     /** needed to make Location arrays */
-    [index: string]: any;
+    id: string;
 
     /** @param type mapbox type: Feature */
     type: 'Feature';
