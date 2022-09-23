@@ -1,11 +1,14 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Google, GoogleLogoWhite, LoginButton, Vipps, VippsLogoWhite } from '../features/login/components/Button';
 import { DivideLine } from '../features/login/components/DivideLine';
 import { Form } from '../features/login/components/Form';
 import { Checkbox, InputEmail, InputPassword, LeftFlex, RightFlex, SplitWrapper } from '../features/login/components/Input';
 import { LoginContent, LoginWrapper } from '../features/login/components/LoginWrapper';
-import { SectionWrapper } from '../features/login/components/SectoionWrapper';
+import { SectionWrapper } from '../features/login/components/SectionWrapper';
 import { LinkText, Text, Title } from '../features/login/components/Text';
+import { useStateDispatch } from '../hooks/useRedux';
+import { authActions } from '../store/state/auth.state';
 
 export const Login: FC = () => {
     const [userEmail, setUserEmail] = useState('');
@@ -16,11 +19,16 @@ export const Login: FC = () => {
         setState(e.target.value);
     };
 
+    const dispatch = useStateDispatch();
+    const navigate = useNavigate();
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Email: ', userEmail);
         console.log('Password: ', userPassword);
         console.log('Stay signed in: ', rememberStatus.toString());
+        dispatch(authActions.logIn());
+        navigate('/');
     };
 
     return (
@@ -42,9 +50,9 @@ export const Login: FC = () => {
                     </Vipps>
                     <DivideLine />
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <InputEmail label="email" value={userEmail} setState={setUserEmail} handleChange={handleFormInputChange} />
+                        <InputEmail label="Email" value={userEmail} setState={setUserEmail} handleChange={handleFormInputChange} />
                         <InputPassword
-                            label="passord"
+                            label="Passord"
                             value={userPassword}
                             setState={setUserPassword}
                             handleChange={handleFormInputChange}
@@ -52,14 +60,16 @@ export const Login: FC = () => {
                         <SplitWrapper>
                             <LeftFlex>
                                 <Checkbox type="checkbox" checked={rememberStatus} onChange={(e) => setRememberStatus(e.target.checked)} />
-                                husk meg
+                                Husk meg
                                 {rememberStatus}
                             </LeftFlex>
                             <RightFlex>
                                 <LinkText>Glemt passord</LinkText>
                             </RightFlex>
                         </SplitWrapper>
-                        <LoginButton text="white">LOGG INN</LoginButton>
+                        <LoginButton text="white" type="submit">
+                            LOGG INN
+                        </LoginButton>
                     </Form>
                     <SplitWrapper>
                         <LeftFlex>
