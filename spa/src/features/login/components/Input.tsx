@@ -75,3 +75,23 @@ export const InputPassword: FC<InputProps> = (props) => {
         </>
     );
 };
+
+export const InputName: FC<InputProps> = (props) => {
+    const { label, value, handleChange, setState } = props;
+    return (
+        <>
+            <Label>{label}</Label>
+            <InputField type="text" value={value} required onChange={(e) => handleChange(e, setState)} />
+        </>
+    );
+};
+
+export const InputAge: FC<InputProps> = (props) => {
+    const { label, value, handleChange, setState } = props;
+    return (
+        <>
+            <Label>{label}</Label>
+            <InputField type="date" value={value} required onChange={(e) => handleChange(e, setState)} />
+        </>
+    );
+};
