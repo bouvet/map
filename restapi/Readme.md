@@ -21,7 +21,7 @@ There is a few Azure resources you need to get started.
     - App Service
 
 Set development DB connection string:
-This can either be an Azure dev/prod db, or a locally install MSSQL server
+This can either be an Azure dev/prod db, or a locally installed MSSQL server
 
 ```bash
 $dotnet user-secrets set "Dev:DbConnectionString" "<your connection string>"
@@ -66,6 +66,7 @@ $dotnet publish -c Release -o ./bin/Publish
 
 ## Docs
 
+- [Authentication](Docs/Authentication.md)
 - [Categories examples](Docs/Categories.md)
 - [Locations examples](Docs/Locations.md)
 - [Reviews examples](Docs/Reviews.md)

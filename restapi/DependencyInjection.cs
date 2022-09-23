@@ -3,8 +3,8 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common.Services;
 using restapi.Common.Services.Jwt;
+using restapi.Common.Services.Providers;
 using restapi.Common.Services.Settings;
 using restapi.Data;
 using restapi.Services.AzureBlobStorage;
@@ -25,34 +25,29 @@ public static class DependencyInjection
   {
     if (environment.IsProduction())
     {
-      Console.WriteLine("APPLICATION RUNNING IN PRODUCTION MODE");
-
-      var azureKeyVault = Environment.GetEnvironmentVariable("KeyVaultUri");
+      var azureKeyVault = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUri);
 
       var keyVaultEndpoint = new Uri(azureKeyVault!);
 
       configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
       var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
-
-      var DbConnectionString = await secretClient.GetSecretAsync("DbConnectionString");
+      var DbConnectionString = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
 
       services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
     }
 
     if (environment.IsDevelopment())
     {
-      Console.WriteLine("APPLICATION RUNNING IN DEVELOPMENT MODE");
-
       services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration["Dev:DbConnectionString"]));
     }
 
-    services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
-    services.Configure<AzureSettings>(configuration.GetSection(AzureSettings.SectionName));
-
     services.AddMediatR(Assembly.GetExecutingAssembly());
 
-    services.AddSingleton<IJwtGenerator, JwtGenerator>();
+    services.AddScoped<IAzureProvider, AzureProvider>();
+    services.AddScoped<IImageProvider, ImageProvider>();
+
+    services.AddScoped<IJwtGenerator, JwtGenerator>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
     services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();

@@ -1,4 +1,4 @@
-namespace restapi.Common.Services;
+namespace restapi.Common.Services.Providers;
 
 public class DateTimeProvider : IDateTimeProvider
 {
