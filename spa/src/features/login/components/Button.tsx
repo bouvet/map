@@ -45,3 +45,7 @@ export const Vipps = styled(Button)`
 export const Google = styled(Button)`
     background-color: ${MyTheme.colors.lightbase};
 `;
+
+export const Email = styled(Button)`
+    background-color: ${MyTheme.colors.accent};
+`;
