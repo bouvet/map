@@ -1,0 +1,20 @@
+@devhost=https://localhost:7107
+@prodhost=https://optimus-verden-venter.azurewebsites.net/
+
+POST {{devhost}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "email1@gmail.com",
+  "password": "12345"
+}
+
+###
+
+POST {{prodhost}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "email@gmail.com",
+  "password": "12345"
+}

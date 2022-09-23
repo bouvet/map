@@ -1,78 +1,70 @@
 using ErrorOr;
+using Microsoft.AspNetCore.Mvc;
+using restapi.Dtos.Users;
+using restapi.Models;
+using restapi.Services.Users;
 
-namespace restapi.Controllers
+namespace restapi.Controllers;
+
+public class UsersController : ApiController
 {
-  public class UsersController : ApiController
+  private readonly IUserService userService;
+
+  public UsersController(IUserService userService)
   {
-    private readonly UserService userService;
+    this.userService = userService;
+  }
 
-    public UsersController(UserService userService)
-    {
-      this.userService = userService;
-    }
+  [HttpGet]
+  public async Task<IActionResult> GetUsers()
+  {
+    ErrorOr<List<UserResponseDto>> getUsersResult = await userService.GetUsers();
 
-    [HttpPost]
-    public async Task<IActionResult> AddUser(AddUserDto newUser)
-    {
-      ErrorOr<User> addUserResult = await userService.AddUser(newUser);
+    return getUsersResult.Match(
+      users => Ok(users),
+      errors => Problem(errors)
+    );
+  }
 
-      return addUserResult.Match(
-        user => CreatedAtGetUser(user),
-        errors => Problem(errors)
+  [HttpGet("{id:guid}")]
+  public async Task<IActionResult> GetUser(Guid id)
+  {
+    ErrorOr<UserResponseDto> getUserResult = await userService.GetUser(id);
+
+    return getUserResult.Match(
+      user => Ok(user),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPut("{id:guid}")]
+  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
+  {
+    ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
+
+    return updateUserResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpDelete("{id:guid}")]
+  public async Task<IActionResult> DeleteUser(Guid id)
+  {
+    ErrorOr<Deleted> deleteUserResult = await userService.DeleteUser(id);
+
+    return deleteUserResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  private CreatedAtActionResult CreatedAtGetUser(UserResponseDto user)
+  {
+    return CreatedAtAction(
+        actionName: nameof(GetUser),
+        routeValues: new { id = user.Id },
+        value: user
       );
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> GetUsers()
-    {
-      ErrorOr<List<User>> getUsersResult = await userService.GetUsers();
-
-      return getUsersResult.Match(
-        users => Ok(users),
-        errors => Problem(errors)
-      );
-    }
-
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetUser(Guid id)
-    {
-      ErrorOr<User> getUserResult = await userService.GetUser(id);
-
-      return getUserResult.Match(
-        user => Ok(user),
-        errors => Problem(errors)
-      );
-    }
-
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
-    {
-      ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
-
-      return updateUserResult.Match(
-        _ => NoContent(),
-        errors => Problem(errors)
-      );
-    }
-
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteUser(Guid id)
-    {
-      ErrorOr<Deleted> deleteUserResult = await userService.DeleteUser(id);
-
-      return deleteUserResult.Match(
-        _ => NoContent(),
-        errors => Problem(errors)
-      );
-    }
-
-    private CreatedAtActionResult CreatedAtGetUser(User user)
-    {
-      return CreatedAtAction(
-          actionName: nameof(GetUser),
-          routeValues: new { id = user.Id },
-          value: user
-        );
-    }
   }
 }
