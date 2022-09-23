@@ -17,30 +17,23 @@ namespace restapi;
 
 public static class DependencyInjection
 {
-  public static async Task<IServiceCollection> AddDependenciesAsync(
-    this IServiceCollection services,
-    IWebHostEnvironment environment,
-    ConfigurationManager configuration)
-
+  public static async Task<IServiceCollection> AddDependenciesAsync(this IServiceCollection services, ConfigurationManager configuration)
   {
-    if (environment.IsProduction())
+    var azureKeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUri);
+
+    if (string.IsNullOrEmpty(azureKeyVaultUri))
     {
-      var azureKeyVault = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUri);
-
-      var keyVaultEndpoint = new Uri(azureKeyVault!);
-
-      configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
-      var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
-      var DbConnectionString = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
-
-      services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
+      azureKeyVaultUri = configuration["KeyVaultUri"];
     }
 
-    if (environment.IsDevelopment())
-    {
-      services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration["Dev:DbConnectionString"]));
-    }
+    var keyVaultEndpoint = new Uri(azureKeyVaultUri!);
+
+    configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+
+    var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+    var DbConnectionString = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
+
+    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
 
     services.AddMediatR(Assembly.GetExecutingAssembly());
 

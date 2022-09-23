@@ -3,7 +3,7 @@ using restapi;
 var builder = WebApplication.CreateBuilder(args);
 
 {
-  await builder.Services.AddDependenciesAsync(builder.Environment, builder.Configuration);
+  await builder.Services.AddDependenciesAsync(builder.Configuration);
 }
 
 var app = builder.Build();

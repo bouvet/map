@@ -12,6 +12,10 @@ There is a few Azure resources you need to get started.
     - Secrets:
       - "DbConnectionString"
       - "azureBlobStorageConnectionString"
+      - "JwtSecret"
+      - "JwtIssuer"
+      - "JwtAudience"
+      - "JwtExpiryMinutes"
   - Azure SQL Server
     - Azure SQL database
   - Azure Storage Account
@@ -20,49 +24,48 @@ There is a few Azure resources you need to get started.
   - App Service Plan
     - App Service
 
-Set development DB connection string:
-This can either be an Azure dev/prod db, or a locally installed MSSQL server
+Set Azure KeyVault Uri in user-secrets for development environment:
 
 ```bash
-$dotnet user-secrets set "Dev:DbConnectionString" "<your connection string>"
+$dotnet user-secrets set "KeyVaultUri" "<your Azure KeyVault connection string>"
 ```
 
-You can view your user secrets
+List all user secrets:
 
 ```bash
 $dotnet user-secrets list
 ```
 
-To start the backend service in 'hot reload' mode
+To start the backend service in 'hot reload' mode:
 
 ```bash
 $dotnet watch run
 ```
 
-You can test Production environment also
-(Even if this runs on your computer, it doesn't mean it works when published to Azure)
+Test Production environment:
 
 ```bash
 $dotnet watch run --environment "Production"
 ```
 
-In ./Properties/launchsettings.json add "KeyVaultUri":
-This needs to be added in both "restapi" & "IIS Express" profiles.
-
-```json
-"environmentVariables": {
-  "ASPNETCORE_ENVIRONMENT": "Development",
-  "KeyVaultUri": "https://<YOUR KEYVAULT NAME>.vault.azure.net/" // Add this line
-}
-```
-
 ### Deployment
 
-Build:
+Build the project:
 
 ```bash
 $dotnet publish -c Release -o ./bin/Publish
 ```
+
+If you are using VSCode you need to:
+
+- Install "Azure App Service" and "Azure Account" extensions.
+- Login in to Azure through VSCode extension.
+- Find your App Service.
+- Add "KeyVaultUri" to Application Settings.
+
+This can also be done via Azure portal under App Service - Settings - Configuration.
+
+![Azure App Service](Docs/Images/Azure%20App%20Service%20-%20Application%20Settings.png)
 
 ## Docs
 
