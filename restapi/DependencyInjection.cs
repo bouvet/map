@@ -3,8 +3,8 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common.Services;
 using restapi.Common.Services.Jwt;
+using restapi.Common.Services.Providers;
 using restapi.Common.Services.Settings;
 using restapi.Data;
 using restapi.Services.AzureBlobStorage;
@@ -17,42 +17,30 @@ namespace restapi;
 
 public static class DependencyInjection
 {
-  public static async Task<IServiceCollection> AddDependenciesAsync(
-    this IServiceCollection services,
-    IWebHostEnvironment environment,
-    ConfigurationManager configuration)
-
+  public static async Task<IServiceCollection> AddDependenciesAsync(this IServiceCollection services, ConfigurationManager configuration)
   {
-    if (environment.IsProduction())
+    var azureKeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUri);
+
+    if (string.IsNullOrEmpty(azureKeyVaultUri))
     {
-      Console.WriteLine("APPLICATION RUNNING IN PRODUCTION MODE");
-
-      var azureKeyVault = Environment.GetEnvironmentVariable("KeyVaultUri");
-
-      var keyVaultEndpoint = new Uri(azureKeyVault!);
-
-      configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
-      var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
-
-      var DbConnectionString = await secretClient.GetSecretAsync("DbConnectionString");
-
-      services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
+      azureKeyVaultUri = configuration["KeyVaultUri"];
     }
 
-    if (environment.IsDevelopment())
-    {
-      Console.WriteLine("APPLICATION RUNNING IN DEVELOPMENT MODE");
+    var keyVaultEndpoint = new Uri(azureKeyVaultUri!);
 
-      services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration["Dev:DbConnectionString"]));
-    }
+    configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
-    services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
-    services.Configure<AzureSettings>(configuration.GetSection(AzureSettings.SectionName));
+    var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+    var DbConnectionString = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
+
+    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
 
     services.AddMediatR(Assembly.GetExecutingAssembly());
 
-    services.AddSingleton<IJwtGenerator, JwtGenerator>();
+    services.AddScoped<IAzureProvider, AzureProvider>();
+    services.AddScoped<IImageProvider, ImageProvider>();
+
+    services.AddScoped<IJwtGenerator, JwtGenerator>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
     services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();

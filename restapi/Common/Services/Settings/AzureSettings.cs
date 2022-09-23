@@ -1,15 +1,14 @@
 namespace restapi.Common.Services.Settings;
 
-public class AzureSettings
+public static class AzureSettings
 {
-  public const string SectionName = "AzureSettings";
+  public const string KeyVaultUri = "KeyVaultUri";
+  public const string KeyVaultNameForDbConnectionString = "DbConnectionString";
+  public const string KeyVaultNameForBlobStorageConnectionString = "azureBlobStorageConnectionString";
+  public const string KeyVaultNameForJwtSecret = "JwtSecret";
+  public const string KeyVaultNameForJwtIssuer = "JwtIssuer";
+  public const string KeyVaultNameForJwtAudience = "JwtAudience";
+  public const string KeyVaultNameForJwtExpiryMinutes = "JwtExpiryMinutes";
   public const string AzureBlobStorageServer = ".blob.core.windows.net";
   public const string AzureCDNserver = ".azureedge.net";
-  public const string ImageContentType = "image/webp";
-  public const int CompressedImageQuality = 50;
-
-  public string KeyVaultUri { get; init; } = null!;
-  public string KeyVaultJwtSecret { get; init; } = null!;
-  public string KeyVaultDbConnectionString { get; init; } = null!;
-  public string KeyVaultBlobStorageConnectionString { get; init; } = null!;
 }

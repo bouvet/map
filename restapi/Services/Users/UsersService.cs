@@ -28,7 +28,7 @@ public class UserService : IUserService
       return Errors.User.NotFound;
     }
 
-    var token = jwtGenerator.GenerateToken(user.Id, user.Email);
+    var token = await jwtGenerator.GenerateToken(user.Id, user.Email);
 
     return MapToUserResponse(user, token);
   }
