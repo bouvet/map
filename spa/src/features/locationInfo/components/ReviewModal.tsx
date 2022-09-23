@@ -156,14 +156,19 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                             {image ? (
                                 <>
                                     <Img src={imageUrl} alt="blobb" />
-                                    <IconButton aria-label="delete">
-                                        <DeleteIcon onClick={removeImage} />
+                                    <IconButton aria-label="delete" onClick={removeImage}>
+                                        <DeleteIcon />
                                     </IconButton>
                                 </>
                             ) : (
                                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
                                     Last opp
-                                    <input hidden accept="image/*" multiple type="file" onChange={(event) => handleImageChange(event)} />
+                                    <input
+                                        hidden
+                                        accept="image/png, image/webp, image/jpg, image/jpeg"
+                                        type="file"
+                                        onChange={(event) => handleImageChange(event)}
+                                    />
                                 </Button>
                             )}
                             {!value ? (

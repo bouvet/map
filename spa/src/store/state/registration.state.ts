@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LatLong } from '../../utils/types.d';
 
 const initialState = {
@@ -15,27 +15,28 @@ const registrationState = createSlice({
     name: 'registration',
     initialState,
     reducers: {
-        setCurrentMapCenter(state, action: { payload: LatLong; type: string }) {
+        setCurrentMapCenter(state, action: PayloadAction<LatLong>) {
             state.currentMapCenter = action.payload;
         },
-        setCurrentTitle(state, action: { payload: string; type: string }) {
+        setCurrentTitle(state, action: PayloadAction<string>) {
             state.currentTitle = action.payload;
         },
-        setCurrentDescription(state, action: { payload: string; type: string }) {
+        setCurrentDescription(state, action: PayloadAction<string>) {
             state.currentDescription = action.payload;
         },
-        setCurrentCategories(state, action: { payload: string[]; type: string }) {
+        setCurrentCategories(state, action: PayloadAction<string[]>) {
             state.currentCategories = action.payload;
         },
-        setCurrentImage(state, action: { payload: string; type: string }) {
+        setCurrentImage(state, action: PayloadAction<string>) {
             state.currentImage = action.payload;
         },
-        setCurrentUserLocation(state, action: { payload: LatLong; type: string }) {
+        setCurrentUserLocation(state, action: PayloadAction<LatLong>) {
             state.currentUserLocation = action.payload;
         },
-        setHasUserLocation(state, action: { payload: boolean; type: string }) {
+        setHasUserLocation(state, action: PayloadAction<boolean>) {
             state.hasUserLocation = action.payload;
         },
+        resetToInitalState: () => initialState,
     },
 });
 
