@@ -70,7 +70,7 @@ export const Home: FC = () => {
                                     name={currentlySelectedLocation.properties.title}
                                     description={currentlySelectedLocation.properties.description}
                                     rating={currentlySelectedLocation.properties.rating}
-                                    image={currentlySelectedLocation.properties.img}
+                                    image={currentlySelectedLocation.properties.image}
                                 />
                             </>
                         )}

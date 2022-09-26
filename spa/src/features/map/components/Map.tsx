@@ -97,26 +97,30 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         >
             {!addingLocation &&
                 selectedFilterCategory &&
-                filteredLocations.map((locaction) => (
-                    <CustomMarker
-                        key={locaction.id}
-                        coordinates={locaction.geometry.coordinates}
-                        onClickHandler={onClickHandler}
-                        locaction={locaction}
-                        selectedMarker={selectedMarker}
-                    />
-                ))}
+                filteredLocations
+                    .filter((location) => location.properties.status === 'Approved')
+                    .map((locaction) => (
+                        <CustomMarker
+                            key={locaction.id}
+                            coordinates={locaction.geometry.coordinates}
+                            onClickHandler={onClickHandler}
+                            locaction={locaction}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
             {!addingLocation &&
                 !selectedFilterCategory &&
-                locations.map((locaction) => (
-                    <CustomMarker
-                        key={locaction.id}
-                        coordinates={locaction.geometry.coordinates}
-                        onClickHandler={onClickHandler}
-                        locaction={locaction}
-                        selectedMarker={selectedMarker}
-                    />
-                ))}
+                locations
+                    .filter((location) => location.properties.status === 'Approved')
+                    .map((locaction) => (
+                        <CustomMarker
+                            key={locaction.id}
+                            coordinates={locaction.geometry.coordinates}
+                            onClickHandler={onClickHandler}
+                            locaction={locaction}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
         </ReactMap>
     );
 };

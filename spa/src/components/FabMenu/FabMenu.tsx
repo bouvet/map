@@ -31,13 +31,26 @@ export const FabMenu: FC = () => {
                     <Fab
                         backgroundColor={MyTheme.colors.lightbase}
                         style={{
-                            transform: isActive ? 'translateY(-180px)' : 'translateY(0)',
+                            transform: isActive ? 'translateY(-240px)' : 'translateY(0)',
                             boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                         }}
                     >
                         <Link to="/">
                             <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
                                 person
+                            </GoogleIcon>
+                        </Link>
+                    </Fab>
+                    <Fab
+                        backgroundColor={MyTheme.colors.lightbase}
+                        style={{
+                            transform: isActive ? 'translateY(-180px)' : 'translateY(0)',
+                            boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
+                        }}
+                    >
+                        <Link to="/location-approval-panel">
+                            <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                admin_panel_settings
                             </GoogleIcon>
                         </Link>
                     </Fab>
