@@ -1,5 +1,3 @@
-
-
 using ErrorOr;
 using MediatR;
 using restapi.Services.Authentication.Common;

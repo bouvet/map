@@ -27,7 +27,7 @@ There is a few Azure resources you need to get started.
 Set Azure KeyVault Uri in user-secrets for development environment:
 
 ```bash
-$dotnet user-secrets set "KeyVaultUri" "<your Azure KeyVault connection string>"
+$dotnet user-secrets set "AzureSettings:KeyVaultUri" "<your Azure KeyVault connection string>"
 ```
 
 List all user secrets:

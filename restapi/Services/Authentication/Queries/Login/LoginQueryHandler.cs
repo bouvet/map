@@ -38,14 +38,8 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
     var token = await jwtGenerator.GenerateToken(user.Id, user.Email);
 
     return new AuthenticationResult(
-      user.Id,
-      user.Email,
-      user.Name,
-      user.Address,
-      user.PostalArea,
-      token,
-      user.PostalCode,
-      user.BirthYear
+      user,
+      token
     );
   }
 }

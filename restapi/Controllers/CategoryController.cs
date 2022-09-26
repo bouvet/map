@@ -1,18 +1,27 @@
 ﻿using ErrorOr;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Dtos.Categories;
 using restapi.Models;
 using restapi.Services.Categories;
+using restapi.Services.Categories.Commands.Common;
+using restapi.Services.Categories.Commands.Create;
+using restapi.Services.Categories.Commands.Delete;
 
 namespace restapi.Controllers;
 
 public class CategoriesController : ApiController
 {
   private readonly ICategoryService categoryService;
+  private readonly ISender mediator;
+  private readonly IMapper mapper;
 
-  public CategoriesController(ICategoryService categoryService)
+  public CategoriesController(ICategoryService categoryService, ISender mediator, IMapper mapper)
   {
     this.categoryService = categoryService;
+    this.mediator = mediator;
+    this.mapper = mapper;
   }
 
   [HttpGet]
@@ -49,9 +58,10 @@ public class CategoriesController : ApiController
   }
 
   [HttpPost]
-  public async Task<IActionResult> AddCategory(CategoryDto category)
+  public async Task<IActionResult> CreateCategory(CategoryDto request)
   {
-    ErrorOr<Category> createCategoryResult = await categoryService.AddCategory(category);
+    var createCategoryCommand = mapper.Map<CreateCategoryCommand>(request);
+    ErrorOr<CategoryResult> createCategoryResult = await mediator.Send(createCategoryCommand);
 
     return createCategoryResult.Match(
       category => CreatedAtGetCategory(category),
@@ -73,7 +83,9 @@ public class CategoriesController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteCategory(Guid id)
   {
-    ErrorOr<Deleted> deleteCategoryResult = await categoryService.DeleteCategory(id);
+    var deleteCommand = new DeleteCategoryCommand(id);
+
+    ErrorOr<Deleted> deleteCategoryResult = await mediator.Send(deleteCommand);
 
     return deleteCategoryResult.Match(
       _ => NoContent(),
@@ -81,12 +93,14 @@ public class CategoriesController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetCategory(Category category)
+  private CreatedAtActionResult CreatedAtGetCategory(CategoryResult categoryResult)
   {
+    CategoryResponse categoryResponse = mapper.Map<CategoryResponse>(categoryResult);
+
     return CreatedAtAction(
         actionName: nameof(GetCategory),
-        routeValues: new { id = category.Id },
-        value: category
+        routeValues: new { id = categoryResponse.Id },
+        value: categoryResponse
       );
   }
 }

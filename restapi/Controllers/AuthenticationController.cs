@@ -1,4 +1,5 @@
 using ErrorOr;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Dtos.Authentication;
@@ -12,24 +13,23 @@ namespace restapi.Controllers;
 public class AuthenticationController : ApiController
 {
   private readonly ISender mediator;
+  private readonly IMapper mapper;
 
-  public AuthenticationController(ISender mediator)
+  public AuthenticationController(ISender mediator, IMapper mapper)
   {
     this.mediator = mediator;
+    this.mapper = mapper;
   }
 
   [HttpPost("register")]
   public async Task<IActionResult> Register(RegisterRequest request)
   {
-    var registerCommand = new RegisterCommand(
-      request.Email,
-      request.Password
-    );
+    var registerCommand = mapper.Map<RegisterCommand>(request);
 
     ErrorOr<AuthenticationResult> registerCommandResult = await mediator.Send(registerCommand);
 
     return registerCommandResult.Match(
-      result => Ok(result),
+      result => Ok(mapper.Map<AuthenticationResponse>(result)),
       errors => Problem(errors)
     );
   }
@@ -37,15 +37,12 @@ public class AuthenticationController : ApiController
   [HttpPost("login")]
   public async Task<IActionResult> Login(LoginRequest request)
   {
-    var loginQuery = new LoginQuery(
-      request.Email,
-      request.Password
-    );
+    var loginQuery = mapper.Map<LoginQuery>(request);
 
     ErrorOr<AuthenticationResult> loginQueryResult = await mediator.Send(loginQuery);
 
     return loginQueryResult.Match(
-      user => Ok(user),
+      result => Ok(mapper.Map<AuthenticationResponse>(result)),
       errors => Problem(errors)
     );
   }

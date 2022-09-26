@@ -3,6 +3,8 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using restapi.Common.Mapping;
 using restapi.Common.Services.Jwt;
 using restapi.Common.Services.Providers;
 using restapi.Common.Services.Settings;
@@ -19,11 +21,13 @@ public static class DependencyInjection
 {
   public static async Task<IServiceCollection> AddDependenciesAsync(this IServiceCollection services, ConfigurationManager configuration)
   {
-    var azureKeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUri);
+    services.Configure<AzureSettings>(configuration.GetSection("AzureSettings"));
+
+    var azureKeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUriName);
 
     if (string.IsNullOrEmpty(azureKeyVaultUri))
     {
-      azureKeyVaultUri = configuration["KeyVaultUri"];
+      azureKeyVaultUri = configuration["AzureSettings:KeyVaultUri"];
     }
 
     var keyVaultEndpoint = new Uri(azureKeyVaultUri!);
@@ -36,6 +40,7 @@ public static class DependencyInjection
     services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString.Value.Value));
 
     services.AddMediatR(Assembly.GetExecutingAssembly());
+    services.AddMappings();
 
     services.AddScoped<IAzureProvider, AzureProvider>();
     services.AddScoped<IImageProvider, ImageProvider>();

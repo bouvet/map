@@ -1,6 +1,7 @@
 using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Services.Settings;
@@ -9,9 +10,21 @@ namespace restapi.Common.Services.Providers;
 
 public class AzureProvider : IAzureProvider
 {
+  private readonly AzureSettings azureSettings;
+
+  public AzureProvider(IOptions<AzureSettings> azureOptions)
+  {
+    azureSettings = azureOptions.Value;
+  }
+
   public SecretClient GetKeyVaultClient()
   {
     var azureKeyVaultUri = Environment.GetEnvironmentVariable("KeyVaultUri");
+
+    if (string.IsNullOrEmpty(azureKeyVaultUri))
+    {
+      azureKeyVaultUri = azureSettings.KeyVaultUri;
+    }
 
     var keyVaultEndpoint = new Uri(azureKeyVaultUri!);
 

@@ -126,8 +126,6 @@ public class LocationService : ILocationService
 
     var coord = new GeoCoordinate(latitude, longitude);
 
-    Console.WriteLine(categoryId + " is " + (categoryId == Guid.Empty));
-
     var locationsWithCategory = locations.Where(x => x.Categories.Exists(x => x.Id == categoryId) || Guid.Empty == categoryId);
 
     if (!locationsWithCategory.Any())

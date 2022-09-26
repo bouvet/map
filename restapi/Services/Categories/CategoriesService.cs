@@ -40,7 +40,7 @@ public class CategoryService : ICategoryService
     return category;
   }
 
-  public async Task<ErrorOr<Category>> AddCategory(CategoryDto request)
+  public async Task<ErrorOr<Category>> CreateCategory(CategoryDto request)
   {
     List<Error> errors = new();
 
@@ -106,28 +106,6 @@ public class CategoryService : ICategoryService
     await dataContext.SaveChangesAsync();
 
     return Result.Updated;
-  }
-
-  public async Task<ErrorOr<Deleted>> DeleteCategory(Guid id)
-  {
-    var category = await dataContext.Categories.FindAsync(id);
-
-    if (category is null)
-    {
-      return Errors.Category.NotFound;
-    }
-
-    var locationsWhereCategoryIsUsed = dataContext.Entry(category).Collection(c => c.Locations).Query().AsEnumerable().ToList();
-
-    if (locationsWhereCategoryIsUsed.Count > 0)
-    {
-      return Errors.Category.UsedByLocations;
-    }
-
-    dataContext.Categories.Remove(category);
-    await dataContext.SaveChangesAsync();
-
-    return Result.Deleted;
   }
 }
 

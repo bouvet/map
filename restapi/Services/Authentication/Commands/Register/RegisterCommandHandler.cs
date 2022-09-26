@@ -55,14 +55,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
     await dataContext.SaveChangesAsync(cancellationToken);
 
     return new AuthenticationResult(
-      user.Id,
-      user.Email,
-      user.Name,
-      user.Address,
-      user.PostalArea,
-      token,
-      user.PostalCode,
-      user.BirthYear
+      user,
+      token
     );
   }
 }
