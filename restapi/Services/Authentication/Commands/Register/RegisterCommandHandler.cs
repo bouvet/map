@@ -49,7 +49,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       Password = BCrypt.Net.BCrypt.HashPassword(request.Password)
     };
 
-    var token = await jwtGenerator.GenerateToken(user.Id, user.Email);
+    var token = jwtGenerator.GenerateToken(user.Id, user.Email);
 
     dataContext.Users.Add(user);
     await dataContext.SaveChangesAsync(cancellationToken);

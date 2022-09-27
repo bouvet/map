@@ -28,12 +28,10 @@ public static class DependencyInjection
   {
     await services.AddAzureKeyVault(configuration);
 
-    services.AddAuth(configuration);
+    services.AddProviders();
 
     services.AddMediatR(Assembly.GetExecutingAssembly());
     services.AddMappings();
-
-    services.AddProviders();
 
     services.AddServices();
 
@@ -43,41 +41,7 @@ public static class DependencyInjection
 
     services.AddControllers();
 
-    return services;
-  }
-
-  public async static Task<IServiceCollection> AddAzureKeyVault(
-   this IServiceCollection services,
-   ConfigurationManager configuration)
-  {
-    var azureSettings = new AzureSettings();
-
-    configuration.Bind(AzureSettings.SectionName, azureSettings);
-
-    services.AddSingleton(Options.Create(azureSettings));
-
-    var azureKeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUriName);
-
-    if (string.IsNullOrEmpty(azureKeyVaultUri))
-    {
-      azureKeyVaultUri = configuration["AzureSettings:KeyVaultUri"];
-    }
-
-    var keyVaultEndpoint = new Uri(azureKeyVaultUri!);
-
-    // configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
-    var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
-
-    string? DbConnectionString = configuration["AzureSettings:DbConnectionString"];
-
-    if (string.IsNullOrEmpty(DbConnectionString))
-    {
-      var keyVaultDbConnection = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
-      DbConnectionString = keyVaultDbConnection.Value.Value;
-    }
-
-    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(DbConnectionString));
+    services.AddAuth(configuration);
 
     return services;
   }
@@ -87,11 +51,32 @@ public static class DependencyInjection
    ConfigurationManager configuration)
   {
     var jwtSettings = new JwtSettings();
+
     configuration.Bind(JwtSettings.SectionName, jwtSettings);
 
     services.AddSingleton(Options.Create(jwtSettings));
 
-    services.AddSingleton<IJwtGenerator, JwtGenerator>();
+    if (string.IsNullOrEmpty(jwtSettings.Secret))
+    {
+      jwtSettings.Secret = Environment.GetEnvironmentVariable("JwtSecret")!;
+    }
+
+    if (jwtSettings.ExpiryMinutes < 1)
+    {
+      jwtSettings.ExpiryMinutes = int.Parse(Environment.GetEnvironmentVariable("ExpiryMinutes")!);
+    }
+
+    if (string.IsNullOrEmpty(jwtSettings.Issuer))
+    {
+      jwtSettings.Issuer = Environment.GetEnvironmentVariable("JwtIssuer")!;
+    }
+
+    if (string.IsNullOrEmpty(jwtSettings.Audience))
+    {
+      jwtSettings.Audience = Environment.GetEnvironmentVariable("JwtAudience")!;
+    }
+
+    services.AddScoped<IJwtGenerator, JwtGenerator>();
 
     services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
       .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
@@ -106,6 +91,40 @@ public static class DependencyInjection
               Encoding.UTF8.GetBytes(jwtSettings.Secret)
             )
       });
+
+    return services;
+  }
+
+  public async static Task<IServiceCollection> AddAzureKeyVault(
+   this IServiceCollection services,
+   ConfigurationManager configuration)
+  {
+    var azureSettings = new AzureSettings();
+
+    configuration.Bind(AzureSettings.SectionName, azureSettings);
+
+    services.AddSingleton(Options.Create(azureSettings));
+
+    var azureKeyVaultUri = azureSettings.KeyVaultUri;
+
+    if (string.IsNullOrEmpty(azureKeyVaultUri))
+    {
+      azureSettings.KeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUriName)!;
+    }
+
+    var keyVaultEndpoint = new Uri(azureSettings.KeyVaultUri);
+
+    // configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+
+    var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+
+    if (string.IsNullOrEmpty(azureSettings.DbConnectionString))
+    {
+      var keyVaultDbConnection = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
+      azureSettings.DbConnectionString = keyVaultDbConnection.Value.Value;
+    }
+
+    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureSettings.DbConnectionString));
 
     return services;
   }

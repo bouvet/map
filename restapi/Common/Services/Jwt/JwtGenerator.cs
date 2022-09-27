@@ -4,37 +4,25 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using restapi.Common.Services.Settings;
 using restapi.Common.Services.Providers;
+using Microsoft.Extensions.Options;
 
 namespace restapi.Common.Services.Jwt;
 
 public class JwtGenerator : IJwtGenerator
 {
-  private readonly IAzureProvider azureProvider;
+  private readonly JwtSettings jwtSettings;
   private readonly IDateTimeProvider dateTimeProvider;
 
-  public JwtGenerator(
-    IAzureProvider azureProvider,
-    IDateTimeProvider dateTimeProvider)
+  public JwtGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtOptions)
   {
-    this.azureProvider = azureProvider;
     this.dateTimeProvider = dateTimeProvider;
+    jwtSettings = jwtOptions.Value;
   }
 
-  public async Task<string> GenerateToken(Guid userId, string email)
+  public string GenerateToken(Guid userId, string email)
   {
-    var keyVaultClient = azureProvider.GetKeyVaultClient();
-    var jwtSecretResponse = await azureProvider.GetKeyVaultSecret(keyVaultClient, AzureSettings.KeyVaultNameForJwtSecret);
-    var jwtIssuerResponse = await azureProvider.GetKeyVaultSecret(keyVaultClient, AzureSettings.KeyVaultNameForJwtIssuer);
-    var jwtAudienceResponse = await azureProvider.GetKeyVaultSecret(keyVaultClient, AzureSettings.KeyVaultNameForJwtAudience);
-    var jwtExpiryMinutesResponse = await azureProvider.GetKeyVaultSecret(keyVaultClient, AzureSettings.KeyVaultNameForJwtExpiryMinutes);
-
-    var jwtSecret = jwtSecretResponse.Value.Value;
-    var jwtIssuer = jwtIssuerResponse.Value.Value;
-    var jwtAudience = jwtAudienceResponse.Value.Value;
-    var jwtExpiryMinutes = jwtExpiryMinutesResponse.Value.Value;
-
     var signingCredentials = new SigningCredentials(
-      new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
+      new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
       SecurityAlgorithms.HmacSha256
     );
 
@@ -46,9 +34,9 @@ public class JwtGenerator : IJwtGenerator
     };
 
     var securityToken = new JwtSecurityToken(
-      issuer: jwtIssuer,
-      audience: jwtAudience,
-      expires: dateTimeProvider.UtcNow.AddMinutes(int.Parse(jwtExpiryMinutes)),
+      issuer: jwtSettings.Issuer,
+      audience: jwtSettings.Audience,
+      expires: dateTimeProvider.UtcNow.AddMinutes(jwtSettings.ExpiryMinutes),
       claims: claims,
       signingCredentials: signingCredentials
     );
