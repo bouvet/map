@@ -35,7 +35,7 @@ export const FabMenu: FC = () => {
                             boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                         }}
                     >
-                        <Link to="/">
+                        <Link to="/profile">
                             <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
                                 person
                             </GoogleIcon>

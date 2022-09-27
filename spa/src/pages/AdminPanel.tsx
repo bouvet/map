@@ -31,16 +31,7 @@ export const AdminPanel: FC = () => {
     useEffect(() => {
         const temp = locations
             .filter((item: Location) => item.properties.status === selectedFilter)
-            .map((item: Location) => (
-                <LocationBlock
-                    key={item.id}
-                    id={item.id}
-                    title={item.properties.title}
-                    description={item.properties.description}
-                    image={item.properties.image}
-                    status={item.properties.status}
-                />
-            ));
+            .map((item: Location) => <LocationBlock key={item.id} item={item} />);
         setMappedLocation(temp);
     }, [locations, selectedFilter]);
 
