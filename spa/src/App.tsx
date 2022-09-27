@@ -5,6 +5,7 @@ import { LocationInfo } from './pages/LocationInfo';
 import { Login } from './pages/Login';
 import { LocationRegistration } from './pages/LocationRegistration';
 import { CustomizedSnackbars } from './components/Snackbar/Snackbar';
+import { AdminPanel } from './pages/AdminPanel';
 
 const App = () => (
     <Router>
@@ -13,6 +14,7 @@ const App = () => (
             <Route path="/location-info" element={<LocationInfo />} />
             <Route path="/login" element={<Login />} />
             <Route path="/location-registration" element={<LocationRegistration />} />
+            <Route path="/location-approval-panel" element={<AdminPanel />} />
         </Routes>
         <CustomizedSnackbars />
     </Router>

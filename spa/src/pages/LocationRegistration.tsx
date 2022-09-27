@@ -62,7 +62,7 @@ export const LocationRegistration: FC = () => {
         const buffer = await response.arrayBuffer();
         const file = new File([buffer], currentImage, { type: 'image' });
 
-        formData.append('img', file);
+        formData.append('image', file);
         const successStatus: boolean = await dispatch(locationServices.postLocation(formData));
         setIsLoading(false);
 
