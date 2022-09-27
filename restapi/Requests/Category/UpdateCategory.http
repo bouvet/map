@@ -2,6 +2,7 @@
 
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "stop",

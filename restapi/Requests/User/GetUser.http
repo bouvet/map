@@ -2,3 +2,4 @@
 @id=46a7a71f-4190-4756-b86e-a706b6f18183
 
 GET {{host}}/api/users/{{id}}
+Authorization: Bearer {{token}}

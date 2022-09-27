@@ -2,6 +2,7 @@
 
 PUT {{host}}/api/users/{{id}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "email": "glen.sorbo@bouvet.com",
