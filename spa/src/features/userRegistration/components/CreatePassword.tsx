@@ -2,12 +2,14 @@ import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { LoginButton } from '../../login/components/Button';
-import { Form } from '../../login/components/Form';
-import { InputPassword } from '../../login/components/Input';
-import { LoginContent, LoginWrapper } from '../../login/components/LoginWrapper';
-import { SectionWrapper } from '../../login/components/SectoionWrapper';
-import { Title } from '../../login/components/Text';
+import { SubmitButton } from '../../../components/Form/Buttons';
+import { Form } from '../../../components/Form/Form';
+import { InputPassword } from '../../../components/Form/Input';
+import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
+import { SectionWrapper } from '../../../components/Form/SectionWrapper';
+import { LinkText, ProgressBarForm, TitleForm } from '../../../components/Form/Text';
+import { BackButton } from '../../../components/Navigation/Buttons';
+import { MyTheme } from '../../../styles/global';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -31,11 +33,21 @@ export const CreatePassword: FC = () => {
         }
     };
 
+    const pageIndex = 3;
+
     return (
-        <LoginWrapper>
-            <LoginContent>
+        <FormWrapper>
+            <BackButton
+                backgroundColor={MyTheme.colors.opaque}
+                textColor={MyTheme.colors.lightbase}
+                onClick={() => navigate('/user-registration')}
+            >
+                <span className="material-symbols-outlined">close</span>
+            </BackButton>
+            <FormContent>
                 <SectionWrapper>
-                    <Title>Passord</Title>
+                    <TitleForm>Passord</TitleForm>
+                    <ProgressBarForm pageIndex={pageIndex} />
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <InputPassword
                             label="Passord*"
@@ -49,10 +61,11 @@ export const CreatePassword: FC = () => {
                             setState={setConfirmPassword}
                             handleChange={handleFormInputChange}
                         />
-                        <LoginButton text="white">Gå videre</LoginButton>
+                        <SubmitButton text="white">Gå videre</SubmitButton>
                     </Form>
+                    <LinkText onClick={() => navigate(-1)}>Gå tilbake</LinkText>
                 </SectionWrapper>
-            </LoginContent>
-        </LoginWrapper>
+            </FormContent>
+        </FormWrapper>
     );
 };

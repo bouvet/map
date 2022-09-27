@@ -1,17 +1,17 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Email, Google, GoogleLogoWhite, Vipps, VippsLogoWhite } from '../features/login/components/Button';
-import { LeftFlex, RightFlex, SplitWrapper } from '../features/login/components/Input';
-import { LoginContent, LoginWrapper } from '../features/login/components/LoginWrapper';
-import { SectionWrapper } from '../features/login/components/SectoionWrapper';
-import { LinkText, Text, Title } from '../features/login/components/Text';
+import { Email, Google, GoogleLogoWhite, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
+import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
+import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
+import { SectionWrapper } from '../components/Form/SectionWrapper';
+import { LinkText, Text, Title } from '../components/Form/Text';
 
 export const UserRegistration: FC = () => {
     const navigate = useNavigate();
 
     return (
-        <LoginWrapper>
-            <LoginContent>
+        <FormWrapper>
+            <FormContent>
                 <SectionWrapper>
                     <LinkText href="/login">Tilbake</LinkText>
                     <span>
@@ -45,7 +45,7 @@ export const UserRegistration: FC = () => {
                         </RightFlex>
                     </SplitWrapper>
                 </SectionWrapper>
-            </LoginContent>
-        </LoginWrapper>
+            </FormContent>
+        </FormWrapper>
     );
 };

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { MyTheme } from '../../../styles/global';
+import { MyTheme } from '../../styles/global';
 
 const Label = styled.label`
     display: block;

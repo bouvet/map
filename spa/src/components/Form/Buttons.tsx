@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MyTheme } from '../../../styles/global';
+import { MyTheme } from '../../styles/global';
 
 interface ButtonProps {
     background?: string;
@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 export const Button = styled.button<ButtonProps>`
-    position: relative; // absolute
+    position: relative;
     border: none;
     z-index: 10;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
@@ -25,6 +25,15 @@ export const Button = styled.button<ButtonProps>`
     cursor: ${({ disabled }) => disabled && 'not-allowed'};
 `;
 
+export const SubmitButton = styled(Button)`
+    background-color: ${MyTheme.colors.accent};
+`;
+
+export const SubmitButtonRight = styled(SubmitButton)`
+    width: 50%;
+    float: right;
+`;
+
 export const VippsLogoWhite = styled.img`
     height: 30px;
 `;
@@ -32,10 +41,6 @@ export const VippsLogoWhite = styled.img`
 export const GoogleLogoWhite = styled.img`
     height: 20px;
     margin-right: 10px;
-`;
-
-export const LoginButton = styled(Button)`
-    background-color: ${MyTheme.colors.accent};
 `;
 
 export const Vipps = styled(Button)`

@@ -1,11 +1,17 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginButton } from '../../login/components/Button';
-import { Form } from '../../login/components/Form';
-import { InputAge, InputName } from '../../login/components/Input';
-import { LoginContent, LoginWrapper } from '../../login/components/LoginWrapper';
-import { SectionWrapper } from '../../login/components/SectoionWrapper';
-import { Title } from '../../login/components/Text';
+import styled from 'styled-components';
+import { SubmitButton } from '../../../components/Form/Buttons';
+import { Form } from '../../../components/Form/Form';
+import { InputAge, InputName } from '../../../components/Form/Input';
+import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
+import { SectionWrapper } from '../../../components/Form/SectionWrapper';
+import { ProgressBarForm, TitleForm } from '../../../components/Form/Text';
+import { RequiredStar } from '../../../components/Common/RequiredStar';
+import { BackButton } from '../../../components/Navigation/Buttons';
+import { MyTheme } from '../../../styles/global';
+
+const Label = styled.div``;
 
 export const PersonalInfo: FC = () => {
     const navigate = useNavigate();
@@ -24,18 +30,32 @@ export const PersonalInfo: FC = () => {
         console.log('Age: ', inputAge);
     };
 
+    const pageIndex = 2;
+
     return (
-        <LoginWrapper>
-            <LoginContent>
+        <FormWrapper>
+            <BackButton
+                backgroundColor={MyTheme.colors.opaque}
+                textColor={MyTheme.colors.lightbase}
+                onClick={() => navigate('/user-registration')}
+            >
+                <span className="material-symbols-outlined">close</span>
+            </BackButton>
+            <FormContent>
                 <SectionWrapper>
-                    <Title>Personlig informasjon</Title>
+                    <TitleForm>Personlig informasjon</TitleForm>
+                    <ProgressBarForm pageIndex={pageIndex} />
                     <Form onSubmit={(e) => handleSubmit(e)}>
+                        <Label>
+                            Navn
+                            <RequiredStar />
+                        </Label>
                         <InputName label="Navn*" value={inputName} setState={setInputName} handleChange={handleFormInputChange} />
                         <InputAge label="Fødselsdato*" value={inputAge} setState={setInputAge} handleChange={handleFormInputChange} />
-                        <LoginButton text="white">Gå videre</LoginButton>
+                        <SubmitButton text="white">Gå videre</SubmitButton>
                     </Form>
                 </SectionWrapper>
-            </LoginContent>
-        </LoginWrapper>
+            </FormContent>
+        </FormWrapper>
     );
 };

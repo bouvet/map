@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LoginWrapper = styled.div`
+export const FormWrapper = styled.div`
     width: 100%;
     height: 100vh;
     display: flex;
@@ -8,7 +8,7 @@ export const LoginWrapper = styled.div`
     justify-content: center;
 `;
 
-export const LoginContent = styled.div`
+export const FormContent = styled.div`
     width: 80%;
     padding: 5px;
     max-width: 350px;

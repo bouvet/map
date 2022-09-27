@@ -1,11 +1,11 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
-import { Google, GoogleLogoWhite, LoginButton, Vipps, VippsLogoWhite } from '../features/login/components/Button';
+import { Google, GoogleLogoWhite, SubmitButton, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
 import { DivideLine } from '../features/login/components/DivideLine';
-import { Form } from '../features/login/components/Form';
-import { Checkbox, InputEmail, InputPassword, LeftFlex, RightFlex, SplitWrapper } from '../features/login/components/Input';
-import { LoginContent, LoginWrapper } from '../features/login/components/LoginWrapper';
-import { SectionWrapper } from '../features/login/components/SectoionWrapper';
-import { LinkText, Text, Title } from '../features/login/components/Text';
+import { Form } from '../components/Form/Form';
+import { Checkbox, InputEmail, InputPassword, LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
+import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
+import { SectionWrapper } from '../components/Form/SectionWrapper';
+import { LinkText, Text, Title } from '../components/Form/Text';
 
 export const Login: FC = () => {
     const [userEmail, setUserEmail] = useState('');
@@ -24,8 +24,8 @@ export const Login: FC = () => {
     };
 
     return (
-        <LoginWrapper>
-            <LoginContent>
+        <FormWrapper>
+            <FormContent>
                 <SectionWrapper>
                     <LinkText href="/">Tilbake</LinkText>
                     <span>
@@ -59,7 +59,7 @@ export const Login: FC = () => {
                                 <LinkText>Glemt passord</LinkText>
                             </RightFlex>
                         </SplitWrapper>
-                        <LoginButton text="white">LOGG INN</LoginButton>
+                        <SubmitButton text="white">LOGG INN</SubmitButton>
                     </Form>
                     <SplitWrapper>
                         <LeftFlex>
@@ -70,7 +70,7 @@ export const Login: FC = () => {
                         </RightFlex>
                     </SplitWrapper>
                 </SectionWrapper>
-            </LoginContent>
-        </LoginWrapper>
+            </FormContent>
+        </FormWrapper>
     );
 };

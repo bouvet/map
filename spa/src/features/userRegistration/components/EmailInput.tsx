@@ -1,18 +1,22 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
+import { ChangeEvent, createContext, Dispatch, FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
-import { LoginButton } from '../../login/components/Button';
-import { Form } from '../../login/components/Form';
-import { InputEmail } from '../../login/components/Input';
-import { LoginContent, LoginWrapper } from '../../login/components/LoginWrapper';
-import { SectionWrapper } from '../../login/components/SectoionWrapper';
-import { Text, Title } from '../../login/components/Text';
+import { SubmitButton } from '../../../components/Form/Buttons';
+import { Form } from '../../../components/Form/Form';
+import { InputEmail } from '../../../components/Form/Input';
+import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
+import { SectionWrapper } from '../../../components/Form/SectionWrapper';
+import { ProgressBarForm, Text, TitleForm } from '../../../components/Form/Text';
+
+// export const MyContext = createContext({ inputEmail: '', setInputEmail: () => {} });
 
 export const EmailInput: FC = () => {
     const navigate = useNavigate();
 
     const [inputEmail, setInputEmail] = useState('');
+
+    // const contextValue = { inputEmail };
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -24,21 +28,28 @@ export const EmailInput: FC = () => {
         console.log('Email: ', inputEmail);
     };
 
+    const pageIndex = 0;
+
     return (
-        <LoginWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate(-1)}>
-                <span className="material-symbols-outlined">arrow_back</span>
+        <FormWrapper>
+            <BackButton
+                backgroundColor={MyTheme.colors.opaque}
+                textColor={MyTheme.colors.lightbase}
+                onClick={() => navigate('/user-registration')}
+            >
+                <span className="material-symbols-outlined">close</span>
             </BackButton>
-            <LoginContent>
+            <FormContent>
                 <SectionWrapper>
-                    <Title>E-post</Title>
+                    <TitleForm>E-post</TitleForm>
+                    <ProgressBarForm pageIndex={pageIndex} />
                     <Text>Fyll inn din e-postadresse for å motta en bekreftelseskode.</Text>
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <InputEmail label="E-post*" value={inputEmail} setState={setInputEmail} handleChange={handleFormInputChange} />
-                        <LoginButton text="white">Send kode</LoginButton>
+                        <SubmitButton text="white">Send kode</SubmitButton>
                     </Form>
                 </SectionWrapper>
-            </LoginContent>
-        </LoginWrapper>
+            </FormContent>
+        </FormWrapper>
     );
 };
