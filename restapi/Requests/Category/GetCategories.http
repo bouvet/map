@@ -1,8 +1,2 @@
-@devhost=https://localhost:7107
-@prodhost=https://optimus-verden-venter.azurewebsites.net/
-
-GET {{devhost}}/api/categories
-
-###
-
-GET {{prodhost}}/api/categories
+GET {{host}}/api/categories
+Authorization: Bearer {{token}}

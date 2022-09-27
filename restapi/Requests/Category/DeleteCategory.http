@@ -1,10 +1,3 @@
-@devhost=https://localhost:7107
-@prodhost=https://optimus-verden-venter.azurewebsites.net/
-
 @id=0de59280-c560-4aa7-2127-08da9f9e70a6
 
-DELETE {{devhost}}/api/categories/{{id}}
-
-###
-
-DELETE {{prodhost}}/api/categories/{{id}}
+DELETE {{host}}/api/categories/{{id}}
