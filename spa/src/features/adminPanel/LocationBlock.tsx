@@ -46,11 +46,7 @@ const ButtonWrapper = styled.div`
 `;
 
 interface LocationProps {
-    id: string;
-    title: string;
-    description: string;
-    image?: string;
-    status: string;
+    item: Location;
 }
 
 const LocationInformation = styled.div`
@@ -62,8 +58,18 @@ const Image = styled.img`
     margin: 10px 0px;
 `;
 
+const Li = styled.li`
+    margin-left: 20px;
+`;
+
+const CategoryHeader = styled.p`
+    margin-top: 10px;
+`;
+
 export const LocationBlock: FC<LocationProps> = (props) => {
-    const { id, title, description, image, status } = props;
+    const { item } = props;
+    const { title, status, description, image, category } = item.properties;
+
     const [isActive, setIsActive] = useState(false);
 
     const dispatch = useStateDispatch();
@@ -71,7 +77,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
     const { locations } = useStateSelector((state) => state.map);
 
     const handleApprove = async () => {
-        const location = locations.filter((location) => location.id === id)[0];
+        const location = locations.filter((location) => location.id === item.id)[0];
         const payload: PutLocation = {
             id: location.id,
             title: location.properties.title,
@@ -83,7 +89,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
     };
 
     const handleReject = async () => {
-        const location = locations.filter((location) => location.id === id)[0];
+        const location = locations.filter((location) => location.id === item.id)[0];
         const payload: PutLocation = {
             id: location.id,
             title: location.properties.title,
@@ -110,6 +116,12 @@ export const LocationBlock: FC<LocationProps> = (props) => {
                 <LocationInformation>
                     <Text>{title}</Text>
                     {description}
+                    <CategoryHeader>Kategorier:</CategoryHeader>
+                    <ul>
+                        {category.map((item) => (
+                            <Li key={item.name}>{item.name}</Li>
+                        ))}
+                    </ul>
                     {image !== undefined && <Image src={image} alt="location" />}
                     {(() => {
                         if (status === 'Approved') {
