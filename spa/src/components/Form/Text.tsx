@@ -17,13 +17,13 @@ export const LinkText = styled.a`
     margin: 0px;
 `;
 
+export const LinkTextCenter = styled(LinkText)`
+    text-align: center;
+`;
+
 export const LinkTextOnboarding = styled(LinkText)`
     padding: 5px;
     float: left;
-`;
-
-export const LinkTextCenter = styled(LinkText)`
-    text-align: center;
 `;
 
 export const Title = styled.h1`
@@ -113,10 +113,10 @@ export const ProgressBarForm: FC<ProgressBarProps> = ({ pageIndex }) => (
 //     </ProgressElementWrapper>
 // );
 
-// export const ProgressBarOnboarding: FC<ProgressBarProps> = ({ pageIndex }) => (
-//     <ProgressBarWrapper>
-//         <ProgressElement completed={pageIndex >= 0} />
-//         <ProgressElement completed={pageIndex >= 1} />
-//         <ProgressElement completed={pageIndex >= 2} />
-//     </ProgressBarWrapper>
-// );
+export const ProgressBarOnboarding: FC<ProgressBarProps> = ({ pageIndex }) => (
+    <ProgressBarWrapper>
+        <ProgressElement completed={pageIndex >= 0} />
+        <ProgressElement completed={pageIndex >= 1} />
+        <ProgressElement completed={pageIndex >= 2} />
+    </ProgressBarWrapper>
+);

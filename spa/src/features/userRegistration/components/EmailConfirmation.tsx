@@ -6,6 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, ProgressBarForm, Text, TitleForm } from '../../../components/Form/Text';
@@ -56,6 +58,21 @@ export const EmailConfirmation: FC = () => {
                     <TitleForm>Bekreft e-post</TitleForm>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <Text>Skriv inn koden for å bekrefte e-postadressen *fra EmailInput*</Text>
+                    <Box
+                        component="form"
+                        sx={{
+                            '& .MuiTextField-root': { m: 0.5, width: '4ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <TextField id="outlined-number" type="number" inputProps={{ maxLength: 1 }} autoFocus />
+                        <TextField id="outlined-number" type="number" inputProps={{ maxLength: 1 }} />
+                        <TextField id="outlined-number" type="number" inputProps={{ maxLength: 1 }} />
+                        <TextField id="outlined-number" type="number" inputProps={{ maxLength: 1 }} />
+                        <TextField id="outlined-number" type="number" inputProps={{ maxLength: 1 }} />
+                        <TextField id="outlined-number" type="number" inputProps={{ maxLength: 1 }} />
+                    </Box>
                     <LinkText onClick={() => navigate(-1)}>Gå tilbake</LinkText>
                 </SectionWrapper>
             </FormContent>

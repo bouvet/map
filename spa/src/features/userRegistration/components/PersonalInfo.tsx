@@ -1,17 +1,18 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { SubmitButton } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { InputAge, InputName } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { ProgressBarForm, TitleForm } from '../../../components/Form/Text';
-import { RequiredStar } from '../../../components/Common/RequiredStar';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
-
-const Label = styled.div``;
 
 export const PersonalInfo: FC = () => {
     const navigate = useNavigate();
@@ -46,12 +47,55 @@ export const PersonalInfo: FC = () => {
                     <TitleForm>Personlig informasjon</TitleForm>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <Label>
-                            Navn
-                            <RequiredStar />
-                        </Label>
                         <InputName label="Navn*" value={inputName} setState={setInputName} handleChange={handleFormInputChange} />
-                        <InputAge label="Fødselsdato*" value={inputAge} setState={setInputAge} handleChange={handleFormInputChange} />
+                        {/* <InputAge label="Fødselsdato*" value={inputAge} setState={setInputAge} handleChange={handleFormInputChange} /> */}
+                        <Box>
+                            <FormControl sx={{ m: 1, minWidth: 80 }}>
+                                <InputLabel id="demo-simple-select-label">År</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="År"
+                                    defaultValue=""
+                                    autoWidth
+                                    value={inputAge}
+                                    // @ts-ignore
+                                    onChange={(e) => handleFormInputChange(e, setInputAge)}
+                                >
+                                    <MenuItem value={1990}>1990</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                                <InputLabel id="demo-simple-select-label">Måned</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Måned"
+                                    defaultValue=""
+                                    autoWidth
+                                    value={inputAge}
+                                    // @ts-ignore
+                                    onChange={(e) => handleFormInputChange(e, setInputAge)}
+                                >
+                                    <MenuItem value={1}>Januar</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl sx={{ m: 1, minWidth: 80 }}>
+                                <InputLabel id="demo-simple-select-label">Dag</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Dag"
+                                    defaultValue=""
+                                    autoWidth
+                                    value={inputAge}
+                                    // @ts-ignore
+                                    onChange={(e) => handleFormInputChange(e, setInputAge)}
+                                >
+                                    <MenuItem value={2}>1</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                         <SubmitButton text="white">Gå videre</SubmitButton>
                     </Form>
                 </SectionWrapper>

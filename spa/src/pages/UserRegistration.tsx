@@ -16,14 +16,7 @@ export const UserRegistration: FC = () => {
                     <LinkText href="/login">Tilbake</LinkText>
                     <span>
                         <Title>Registrer ny bruker</Title>
-                        <Text>
-                            Ved å opprette bruker kan du:
-                            <br />
-                            <ul>
-                                <li>Legge til lokasjoner</li>
-                                <li>Få personlig tilpasning</li>
-                            </ul>
-                        </Text>
+                        <Text>Ved å opprette bruker kan du...</Text>
                     </span>
                     <Google text="google">
                         <GoogleLogoWhite src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google" />
