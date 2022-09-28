@@ -7,8 +7,12 @@ export const Button = styled.button`
     color: ${MyTheme.colors.lightbase};
     width: 60%;
     min-width: 50px;
-    max-width: 100px;
+    max-width: 200px;
     border: none;
     border-radius: 50px;
     padding: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 `;

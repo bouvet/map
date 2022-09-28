@@ -1,29 +1,35 @@
-import { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { Button } from '../features/profile/Buttons';
 import { Form } from '../features/profile/Form';
-import { Input, InputProps } from '../features/profile/Input';
+import { Input, InputProps, PasswordLink } from '../features/profile/Input';
 import { ProfileHeader } from '../features/profile/ProfileHeader';
 
 export const ProfilePage: FC = () => {
     const [username, setUsername] = useState('Ola Nordman');
     const [birthday, setBirthday] = useState('01.01.1990');
-    const [phoneNumber, setPhoneNumber] = useState('+4790000000');
+    const [phoneNumber, setPhoneNumber] = useState('90000000');
     const [userEmail, setUserEmail] = useState('email@email.com');
 
     const InputContent: InputProps[] = [
-        { key: 'username', value: username, setter: setUsername, icon: 'person' },
-        { key: 'birthday', value: birthday, setter: setBirthday, icon: 'person' },
-        { key: 'phonenumber', value: phoneNumber, setter: setPhoneNumber, icon: 'person' },
-        { key: 'email', value: userEmail, setter: setUserEmail, icon: 'person' },
+        { type: 'text', value: username, setter: setUsername, icon: 'person' },
+        { type: 'text', value: birthday, setter: setBirthday, icon: 'calendar_month' },
+        { type: 'number', value: phoneNumber, setter: setPhoneNumber, icon: 'call' },
+        { type: 'email', value: userEmail, setter: setUserEmail, icon: 'mail' },
+        { type: 'password', value: '********', icon: 'key' },
     ];
 
-    const inputs = InputContent.map((item: InputProps) => <Input key={item.key} {...item} />);
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log('submitted');
+    };
+    const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);
     return (
         <>
             <ProfileHeader />
-            <Form>
+            <Form onSubmit={(event) => handleSubmit(event)}>
                 {inputs}
-                <Button type="submit">Oppdater</Button>
+                <PasswordLink to="/change-password">Endre passord</PasswordLink>
+                <Button type="submit">Oppdater profil</Button>
             </Form>
         </>
     );

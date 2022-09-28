@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { BackButton, GoogleIcon } from '../../components/Navigation/Buttons';
 import { MyTheme } from '../../styles/global';
-import { GoogleLogoWhite } from '../login/components/Button';
 
 const HeaderWrapper = styled.div`
     width: 100%;
@@ -38,14 +38,44 @@ const ProfilePicture = styled.div`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 `;
 
-export const ProfileHeader: FC = () => (
-    <HeaderWrapper>
-        <BackButtonHeader backgroundColor={MyTheme.colors.opaque}>
-            <GoogleIcon color="white" className="material-symbols-outlined">
-                arrow_back
-            </GoogleIcon>
-        </BackButtonHeader>
-        <ColouredSection />
-        <ProfilePicture />
-    </HeaderWrapper>
-);
+const ButtonChangePicture = styled.button`
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${MyTheme.colors.opaque};
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+`;
+
+export const ProfileHeader: FC = () => {
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+        navigate('/');
+    };
+
+    const handleProfilePictureClick = () => console.log('profile click');
+    return (
+        <HeaderWrapper>
+            <BackButtonHeader backgroundColor={MyTheme.colors.opaque} onClick={handleBackClick}>
+                <GoogleIcon color="white" className="material-symbols-outlined">
+                    arrow_back
+                </GoogleIcon>
+            </BackButtonHeader>
+            <ColouredSection />
+            <ProfilePicture>
+                <ButtonChangePicture type="button" onClick={handleProfilePictureClick}>
+                    <GoogleIcon color="white" className="material-symbols-outlined">
+                        add
+                    </GoogleIcon>
+                </ButtonChangePicture>
+            </ProfilePicture>
+        </HeaderWrapper>
+    );
+};
