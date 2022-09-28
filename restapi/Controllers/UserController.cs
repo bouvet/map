@@ -15,38 +15,38 @@ public class UsersController : ApiController
     this.userService = userService;
   }
 
-  [HttpGet]
-  public async Task<IActionResult> GetUsers()
-  {
-    ErrorOr<List<UserResponseDto>> getUsersResult = await userService.GetUsers();
+  // [HttpGet]
+  // public async Task<IActionResult> GetUsers()
+  // {
+  //   ErrorOr<List<UserResponseDto>> getUsersResult = await userService.GetUsers();
 
-    return getUsersResult.Match(
-      users => Ok(users),
-      errors => Problem(errors)
-    );
-  }
+  //   return getUsersResult.Match(
+  //     users => Ok(users),
+  //     errors => Problem(errors)
+  //   );
+  // }
 
-  [HttpGet("{id:guid}")]
-  public async Task<IActionResult> GetUser(Guid id)
-  {
-    ErrorOr<UserResponseDto> getUserResult = await userService.GetUser(id);
+  // [HttpGet("{id:guid}")]
+  // public async Task<IActionResult> GetUser(Guid id)
+  // {
+  //   ErrorOr<UserResponseDto> getUserResult = await userService.GetUser(id);
 
-    return getUserResult.Match(
-      user => Ok(user),
-      errors => Problem(errors)
-    );
-  }
+  //   return getUserResult.Match(
+  //     user => Ok(user),
+  //     errors => Problem(errors)
+  //   );
+  // }
 
-  [HttpPut("{id:guid}")]
-  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
-  {
-    ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
+  // [HttpPut("{id:guid}")]
+  // public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
+  // {
+  //   ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
 
-    return updateUserResult.Match(
-      _ => NoContent(),
-      errors => Problem(errors)
-    );
-  }
+  //   return updateUserResult.Match(
+  //     _ => NoContent(),
+  //     errors => Problem(errors)
+  //   );
+  // }
 
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteUser(Guid id)
@@ -59,12 +59,12 @@ public class UsersController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetUser(UserResponseDto user)
-  {
-    return CreatedAtAction(
-        actionName: nameof(GetUser),
-        routeValues: new { id = user.Id },
-        value: user
-      );
-  }
+  // private CreatedAtActionResult CreatedAtGetUser(UserResponseDto user)
+  // {
+  //   return CreatedAtAction(
+  //       actionName: nameof(GetUser),
+  //       routeValues: new { id = user.Id },
+  //       value: user
+  //     );
+  // }
 }

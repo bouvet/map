@@ -26,8 +26,7 @@ public class JwtGenerator : IJwtGenerator
       SecurityAlgorithms.HmacSha256
     );
 
-    var claims = new[]
-    {
+    var claims = new List<Claim>{
       new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
       new Claim(JwtRegisteredClaimNames.Email, email),
       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

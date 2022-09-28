@@ -17,5 +17,4 @@ public class Category
 
   [JsonIgnore]
   public List<Location> Locations { get; set; } = new List<Location>();
-
 }

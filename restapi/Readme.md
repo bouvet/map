@@ -2,6 +2,18 @@
 
 For more information please visit the [Backend Wiki](https://github.com/bouvet/map/wiki/Backend) & [Azure Wiki](https://github.com/bouvet/map/wiki/Azure-Resources) pages
 
+- [Verden Venter Optimus Api](#verden-venter-optimus-api)
+  - [How to get started](#how-to-get-started)
+  - [Deployment](#deployment)
+  - [Docs](#docs)
+  - [Example requests](#example-requests)
+    - [Categories](#categories)
+    - [Locations](#locations)
+    - [Reviews](#reviews)
+  - [Team](#team)
+    - [Contributors](#contributors)
+    - [Facilitators](#facilitators)
+
 ## How to get started
 
 There is a few Azure resources you need to get started.
@@ -12,10 +24,6 @@ There is a few Azure resources you need to get started.
     - Secrets:
       - "DbConnectionString"
       - "azureBlobStorageConnectionString"
-      - "JwtSecret"
-      - "JwtIssuer"
-      - "JwtAudience"
-      - "JwtExpiryMinutes"
   - Azure SQL Server
     - Azure SQL database
   - Azure Storage Account
@@ -24,10 +32,15 @@ There is a few Azure resources you need to get started.
   - App Service Plan
     - App Service
 
-Set Azure KeyVault Uri in user-secrets for development environment:
+Set some secrets in user-secrets for development:
 
 ```bash
-$dotnet user-secrets set "AzureSettings:KeyVaultUri" "<your Azure KeyVault connection string>"
+$dotnet user-secrets set "AzureProvider:KeyVaultUri" "<your Azure KeyVault connection string>"
+$dotnet user-secrets set "AzureProvider:DbConnectionString" "<your DB connection string>"
+$dotnet user-secrets set "JwtSettings:Secret" "<Jwt secret for this project>"
+$dotnet user-secrets set "JwtSettings:ExpiryMinutes" "<How long JWT should be valid>"
+$dotnet user-secrets set "JwtSettings:Issuer" "<JWT Issuer>"
+$dotnet user-secrets set "JwtSettings:Audience" "<JWT Audience>"
 ```
 
 List all user secrets:
@@ -48,7 +61,7 @@ Test Production environment:
 $dotnet watch run --environment "Production"
 ```
 
-### Deployment
+## Deployment
 
 Build the project:
 
@@ -59,9 +72,16 @@ $dotnet publish -c Release -o ./bin/Publish
 If you are using VSCode you need to:
 
 - Install "Azure App Service" and "Azure Account" extensions.
-- Login in to Azure through VSCode extension.
+- Log in to Azure through VSCode extension.
 - Find your App Service.
-- Add "KeyVaultUri" to Application Settings.
+- Add the following to Application Settings:
+  - KeyVaultUri
+  - JwtSecret
+  - ExpiryMinutes
+  - JwtIssuer
+  - JwtAudience
+
+Make sure your application have access to the KeyVault!
 
 This can also be done via Azure portal under App Service - Settings - Configuration.
 
@@ -105,14 +125,16 @@ This can also be done via Azure portal under App Service - Settings - Configurat
 - [Get Reviews](Requests/Review/GetReviews.http)
 - [Update Review](Requests/Review/UpdateReview.http)
 
-#### Contributors
+## Team
+
+### Contributors
 
 - [Skjalg Eriksen](https://github.com/skjalg-eriksen)
 - [Glen Sørbø](https://github.com/glensorbo)
 - [Sindre Mohr](https://github.com/SindreMohr)
 - [Margrethe Amundsen](https://github.com/margretheamundsen)
 
-#### Facilitators
+### Facilitators
 
 - [Nick Rivas](https://github.com/nickrivas)
 - [Andrea Esposito](https://github.com/AndreaEsposit)

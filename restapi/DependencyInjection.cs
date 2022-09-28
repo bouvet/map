@@ -99,39 +99,38 @@ public static class DependencyInjection
    this IServiceCollection services,
    ConfigurationManager configuration)
   {
-    var azureSettings = new AzureSettings();
+    var azureProvider = new AzureProvider();
 
-    configuration.Bind(AzureSettings.SectionName, azureSettings);
+    configuration.Bind(AzureProvider.SectionName, azureProvider);
 
-    services.AddSingleton(Options.Create(azureSettings));
+    services.AddSingleton(Options.Create(azureProvider));
 
-    var azureKeyVaultUri = azureSettings.KeyVaultUri;
+    var azureKeyVaultUri = azureProvider.KeyVaultUri;
 
     if (string.IsNullOrEmpty(azureKeyVaultUri))
     {
-      azureSettings.KeyVaultUri = Environment.GetEnvironmentVariable(AzureSettings.KeyVaultUriName)!;
+      azureProvider.KeyVaultUri = Environment.GetEnvironmentVariable(AzureProvider.KeyVaultUriName)!;
     }
 
-    var keyVaultEndpoint = new Uri(azureSettings.KeyVaultUri);
+    var keyVaultEndpoint = new Uri(azureProvider.KeyVaultUri);
 
     // configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
-    var secretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+    azureProvider.KeyVaultSecretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
 
-    if (string.IsNullOrEmpty(azureSettings.DbConnectionString))
+    if (string.IsNullOrEmpty(azureProvider.DbConnectionString))
     {
-      var keyVaultDbConnection = await secretClient.GetSecretAsync(AzureSettings.KeyVaultNameForDbConnectionString);
-      azureSettings.DbConnectionString = keyVaultDbConnection.Value.Value;
+      var keyVaultDbConnection = await azureProvider.KeyVaultSecretClient.GetSecretAsync(AzureProvider.KeyVaultNameForDbConnectionString);
+      azureProvider.DbConnectionString = keyVaultDbConnection.Value.Value;
     }
 
-    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureSettings.DbConnectionString));
+    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureProvider.DbConnectionString));
 
     return services;
   }
 
   public static IServiceCollection AddProviders(this IServiceCollection services)
   {
-    services.AddScoped<IAzureProvider, AzureProvider>();
     services.AddScoped<IImageProvider, ImageProvider>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 

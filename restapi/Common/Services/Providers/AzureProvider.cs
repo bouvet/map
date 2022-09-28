@@ -1,43 +1,51 @@
 using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using restapi.Common.Services.Settings;
 
 namespace restapi.Common.Services.Providers;
 
-public class AzureProvider : IAzureProvider
+public class AzureProvider
 {
-  private readonly AzureSettings azureSettings;
+  public const string SectionName = "AzureProvider";
+  public const string KeyVaultUriName = "KeyVaultUri";
+  public const string KeyVaultNameForDbConnectionString = "DbConnectionString";
+  public const string KeyVaultNameForBlobStorageConnectionString = "azureBlobStorageConnectionString";
+  public string BlobStorageContainerName { get; set; } = "images";
+  public const string AzureBlobStorageServer = ".blob.core.windows.net";
+  public const string AzureCDNserver = ".azureedge.net";
 
-  public AzureProvider(IOptions<AzureSettings> azureOptions)
-  {
-    azureSettings = azureOptions.Value;
-  }
+  public string KeyVaultUri { get; set; } = null!;
+  public string DbConnectionString { get; set; } = null!;
+  public string BlobStorageConnectionString { get; set; } = null!;
+  public SecretClient? KeyVaultSecretClient { get; set; }
 
   public SecretClient GetKeyVaultClient()
   {
-    var azureKeyVaultUri = Environment.GetEnvironmentVariable("KeyVaultUri");
-
-    if (string.IsNullOrEmpty(azureKeyVaultUri))
+    if (KeyVaultSecretClient is not null)
     {
-      azureKeyVaultUri = azureSettings.KeyVaultUri;
+      Console.WriteLine("It's not null");
+      return KeyVaultSecretClient;
     }
+    Console.WriteLine("It's null");
 
-    var keyVaultEndpoint = new Uri(azureKeyVaultUri!);
+    var keyVaultEndpoint = new Uri(KeyVaultUri);
 
-    return new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+    KeyVaultSecretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+
+    return KeyVaultSecretClient;
   }
 
   public async Task<CloudBlobContainer> GetImageBlobContainer(SecretClient client)
   {
-    Response<KeyVaultSecret> blobStorageConnectionString = await GetKeyVaultSecret(client, AzureSettings.KeyVaultNameForBlobStorageConnectionString);
+    Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(client, KeyVaultNameForBlobStorageConnectionString);
 
-    CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(blobStorageConnectionString.Value.Value);
+    BlobStorageConnectionString = keyVaultResponse.Value.Value;
+
+    CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(BlobStorageConnectionString);
     CloudBlobClient blobStorageClient = azureCloudStorageAccount.CreateCloudBlobClient();
-    CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference("images");
+    CloudBlobContainer imageBlobContainer = blobStorageClient.GetContainerReference(BlobStorageContainerName);
     await imageBlobContainer.CreateIfNotExistsAsync();
     return imageBlobContainer;
   }

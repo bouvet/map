@@ -1,5 +1,6 @@
 using Azure.Security.KeyVault.Secrets;
 using ErrorOr;
+using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Services.Providers;
 using SkiaSharp;
@@ -8,12 +9,12 @@ namespace restapi.Services.AzureBlobStorage;
 
 public class AzureBlobStorageService : IAzureBlobStorageService
 {
-  private readonly IAzureProvider azureProvider;
+  private readonly AzureProvider azureProvider;
   private readonly IImageProvider imageProvider;
 
-  public AzureBlobStorageService(IAzureProvider azureProvider, IImageProvider imageProvider)
+  public AzureBlobStorageService(IOptions<AzureProvider> azureOptions, IImageProvider imageProvider)
   {
-    this.azureProvider = azureProvider;
+    azureProvider = azureOptions.Value;
     this.imageProvider = imageProvider;
   }
 

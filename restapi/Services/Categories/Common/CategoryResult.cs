@@ -1,6 +1,6 @@
 using restapi.Models;
 
-namespace restapi.Services.Categories.Commands.Common;
+namespace restapi.Services.Categories.Common;
 
 public record CategoryResult(
   Category Category

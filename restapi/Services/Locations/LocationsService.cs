@@ -8,6 +8,7 @@ using restapi.Services.AzureBlobStorage;
 using restapi.Dtos.Locations;
 using restapi.ServiceUtils.ServiceErrors;
 using restapi.Common.Services.Settings;
+using restapi.Common.Services.Providers;
 
 namespace restapi.Services.Locations;
 
@@ -269,7 +270,7 @@ public class LocationService : ILocationService
     {
       Title = location.Title,
       Description = location.Description,
-      Image = location.Image.Replace(AzureSettings.AzureBlobStorageServer, AzureSettings.AzureCDNserver),
+      Image = location.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
       Rating = location.Rating,
       Category = location.Categories,
       Status = location.Status

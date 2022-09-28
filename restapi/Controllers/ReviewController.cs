@@ -1,10 +1,12 @@
 using ErrorOr;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Dtos.Reviews;
 using restapi.Services.Reviews;
 
 namespace restapi.Controllers;
 
+[AllowAnonymous]
 public class ReviewsController : ApiController
 {
   private readonly IReviewService reviewService;

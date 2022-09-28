@@ -1,6 +1,6 @@
 using ErrorOr;
 using MediatR;
-using restapi.Services.Categories.Commands.Common;
+using restapi.Services.Categories.Common;
 
 namespace restapi.Services.Categories.Commands.Create;
 

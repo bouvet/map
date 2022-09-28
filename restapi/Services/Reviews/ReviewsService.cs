@@ -1,7 +1,7 @@
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
-using restapi.Common.Services.Settings;
+using restapi.Common.Services.Providers;
 using restapi.Data;
 using restapi.Dtos.Reviews;
 using restapi.Models;
@@ -201,7 +201,7 @@ public class ReviewService : IReviewService
       Rating = review.Rating,
       Status = review.Status,
       Text = review.Text ?? "",
-      Image = review.Image.Replace(AzureSettings.AzureBlobStorageServer, AzureSettings.AzureCDNserver),
+      Image = review.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
       LocationId = review.LocationId
     };
   }

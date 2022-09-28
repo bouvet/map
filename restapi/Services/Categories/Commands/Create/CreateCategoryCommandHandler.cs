@@ -1,8 +1,9 @@
 using ErrorOr;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using restapi.Data;
 using restapi.Models;
-using restapi.Services.Categories.Commands.Common;
+using restapi.Services.Categories.Common;
 using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Categories.Commands.Create;
@@ -20,11 +21,11 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
   {
     List<Error> errors = new();
 
-    List<Category> existingCategoryWithSameName = dataContext.Categories.Where(c => c.Name == request.Name).ToList();
+    var categoryAlreadyExists = await dataContext.Categories.AnyAsync(c => c.Name == request.Name, cancellationToken);
 
-    if (existingCategoryWithSameName.Count > 0)
+    if (categoryAlreadyExists)
     {
-      errors.Add(Errors.Category.AlreadyExists);
+      return Errors.Category.AlreadyExists;
     }
 
     if (request.Name.Length is < Category.MinNameLength or > Category.MaxNameLength)
