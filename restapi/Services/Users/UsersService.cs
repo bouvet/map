@@ -1,6 +1,6 @@
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common.Services.Jwt;
+using restapi.Common.Services;
 using restapi.Data;
 using restapi.Dtos.Users;
 using restapi.Models;

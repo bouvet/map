@@ -2,12 +2,12 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-using restapi.Common.Services.Settings;
-using restapi.Common.Services.Providers;
 using Microsoft.Extensions.Options;
 using restapi.Models;
+using restapi.Common.Providers;
+using restapi.Common.Settings;
 
-namespace restapi.Common.Services.Jwt;
+namespace restapi.Common.Services;
 
 public class JwtGenerator : IJwtGenerator
 {

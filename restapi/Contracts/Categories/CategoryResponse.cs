@@ -1,4 +1,4 @@
-namespace restapi.Services.Categories.Common;
+namespace restapi.Contracts.Categories;
 
 public record CategoryResponse(
   Guid Id,

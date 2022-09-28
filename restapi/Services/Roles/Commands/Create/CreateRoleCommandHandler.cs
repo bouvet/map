@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common.Services.Providers;
+using restapi.Common.Providers;
 using restapi.Data;
 using restapi.Models;
 using restapi.Services.Roles.Commands.Create;

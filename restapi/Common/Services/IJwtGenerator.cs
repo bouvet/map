@@ -1,6 +1,6 @@
 using restapi.Models;
 
-namespace restapi.Common.Services.Jwt;
+namespace restapi.Common.Services;
 
 public interface IJwtGenerator
 {

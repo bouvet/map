@@ -2,7 +2,7 @@ using Azure.Security.KeyVault.Secrets;
 using ErrorOr;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage.Blob;
-using restapi.Common.Services.Providers;
+using restapi.Common.Providers;
 using SkiaSharp;
 
 namespace restapi.Services.AzureBlobStorage;

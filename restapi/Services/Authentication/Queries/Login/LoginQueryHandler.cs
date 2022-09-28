@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common.Services.Jwt;
+using restapi.Common.Services;
 using restapi.Data;
 using restapi.Services.Authentication.Common;
 using restapi.ServiceUtils.ServiceErrors;

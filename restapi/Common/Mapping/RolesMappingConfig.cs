@@ -1,5 +1,5 @@
 using Mapster;
-using restapi.Dtos.Roles;
+using restapi.Contracts.Roles;
 using restapi.Services.Roles.Commands.Create;
 using restapi.Services.Roles.Common;
 

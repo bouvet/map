@@ -1,5 +1,5 @@
 using Mapster;
-using restapi.Dtos.Authentication;
+using restapi.Contracts.Authentication;
 using restapi.Services.Authentication.Commands.Register;
 using restapi.Services.Authentication.Common;
 using restapi.Services.Authentication.Queries.Login;

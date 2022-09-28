@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using restapi.Services.AzureBlobStorage;
 using restapi.Dtos.Locations;
 using restapi.ServiceUtils.ServiceErrors;
-using restapi.Common.Services.Settings;
-using restapi.Common.Services.Providers;
+using restapi.Common.Providers;
 
 namespace restapi.Services.Locations;
 

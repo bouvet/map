@@ -1,4 +1,4 @@
-namespace restapi.Dtos.Authentication;
+namespace restapi.Contracts.Authentication;
 
 public record LoginRequest(
   string Email,

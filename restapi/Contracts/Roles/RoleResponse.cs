@@ -1,6 +1,6 @@
 using restapi.Models;
 
-namespace restapi.Services.Roles.Common;
+namespace restapi.Contracts.Roles;
 
 public record RoleResponse(
   Guid Id,

@@ -1,4 +1,4 @@
-namespace restapi.Common.Services.Settings;
+namespace restapi.Common.Settings;
 
 public class JwtSettings
 {

@@ -4,7 +4,7 @@ using Azure.Security.KeyVault.Secrets;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace restapi.Common.Services.Providers;
+namespace restapi.Common.Providers;
 
 public class AzureProvider
 {

@@ -2,6 +2,7 @@
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Contracts.Categories;
 using restapi.Dtos.Categories;
 using restapi.Models;
 using restapi.Services.Categories;

@@ -1,6 +1,4 @@
-using restapi.Models;
-
-namespace restapi.Services.Authentication.Common;
+namespace restapi.Contracts.Authentication;
 
 public record AuthenticationResponse(
   Guid Id,
@@ -12,6 +10,5 @@ public record AuthenticationResponse(
   int PostalCode,
   int PhoneNumber,
   DateTime? DOB,
-  // List<Role> Roles,
   string Token
 );

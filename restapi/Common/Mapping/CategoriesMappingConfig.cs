@@ -1,5 +1,5 @@
 using Mapster;
-using restapi.Dtos.Categories;
+using restapi.Contracts.Categories;
 using restapi.Services.Categories.Commands.Create;
 using restapi.Services.Categories.Common;
 

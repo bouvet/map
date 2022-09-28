@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace restapi.Common.Services.Providers;
+namespace restapi.Common.Providers;
 
 public class ImageProvider : IImageProvider
 {
