@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using MapsterMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Dtos.Categories;
 using restapi.Models;
@@ -11,7 +10,7 @@ using restapi.Services.Categories.Commands.Delete;
 using restapi.Services.Categories.Common;
 
 namespace restapi.Controllers;
-[AllowAnonymous]
+
 public class CategoriesController : ApiController
 {
   private readonly ICategoryService categoryService;

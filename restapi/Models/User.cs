@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace restapi.Models;
 
@@ -17,5 +18,6 @@ public class User
   public int PostalCode { get; set; }
   public int PhoneNumber { get; set; }
   public DateTime? DOB { get; set; }
+
   public List<Role> Roles { get; set; } = new List<Role>();
 }

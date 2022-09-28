@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using restapi.Common.Services.Settings;
 using restapi.Common.Services.Providers;
 using Microsoft.Extensions.Options;
+using restapi.Models;
 
 namespace restapi.Common.Services.Jwt;
 
@@ -19,18 +20,24 @@ public class JwtGenerator : IJwtGenerator
     jwtSettings = jwtOptions.Value;
   }
 
-  public string GenerateToken(Guid userId, string email)
+  public string GenerateToken(User user)
   {
     var signingCredentials = new SigningCredentials(
       new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
       SecurityAlgorithms.HmacSha256
     );
 
-    var claims = new List<Claim>{
-      new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-      new Claim(JwtRegisteredClaimNames.Email, email),
+    var claims = new List<Claim>
+    {
+      new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+      new Claim(JwtRegisteredClaimNames.Email, user.Email),
       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
     };
+
+    foreach (Role role in user.Roles)
+    {
+      claims.Add(new Claim("roles", role.Name));
+    }
 
     var securityToken = new JwtSecurityToken(
       issuer: jwtSettings.Issuer,

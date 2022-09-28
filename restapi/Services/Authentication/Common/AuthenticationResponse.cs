@@ -1,3 +1,5 @@
+using restapi.Models;
+
 namespace restapi.Services.Authentication.Common;
 
 public record AuthenticationResponse(
@@ -10,6 +12,6 @@ public record AuthenticationResponse(
   int PostalCode,
   int PhoneNumber,
   DateTime? DOB,
-  List<string> Roles,
+  // List<Role> Roles,
   string Token
 );
