@@ -7,9 +7,6 @@
   - [Create Category](#create-category)
     - [Create Category Request](#create-category-request)
     - [Create Category Response](#create-category-response)
-  - [Get Categories In Use](#get-categories-in-use)
-    - [Get Categories In Use Request](#get-categories-in-use-request)
-    - [Get Categories In Use Response](#get-categories-in-use-response)
   - [Get Category](#get-category)
     - [Get Category Request](#get-category-request)
     - [Get Category Response](#get-category-response)
@@ -87,35 +84,6 @@ Location: {{host}}/api/Categories/{{id}}
   "name": "Styrke",
   "emoji": "\uD83D\uDCAA"
 }
-```
-
-## Get Categories In Use
-
-### Get Categories In Use Request
-
-```js
-GET {{host}}/api/categories/InUse
-```
-
-### Get Categories In Use Response
-
-```js
-200 Ok
-```
-
-```json
-[
-  {
-    "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
-    "name": "Fotball",
-    "emoji": "⚽"
-  },
-  {
-    "id": "60c951f3-d233-442b-7883-08da9ad92895",
-    "name": "Basketball",
-    "emoji": "\uD83C\uDFC0"
-  }
-]
 ```
 
 ## Get Category

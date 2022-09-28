@@ -5,14 +5,14 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
 using SkiaSharp;
 
-namespace restapi.Services.AzureBlobStorage;
+namespace restapi.Common.Services;
 
-public class AzureBlobStorageService : IAzureBlobStorageService
+public class AzureBlobStorage : IAzureBlobStorage
 {
   private readonly AzureProvider azureProvider;
   private readonly IImageProvider imageProvider;
 
-  public AzureBlobStorageService(IOptions<AzureProvider> azureOptions, IImageProvider imageProvider)
+  public AzureBlobStorage(IOptions<AzureProvider> azureOptions, IImageProvider imageProvider)
   {
     azureProvider = azureOptions.Value;
     this.imageProvider = imageProvider;

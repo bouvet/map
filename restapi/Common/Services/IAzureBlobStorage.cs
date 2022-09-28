@@ -1,9 +1,9 @@
 using ErrorOr;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace restapi.Services.AzureBlobStorage;
+namespace restapi.Common.Services;
 
-public interface IAzureBlobStorageService
+public interface IAzureBlobStorage
 {
   Task<ErrorOr<CloudBlockBlob>> UploadFile(IFormFile image);
 }

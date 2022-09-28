@@ -10,10 +10,8 @@ public class Category
 
   [Key]
   public Guid Id { get; set; } = new Guid();
-
-  public string Name { get; set; } = "new category";
-
-  public string Emoji { get; set; } = "😀";
+  public string Name { get; set; } = null!;
+  public string Emoji { get; set; } = null!;
 
   [JsonIgnore]
   public List<Location> Locations { get; set; } = new List<Location>();

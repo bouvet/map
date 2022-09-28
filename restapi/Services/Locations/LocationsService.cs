@@ -4,19 +4,18 @@ using ErrorOr;
 using restapi.Models;
 using restapi.Data;
 using Microsoft.EntityFrameworkCore;
-using restapi.Services.AzureBlobStorage;
 using restapi.Dtos.Locations;
-using restapi.ServiceUtils.ServiceErrors;
 using restapi.Common.Providers;
+using restapi.Common.Services;
 
 namespace restapi.Services.Locations;
 
 public class LocationService : ILocationService
 {
   private readonly DataContext dataContext;
-  private readonly IAzureBlobStorageService azureBlobStorageService;
+  private readonly IAzureBlobStorage azureBlobStorageService;
 
-  public LocationService(DataContext dataContext, IAzureBlobStorageService azureBlobStorageService)
+  public LocationService(DataContext dataContext, IAzureBlobStorage azureBlobStorageService)
   {
     this.dataContext = dataContext;
     this.azureBlobStorageService = azureBlobStorageService;

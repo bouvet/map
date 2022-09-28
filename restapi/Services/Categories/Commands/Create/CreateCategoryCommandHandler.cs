@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using restapi.Data;
 using restapi.Models;
 using restapi.Services.Categories.Common;
-using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Categories.Commands.Create;
 

@@ -1,3 +1,3 @@
-@id=3e061bac-93c0-46b9-a502-08da96e466d8
+@id=7be3da92-357c-4d88-15ab-08daa15a7973
 
 GET {{host}}/api/categories/{{id}}

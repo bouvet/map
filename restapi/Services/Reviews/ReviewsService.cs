@@ -2,10 +2,10 @@ using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
+using restapi.Common.Services;
 using restapi.Data;
 using restapi.Dtos.Reviews;
 using restapi.Models;
-using restapi.Services.AzureBlobStorage;
 using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Reviews;
@@ -13,9 +13,9 @@ namespace restapi.Services.Reviews;
 public class ReviewService : IReviewService
 {
   private readonly DataContext dataContext;
-  private readonly IAzureBlobStorageService azureBlobStorageService;
+  private readonly IAzureBlobStorage azureBlobStorageService;
 
-  public ReviewService(DataContext dataContext, IAzureBlobStorageService azureBlobStorageService)
+  public ReviewService(DataContext dataContext, IAzureBlobStorage azureBlobStorageService)
   {
     this.dataContext = dataContext;
     this.azureBlobStorageService = azureBlobStorageService;

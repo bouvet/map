@@ -1,4 +1,4 @@
-@id=735fbdfd-ab84-4cc8-ddbf-08da9b08fa95
+@id=7be3da92-357c-4d88-15ab-08daa15a7973
 
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json

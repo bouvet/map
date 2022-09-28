@@ -1,6 +1,7 @@
 using Mapster;
 using restapi.Contracts.Categories;
 using restapi.Services.Categories.Commands.Create;
+using restapi.Services.Categories.Commands.Update;
 using restapi.Services.Categories.Common;
 
 namespace restapi.Common.Mapping;
@@ -13,5 +14,6 @@ public class CategoriesMappingConfig : IRegister
           .Map(dest => dest, src => src.Category);
 
     config.NewConfig<CreateCategoryRequest, CreateCategoryCommand>();
+
   }
 }
