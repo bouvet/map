@@ -10,5 +10,10 @@ public static partial class Errors
       code: "AzureBlobStorage.UploadFailed",
       description: "Uploading file to storage failed."
     );
+
+    public static Error DeleteFailed => Error.Failure(
+     code: "AzureBlobStorage.DeleteFailed",
+     description: "Deleting file from storage failed."
+   );
   }
 }
