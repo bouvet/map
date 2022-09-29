@@ -2,12 +2,16 @@
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.WindowsAzure.Storage.Blob;
+using restapi.Common.Services;
 using restapi.Contracts.Locations;
 using restapi.Dtos.Locations;
 using restapi.Services.Locations;
 using restapi.Services.Locations.Command.Create;
 using restapi.Services.Locations.Command.Delete;
+using restapi.Services.Locations.Command.UpdateImage;
 using restapi.Services.Locations.Common;
+using SkiaSharp;
 
 namespace restapi.Controllers;
 
@@ -16,23 +20,32 @@ public class LocationsController : ApiController
   private readonly ILocationService locationService;
   private readonly IMapper mapper;
   private readonly ISender mediator;
+  private readonly IAzureBlobStorage azureBlobStorage;
 
-  public LocationsController(ILocationService locationService, IMapper mapper, ISender mediator)
+  public LocationsController(ILocationService locationService, IMapper mapper, ISender mediator, IAzureBlobStorage azureBlobStorage)
   {
     this.locationService = locationService;
     this.mapper = mapper;
     this.mediator = mediator;
+    this.azureBlobStorage = azureBlobStorage;
   }
 
   [HttpPost]
   public async Task<IActionResult> CreateLocation([FromForm] CreateLocationRequest request)
   {
-    var createLocationCommand = mapper.Map<CreateLocationCommand>(request);
+    var createLocationCommand = new CreateLocationCommand(
+      request.Title,
+      request.Description,
+      request.Image,
+      request.Longitude,
+      request.Latitude,
+      request.Category
+    );
 
     ErrorOr<LocationResult> createLocationCommandResult = await mediator.Send(createLocationCommand);
 
     return createLocationCommandResult.Match(
-      location => CreatedAtGetLocation(mapper.Map<LocationResponse>(location)),
+      result => CreatedAtGetLocation(result),
       errors => Problem(errors)
     );
   }
@@ -92,12 +105,27 @@ public class LocationsController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetLocation(LocationResponse location)
+  private CreatedAtActionResult CreatedAtGetLocation(LocationResult location)
   {
+    var locationProperties = new LocationProperties(
+      location.Title,
+      location.Description,
+      location.Image,
+      location.Status,
+      location.Rating,
+      location.Category
+    );
+    var locationGeometry = new LocationGeometry(location.Coordinates);
+    var locationResponse = new LocationResponse(
+      location.Id,
+      "Feature",
+      locationProperties,
+      locationGeometry
+    );
     return CreatedAtAction(
         actionName: nameof(GetLocationById),
         routeValues: new { id = location.Id },
-        value: location
+        value: locationResponse
       );
   }
 }

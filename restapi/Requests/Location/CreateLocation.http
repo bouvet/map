@@ -29,8 +29,8 @@ Content-Disposition: form-data; name="category"
 ### Create Location With Image
 
 POST {{host}}/api/locations
+# Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: Bearer {{token}}
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
@@ -43,11 +43,11 @@ A very long description as it needs 20 chars
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="longitude"
 
-5.12343456345
+5.3454362342
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="latitude"
 
-58.1234546546
+58.2345346547
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 

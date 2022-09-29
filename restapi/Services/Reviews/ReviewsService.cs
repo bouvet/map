@@ -58,21 +58,21 @@ public class ReviewService : IReviewService
       return errors;
     }
 
-    if (request.Image is not null)
-    {
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+    // if (request.Image is not null)
+    // {
+    //   ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
 
-      if (fileUploadResult.IsError)
-      {
-        return Errors.AzureBlobStorage.UploadFailed;
-      }
+    //   if (fileUploadResult.IsError)
+    //   {
+    //     return Errors.AzureBlobStorage.UploadFailed;
+    //   }
 
-      review.Image = fileUploadResult.Value.Uri.ToString();
-    }
+    //   review.Image = fileUploadResult.Value.Uri.ToString();
+    // }
 
-    await dataContext.Reviews.AddAsync(review);
-    await dataContext.SaveChangesAsync();
-    await UpdateLocationRating(review.LocationId);
+    // await dataContext.Reviews.AddAsync(review);
+    // await dataContext.SaveChangesAsync();
+    // await UpdateLocationRating(review.LocationId);
 
     return MapToReviewResponseDto(review);
   }
@@ -155,17 +155,17 @@ public class ReviewService : IReviewService
       }
     }
 
-    if (request.Image is not null)
-    {
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+    // if (request.Image is not null)
+    // {
+    //   ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
 
-      if (fileUploadResult.IsError)
-      {
-        return Errors.AzureBlobStorage.UploadFailed;
-      }
+    //   if (fileUploadResult.IsError)
+    //   {
+    //     return Errors.AzureBlobStorage.UploadFailed;
+    //   }
 
-      review.Image = fileUploadResult.Value.Uri.ToString();
-    }
+    //   review.Image = fileUploadResult.Value.Uri.ToString();
+    // }
 
     review.Updated = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
 

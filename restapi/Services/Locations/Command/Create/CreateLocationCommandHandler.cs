@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.WindowsAzure.Storage.Blob;
+using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Data;
 using restapi.Models;
@@ -65,11 +66,11 @@ public class CreateLocationCommandHandler : IRequestHandler<CreateLocationComman
         return Errors.AzureBlobStorage.UploadFailed;
       }
 
-      location.Image = fileUploadResult.Value.Uri.ToString();
+      location.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
     }
 
-    // dataContext.Locations.Add(location);
-    // await dataContext.SaveChangesAsync(cancellationToken);
+    dataContext.Locations.Add(location);
+    await dataContext.SaveChangesAsync(cancellationToken);
 
     return new LocationResult(
       location.Id,

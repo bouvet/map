@@ -2,6 +2,7 @@ using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Dtos.Reviews;
 using restapi.Services.Reviews;
+using SkiaSharp;
 
 namespace restapi.Controllers;
 
@@ -17,6 +18,14 @@ public class ReviewsController : ApiController
   [HttpPost]
   public async Task<IActionResult> AddReview([FromForm] AddReviewDto request)
   {
+    if (request.Image is not null)
+    {
+      var streamFromUpload = new MemoryStream();
+      await request.Image.CopyToAsync(streamFromUpload);
+      var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
+      var webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, 50);
+    }
+
     ErrorOr<ReviewResponseDto> addReviewResult = await reviewService.AddReview(request);
 
     return addReviewResult.Match(

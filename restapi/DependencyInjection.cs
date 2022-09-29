@@ -26,11 +26,10 @@ public static class DependencyInjection
   {
     await services.AddAzureKeyVault(configuration);
 
-    services.AddProviders();
-
     services.AddMediatR(Assembly.GetExecutingAssembly());
     services.AddMappings();
 
+    services.AddProviders();
     services.AddServices();
 
     services.AddResponseCompression(options => options.EnableForHttps = true);
@@ -129,7 +128,7 @@ public static class DependencyInjection
 
   public static IServiceCollection AddProviders(this IServiceCollection services)
   {
-    services.AddScoped<IImageProvider, ImageProvider>();
+    services.AddSingleton<IImageProvider, ImageProvider>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
     return services;

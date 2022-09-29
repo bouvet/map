@@ -104,48 +104,21 @@ public class LocationService : ILocationService
       }
     }
 
-    if (request.Image is not null)
-    {
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
+    // if (request.Image is not null)
+    // {
+    //   ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorageService.UploadFile(request.Image);
 
-      if (fileUploadResult.IsError)
-      {
-        return Errors.AzureBlobStorage.UploadFailed;
-      }
+    //   if (fileUploadResult.IsError)
+    //   {
+    //     return Errors.AzureBlobStorage.UploadFailed;
+    //   }
 
-      location.Image = fileUploadResult.Value.Uri.ToString();
-    }
+    //   location.Image = fileUploadResult.Value.Uri.ToString();
+    // }
 
     await dataContext.SaveChangesAsync();
 
     return Result.Updated;
-  }
-
-  private static List<Error> ValidateUserInput(AddLocationDto request)
-  {
-    List<Error> errors = new();
-
-    if (request.Title.Length is < Location.MinTitleLength or > Location.MaxTitleLength)
-    {
-      errors.Add(Errors.Location.InvalidTitle);
-    }
-
-    if (request.Description.Length is < Location.MinDescriptionLength or > Location.MaxDescriptionLength)
-    {
-      errors.Add(Errors.Location.InvalidDescription);
-    }
-
-    if (request.Longitude is < Location.MinLongitudeValue or > Location.MaxLongitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLongitude);
-    }
-
-    if (request.Latitude is < Location.MinLatitudeValue or > Location.MaxLatitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLatitude);
-    }
-
-    return errors;
   }
 
   private static ErrorOr<Location> MapUpdatedLocation(Location location, UpdateLocationDto request)

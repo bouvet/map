@@ -18,9 +18,14 @@ public class AzureBlobStorage : IAzureBlobStorage
     this.imageProvider = imageProvider;
   }
 
-  public async Task<ErrorOr<CloudBlockBlob>> UploadFile(IFormFile image)
+  public async Task<ErrorOr<CloudBlockBlob>> UploadFile(IFormFile file)
   {
-    SKData webpImage = await imageProvider.ConvertImageToWebp(image);
+    SKData webpImage = await imageProvider.ConvertImageToWebp(file);
+
+    if (webpImage is null)
+    {
+      return Errors.ImageProvider.ConvertionFail;
+    }
 
     SecretClient client = azureProvider.GetKeyVaultClient();
 

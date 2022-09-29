@@ -5,6 +5,6 @@ namespace restapi.Common.Services;
 
 public interface IAzureBlobStorage
 {
-  Task<ErrorOr<CloudBlockBlob>> UploadFile(IFormFile image);
+  Task<ErrorOr<CloudBlockBlob>> UploadFile(IFormFile file);
   Task<ErrorOr<Deleted>> DeleteFile(Guid id);
 }

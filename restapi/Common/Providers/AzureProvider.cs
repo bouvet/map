@@ -25,23 +25,21 @@ public class AzureProvider
   {
     if (KeyVaultSecretClient is not null)
     {
-      Console.WriteLine("It's not null");
       return KeyVaultSecretClient;
     }
-    Console.WriteLine("It's null");
 
     var keyVaultEndpoint = new Uri(KeyVaultUri);
 
-    KeyVaultSecretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
-
-    return KeyVaultSecretClient;
+    return new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
   }
 
   public async Task<CloudBlobContainer> GetImageBlobContainer(SecretClient client)
   {
-    Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(client, KeyVaultNameForBlobStorageConnectionString);
-
-    BlobStorageConnectionString = keyVaultResponse.Value.Value;
+    if (string.IsNullOrEmpty(BlobStorageConnectionString))
+    {
+      Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(client, KeyVaultNameForBlobStorageConnectionString);
+      BlobStorageConnectionString = keyVaultResponse.Value.Value;
+    }
 
     CloudStorageAccount azureCloudStorageAccount = CloudStorageAccount.Parse(BlobStorageConnectionString);
     CloudBlobClient blobStorageClient = azureCloudStorageAccount.CreateCloudBlobClient();
