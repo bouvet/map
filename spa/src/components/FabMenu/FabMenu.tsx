@@ -18,10 +18,7 @@ export const FabMenu: FC = () => {
     };
 
     const dispatch = useStateDispatch();
-
     const { isAuthenticated } = useStateSelector((state) => state.auth);
-    console.log('auth: ', isAuthenticated);
-
     const handleLogOut = () => dispatch(authActions.logOut());
 
     return (
@@ -95,13 +92,11 @@ export const FabMenu: FC = () => {
                     </Link>
                 </Fab>
             )}
-            <span onClick={handleClick} role="presentation">
-                <RoundButton backgroundColor={MyTheme.colors.accent}>
-                    <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
-                        {isActive ? 'close' : 'menu'}
-                    </GoogleIcon>
-                </RoundButton>
-            </span>
+            <RoundButton backgroundColor={MyTheme.colors.accent} type="button" onClick={handleClick}>
+                <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+                    {isActive ? 'close' : 'menu'}
+                </GoogleIcon>
+            </RoundButton>
         </>
     );
 };
