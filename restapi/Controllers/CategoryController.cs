@@ -3,7 +3,6 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Contracts.Categories;
-using restapi.Dtos.Categories;
 using restapi.Models;
 using restapi.Services.Categories.Commands.Create;
 using restapi.Services.Categories.Commands.Delete;
@@ -48,7 +47,7 @@ public class CategoriesController : ApiController
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateCategory(CategoryDto request)
+  public async Task<IActionResult> CreateCategory(CreateCategoryRequest request)
   {
     var createCategoryCommand = mapper.Map<CreateCategoryCommand>(request);
 
