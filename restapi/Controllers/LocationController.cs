@@ -6,6 +6,7 @@ using restapi.Contracts.Locations;
 using restapi.Dtos.Locations;
 using restapi.Services.Locations;
 using restapi.Services.Locations.Command.Create;
+using restapi.Services.Locations.Command.Delete;
 using restapi.Services.Locations.Common;
 
 namespace restapi.Controllers;
@@ -83,7 +84,7 @@ public class LocationsController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {
-    ErrorOr<Deleted> deleteLocationResult = await locationService.DeleteLocation(id);
+    ErrorOr<Deleted> deleteLocationResult = await mediator.Send(new DeleteLocationCommand(id));
 
     return deleteLocationResult.Match(
       _ => NoContent(),
