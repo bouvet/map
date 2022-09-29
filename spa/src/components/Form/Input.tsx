@@ -16,6 +16,16 @@ const InputField = styled.input`
     width: calc(100% - 22px);
 `;
 
+const InputFieldCode = styled.input`
+    border: 1px solid rgb(193, 193, 193);
+    font-size: ${MyTheme.fontSize.header};
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    width: calc(15% - 22px);
+    height: 35%;
+`;
+
 export const Checkbox = styled.input`
     margin-right: 7px;
 `;
@@ -92,6 +102,16 @@ export const InputAge: FC<InputProps> = (props) => {
         <>
             <Label>{label}</Label>
             <InputField type="date" value={value} required onChange={(e) => handleChange(e, setState)} />
+        </>
+    );
+};
+
+export const InputCode: FC<InputProps> = (props) => {
+    const { label, value, handleChange, setState } = props;
+    return (
+        <>
+            <div hidden>{label}</div>
+            <InputFieldCode type="number" value={value} required onChange={(e) => handleChange(e, setState)} />
         </>
     );
 };

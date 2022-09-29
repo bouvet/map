@@ -57,7 +57,8 @@ export const PersonalInfo: FC = () => {
                                     id="demo-simple-select"
                                     label="År"
                                     defaultValue=""
-                                    autoWidth
+                                    // @ts-ignore
+                                    autoWidth="true"
                                     value={inputAge}
                                     // @ts-ignore
                                     onChange={(e) => handleFormInputChange(e, setInputAge)}
@@ -65,7 +66,7 @@ export const PersonalInfo: FC = () => {
                                     <MenuItem value={1990}>1990</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <InputLabel id="demo-simple-select-label">Måned</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -92,7 +93,7 @@ export const PersonalInfo: FC = () => {
                                     // @ts-ignore
                                     onChange={(e) => handleFormInputChange(e, setInputAge)}
                                 >
-                                    <MenuItem value={2}>1</MenuItem>
+                                    <MenuItem value={1}>1</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>

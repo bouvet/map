@@ -11,6 +11,8 @@ import { PersonalInfo } from './features/userRegistration/components/PersonalInf
 import { CreatePassword } from './features/userRegistration/components/CreatePassword';
 import { Personalization } from './features/userRegistration/components/Personalization';
 import { Onboarding } from './features/userRegistration/components/Onboarding';
+import { ForgottenPassword } from './features/login/components/ForgottenPassword';
+import { ResetPassword } from './features/login/components/ResetPassword';
 
 const App = () => (
     <Router>
@@ -27,6 +29,8 @@ const App = () => (
             <Route path="/create-password" element={<CreatePassword />} />
             <Route path="/personalization" element={<Personalization />} />
             <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/glemt-passord" element={<ForgottenPassword />} />
+            <Route path="/tilbakestill-passord" element={<ResetPassword />} />
         </Routes>
         <CustomizedSnackbars />
     </Router>

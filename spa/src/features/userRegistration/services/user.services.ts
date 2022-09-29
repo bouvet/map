@@ -1,6 +1,9 @@
+import { AppDispatch } from '../../../store';
+import { UserType } from '../../../utils/types.d';
+
 export const userService = {
-    registerUser() {
-        return async () => {
+    registerUser(payload: UserType) {
+        return async (dispatch: AppDispatch) => {
             try {
                 console.log('hello');
             } catch (error) {
