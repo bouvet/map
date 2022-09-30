@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 
@@ -8,7 +9,7 @@ export const Text = styled.p`
     margin: 0px;
 `;
 
-export const LinkText = styled.a`
+export const LinkText = styled(Link)`
     color: ${MyTheme.colors.accent};
     font-size: ${MyTheme.fontSize.header};
     text-decoration: none;

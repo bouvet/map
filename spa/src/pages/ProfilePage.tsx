@@ -35,7 +35,10 @@ export const ProfilePage: FC = () => {
             <ProfileHeader handleClick={ToggleImageModal} />
             <Form onSubmit={(event) => handleSubmit(event)}>
                 {inputs}
-                <PasswordLink to="/change-password">Endre passord</PasswordLink>
+
+                <span>
+                    <PasswordLink to="/change-password">Endre passord</PasswordLink>
+                </span>
                 <Button type="submit">Oppdater profil</Button>
             </Form>
         </>
