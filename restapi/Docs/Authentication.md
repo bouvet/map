@@ -20,7 +20,7 @@ Content-Type: application/json
 ```yml
 Required fields:
   - email
-  - password (min 5 chars)
+  - password (min 8 chars)
 ```
 
 ```json
@@ -40,12 +40,22 @@ Required fields:
 {
   "id": "",
   "email": "",
-  "name": "",
-  "address": "",
-  "postalArea": "",
-  "token": "",
+  "firstName": null,
+  "lastName": null,
+  "address": null,
+  "postalArea": null,
   "postalCode": 0,
-  "birthYear": 0
+  "phoneNumber": 0,
+  "dob": null,
+  "roles": [
+    {
+      "id": "",
+      "name": "",
+      "created": "",
+      "updated": null
+    }
+  ],
+  "token": ""
 }
 ```
 
@@ -81,11 +91,21 @@ Required fields:
 {
   "id": "",
   "email": "",
-  "name": "",
+  "firstName": "",
+  "lastName": "",
   "address": "",
   "postalArea": "",
-  "token": "",
   "postalCode": 0,
-  "birthYear": 0
+  "phoneNumber": 0,
+  "dob": "",
+  "roles": [
+    {
+      "id": "",
+      "name": "",
+      "created": "",
+      "updated": null
+    }
+  ],
+  "token": ""
 }
 ```

@@ -24,17 +24,7 @@ public class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, Error
 
     foreach (Location location in locations)
     {
-      var locationResult = new LocationResult(
-        location.Id,
-        location.Title,
-        location.Description,
-        location.Image,
-        location.Rating,
-        new[] { location.Longitude, location.Latitude },
-        location.Status,
-        location.Categories,
-        location.Reviews
-      );
+      var locationResult = new LocationResult(location);
 
       locationResultList.Add(locationResult);
     }

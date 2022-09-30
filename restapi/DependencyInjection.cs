@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using restapi.Common.Mapping;
 using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Common.Settings;
@@ -24,7 +23,6 @@ public static class DependencyInjection
     await services.AddAzureKeyVault(configuration);
 
     services.AddMediatR(Assembly.GetExecutingAssembly());
-    services.AddMappings();
 
     services.AddProviders();
     services.AddServices();

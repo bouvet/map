@@ -72,17 +72,7 @@ public class CreateLocationCommandHandler : IRequestHandler<CreateLocationComman
     dataContext.Locations.Add(location);
     await dataContext.SaveChangesAsync(cancellationToken);
 
-    return new LocationResult(
-      location.Id,
-      location.Title,
-      location.Description,
-      location.Image,
-      location.Rating,
-      new[] { location.Longitude, location.Latitude },
-      location.Status,
-      location.Categories,
-      location.Reviews
-    );
+    return new LocationResult(location);
   }
 
   private static List<Error> ValidateUserInput(CreateLocationCommand request)

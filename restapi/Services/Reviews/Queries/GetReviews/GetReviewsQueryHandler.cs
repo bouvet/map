@@ -33,15 +33,7 @@ public class GetReviewsQueryHandler : IRequestHandler<GetReviewsQuery, ErrorOr<L
 
     foreach (Review review in reviews)
     {
-      reviewResultList.Add(new ReviewResult(
-        review.Id,
-        review.Status,
-        review.Text,
-        review.Image,
-        review.Created,
-        review.Updated,
-        review.LocationId
-      ));
+      reviewResultList.Add(new ReviewResult(review));
     }
 
     return reviewResultList;

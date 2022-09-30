@@ -1,5 +1,4 @@
 ﻿using ErrorOr;
-using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Contracts.Categories;
@@ -16,12 +15,10 @@ namespace restapi.Controllers;
 public class CategoriesController : ApiController
 {
   private readonly ISender mediator;
-  private readonly IMapper mapper;
 
-  public CategoriesController(ISender mediator, IMapper mapper)
+  public CategoriesController(ISender mediator)
   {
     this.mediator = mediator;
-    this.mapper = mapper;
   }
 
   [HttpGet]
@@ -49,7 +46,10 @@ public class CategoriesController : ApiController
   [HttpPost]
   public async Task<IActionResult> CreateCategory(CreateCategoryRequest request)
   {
-    var createCategoryCommand = mapper.Map<CreateCategoryCommand>(request);
+    var createCategoryCommand = new CreateCategoryCommand(
+      request.Name,
+      request.Emoji
+    );
 
     ErrorOr<CategoryResult> createCategoryResult = await mediator.Send(createCategoryCommand);
 
@@ -85,14 +85,21 @@ public class CategoriesController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetCategory(CategoryResult categoryResult)
+  private static CategoryResponse MapResultToResponse(CategoryResult result)
   {
-    CategoryResponse categoryResponse = mapper.Map<CategoryResponse>(categoryResult);
+    return new CategoryResponse(
+      result.Category.Id,
+      result.Category.Name,
+      result.Category.Emoji
+    );
+  }
 
+  private CreatedAtActionResult CreatedAtGetCategory(CategoryResult result)
+  {
     return CreatedAtAction(
         actionName: nameof(GetCategory),
-        routeValues: new { id = categoryResponse.Id },
-        value: categoryResponse
+        routeValues: new { id = result.Category.Id },
+        value: MapResultToResponse(result)
       );
   }
 }

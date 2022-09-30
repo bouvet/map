@@ -119,28 +119,30 @@ public class LocationsController : ApiController
     );
   }
 
-  private static LocationResponse MapResultToResponse(LocationResult location)
+  private static LocationResponse MapResultToResponse(LocationResult result)
   {
-    var geometry = new LocationGeometry(location.Coordinates);
+    var geometry = new LocationGeometry(
+      new[] { result.Location.Longitude, result.Location.Latitude }
+    );
 
     var properties = new LocationProperties
     (
-      location.Title,
-      location.Description,
-      location.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
-      location.Status,
-      location.Rating,
-      location.Category
+      result.Location.Title,
+      result.Location.Description,
+      result.Location.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
+      result.Location.Status,
+      result.Location.Rating,
+      result.Location.Categories
     );
 
-    return new LocationResponse(location.Id, "Feature", properties, geometry);
+    return new LocationResponse(result.Location.Id, "Feature", properties, geometry);
   }
 
-  private static List<LocationResponse> MapResultListToResponseList(List<LocationResult> locations)
+  private static List<LocationResponse> MapResultListToResponseList(List<LocationResult> resultList)
   {
     var mappedList = new List<LocationResponse>();
 
-    foreach (LocationResult location in locations)
+    foreach (LocationResult location in resultList)
     {
       mappedList.Add(MapResultToResponse(location));
     }
@@ -148,12 +150,12 @@ public class LocationsController : ApiController
     return mappedList;
   }
 
-  private CreatedAtActionResult CreatedAtGetLocation(LocationResult location)
+  private CreatedAtActionResult CreatedAtGetLocation(LocationResult result)
   {
     return CreatedAtAction(
         actionName: nameof(GetLocationById),
-        routeValues: new { id = location.Id },
-        value: MapResultToResponse(location)
+        routeValues: new { id = result.Location.Id },
+        value: MapResultToResponse(result)
       );
   }
 }

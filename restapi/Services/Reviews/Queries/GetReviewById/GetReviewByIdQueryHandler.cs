@@ -23,14 +23,6 @@ public class GetReviewQueryHandler : IRequestHandler<GetReviewByIdQuery, ErrorOr
       return Errors.Review.NotFound;
     }
 
-    return new ReviewResult(
-      review.Id,
-      review.Status,
-      review.Text,
-      review.Image,
-      review.Created,
-      review.Updated,
-      review.LocationId
-    );
+    return new ReviewResult(review);
   }
 }

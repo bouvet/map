@@ -23,16 +23,6 @@ public class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, ErrorOr
       return Errors.Location.NotFound;
     }
 
-    return new LocationResult(
-      location.Id,
-      location.Title,
-      location.Description,
-      location.Image,
-      location.Rating,
-      new[] { location.Longitude, location.Latitude },
-      location.Status,
-      location.Categories,
-      location.Reviews
-    );
+    return new LocationResult(location);
   }
 }

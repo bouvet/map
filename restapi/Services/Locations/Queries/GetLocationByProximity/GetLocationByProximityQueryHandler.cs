@@ -38,16 +38,6 @@ public class GetLocationByProximityQueryHandler : IRequestHandler<GetLocationByP
 
     var location = nearestLocationList.First();
 
-    return new LocationResult(
-      location.Id,
-      location.Title,
-      location.Description,
-      location.Image,
-      location.Rating,
-      new[] { location.Longitude, location.Latitude },
-      location.Status,
-      location.Categories,
-      location.Reviews
-    );
+    return new LocationResult(location);
   }
 }

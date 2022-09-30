@@ -97,12 +97,12 @@ public class ReviewsController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetReview(ReviewResult review)
+  private CreatedAtActionResult CreatedAtGetReview(ReviewResult result)
   {
     return CreatedAtAction(
         actionName: nameof(GetReviewById),
-        routeValues: new { id = review.Id },
-        value: review
+        routeValues: new { id = result.Review.Id },
+        value: result.Review
       );
   }
 }

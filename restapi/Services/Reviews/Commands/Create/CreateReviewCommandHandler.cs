@@ -74,15 +74,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
     await dataContext.SaveChangesAsync(cancellationToken);
     await UpdateLocationRating(review.LocationId);
 
-    return new ReviewResult(
-      review.Id,
-      review.Status,
-      review.Text,
-      review.Image,
-      review.Created,
-      review.Updated,
-      review.LocationId
-    );
+    return new ReviewResult(review);
   }
 
   // TODO: Extract to a more global thing as Create, Update and Delete uses this..

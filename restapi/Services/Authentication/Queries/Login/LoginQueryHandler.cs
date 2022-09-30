@@ -5,7 +5,6 @@ using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Data;
 using restapi.Services.Authentication.Common;
-using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Authentication.Queries.Login;
 
@@ -22,16 +21,16 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
     this.passwordProvider = passwordProvider;
   }
 
-  public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+  public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
   {
-    var user = await dataContext.Users.SingleOrDefaultAsync(user => user.Email == query.Email, cancellationToken);
+    var user = await dataContext.Users.SingleOrDefaultAsync(user => user.Email == request.Email, cancellationToken);
 
     if (user is null)
     {
       return Errors.Authentication.InvalidCredentials;
     }
 
-    bool passwordIsValid = passwordProvider.VerifyPassword(query.Password, user.Password);
+    bool passwordIsValid = passwordProvider.VerifyPassword(request.Password, user.Password);
 
     if (!passwordIsValid)
     {
