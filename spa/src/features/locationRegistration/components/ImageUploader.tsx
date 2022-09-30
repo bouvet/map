@@ -1,9 +1,8 @@
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import styled from 'styled-components';
-import { RemoveButton } from './Common';
-import { MyTheme } from '../../../styles/global';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
 
@@ -11,6 +10,7 @@ const ImageUploaderWrapper = styled.div`
     width: 100%;
     height: calc(100vh - 250px);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
@@ -50,9 +50,9 @@ export const ImageUploader: FC = () => {
             {image ? (
                 <>
                     <Img src={imageUrl} alt="blobb" />
-                    <RemoveButton background={MyTheme.colors.alert} text={MyTheme.colors.lightbase} onClick={removeImage}>
-                        Remove
-                    </RemoveButton>
+                    <IconButton onClick={removeImage}>
+                        <DeleteIcon />
+                    </IconButton>
                 </>
             ) : (
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
