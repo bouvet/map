@@ -1,4 +1,4 @@
-@id=5a2936d2-a958-4e6c-84ea-abb0bdfddcec
+@id=4551b68e-1e79-46ac-a725-cc8e3812096a
 
 DELETE {{host}}/api/reviews/{{id}}
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}

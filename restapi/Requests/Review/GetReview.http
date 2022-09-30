@@ -1,3 +1,0 @@
-@id=7da7e16e-8b07-4a20-a394-75f3329df06f
-
-GET {{host}}/api/reviews/{{id}}

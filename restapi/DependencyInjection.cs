@@ -12,8 +12,6 @@ using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Common.Settings;
 using restapi.Data;
-using restapi.Services.Locations;
-using restapi.Services.Reviews;
 using restapi.Services.Users;
 
 namespace restapi;
@@ -137,7 +135,6 @@ public static class DependencyInjection
   public static IServiceCollection AddServices(this IServiceCollection services)
   {
     services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
-    services.AddScoped<IReviewService, ReviewService>();
     services.AddScoped<IUserService, UserService>();
 
     return services;

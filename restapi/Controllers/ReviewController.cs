@@ -1,65 +1,82 @@
 using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos.Reviews;
-using restapi.Services.Reviews;
-using SkiaSharp;
+using restapi.Contracts.Reviews;
+using restapi.Services.Reviews.Commands.Create;
+using restapi.Services.Reviews.Commands.Delete;
+using restapi.Services.Reviews.Commands.Update;
+using restapi.Services.Reviews.Common;
+using restapi.Services.Reviews.Queries.GetReviewById;
+using restapi.Services.Reviews.Queries.GetReviews;
 
 namespace restapi.Controllers;
 
 public class ReviewsController : ApiController
 {
-  private readonly IReviewService reviewService;
+  private readonly ISender mediator;
 
-  public ReviewsController(IReviewService reviewService)
+  public ReviewsController(ISender mediator)
   {
-    this.reviewService = reviewService;
+    this.mediator = mediator;
   }
 
   [HttpPost]
-  public async Task<IActionResult> AddReview([FromForm] AddReviewDto request)
+  public async Task<IActionResult> CreateReview([FromForm] CreateReviewRequest request)
   {
-    if (request.Image is not null)
-    {
-      var streamFromUpload = new MemoryStream();
-      await request.Image.CopyToAsync(streamFromUpload);
-      var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
-      var webpImage = SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, 50);
-    }
+    var createReviewCommand = new CreateReviewCommand(
+      request.Rating,
+      request.Text,
+      request.Image,
+      request.LocationId
+    );
 
-    ErrorOr<ReviewResponseDto> addReviewResult = await reviewService.AddReview(request);
+    ErrorOr<ReviewResult> createReviewResult = await mediator.Send(createReviewCommand);
 
-    return addReviewResult.Match(
-      addReviewResult => CreatedAtGetReview(addReviewResult),
+    return createReviewResult.Match(
+      result => CreatedAtGetReview(result),
       errors => Problem(errors)
     );
   }
 
   [HttpGet("{id:guid}")]
-  public async Task<IActionResult> GetReview(Guid id)
+  public async Task<IActionResult> GetReviewById(Guid id)
   {
-    ErrorOr<ReviewResponseDto> getReviewResult = await reviewService.GetReview(id);
+    var getReviewByIdQuery = new GetReviewByIdQuery(id);
 
-    return getReviewResult.Match(
-      review => Ok(review),
+    ErrorOr<ReviewResult> getReviewByIdResult = await mediator.Send(getReviewByIdQuery);
+
+    return getReviewByIdResult.Match(
+      result => Ok(result),
       errors => Problem(errors)
     );
   }
 
   [HttpGet]
-  public async Task<IActionResult> GetAllReviews(Guid locationId)
+  public async Task<IActionResult> GetReviews(Guid locationId)
   {
-    ErrorOr<List<ReviewResponseDto>> getReviewsResult = await reviewService.GetReviews(locationId);
+    var getReviewsQuery = new GetReviewsQuery(locationId);
+
+    ErrorOr<List<ReviewResult>> getReviewsResult = await mediator.Send(getReviewsQuery);
 
     return getReviewsResult.Match(
-      reviews => Ok(reviews),
+      result => Ok(result),
       errors => Problem(errors)
     );
   }
 
   [HttpPut]
-  public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewDto request)
+  public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewRequest request)
   {
-    ErrorOr<Updated> updateReviewResult = await reviewService.UpdateReview(request);
+    var updateReviewCommand = new UpdateReviewCommand(
+      request.Id,
+      request.Status,
+      request.Text,
+      request.Rating,
+      request.Image,
+      request.LocationId
+    );
+
+    ErrorOr<Updated> updateReviewResult = await mediator.Send(updateReviewCommand);
 
     return updateReviewResult.Match(
       _ => NoContent(),
@@ -70,7 +87,9 @@ public class ReviewsController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {
-    ErrorOr<Deleted> deleteReviewResult = await reviewService.DeleteReview(id);
+    var deleteReviewCommand = new DeleteReviewCommand(id);
+
+    ErrorOr<Deleted> deleteReviewResult = await mediator.Send(deleteReviewCommand);
 
     return deleteReviewResult.Match(
       _ => NoContent(),
@@ -78,10 +97,10 @@ public class ReviewsController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetReview(ReviewResponseDto review)
+  private CreatedAtActionResult CreatedAtGetReview(ReviewResult review)
   {
     return CreatedAtAction(
-        actionName: nameof(GetReview),
+        actionName: nameof(GetReviewById),
         routeValues: new { id = review.Id },
         value: review
       );

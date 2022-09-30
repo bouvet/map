@@ -1,4 +1,4 @@
-@id=7da7e16e-8b07-4a20-a394-75f3329df06f
+@id=d0efc13f-d13c-4772-b7d9-0d16a098ce09
 @locationId=9fbf46b3-c5a5-450a-9b28-1a3167e2625a
 
 ### Update Review Without Image
@@ -31,13 +31,17 @@ Content-Disposition: form-data; name="locationId"
 
 ### Update Review With Image
 
-PUT {{host}}/api/reviews/{{id}}
+PUT {{host}}/api/reviews
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="id"
+
+{{id}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="status"
 
-Under Review
+Declined
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 

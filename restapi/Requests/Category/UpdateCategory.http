@@ -1,10 +1,10 @@
-@id=7be3da92-357c-4d88-15ab-08daa15a7973
+@id=8b584de2-f488-477a-2b6b-08daa2b61a1a
 
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "stop",
+  "name": "Golf!!",
   "emoji": "🚧"
 }

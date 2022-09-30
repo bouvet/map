@@ -1,4 +1,4 @@
-@id=a4eb19fb-35b9-4a1e-b94f-e283bb7dedee
+@id=ed7c5695-50f9-4b4b-9a2f-d6f10fa18130
 
 ### Update Location Without Image
 
@@ -64,8 +64,8 @@ Content-Disposition: form-data; name="category"
 
 5464a9f8-70be-4ce4-0a01-08da9f9ee008
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="park.png"
+Content-Disposition: form-data; name="image"; filename="fotball.png"
 Content-Type: image/png
 
-< ../Images/park.png
+< ../Images/fotball.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

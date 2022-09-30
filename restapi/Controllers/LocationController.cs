@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Contracts.Locations;
-using restapi.Services.Locations.Command.Create;
-using restapi.Services.Locations.Command.Delete;
-using restapi.Services.Locations.Command.Update;
+using restapi.Services.Locations.Commands.Create;
+using restapi.Services.Locations.Commands.Delete;
+using restapi.Services.Locations.Commands.Update;
 using restapi.Services.Locations.Common;
-using restapi.Services.Locations.Query.GetLocationById;
-using restapi.Services.Locations.Query.GetLocationByProximity;
-using restapi.Services.Locations.Query.GetLocations;
+using restapi.Services.Locations.Queries.GetLocationById;
+using restapi.Services.Locations.Queries.GetLocationByProximity;
+using restapi.Services.Locations.Queries.GetLocations;
 
 namespace restapi.Controllers;
 
@@ -61,7 +61,7 @@ public class LocationsController : ApiController
   }
 
   [HttpGet("{latitude}&{longitude}/category")]
-  public async Task<IActionResult> GetClosestLocation(double latitude, double longitude, Guid categoryId)
+  public async Task<IActionResult> GetLocationByProximity(double latitude, double longitude, Guid categoryId)
   {
     var getLocationByProximityQuery = new GetLocationByProximityQuery(latitude, longitude, categoryId);
 
