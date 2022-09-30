@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Data;
 using restapi.Services.Authentication.Common;
@@ -12,11 +13,13 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 {
   private readonly DataContext dataContext;
   private readonly IJwtGenerator jwtGenerator;
+  private readonly IPasswordProvider passwordProvider;
 
-  public LoginQueryHandler(DataContext dataContext, IJwtGenerator jwtGenerator)
+  public LoginQueryHandler(DataContext dataContext, IJwtGenerator jwtGenerator, IPasswordProvider passwordProvider)
   {
     this.dataContext = dataContext;
     this.jwtGenerator = jwtGenerator;
+    this.passwordProvider = passwordProvider;
   }
 
   public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
@@ -28,7 +31,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
       return Errors.Authentication.InvalidCredentials;
     }
 
-    bool passwordIsValid = BCrypt.Net.BCrypt.Verify(query.Password, user.Password);
+    bool passwordIsValid = passwordProvider.VerifyPassword(query.Password, user.Password);
 
     if (!passwordIsValid)
     {

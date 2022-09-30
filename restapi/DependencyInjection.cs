@@ -12,7 +12,6 @@ using restapi.Common.Providers;
 using restapi.Common.Services;
 using restapi.Common.Settings;
 using restapi.Data;
-using restapi.Services.Users;
 
 namespace restapi;
 
@@ -128,6 +127,7 @@ public static class DependencyInjection
   {
     services.AddSingleton<IImageProvider, ImageProvider>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+    services.AddSingleton<IPasswordProvider, PasswordProvider>();
 
     return services;
   }
@@ -135,7 +135,6 @@ public static class DependencyInjection
   public static IServiceCollection AddServices(this IServiceCollection services)
   {
     services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
-    services.AddScoped<IUserService, UserService>();
 
     return services;
   }

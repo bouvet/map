@@ -1,63 +1,18 @@
-# 🚧Users
+# Users
 
-- [🚧Users](#users)
-  - [Create User](#create-user)
-    - [Create User Request](#create-user-request)
-    - [Create User Response](#create-user-response)
+- [Users](#users)
   - [Get User](#get-user)
     - [Get User Request](#get-user-request)
     - [Get User Response](#get-user-response)
+  - [Get Users](#get-users)
+    - [Get Users Request](#get-users-request)
+    - [Get Users Response](#get-users-response)
   - [Update User](#update-user)
     - [Update User Request](#update-user-request)
     - [Update User Response](#update-user-response)
   - [Delete User](#delete-user)
     - [Delete User Request](#delete-user-request)
     - [Delete User Response](#delete-user-response)
-
-## Create User
-
-### Create User Request
-
-```js
-POST {{host}}/api/users
-Content-Type: application/json
-```
-
-```yml
-Required fields:
-  - email
-  - password (min 5 chars)
-```
-
-```json
-{
-  "email": "",
-  "password": ""
-}
-```
-
-### Create User Response
-
-```js
-201 Created
-```
-
-```yml
-Location: {{host}}/api/users/{{id}}
-```
-
-```json
-{
-  "id": "",
-  "email": "",
-  "name": "",
-  "address": "",
-  "postalArea": "",
-  "token": "",
-  "postalCode": 0,
-  "birthYear": 0
-}
-```
 
 ## Get User
 
@@ -75,15 +30,81 @@ GET {{host}}/api/users/{{id}}
 
 ```json
 {
-  "id": "",
-  "email": "",
-  "name": "",
-  "address": "",
-  "postalArea": "",
-  "token": "",
+  "id": "20b2cb67-df41-49b6-bf2a-3628c136f07d",
+  "email": "email56@gmail.com",
+  "firstName": null,
+  "lastName": null,
+  "address": null,
+  "postalArea": null,
   "postalCode": 0,
-  "birthYear": 0
+  "phoneNumber": 0,
+  "dob": null,
+  "roles": [
+    {
+      "id": "04571743-0a86-45f5-901a-08daa13f9828",
+      "name": "User",
+      "created": "2022-09-28T12:52:53.390776",
+      "updated": null
+    }
+  ]
 }
+```
+
+## Get Users
+
+### Get Users Request
+
+```js
+GET {{host}}/api/users
+```
+
+### Get Users Response
+
+```js
+200 OK
+```
+
+```json
+[
+  {
+    "id": "20b2cb67-df41-49b6-bf2a-3628c136f07d",
+    "email": "email56@gmail.com",
+    "firstName": null,
+    "lastName": null,
+    "address": null,
+    "postalArea": null,
+    "postalCode": 0,
+    "phoneNumber": 0,
+    "dob": null,
+    "roles": [
+      {
+        "id": "04571743-0a86-45f5-901a-08daa13f9828",
+        "name": "User",
+        "created": "2022-09-28T12:52:53.390776",
+        "updated": null
+      }
+    ]
+  },
+  {
+    "id": "b0d82eb1-592a-4a8b-ad59-8c284178764f",
+    "email": "email@gmail.com",
+    "firstName": null,
+    "lastName": null,
+    "address": null,
+    "postalArea": null,
+    "postalCode": 0,
+    "phoneNumber": 0,
+    "dob": null,
+    "roles": [
+      {
+        "id": "04571743-0a86-45f5-901a-08daa13f9828",
+        "name": "User",
+        "created": "2022-09-28T12:52:53.390776",
+        "updated": null
+      }
+    ]
+  }
+]
 ```
 
 ## Update User
@@ -95,13 +116,18 @@ POST {{host}}/api/users/{{id}}
 Content-Type: application/json
 ```
 
-```yml
-Required fields:
-  - 
-```
-
 ```json
-
+{
+  "Email": "",
+  "FirstName": "",
+  "LastName": "",
+  "Address": "",
+  "PostalArea": "",
+  "PostalCode": 0,
+  "PhoneNumber": 0,
+  "DOB": "", // (DateOfBirth) Format: Year-Month-Day : 2022-09-30
+  "RoleIds": []
+}
 ```
 
 ### Update User Response

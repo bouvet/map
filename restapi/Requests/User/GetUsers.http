@@ -1,2 +1,2 @@
 GET {{host}}/api/users
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}

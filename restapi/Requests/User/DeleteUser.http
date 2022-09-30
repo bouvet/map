@@ -1,4 +1,4 @@
-@id=09ba6391-421c-494d-8da3-be4057172dbc
+@id=20b2cb67-df41-49b6-bf2a-3628c136f07d
 
 DELETE {{host}}/api/users/{{id}}
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}

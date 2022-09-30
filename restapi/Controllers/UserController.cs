@@ -1,57 +1,80 @@
 using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos.Users;
-using restapi.Models;
 using restapi.Services.Users;
+using restapi.Services.Users.Commands.Delete;
+using restapi.Services.Users.Commands.Update;
+using restapi.Services.Users.Common;
+using restapi.Services.Users.Queries.GetUserById;
+using restapi.Services.Users.Queries.GetUsers;
 
 namespace restapi.Controllers;
 
 public class UsersController : ApiController
 {
-  private readonly IUserService userService;
+  private readonly ISender mediator;
 
-  public UsersController(IUserService userService)
+  public UsersController(ISender mediator)
   {
-    this.userService = userService;
+    this.mediator = mediator;
   }
 
-  // [HttpGet]
-  // public async Task<IActionResult> GetUsers()
-  // {
-  //   ErrorOr<List<UserResponseDto>> getUsersResult = await userService.GetUsers();
+  [HttpGet]
+  public async Task<IActionResult> GetUsers()
+  {
+    var getUsersQuery = new GetUsersQuery();
 
-  //   return getUsersResult.Match(
-  //     users => Ok(users),
-  //     errors => Problem(errors)
-  //   );
-  // }
+    ErrorOr<List<UserResult>> getUsersQueryResult = await mediator.Send(getUsersQuery);
 
-  // [HttpGet("{id:guid}")]
-  // public async Task<IActionResult> GetUser(Guid id)
-  // {
-  //   ErrorOr<UserResponseDto> getUserResult = await userService.GetUser(id);
+    return getUsersQueryResult.Match(
+      result => Ok(result),
+      errors => Problem(errors)
+    );
+  }
 
-  //   return getUserResult.Match(
-  //     user => Ok(user),
-  //     errors => Problem(errors)
-  //   );
-  // }
+  [HttpGet("{id:guid}")]
+  public async Task<IActionResult> GetUserById(Guid id)
+  {
+    var getUserByIdQuery = new GetUserByIdQuery(id);
 
-  // [HttpPut("{id:guid}")]
-  // public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
-  // {
-  //   ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
+    ErrorOr<UserResult> getUserByIdQueryResult = await mediator.Send(getUserByIdQuery);
 
-  //   return updateUserResult.Match(
-  //     _ => NoContent(),
-  //     errors => Problem(errors)
-  //   );
-  // }
+    return getUserByIdQueryResult.Match(
+      result => Ok(result),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPut("{id:guid}")]
+  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserCommand request)
+  {
+    var updateUserCommand = new UpdateUserCommand(
+      id,
+      request.Email,
+      request.FirstName,
+      request.LastName,
+      request.Address,
+      request.PostalArea,
+      request.PostalCode,
+      request.PhoneNumber,
+      request.DOB,
+      request.RoleIds
+    );
+
+    ErrorOr<Updated> updateUserCommandResult = await mediator.Send(updateUserCommand);
+
+    return updateUserCommandResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
 
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteUser(Guid id)
   {
-    ErrorOr<Deleted> deleteUserResult = await userService.DeleteUser(id);
+    var deleteUserCommand = new DeleteUserCommand(id);
+
+    ErrorOr<Deleted> deleteUserResult = await mediator.Send(deleteUserCommand);
 
     return deleteUserResult.Match(
       _ => NoContent(),

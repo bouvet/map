@@ -15,12 +15,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
   private readonly DataContext dataContext;
   private readonly IJwtGenerator jwtGenerator;
   private readonly IDateTimeProvider dateTimeProvider;
+  private readonly IPasswordProvider passwordProvider;
 
-  public RegisterCommandHandler(DataContext dataContext, IJwtGenerator jwtGenerator, IDateTimeProvider dateTimeProvider)
+  public RegisterCommandHandler(DataContext dataContext, IJwtGenerator jwtGenerator, IDateTimeProvider dateTimeProvider, IPasswordProvider passwordProvider)
   {
     this.dataContext = dataContext;
     this.jwtGenerator = jwtGenerator;
     this.dateTimeProvider = dateTimeProvider;
+    this.passwordProvider = passwordProvider;
   }
 
   public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -51,7 +53,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
     {
       Id = Guid.NewGuid(),
       Email = request.Email,
-      Password = BCrypt.Net.BCrypt.HashPassword(request.Password)
+      Password = passwordProvider.HashPassword(request.Password)
     };
 
     user.Roles.Add(userRole);

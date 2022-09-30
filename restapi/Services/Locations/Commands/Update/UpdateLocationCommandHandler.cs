@@ -35,6 +35,8 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
       return mapUpdatedLocationResult.Errors;
     }
 
+    location = mapUpdatedLocationResult.Value;
+
     if (request.Category?.Count > 0)
     {
       location.Categories = new List<Category>();

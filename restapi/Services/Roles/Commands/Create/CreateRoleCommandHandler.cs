@@ -6,7 +6,6 @@ using restapi.Data;
 using restapi.Models;
 using restapi.Services.Roles.Commands.Create;
 using restapi.Services.Roles.Common;
-using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Authentication.Commands.Register;
 
