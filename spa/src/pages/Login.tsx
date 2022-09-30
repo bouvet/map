@@ -27,7 +27,9 @@ export const Login: FC = () => {
         <FormWrapper>
             <FormContent>
                 <SectionWrapper>
-                    <LinkText href="/">Tilbake</LinkText>
+                    <span>
+                        <LinkText to="/">Tilbake</LinkText>
+                    </span>
                     <span>
                         <Title>Login</Title>
                         <Text>Verden venter... på deg!</Text>
@@ -56,7 +58,7 @@ export const Login: FC = () => {
                                 {rememberStatus}
                             </LeftFlex>
                             <RightFlex>
-                                <LinkText href="/glemt-passord">Glemt passord</LinkText>
+                                <LinkText to="forgotten-password">Glemt passord</LinkText>
                             </RightFlex>
                         </SplitWrapper>
                         <SubmitButton text="white">LOGG INN</SubmitButton>
@@ -66,7 +68,7 @@ export const Login: FC = () => {
                             <Text>Ikke registrert?</Text>
                         </LeftFlex>
                         <RightFlex>
-                            <LinkText href="/user-registration">Registrer deg</LinkText>
+                            <LinkText to="/user-registration">Registrer deg</LinkText>
                         </RightFlex>
                     </SplitWrapper>
                 </SectionWrapper>

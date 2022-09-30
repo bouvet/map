@@ -13,7 +13,9 @@ export const UserRegistration: FC = () => {
         <FormWrapper>
             <FormContent>
                 <SectionWrapper>
-                    <LinkText href="/login">Tilbake</LinkText>
+                    <span>
+                        <LinkText to="/login">Tilbake</LinkText>
+                    </span>
                     <span>
                         <Title>Registrer ny bruker</Title>
                         <Text>Ved å opprette bruker kan du...</Text>
@@ -34,7 +36,7 @@ export const UserRegistration: FC = () => {
                             <Text>Allerede bruker?</Text>
                         </LeftFlex>
                         <RightFlex>
-                            <LinkText href="/user-registration">Logg inn</LinkText>
+                            <LinkText to="/user-registration">Logg inn</LinkText>
                         </RightFlex>
                     </SplitWrapper>
                 </SectionWrapper>

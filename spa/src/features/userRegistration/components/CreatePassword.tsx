@@ -28,6 +28,7 @@ export const CreatePassword: FC = () => {
             dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
             console.log('Passordene er ikke like');
         } else {
+            e.preventDefault();
             navigate('/personalization');
             console.log('Passord er satt');
         }
@@ -63,7 +64,9 @@ export const CreatePassword: FC = () => {
                         />
                         <SubmitButton text="white">Gå videre</SubmitButton>
                     </Form>
-                    <LinkText onClick={() => navigate(-1)}>Gå tilbake</LinkText>
+                    <span>
+                        <LinkText to="/personal-info">Gå tilbake</LinkText>
+                    </span>
                 </SectionWrapper>
             </FormContent>
         </FormWrapper>

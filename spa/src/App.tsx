@@ -29,8 +29,8 @@ const App = () => (
             <Route path="/create-password" element={<CreatePassword />} />
             <Route path="/personalization" element={<Personalization />} />
             <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/glemt-passord" element={<ForgottenPassword />} />
-            <Route path="/tilbakestill-passord" element={<ResetPassword />} />
+            <Route path="/forgotten-password" element={<ForgottenPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
         <CustomizedSnackbars />
     </Router>

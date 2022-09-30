@@ -1,34 +1,52 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
+import TextField from '@mui/material/TextField';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import moment from 'moment';
+import 'moment/locale/nb';
 import { SubmitButton } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { InputAge, InputName } from '../../../components/Form/Input';
+import { InputName, Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { ProgressBarForm, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
+import { useStateDispatch } from '../../../hooks/useRedux';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 
 export const PersonalInfo: FC = () => {
+    const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
     const [inputName, setInputName] = useState('');
-    const [inputAge, setInputAge] = useState('');
+    const [inputAge, setInputAge] = useState<Date | null>(null);
 
-    const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
+    const handleFormInputChangeName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
     };
 
+    const handleFormInputChangeAge = (timestamp: Date | null, setState: Dispatch<SetStateAction<Date | null>>) => {
+        if (timestamp !== null) {
+            setState(timestamp);
+        }
+    };
+
+    moment.locale('nb');
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        navigate('/create-password');
-        console.log('Name: ', inputName);
-        console.log('Age: ', inputAge);
+        if (inputAge === null) {
+            e.preventDefault();
+            dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
+        } else {
+            e.preventDefault();
+            navigate('/create-password');
+            console.log('Name: ', inputName);
+            console.log('Date of birth: ', moment(inputAge).format('L'));
+        }
     };
 
     const pageIndex = 2;
@@ -47,56 +65,17 @@ export const PersonalInfo: FC = () => {
                     <TitleForm>Personlig informasjon</TitleForm>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <InputName label="Navn*" value={inputName} setState={setInputName} handleChange={handleFormInputChange} />
-                        {/* <InputAge label="Fødselsdato*" value={inputAge} setState={setInputAge} handleChange={handleFormInputChange} /> */}
-                        <Box>
-                            <FormControl sx={{ m: 1, minWidth: 80 }}>
-                                <InputLabel id="demo-simple-select-label">År</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    label="År"
-                                    defaultValue=""
-                                    // @ts-ignore
-                                    autoWidth="true"
-                                    value={inputAge}
-                                    // @ts-ignore
-                                    onChange={(e) => handleFormInputChange(e, setInputAge)}
-                                >
-                                    <MenuItem value={1990}>1990</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 100 }}>
-                                <InputLabel id="demo-simple-select-label">Måned</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    label="Måned"
-                                    defaultValue=""
-                                    autoWidth
-                                    value={inputAge}
-                                    // @ts-ignore
-                                    onChange={(e) => handleFormInputChange(e, setInputAge)}
-                                >
-                                    <MenuItem value={1}>Januar</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 80 }}>
-                                <InputLabel id="demo-simple-select-label">Dag</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    label="Dag"
-                                    defaultValue=""
-                                    autoWidth
-                                    value={inputAge}
-                                    // @ts-ignore
-                                    onChange={(e) => handleFormInputChange(e, setInputAge)}
-                                >
-                                    <MenuItem value={1}>1</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Box>
+                        <InputName label="Navn*" value={inputName} setState={setInputName} handleChange={handleFormInputChangeName} />
+                        <Label>Fødselsdato*</Label>
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                            <MobileDatePicker
+                                label="dd.mm.åååå"
+                                value={inputAge}
+                                onChange={(newValue) => handleFormInputChangeAge(newValue, setInputAge)}
+                                renderInput={(params) => <TextField {...params} />}
+                                maxDate={new Date()}
+                            />
+                        </LocalizationProvider>
                         <SubmitButton text="white">Gå videre</SubmitButton>
                     </Form>
                 </SectionWrapper>

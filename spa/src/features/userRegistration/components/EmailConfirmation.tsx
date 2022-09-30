@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,6 +17,7 @@ import { Form } from '../../../components/Form/Form';
 
 export const EmailConfirmation: FC = () => {
     const navigate = useNavigate();
+    const location: any = useLocation();
 
     const [inputCode, setInputCode] = useState<string[]>(new Array(6).fill(''));
 
@@ -72,7 +73,7 @@ export const EmailConfirmation: FC = () => {
                     <TitleForm>Bekreft e-post</TitleForm>
                     <Form>
                         <ProgressBarForm pageIndex={pageIndex} />
-                        <Text>Skriv inn koden for å bekrefte e-postadressen *fra EmailInput*</Text>
+                        <Text>Skriv inn koden for å bekrefte e-postadressen {location.state.inputEmail}</Text>
                         <Box
                             sx={{
                                 '& .MuiTextField-root': { m: '1%', width: '14%' },
@@ -94,7 +95,9 @@ export const EmailConfirmation: FC = () => {
                             ))}
                         </Box>
                     </Form>
-                    <LinkText onClick={() => navigate(-1)}>Gå tilbake</LinkText>
+                    <span>
+                        <LinkText to="/email-input">Gå tilbake</LinkText>
+                    </span>
                 </SectionWrapper>
             </FormContent>
         </FormWrapper>

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 
-const Label = styled.label`
+export const Label = styled.label`
     display: block;
     margin-bottom: -15px;
 `;

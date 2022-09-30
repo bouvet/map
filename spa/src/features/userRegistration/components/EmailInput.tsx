@@ -1,6 +1,5 @@
-import { ChangeEvent, createContext, Dispatch, FC, FormEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { SubmitButton } from '../../../components/Form/Buttons';
@@ -9,18 +8,11 @@ import { InputEmail } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { ProgressBarForm, Text, TitleForm } from '../../../components/Form/Text';
-import { UserType } from '../../../utils/types.d';
-import { userService } from '../services/user.services';
-
-// export const MyContext = createContext({ inputEmail: '', setInputEmail: () => {} });
 
 export const EmailInput: FC = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [inputEmail, setInputEmail] = useState('');
-
-    // const contextValue = { inputEmail };
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -28,7 +20,7 @@ export const EmailInput: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('/email-confirmation');
+        navigate('/email-confirmation', { state: { inputEmail } });
         console.log('Email: ', inputEmail);
     };
 

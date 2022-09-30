@@ -15,7 +15,7 @@ export const Onboarding: FC = () => (
                 <ProgressBarOnboarding pageIndex={pageIndex} />
                 <div>
                     <SubmitButtonRight text="white">Neste</SubmitButtonRight>
-                    <LinkTextOnboarding href="/">Hopp over</LinkTextOnboarding>
+                    <LinkTextOnboarding to="/">Hopp over</LinkTextOnboarding>
                 </div>
             </SectionWrapper>
         </FormContent>
