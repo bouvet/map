@@ -137,7 +137,6 @@ public static class DependencyInjection
   public static IServiceCollection AddServices(this IServiceCollection services)
   {
     services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
-    services.AddScoped<ILocationService, LocationService>();
     services.AddScoped<IReviewService, ReviewService>();
     services.AddScoped<IUserService, UserService>();
 

@@ -1,4 +1,4 @@
-@id=9fbf46b3-c5a5-450a-9b28-1a3167e2625a
+@id=a4eb19fb-35b9-4a1e-b94f-e283bb7dedee
 
 ### Update Location Without Image
 
@@ -54,18 +54,18 @@ A description which is over 20 chars!
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="status"
 
-Under Review
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="category"
-
-3e061bac-93c0-46b9-a502-08da96e466d8
+Rejected
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
 60c951f3-d233-442b-7883-08da9ad92895
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="fotball.png"
+Content-Disposition: form-data; name="category"
+
+5464a9f8-70be-4ce4-0a01-08da9f9ee008
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="park.png"
 Content-Type: image/png
 
-< ../Images/fotball.png
+< ../Images/park.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

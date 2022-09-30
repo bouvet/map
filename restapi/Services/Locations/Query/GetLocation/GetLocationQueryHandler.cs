@@ -3,7 +3,7 @@ using MediatR;
 using restapi.Data;
 using restapi.Services.Locations.Common;
 
-namespace restapi.Services.Locations.Query;
+namespace restapi.Services.Locations.Query.GetLocation;
 
 public class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, ErrorOr<LocationResult>>
 {
