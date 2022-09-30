@@ -1,5 +1,4 @@
 ﻿using ErrorOr;
-using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Providers;
@@ -17,13 +16,11 @@ namespace restapi.Controllers;
 
 public class LocationsController : ApiController
 {
-  private readonly IMapper mapper;
   private readonly ISender mediator;
   private readonly IAzureBlobStorage azureBlobStorage;
 
-  public LocationsController(IMapper mapper, ISender mediator, IAzureBlobStorage azureBlobStorage)
+  public LocationsController(ISender mediator, IAzureBlobStorage azureBlobStorage)
   {
-    this.mapper = mapper;
     this.mediator = mediator;
     this.azureBlobStorage = azureBlobStorage;
   }
@@ -142,9 +139,9 @@ public class LocationsController : ApiController
   {
     var mappedList = new List<LocationResponse>();
 
-    foreach (LocationResult location in resultList)
+    foreach (LocationResult result in resultList)
     {
-      mappedList.Add(MapResultToResponse(location));
+      mappedList.Add(MapResultToResponse(result));
     }
 
     return mappedList;

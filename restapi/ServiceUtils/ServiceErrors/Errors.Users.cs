@@ -13,6 +13,11 @@ public static partial class Errors
       description: "User already exists"
     );
 
+    public static Error RoleAlreadyAdded => Error.Conflict(
+      code: "User.RoleAlreadyAdded",
+      description: "Role is already added to user!"
+    );
+
     public static Error InvalidPassword => Error.Validation(
       code: "User.InvalidPassword",
       description: $"Password must be at least {Models.User.MinPasswordLength} characters long"

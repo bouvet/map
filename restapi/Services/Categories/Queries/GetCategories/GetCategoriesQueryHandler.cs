@@ -1,13 +1,12 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Contracts.Categories;
 using restapi.Data;
-using restapi.Models;
+using restapi.Services.Categories.Common;
 
 namespace restapi.Services.Categories.Queries.GetCategories;
 
-public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, ErrorOr<List<Category>>>
+public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, ErrorOr<List<CategoryResult>>>
 {
   private readonly DataContext dataContext;
 
@@ -16,8 +15,17 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Err
     this.dataContext = dataContext;
   }
 
-  public async Task<ErrorOr<List<Category>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+  public async Task<ErrorOr<List<CategoryResult>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
   {
-    return await dataContext.Categories.ToListAsync(cancellationToken: cancellationToken);
+    var categories = await dataContext.Categories.ToListAsync(cancellationToken: cancellationToken);
+
+    var categoryResultList = new List<CategoryResult>();
+
+    foreach (var category in categories)
+    {
+      categoryResultList.Add(new CategoryResult(category));
+    }
+
+    return categoryResultList;
   }
 }

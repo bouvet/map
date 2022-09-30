@@ -1,7 +1,7 @@
 POST {{host}}/api/roles
 Content-Type: application/json
-# Authorization: Bearer {{token}}
+Authorization: Bearer {{admintoken}}
 
 {
-  "name": "User"
+  "name": "SuperUser"
 }

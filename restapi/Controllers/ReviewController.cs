@@ -46,7 +46,7 @@ public class ReviewsController : ApiController
     ErrorOr<ReviewResult> getReviewByIdResult = await mediator.Send(getReviewByIdQuery);
 
     return getReviewByIdResult.Match(
-      result => Ok(result),
+      result => Ok(MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -59,7 +59,7 @@ public class ReviewsController : ApiController
     ErrorOr<List<ReviewResult>> getReviewsResult = await mediator.Send(getReviewsQuery);
 
     return getReviewsResult.Match(
-      result => Ok(result),
+      result => Ok(MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
@@ -95,6 +95,31 @@ public class ReviewsController : ApiController
       _ => NoContent(),
       errors => Problem(errors)
     );
+  }
+
+  private static ReviewResponse MapResultToResponse(ReviewResult result)
+  {
+    return new ReviewResponse(
+      result.Review.Id,
+      result.Review.Status,
+      result.Review.Text,
+      result.Review.Image,
+      result.Review.Created,
+      result.Review.Updated,
+      result.Review.LocationId
+    );
+  }
+
+  private static List<ReviewResponse> MapResultListToResponseList(List<ReviewResult> resultList)
+  {
+    var mappedList = new List<ReviewResponse>();
+
+    foreach (ReviewResult result in resultList)
+    {
+      mappedList.Add(MapResultToResponse(result));
+    }
+
+    return mappedList;
   }
 
   private CreatedAtActionResult CreatedAtGetReview(ReviewResult result)

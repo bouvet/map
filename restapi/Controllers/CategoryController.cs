@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Contracts.Categories;
-using restapi.Models;
 using restapi.Services.Categories.Commands.Create;
 using restapi.Services.Categories.Commands.Delete;
 using restapi.Services.Categories.Commands.Update;
@@ -24,21 +23,23 @@ public class CategoriesController : ApiController
   [HttpGet]
   public async Task<IActionResult> GetCategories()
   {
-    ErrorOr<List<Category>> getCategoriesResult = await mediator.Send(new GetCategoriesQuery());
+    var getCategoriesQuery = new GetCategoriesQuery();
 
-    return getCategoriesResult.Match(
-      categories => Ok(categories),
+    ErrorOr<List<CategoryResult>> getCategoriesQueryResult = await mediator.Send(getCategoriesQuery);
+
+    return getCategoriesQueryResult.Match(
+      result => Ok(MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpGet("{id:guid}")]
-  public async Task<IActionResult> GetCategory(Guid id)
+  public async Task<IActionResult> GetCategoryById(Guid id)
   {
     ErrorOr<CategoryResult> getCategoryResult = await mediator.Send(new GetCategoryQuery(id));
 
     return getCategoryResult.Match(
-      category => Ok(category),
+      result => Ok(MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -54,7 +55,7 @@ public class CategoriesController : ApiController
     ErrorOr<CategoryResult> createCategoryResult = await mediator.Send(createCategoryCommand);
 
     return createCategoryResult.Match(
-      category => CreatedAtGetCategory(category),
+      result => CreatedAtGetCategory(result),
       errors => Problem(errors)
     );
   }
@@ -94,10 +95,22 @@ public class CategoriesController : ApiController
     );
   }
 
+  private static List<CategoryResponse> MapResultListToResponseList(List<CategoryResult> resultList)
+  {
+    var mappedList = new List<CategoryResponse>();
+
+    foreach (CategoryResult result in resultList)
+    {
+      mappedList.Add(MapResultToResponse(result));
+    }
+
+    return mappedList;
+  }
+
   private CreatedAtActionResult CreatedAtGetCategory(CategoryResult result)
   {
     return CreatedAtAction(
-        actionName: nameof(GetCategory),
+        actionName: nameof(GetCategoryById),
         routeValues: new { id = result.Category.Id },
         value: MapResultToResponse(result)
       );

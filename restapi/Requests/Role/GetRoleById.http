@@ -1,0 +1,3 @@
+@id=04571743-0a86-45f5-901a-08daa13f9828
+
+GET {{host}}/api/roles/{{id}}

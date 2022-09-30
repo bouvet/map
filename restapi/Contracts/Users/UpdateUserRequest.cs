@@ -1,9 +1,6 @@
-using ErrorOr;
-using MediatR;
+namespace restapi.Contracts.Users;
 
-namespace restapi.Services.Users.Commands.Update;
-
-public record UpdateUserCommand(
+public record UpdateUserRequest(
   Guid Id,
   string? Email,
   string? FirstName,
@@ -13,4 +10,4 @@ public record UpdateUserCommand(
   int PostalCode,
   int PhoneNumber,
   DateTime? DOB
-) : IRequest<ErrorOr<Updated>>;
+);

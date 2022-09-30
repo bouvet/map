@@ -24,18 +24,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, ErrorOr<List<
 
     foreach (User user in users)
     {
-      userResultList.Add(new UserResult(
-        user.Id,
-        user.Email,
-        user.FirstName,
-        user.LastName,
-        user.Address,
-        user.PostalArea,
-        user.PostalCode,
-        user.PhoneNumber,
-        user.DOB,
-        user.Roles
-      ));
+      userResultList.Add(new UserResult(user));
     }
 
     return userResultList;

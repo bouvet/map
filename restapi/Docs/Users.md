@@ -1,28 +1,31 @@
 # Users
 
 - [Users](#users)
-  - [Get User](#get-user)
-    - [Get User Request](#get-user-request)
-    - [Get User Response](#get-user-response)
+  - [Get User By Id](#get-user-by-id)
+    - [Get User By Id Request](#get-user-by-id-request)
+    - [Get User By Id Response](#get-user-by-id-response)
   - [Get Users](#get-users)
     - [Get Users Request](#get-users-request)
     - [Get Users Response](#get-users-response)
   - [Update User](#update-user)
     - [Update User Request](#update-user-request)
     - [Update User Response](#update-user-response)
+  - [Add User Role](#add-user-role)
+    - [Add User Role Request](#add-user-role-request)
+    - [Add User Role Response](#add-user-role-response)
   - [Delete User](#delete-user)
     - [Delete User Request](#delete-user-request)
     - [Delete User Response](#delete-user-response)
 
-## Get User
+## Get User By Id
 
-### Get User Request
+### Get User By Id Request
 
 ```js
 GET {{host}}/api/users/{{id}}
 ```
 
-### Get User Response
+### Get User By Id Response
 
 ```js
 200 OK
@@ -125,8 +128,7 @@ Content-Type: application/json
   "PostalArea": "",
   "PostalCode": 0,
   "PhoneNumber": 0,
-  "DOB": "", // (DateOfBirth) Format: Year-Month-Day : 2022-09-30
-  "RoleIds": []
+  "DOB": "" // (DateOfBirth) Format: Year-Month-Day : 2022-09-30
 }
 ```
 
@@ -136,8 +138,26 @@ Content-Type: application/json
 204 No Content
 ```
 
-```yml
-Location: {{host}}/api/users/{{id}}
+## Add User Role
+
+### Add User Role Request
+
+```js
+POST {{host}}/api/users/role
+Content-Type: application/json
+```
+
+```json
+{
+  "UserId": "",
+  "RoleId": ""
+}
+```
+
+### Add User Role Response
+
+```js
+204 No Content
 ```
 
 ## Delete User

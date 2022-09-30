@@ -1,7 +1,8 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Services.Users;
+using restapi.Contracts.Users;
+using restapi.Services.Users.Commands.AddUserRole;
 using restapi.Services.Users.Commands.Delete;
 using restapi.Services.Users.Commands.Update;
 using restapi.Services.Users.Common;
@@ -27,7 +28,7 @@ public class UsersController : ApiController
     ErrorOr<List<UserResult>> getUsersQueryResult = await mediator.Send(getUsersQuery);
 
     return getUsersQueryResult.Match(
-      result => Ok(result),
+      result => Ok(MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
@@ -40,13 +41,13 @@ public class UsersController : ApiController
     ErrorOr<UserResult> getUserByIdQueryResult = await mediator.Send(getUserByIdQuery);
 
     return getUserByIdQueryResult.Match(
-      result => Ok(result),
+      result => Ok(MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpPut("{id:guid}")]
-  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserCommand request)
+  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request)
   {
     var updateUserCommand = new UpdateUserCommand(
       id,
@@ -57,13 +58,28 @@ public class UsersController : ApiController
       request.PostalArea,
       request.PostalCode,
       request.PhoneNumber,
-      request.DOB,
-      request.RoleIds
+      request.DOB
     );
 
     ErrorOr<Updated> updateUserCommandResult = await mediator.Send(updateUserCommand);
 
     return updateUserCommandResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPost("role")]
+  public async Task<IActionResult> AddUserRole(AddUserRoleRequest request)
+  {
+    var addUserRoleCommand = new AddUserRoleCommand(
+      request.UserId,
+      request.RoleId
+    );
+
+    ErrorOr<UserResult> addUserRoleCommandResult = await mediator.Send(addUserRoleCommand);
+
+    return addUserRoleCommandResult.Match(
       _ => NoContent(),
       errors => Problem(errors)
     );
@@ -82,12 +98,31 @@ public class UsersController : ApiController
     );
   }
 
-  // private CreatedAtActionResult CreatedAtGetUser(UserResponseDto user)
-  // {
-  //   return CreatedAtAction(
-  //       actionName: nameof(GetUser),
-  //       routeValues: new { id = user.Id },
-  //       value: user
-  //     );
-  // }
+  private static UserResponse MapResultToResponse(UserResult result)
+  {
+    return new UserResponse(
+      result.User.Id,
+      result.User.Email,
+      result.User.FirstName,
+      result.User.LastName,
+      result.User.Address,
+      result.User.PostalArea,
+      result.User.PostalCode,
+      result.User.PhoneNumber,
+      result.User.DOB,
+      result.User.Roles
+    );
+  }
+
+  private static List<UserResponse> MapResultListToResponseList(List<UserResult> resultList)
+  {
+    var mappedResponseList = new List<UserResponse>();
+
+    foreach (var result in resultList)
+    {
+      mappedResponseList.Add(MapResultToResponse(result));
+    }
+
+    return mappedResponseList;
+  }
 }

@@ -26,22 +26,22 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Error
     // TODO: Validate user-input
     MapUpdatedUser(user, request);
 
-    if (request.RoleIds?.Count > 0)
-    {
-      user.Roles = new List<Role>();
+    // if (request.RoleIds?.Count > 0)
+    // {
+    //   user.Roles = new List<Role>();
 
-      foreach (Guid roleId in request.RoleIds)
-      {
-        var role = await dataContext.Roles.FindAsync(new object?[] { roleId }, cancellationToken: cancellationToken);
+    //   foreach (Guid roleId in request.RoleIds)
+    //   {
+    //     var role = await dataContext.Roles.FindAsync(new object?[] { roleId }, cancellationToken: cancellationToken);
 
-        if (role == null)
-        {
-          return Errors.Role.NotFound;
-        }
+    //     if (role == null)
+    //     {
+    //       return Errors.Role.NotFound;
+    //     }
 
-        user.Roles.Add(role);
-      }
-    }
+    //     user.Roles.Add(role);
+    //   }
+    // }
 
     await dataContext.SaveChangesAsync(cancellationToken);
 

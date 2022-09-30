@@ -4,7 +4,7 @@ namespace restapi.Models;
 
 public class User
 {
-  public const int MinPasswordLength = 5;
+  public const int MinPasswordLength = 8;
 
   [Key]
   public Guid Id { get; set; }

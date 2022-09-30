@@ -7,7 +7,7 @@ using restapi.Services.Categories.Common;
 
 namespace restapi.Services.Categories.Commands.Create;
 
-public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ErrorOr<CategoryResult>>
+public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ErrorOr<Common.CategoryResult>>
 {
   private readonly DataContext dataContext;
 
@@ -16,7 +16,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     this.dataContext = dataContext;
   }
 
-  public async Task<ErrorOr<CategoryResult>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+  public async Task<ErrorOr<Common.CategoryResult>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
   {
     List<Error> errors = new();
 
@@ -27,7 +27,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
       return Errors.Category.AlreadyExists;
     }
 
-    if (request.Name.Length is < Category.MinNameLength or > Category.MaxNameLength)
+    if (request.Name.Length is < Models.Category.MinNameLength or > Models.Category.MaxNameLength)
     {
       errors.Add(Errors.Category.InvalidName);
     }
@@ -42,11 +42,11 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
       return errors;
     }
 
-    var category = new Category { Name = request.Name, Emoji = request.Emoji };
+    var category = new Models.Category { Name = request.Name, Emoji = request.Emoji };
 
     dataContext.Categories.Add(category);
     await dataContext.SaveChangesAsync(cancellationToken);
 
-    return new CategoryResult(category);
+    return new Common.CategoryResult(category);
   }
 }

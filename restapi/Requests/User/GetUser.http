@@ -1,4 +1,4 @@
-@id=1e295e62-4efa-4470-af15-d9ebff887190
+@id=5e5b4c22-48b1-46c9-8572-7f22d67a748c
 
 GET {{host}}/api/users/{{id}}
 # Authorization: Bearer {{token}}

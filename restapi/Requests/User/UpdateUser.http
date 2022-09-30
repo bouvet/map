@@ -12,6 +12,5 @@ Content-Type: application/json
   "PostalArea": "Stavanger",
   "PostalCode": 4034,
   "PhoneNumber": 87654321,
-  "DOB": "1987-04-25",
-  "RoleIds": []
+  "DOB": "1987-04-25"
 }

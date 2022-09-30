@@ -23,17 +23,6 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr
       return Errors.User.NotFound;
     }
 
-    return new UserResult(
-      user.Id,
-      user.Email,
-      user.FirstName,
-      user.LastName,
-      user.Address,
-      user.PostalArea,
-      user.PostalCode,
-      user.PhoneNumber,
-      user.DOB,
-      user.Roles
-    );
+    return new UserResult(user);
   }
 }
