@@ -1,10 +1,11 @@
-@id=8b584de2-f488-477a-2b6b-08daa2b61a1a
+@id=f2a86e72-3f53-4318-b9a7-08daa2ece784
 
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{usertoken}}
+Authorization: Bearer {{admintoken}}
 
 {
-  "name": "Golf!!",
+  "name": "Golf!!!!!",
   "emoji": "🚧"
 }

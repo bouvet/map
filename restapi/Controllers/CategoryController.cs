@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Contracts.Categories;
 using restapi.Services.Categories.Commands.Create;
@@ -44,6 +45,7 @@ public class CategoriesController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPost]
   public async Task<IActionResult> CreateCategory(CreateCategoryRequest request)
   {
@@ -60,6 +62,7 @@ public class CategoriesController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPut("{id:guid}")]
   public async Task<IActionResult> UpdateCategory(Guid id, UpdateCategoryRequest request)
   {
@@ -73,6 +76,7 @@ public class CategoriesController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteCategory(Guid id)
   {

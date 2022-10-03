@@ -53,6 +53,7 @@ GET {{host}}/api/categories
 ```js
 POST /api/categories
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```yml
@@ -82,7 +83,7 @@ Location: {{host}}/api/Categories/{{id}}
 {
   "id": "735fbdfd-ab84-4cc8-ddbf-08da9b08fa95",
   "name": "Styrke",
-  "emoji": "\uD83D\uDCAA"
+  "emoji": "💪"
 }
 ```
 
@@ -115,6 +116,7 @@ GET {{host}}/api/categories/{{id}}
 ```js
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```yml
@@ -142,6 +144,7 @@ Required fields:
 
 ```js
 DELETE {{host}}/api/categories/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete Category Response

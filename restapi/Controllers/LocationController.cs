@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Providers;
 using restapi.Common.Services;
@@ -25,6 +26,7 @@ public class LocationsController : ApiController
     this.azureBlobStorage = azureBlobStorage;
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPost]
   public async Task<IActionResult> CreateLocation([FromForm] CreateLocationRequest request)
   {
@@ -83,6 +85,7 @@ public class LocationsController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPut]
   public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationRequest request)
   {
@@ -105,6 +108,7 @@ public class LocationsController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {

@@ -224,6 +224,7 @@ GET {{host}}/api/locations/{{id}}
 ```js
 PUT {{host}}/api/locations
 Content-Type: multipart/form-data
+Authorization: Bearer {{token}}
 ```
 
 ```multipart/form-data
@@ -249,6 +250,7 @@ latitude = <number> (58.xxxx)
 
 ```js
 DELETE {{host}}/api/locations/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete Location Response
