@@ -19,7 +19,6 @@ public class LocationsController : ApiController
     this.locationMapper = locationMapper;
   }
 
-  [Authorize(Roles = "Administrator")]
   [HttpPost]
   public async Task<IActionResult> CreateLocation([FromForm] CreateLocationRequest request)
   {
@@ -71,7 +70,7 @@ public class LocationsController : ApiController
     );
   }
 
-  [Authorize(Roles = "Administrator")]
+  //TODO: Lock this so only creator and administrator can update?
   [HttpPut]
   public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationRequest request)
   {

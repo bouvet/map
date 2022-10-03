@@ -27,6 +27,7 @@
 ```js
 POST {{host}}/api/roles
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```yml
@@ -66,6 +67,7 @@ Location: {{host}}/api/roles/{{id}}
 
 ```js
 GET {{host}}/api/roles/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Get Role By Id Response
@@ -90,7 +92,7 @@ GET {{host}}/api/roles/{{id}}
 
 ```js
 GET {{host}}/api/roles
-
+Authorization: Bearer {{token}}
 ```
 
 ### Get Roles Response
@@ -119,6 +121,7 @@ GET {{host}}/api/roles
 ```js
 PUT {{host}}/api/roles
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```json
@@ -137,6 +140,7 @@ Content-Type: application/json
 
 ```js
 DELETE {{host}}/api/roles/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete Role Response

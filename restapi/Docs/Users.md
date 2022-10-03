@@ -1,6 +1,9 @@
-# Users
+# Users 🔒
 
-- [Users](#users)
+> **All endpoints require Authorization header!**
+> **Access level: Administrator**
+
+- [Users 🔒](#users-)
   - [Get User By Id](#get-user-by-id)
     - [Get User By Id Request](#get-user-by-id-request)
     - [Get User By Id Response](#get-user-by-id-response)
@@ -23,6 +26,7 @@
 
 ```js
 GET {{host}}/api/users/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Get User By Id Response
@@ -59,6 +63,7 @@ GET {{host}}/api/users/{{id}}
 
 ```js
 GET {{host}}/api/users
+Authorization: Bearer {{token}}
 ```
 
 ### Get Users Response
@@ -117,6 +122,7 @@ GET {{host}}/api/users
 ```js
 POST {{host}}/api/users/{{id}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```json
@@ -145,6 +151,7 @@ Content-Type: application/json
 ```js
 POST {{host}}/api/users/role
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```json
@@ -166,6 +173,7 @@ Content-Type: application/json
 
 ```js
 DELETE {{host}}/api/users/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete User Response

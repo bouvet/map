@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Users;
@@ -7,6 +8,7 @@ using restapi.Services.Users.Common;
 
 namespace restapi.Controllers;
 
+[Authorize(Roles = "Administrator")]
 public class UsersController : ApiController
 {
   private readonly ISender mediator;

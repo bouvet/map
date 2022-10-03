@@ -59,6 +59,7 @@ public class ReviewsController : ApiController
     );
   }
 
+  //TODO: Lock so only creator and admin can update
   [HttpPut]
   public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewRequest request)
   {
@@ -72,6 +73,7 @@ public class ReviewsController : ApiController
     );
   }
 
+  //TODO: Lock so only creator and admin can delete
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {

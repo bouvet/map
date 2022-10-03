@@ -16,7 +16,7 @@
   - [Update Location](#update-location)
     - [Update Location Request](#update-location-request)
     - [Update Location Response](#update-location-response)
-  - [Delete Location](#delete-location)
+  - [🔒Delete Location](#delete-location)
     - [Delete Location Request](#delete-location-request)
     - [Delete Location Response](#delete-location-response)
 
@@ -224,7 +224,6 @@ GET {{host}}/api/locations/{{id}}
 ```js
 PUT {{host}}/api/locations
 Content-Type: multipart/form-data
-Authorization: Bearer {{token}}
 ```
 
 ```multipart/form-data
@@ -244,7 +243,7 @@ latitude = <number> (58.xxxx)
 204 No Content
 ```
 
-## Delete Location
+## 🔒Delete Location
 
 ### Delete Location Request
 

@@ -4,16 +4,16 @@
   - [Get Categories](#get-categories)
     - [Get Categories Request](#get-categories-request)
     - [Get Categories Response](#get-categories-response)
-  - [Create Category](#create-category)
+  - [🔒Create Category](#create-category)
     - [Create Category Request](#create-category-request)
     - [Create Category Response](#create-category-response)
   - [Get Category](#get-category)
     - [Get Category Request](#get-category-request)
     - [Get Category Response](#get-category-response)
-  - [Update Category](#update-category)
+  - [🔒Update Category](#update-category)
     - [Update Category Request](#update-category-request)
     - [Update Category Response](#update-category-response)
-  - [Delete Category](#delete-category)
+  - [🔒Delete Category](#delete-category)
     - [Delete Category Request](#delete-category-request)
     - [Delete Category Response](#delete-category-response)
 
@@ -46,7 +46,7 @@ GET {{host}}/api/categories
 ]
 ```
 
-## Create Category
+## 🔒Create Category
 
 ### Create Category Request
 
@@ -109,7 +109,7 @@ GET {{host}}/api/categories/{{id}}
 }
 ```
 
-## Update Category
+## 🔒Update Category
 
 ### Update Category Request
 
@@ -138,7 +138,7 @@ Required fields:
 204 No Content
 ```
 
-## Delete Category
+## 🔒Delete Category
 
 ### Delete Category Request
 
