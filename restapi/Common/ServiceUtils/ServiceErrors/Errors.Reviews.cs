@@ -1,10 +1,5 @@
 using ErrorOr;
-
-<<<<<<<< HEAD:restapi/Common/ServiceUtils/ServiceErrors/Errors.Reviews.cs
 namespace restapi.Common.ServiceUtils.ServiceErrors;
-========
-namespace restapi.ServiceUtils.ServiceErrors;
->>>>>>>> c3bab50c635a2f21b1396738001752828fde266e:restapi/ServiceUtils/ServiceErrors/Errors.Reviews.cs
 
 public static partial class Errors
 {
