@@ -10,10 +10,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkText, ProgressBarForm, Text, TitleForm } from '../../../components/Form/Text';
+import { LinkText, Text, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { Form } from '../../../components/Form/Form';
+import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 
 export const EmailConfirmation: FC = () => {
     const navigate = useNavigate();
@@ -50,12 +51,7 @@ export const EmailConfirmation: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton
-                backgroundColor={MyTheme.colors.opaque}
-                textColor={MyTheme.colors.lightbase}
-                onClick={handleClickOpen}
-                // onClick={() => navigate('/user-registration')}
-            >
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickOpen}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
             <Dialog open={open}>
@@ -85,9 +81,11 @@ export const EmailConfirmation: FC = () => {
                                     // eslint-disable-next-line react/no-array-index-key
                                     key={index}
                                     name={`input-field-${index}`}
-                                    inputMode="numeric"
+                                    // inputMode="numeric"
+                                    // @ts-ignore
+                                    // pattern: '/^d+$/'
                                     onChange={(event) => handleInputChange(event, index)}
-                                    inputProps={{ maxLength: 1, pattern: '/^d+$/' }}
+                                    inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
                                     required
                                     onFocus={(e) => e.target.select}
                                     autoFocus={index === 0}
@@ -96,7 +94,7 @@ export const EmailConfirmation: FC = () => {
                         </Box>
                     </Form>
                     <span>
-                        <LinkText to="/email-input">Gå tilbake</LinkText>
+                        <LinkText to="/email-input">Tilbake</LinkText>
                     </span>
                 </SectionWrapper>
             </FormContent>

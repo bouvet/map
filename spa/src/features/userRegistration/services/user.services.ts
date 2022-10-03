@@ -1,8 +1,7 @@
 import { AppDispatch } from '../../../store';
-import { UserType } from '../../../utils/types.d';
 
 export const userService = {
-    registerUser(payload: UserType) {
+    registerUser(payload: FormData) {
         return async (dispatch: AppDispatch) => {
             try {
                 console.log('hello');

@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { SubmitButtonRight } from '../../../components/Form/Buttons';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
+import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkTextOnboarding, ProgressBarOnboarding, Text, TitleForm } from '../../../components/Form/Text';
+import { LinkTextOnboarding, Text, TitleForm } from '../../../components/Form/Text';
 
 const pageIndex = 0;
 

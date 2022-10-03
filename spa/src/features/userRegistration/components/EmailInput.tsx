@@ -7,7 +7,8 @@ import { Form } from '../../../components/Form/Form';
 import { InputEmail } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { ProgressBarForm, Text, TitleForm } from '../../../components/Form/Text';
+import { Text, TitleForm } from '../../../components/Form/Text';
+import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 
 export const EmailInput: FC = () => {
     const navigate = useNavigate();

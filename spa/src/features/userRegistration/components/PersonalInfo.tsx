@@ -1,5 +1,11 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import TextField from '@mui/material/TextField';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -12,11 +18,12 @@ import { Form } from '../../../components/Form/Form';
 import { InputName, Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { ProgressBarForm, TitleForm } from '../../../components/Form/Text';
+import { TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
+import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 
 export const PersonalInfo: FC = () => {
     const dispatch = useStateDispatch();
@@ -49,17 +56,28 @@ export const PersonalInfo: FC = () => {
         }
     };
 
+    const [open, setOpen] = useState(false);
+    const handleClickOpen = () => setOpen(true);
+    const handleClose = () => navigate('/user-registration');
+    const handleCloseDialog = () => setOpen(false);
+
     const pageIndex = 2;
 
     return (
         <FormWrapper>
-            <BackButton
-                backgroundColor={MyTheme.colors.opaque}
-                textColor={MyTheme.colors.lightbase}
-                onClick={() => navigate('/user-registration')}
-            >
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickOpen}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
+            <Dialog open={open}>
+                <DialogTitle id="alert-dialog-title">Avbryt registrering</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">Sikker på at du ønsker å avslutte registreringen?</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Ja</Button>
+                    <Button onClick={handleCloseDialog}>Nei</Button>
+                </DialogActions>
+            </Dialog>
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Personlig informasjon</TitleForm>

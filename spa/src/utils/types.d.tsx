@@ -89,7 +89,3 @@ export interface ReviewTypeGet {
     created: string;
     image?: string;
 }
-
-export interface UserType {
-    email: string;
-}
