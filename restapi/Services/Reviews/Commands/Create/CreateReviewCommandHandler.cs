@@ -46,6 +46,16 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
       Created = dateTimeProvider.CEST
     };
 
+    if (request.UserId is not null)
+    {
+      var user = await dataContext.Users.FindAsync(new object?[] { request.UserId }, cancellationToken: cancellationToken);
+
+      if (user is not null)
+      {
+        review.Creator = user;
+      }
+    }
+
     if (!string.IsNullOrEmpty(request.Text))
     {
       review.Text = request.Text;
@@ -58,21 +68,21 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
       return errors;
     }
 
-    if (request.Image is not null)
-    {
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);
+    // if (request.Image is not null)
+    // {
+    //   ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);
 
-      if (fileUploadResult.IsError)
-      {
-        return Errors.AzureBlobStorage.UploadFailed;
-      }
+    //   if (fileUploadResult.IsError)
+    //   {
+    //     return Errors.AzureBlobStorage.UploadFailed;
+    //   }
 
-      review.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
-    }
+    //   review.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
+    // }
 
-    await dataContext.Reviews.AddAsync(review, cancellationToken);
-    await dataContext.SaveChangesAsync(cancellationToken);
-    await UpdateLocationRating(review.LocationId);
+    // await dataContext.Reviews.AddAsync(review, cancellationToken);
+    // await dataContext.SaveChangesAsync(cancellationToken);
+    // await UpdateLocationRating(review.LocationId);
 
     return new ReviewResult(review);
   }

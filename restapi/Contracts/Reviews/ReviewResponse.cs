@@ -1,3 +1,4 @@
+using restapi.Contracts.Users;
 namespace restapi.Contracts.Reviews;
 
 public record ReviewResponse(
@@ -7,5 +8,7 @@ public record ReviewResponse(
   string? Image,
   DateTime Created,
   DateTime? Updated,
+  UserResponse? Creator,
+  UserResponse? Editor,
   Guid LocationId
 );

@@ -2,6 +2,8 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Contracts.Reviews;
+using restapi.Contracts.Users;
+using restapi.Models;
 using restapi.Services.Reviews.Commands.Create;
 using restapi.Services.Reviews.Commands.Delete;
 using restapi.Services.Reviews.Commands.Update;
@@ -23,11 +25,14 @@ public class ReviewsController : ApiController
   [HttpPost]
   public async Task<IActionResult> CreateReview([FromForm] CreateReviewRequest request)
   {
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
     var createReviewCommand = new CreateReviewCommand(
       request.Rating,
       request.Text,
       request.Image,
-      request.LocationId
+      request.LocationId,
+      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
     );
 
     ErrorOr<ReviewResult> createReviewResult = await mediator.Send(createReviewCommand);
@@ -97,6 +102,22 @@ public class ReviewsController : ApiController
     );
   }
 
+  private static UserResponse MapUserResponse(User user)
+  {
+    return new UserResponse(
+       user.Id,
+       user.Email,
+       user.FirstName,
+       user.LastName,
+       user.Address,
+       user.PostalArea,
+       user.PostalCode,
+       user.PhoneNumber,
+       user.DOB,
+       user.Roles
+      );
+  }
+
   private static ReviewResponse MapResultToResponse(ReviewResult result)
   {
     return new ReviewResponse(
@@ -106,6 +127,8 @@ public class ReviewsController : ApiController
       result.Review.Image,
       result.Review.Created,
       result.Review.Updated,
+      result.Review.Creator is not null ? MapUserResponse(result.Review.Creator) : null,
+      result.Review.Editor is not null ? MapUserResponse(result.Review.Editor) : null,
       result.Review.LocationId
     );
   }
@@ -127,7 +150,7 @@ public class ReviewsController : ApiController
     return CreatedAtAction(
         actionName: nameof(GetReviewById),
         routeValues: new { id = result.Review.Id },
-        value: result.Review
+        value: MapResultToResponse(result)
       );
   }
 }

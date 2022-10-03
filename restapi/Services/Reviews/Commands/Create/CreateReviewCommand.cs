@@ -8,5 +8,6 @@ public record CreateReviewCommand(
   float Rating,
   string? Text,
   IFormFile? Image,
-  Guid LocationId
+  Guid LocationId,
+  Guid? UserId
 ) : IRequest<ErrorOr<ReviewResult>>;

@@ -101,6 +101,12 @@ namespace restapi.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EditorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -122,6 +128,10 @@ namespace restapi.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("EditorId");
 
                     b.HasIndex("LocationId");
 
@@ -221,11 +231,23 @@ namespace restapi.Migrations
 
             modelBuilder.Entity("restapi.Models.Review", b =>
                 {
+                    b.HasOne("restapi.Models.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("restapi.Models.User", "Editor")
+                        .WithMany()
+                        .HasForeignKey("EditorId");
+
                     b.HasOne("restapi.Models.Location", "Location")
                         .WithMany("Reviews")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Editor");
 
                     b.Navigation("Location");
                 });

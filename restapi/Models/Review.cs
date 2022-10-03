@@ -16,6 +16,9 @@ public class Review
   public DateTime Created { get; set; }
   public DateTime? Updated { get; set; }
 
+  public User? Creator { get; set; }
+  public User? Editor { get; set; }
+
   public Guid LocationId { get; set; }
   public Location? Location { get; set; }
 }
