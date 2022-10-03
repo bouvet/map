@@ -21,6 +21,7 @@ Content-Type: application/json
 Required fields:
   - email
   - password (min 8 chars)
+
 ```
 
 ```json

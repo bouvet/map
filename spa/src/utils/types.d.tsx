@@ -26,7 +26,8 @@ export interface Geometry {
  * @param title string name of a park
  * @param description string description of park
  * @param category array with park categories
- * @param img sting with image data
+ * @param img string with image data
+ * @param status string with approval status
  * @param rating number to indicate star rating on park
  */
 export interface Properties {
@@ -40,7 +41,10 @@ export interface Properties {
     category: Array<Category>;
 
     /** @param img string with image data */
-    img: string;
+    image: string;
+
+    /** @param status string with image data */
+    status: string;
 
     /** @param rating number to indicate star rating on park */
     rating: number;
@@ -54,7 +58,7 @@ export interface Properties {
  */
 export interface Location {
     /** needed to make Location arrays */
-    [index: string]: any;
+    id: string;
 
     /** @param type mapbox type: Feature */
     type: 'Feature';
@@ -67,6 +71,24 @@ export interface Location {
 
     /** @param pinColor mapbox pin color variable */
     pinColor?: string;
+}
+
+export interface PutLocation {
+    id: string;
+
+    title: string;
+
+    description: string;
+
+    Img?: File;
+
+    status?: string;
+
+    category?: string;
+
+    longitude?: number;
+
+    latitude?: number;
 }
 
 export interface LatLong {

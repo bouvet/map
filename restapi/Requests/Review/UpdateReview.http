@@ -5,7 +5,7 @@
 
 PUT {{host}}/api/reviews
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: Bearer {{token}}
+Authorization: Bearer {{usertoken}}
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="id"

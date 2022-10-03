@@ -24,6 +24,10 @@ There is a few Azure resources you need to get started.
     - Secrets:
       - "DbConnectionString"
       - "azureBlobStorageConnectionString"
+      - "JwtSecret"
+      - "JwtIssuer"
+      - "JwtAudience"
+      - "JwtExpiryMinutes"
   - Azure SQL Server
     - Azure SQL database
   - Azure Storage Account

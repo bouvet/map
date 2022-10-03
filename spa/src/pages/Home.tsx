@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import Slide from '@mui/material/Slide';
-import { Link } from 'react-router-dom';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
 import { Popup, PopupCard } from '../components/Popup/Popup';
@@ -8,12 +7,13 @@ import { ReactMapGL } from '../features/map';
 import { useStateSelector, useStateDispatch } from '../hooks/useRedux';
 import { useFilterEvent } from '../utils/filterLogic';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { BackButton, GoogleIcon, RoundButton } from '../components/Navigation/Buttons';
+import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
 import { Category, LatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
+import { FabMenu } from '../components/FabMenu/FabMenu';
 
 export const Home: FC = () => {
     useFilterEvent();
@@ -35,7 +35,7 @@ export const Home: FC = () => {
             dispatch(locationServices.getClosestLocation(currentUserLocation, selectedFilterCategory));
         } else {
             console.log('isGettingLocation');
-            navigator.geolocation.getCurrentPosition(function (position) {
+            navigator.geolocation.getCurrentPosition((position) => {
                 const userLocation: LatLong = {
                     lat: position.coords.latitude,
                     long: position.coords.longitude,
@@ -50,7 +50,7 @@ export const Home: FC = () => {
             {!homeMarkerFocus ? (
                 <>
                     <FilterMenu>{mappedFilter}</FilterMenu>
-                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="5px" />
+                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="16px" />
                 </>
             ) : (
                 <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleBackClick}>
@@ -60,15 +60,7 @@ export const Home: FC = () => {
             <div className="home-container">
                 <ReactMapGL />
             </div>
-            {!homeMarkerFocus && (
-                <RoundButton backgroundColor={MyTheme.colors.accent}>
-                    <Link to="/location-registration">
-                        <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
-                            add
-                        </GoogleIcon>
-                    </Link>
-                </RoundButton>
-            )}
+            {!homeMarkerFocus && <FabMenu />}
             {!homeMarkerFocus && (
                 <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
                     <PopupCard>
@@ -78,7 +70,7 @@ export const Home: FC = () => {
                                     name={currentlySelectedLocation.properties.title}
                                     description={currentlySelectedLocation.properties.description}
                                     rating={currentlySelectedLocation.properties.rating}
-                                    image={currentlySelectedLocation.properties.img}
+                                    image={currentlySelectedLocation.properties.image}
                                 />
                             </>
                         )}
