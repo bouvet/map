@@ -1,4 +1,4 @@
-global using restapi.ServiceUtils.ServiceErrors;
+global using restapi.Common.ServiceUtils.ServiceErrors;
 using restapi;
 
 var builder = WebApplication.CreateBuilder(args);

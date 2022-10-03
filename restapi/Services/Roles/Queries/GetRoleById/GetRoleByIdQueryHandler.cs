@@ -1,8 +1,6 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Contracts.Authentication;
-using restapi.Contracts.Users;
 using restapi.Data;
 using restapi.Services.Roles.Common;
 

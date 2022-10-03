@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace restapi.ServiceUtils.ServiceValidators.Common;
+namespace restapi.Common.ServiceUtils.ServiceValidators.Common;
 
 public static class EmailValidator
 {

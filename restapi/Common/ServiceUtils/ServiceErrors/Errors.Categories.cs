@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace restapi.ServiceUtils.ServiceErrors;
+namespace restapi.Common.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
 {

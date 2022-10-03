@@ -2,8 +2,6 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Models;
-using restapi.Services.Categories.Common;
 
 namespace restapi.Services.Categories.Commands.Create;
 

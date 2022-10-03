@@ -3,10 +3,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Common.Providers;
 using restapi.Common.Services;
+using restapi.Common.ServiceUtils.ServiceErrors;
+using restapi.Common.ServiceUtils.ServiceValidators.Common;
 using restapi.Data;
 using restapi.Models;
 using restapi.Services.Authentication.Common;
-using restapi.ServiceUtils.ServiceValidators.Common;
 
 namespace restapi.Services.Authentication.Commands.Register;
 
