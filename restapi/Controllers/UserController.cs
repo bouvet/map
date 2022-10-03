@@ -1,34 +1,32 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Users;
-using restapi.Services.Users.Commands.AddUserRole;
-using restapi.Services.Users.Commands.Delete;
-using restapi.Services.Users.Commands.Update;
 using restapi.Services.Users.Common;
-using restapi.Services.Users.Queries.GetUserById;
-using restapi.Services.Users.Queries.GetUsers;
 
 namespace restapi.Controllers;
 
 public class UsersController : ApiController
 {
   private readonly ISender mediator;
+  private readonly IUserMapper userMapper;
 
-  public UsersController(ISender mediator)
+  public UsersController(ISender mediator, IUserMapper userMapper)
   {
     this.mediator = mediator;
+    this.userMapper = userMapper;
   }
 
   [HttpGet]
   public async Task<IActionResult> GetUsers()
   {
-    var getUsersQuery = new GetUsersQuery();
+    var getUsersQuery = userMapper.MapGetUsersToCommand();
 
     ErrorOr<List<UserResult>> getUsersQueryResult = await mediator.Send(getUsersQuery);
 
     return getUsersQueryResult.Match(
-      result => Ok(MapResultListToResponseList(result)),
+      result => Ok(userMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
@@ -36,12 +34,12 @@ public class UsersController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetUserById(Guid id)
   {
-    var getUserByIdQuery = new GetUserByIdQuery(id);
+    var getUserByIdQuery = userMapper.MapGetByIdToCommand(id);
 
     ErrorOr<UserResult> getUserByIdQueryResult = await mediator.Send(getUserByIdQuery);
 
     return getUserByIdQueryResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(userMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -49,17 +47,7 @@ public class UsersController : ApiController
   [HttpPut("{id:guid}")]
   public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request)
   {
-    var updateUserCommand = new UpdateUserCommand(
-      id,
-      request.Email,
-      request.FirstName,
-      request.LastName,
-      request.Address,
-      request.PostalArea,
-      request.PostalCode,
-      request.PhoneNumber,
-      request.DOB
-    );
+    var updateUserCommand = userMapper.MapUpdateToCommand(id, request);
 
     ErrorOr<Updated> updateUserCommandResult = await mediator.Send(updateUserCommand);
 
@@ -72,10 +60,7 @@ public class UsersController : ApiController
   [HttpPost("role")]
   public async Task<IActionResult> AddUserRole(AddUserRoleRequest request)
   {
-    var addUserRoleCommand = new AddUserRoleCommand(
-      request.UserId,
-      request.RoleId
-    );
+    var addUserRoleCommand = userMapper.MapAddRoleToCommand(request);
 
     ErrorOr<UserResult> addUserRoleCommandResult = await mediator.Send(addUserRoleCommand);
 
@@ -88,7 +73,7 @@ public class UsersController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteUser(Guid id)
   {
-    var deleteUserCommand = new DeleteUserCommand(id);
+    var deleteUserCommand = userMapper.MapDeleteToCommand(id);
 
     ErrorOr<Deleted> deleteUserResult = await mediator.Send(deleteUserCommand);
 
@@ -96,33 +81,5 @@ public class UsersController : ApiController
       _ => NoContent(),
       errors => Problem(errors)
     );
-  }
-
-  private static UserResponse MapResultToResponse(UserResult result)
-  {
-    return new UserResponse(
-      result.User.Id,
-      result.User.Email,
-      result.User.FirstName,
-      result.User.LastName,
-      result.User.Address,
-      result.User.PostalArea,
-      result.User.PostalCode,
-      result.User.PhoneNumber,
-      result.User.DOB,
-      result.User.Roles
-    );
-  }
-
-  private static List<UserResponse> MapResultListToResponseList(List<UserResult> resultList)
-  {
-    var mappedResponseList = new List<UserResponse>();
-
-    foreach (var result in resultList)
-    {
-      mappedResponseList.Add(MapResultToResponse(result));
-    }
-
-    return mappedResponseList;
   }
 }

@@ -1,10 +1,9 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Services.Mappers.Authentication;
 using restapi.Contracts.Authentication;
-using restapi.Services.Authentication.Commands.Register;
 using restapi.Services.Authentication.Common;
-using restapi.Services.Authentication.Queries.Login;
 
 namespace restapi.Controllers;
 
@@ -12,24 +11,23 @@ namespace restapi.Controllers;
 public class AuthenticationController : ApiController
 {
   private readonly ISender mediator;
+  private readonly IAuthenticationMapper authenticationMapper;
 
-  public AuthenticationController(ISender mediator)
+  public AuthenticationController(ISender mediator, IAuthenticationMapper authenticationMapper)
   {
     this.mediator = mediator;
+    this.authenticationMapper = authenticationMapper;
   }
 
   [HttpPost("register")]
   public async Task<IActionResult> Register(RegisterRequest request)
   {
-    var registerCommand = new RegisterCommand(
-      request.Email,
-      request.Password
-    );
+    var registerCommand = authenticationMapper.MapRegisterRequestToCommand(request);
 
     ErrorOr<AuthenticationResult> registerCommandResult = await mediator.Send(registerCommand);
 
     return registerCommandResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(authenticationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -37,33 +35,13 @@ public class AuthenticationController : ApiController
   [HttpPost("login")]
   public async Task<IActionResult> Login(LoginRequest request)
   {
-    var loginQuery = new LoginQuery(
-      request.Email,
-      request.Password
-    );
+    var loginQuery = authenticationMapper.MapLoginQueryToCommand(request);
 
     ErrorOr<AuthenticationResult> loginQueryResult = await mediator.Send(loginQuery);
 
     return loginQueryResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(authenticationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
-    );
-  }
-
-  private static AuthenticationResponse MapResultToResponse(AuthenticationResult result)
-  {
-    return new AuthenticationResponse(
-      result.User.Id,
-      result.User.Email,
-      result.User.FirstName,
-      result.User.LastName,
-      result.User.Address,
-      result.User.PostalArea,
-      result.User.PostalCode,
-      result.User.PhoneNumber,
-      result.User.DOB,
-      result.User.Roles,
-      result.Token
     );
   }
 }

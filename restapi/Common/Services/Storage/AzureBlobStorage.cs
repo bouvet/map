@@ -5,7 +5,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
 using SkiaSharp;
 
-namespace restapi.Common.Services;
+namespace restapi.Common.Services.Storage;
 
 public class AzureBlobStorage : IAzureBlobStorage
 {

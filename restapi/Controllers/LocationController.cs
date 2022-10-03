@@ -2,42 +2,28 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Common.Providers;
-using restapi.Common.Services;
+using restapi.Common.Services.Mappers.Locations;
 using restapi.Contracts.Locations;
-using restapi.Services.Locations.Commands.Create;
-using restapi.Services.Locations.Commands.Delete;
-using restapi.Services.Locations.Commands.Update;
 using restapi.Services.Locations.Common;
-using restapi.Services.Locations.Queries.GetLocationById;
-using restapi.Services.Locations.Queries.GetLocationByProximity;
-using restapi.Services.Locations.Queries.GetLocations;
 
 namespace restapi.Controllers;
 
 public class LocationsController : ApiController
 {
   private readonly ISender mediator;
-  private readonly IAzureBlobStorage azureBlobStorage;
+  private readonly ILocationMapper locationMapper;
 
-  public LocationsController(ISender mediator, IAzureBlobStorage azureBlobStorage)
+  public LocationsController(ISender mediator, ILocationMapper locationMapper)
   {
     this.mediator = mediator;
-    this.azureBlobStorage = azureBlobStorage;
+    this.locationMapper = locationMapper;
   }
 
   [Authorize(Roles = "Administrator")]
   [HttpPost]
   public async Task<IActionResult> CreateLocation([FromForm] CreateLocationRequest request)
   {
-    var createLocationCommand = new CreateLocationCommand(
-      request.Title,
-      request.Description,
-      request.Image,
-      request.Longitude,
-      request.Latitude,
-      request.Category
-    );
+    var createLocationCommand = locationMapper.MapCreateRequestToCommand(request);
 
     ErrorOr<LocationResult> createLocationCommandResult = await mediator.Send(createLocationCommand);
 
@@ -50,24 +36,24 @@ public class LocationsController : ApiController
   [HttpGet]
   public async Task<IActionResult> GetLocations()
   {
-    var getLocationsQuery = new GetLocationsQuery();
+    var getLocationsQuery = locationMapper.MapGetLocationsQueryToCommand();
     ErrorOr<List<LocationResult>> getLocationsResult = await mediator.Send(getLocationsQuery);
 
     return getLocationsResult.Match(
-      result => Ok(MapResultListToResponseList(result)),
+      result => Ok(locationMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpGet("{latitude}&{longitude}/category")]
-  public async Task<IActionResult> GetLocationByProximity(double latitude, double longitude, Guid categoryId)
+  public async Task<IActionResult> GetLocationByProximity(GetLocationByProximityRequest request)
   {
-    var getLocationByProximityQuery = new GetLocationByProximityQuery(latitude, longitude, categoryId);
+    var getLocationByProximityQuery = locationMapper.MapGetByProximityToCommand(request);
 
     ErrorOr<LocationResult> getClosestLocationResult = await mediator.Send(getLocationByProximityQuery);
 
     return getClosestLocationResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(locationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -75,12 +61,12 @@ public class LocationsController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetLocationById(Guid id)
   {
-    var getLocationByIdQuery = new GetLocationByIdQuery(id);
+    var getLocationByIdQuery = locationMapper.MapGetByIdToCommand(id);
 
     ErrorOr<LocationResult> getLocationByIdResult = await mediator.Send(getLocationByIdQuery);
 
     return getLocationByIdResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(locationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -89,16 +75,7 @@ public class LocationsController : ApiController
   [HttpPut]
   public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationRequest request)
   {
-    var updateLocationCommand = new UpdateLocationCommand(
-      request.Id,
-      request.Title,
-      request.Description,
-      request.Image,
-      request.Status,
-      request.Longitude,
-      request.Latitude,
-      request.Category
-    );
+    var updateLocationCommand = locationMapper.MapUpdateToCommand(request);
 
     ErrorOr<Updated> updateLocationResult = await mediator.Send(updateLocationCommand);
 
@@ -112,7 +89,9 @@ public class LocationsController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {
-    ErrorOr<Deleted> deleteLocationResult = await mediator.Send(new DeleteLocationCommand(id));
+    var deleteLocationCommand = locationMapper.MapDeleteToCommand(id);
+
+    ErrorOr<Deleted> deleteLocationResult = await mediator.Send(deleteLocationCommand);
 
     return deleteLocationResult.Match(
       _ => NoContent(),
@@ -120,43 +99,12 @@ public class LocationsController : ApiController
     );
   }
 
-  private static LocationResponse MapResultToResponse(LocationResult result)
-  {
-    var geometry = new LocationGeometry(
-      new[] { result.Location.Longitude, result.Location.Latitude }
-    );
-
-    var properties = new LocationProperties
-    (
-      result.Location.Title,
-      result.Location.Description,
-      result.Location.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
-      result.Location.Status,
-      result.Location.Rating,
-      result.Location.Categories
-    );
-
-    return new LocationResponse(result.Location.Id, "Feature", properties, geometry);
-  }
-
-  private static List<LocationResponse> MapResultListToResponseList(List<LocationResult> resultList)
-  {
-    var mappedList = new List<LocationResponse>();
-
-    foreach (LocationResult result in resultList)
-    {
-      mappedList.Add(MapResultToResponse(result));
-    }
-
-    return mappedList;
-  }
-
   private CreatedAtActionResult CreatedAtGetLocation(LocationResult result)
   {
     return CreatedAtAction(
         actionName: nameof(GetLocationById),
         routeValues: new { id = result.Location.Id },
-        value: MapResultToResponse(result)
+        value: locationMapper.MapResultToResponse(result)
       );
   }
 }

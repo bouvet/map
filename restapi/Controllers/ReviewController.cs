@@ -1,25 +1,21 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Services.Mappers.Reviews;
 using restapi.Contracts.Reviews;
-using restapi.Contracts.Users;
-using restapi.Models;
-using restapi.Services.Reviews.Commands.Create;
-using restapi.Services.Reviews.Commands.Delete;
-using restapi.Services.Reviews.Commands.Update;
 using restapi.Services.Reviews.Common;
-using restapi.Services.Reviews.Queries.GetReviewById;
-using restapi.Services.Reviews.Queries.GetReviews;
 
 namespace restapi.Controllers;
 
 public class ReviewsController : ApiController
 {
   private readonly ISender mediator;
+  private readonly IReviewMapper reviewMapper;
 
-  public ReviewsController(ISender mediator)
+  public ReviewsController(ISender mediator, IReviewMapper reviewMapper)
   {
     this.mediator = mediator;
+    this.reviewMapper = reviewMapper;
   }
 
   [HttpPost]
@@ -27,13 +23,7 @@ public class ReviewsController : ApiController
   {
     var userId = HttpContext.User.FindFirst("userId")?.Value;
 
-    var createReviewCommand = new CreateReviewCommand(
-      request.Rating,
-      request.Text,
-      request.Image,
-      request.LocationId,
-      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
-    );
+    var createReviewCommand = reviewMapper.MapCreateToCommand(request, userId ?? "");
 
     ErrorOr<ReviewResult> createReviewResult = await mediator.Send(createReviewCommand);
 
@@ -46,12 +36,12 @@ public class ReviewsController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetReviewById(Guid id)
   {
-    var getReviewByIdQuery = new GetReviewByIdQuery(id);
+    var getReviewByIdQuery = reviewMapper.MapGetByIdToCommand(id);
 
     ErrorOr<ReviewResult> getReviewByIdResult = await mediator.Send(getReviewByIdQuery);
 
     return getReviewByIdResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(reviewMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -59,12 +49,12 @@ public class ReviewsController : ApiController
   [HttpGet]
   public async Task<IActionResult> GetReviews(Guid locationId)
   {
-    var getReviewsQuery = new GetReviewsQuery(locationId);
+    var getReviewsQuery = reviewMapper.MapGetReviewsToCommand(locationId);
 
     ErrorOr<List<ReviewResult>> getReviewsResult = await mediator.Send(getReviewsQuery);
 
     return getReviewsResult.Match(
-      result => Ok(MapResultListToResponseList(result)),
+      result => Ok(reviewMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
@@ -72,14 +62,7 @@ public class ReviewsController : ApiController
   [HttpPut]
   public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewRequest request)
   {
-    var updateReviewCommand = new UpdateReviewCommand(
-      request.Id,
-      request.Status,
-      request.Text,
-      request.Rating,
-      request.Image,
-      request.LocationId
-    );
+    var updateReviewCommand = reviewMapper.MapUpdateToCommand(request);
 
     ErrorOr<Updated> updateReviewResult = await mediator.Send(updateReviewCommand);
 
@@ -92,7 +75,7 @@ public class ReviewsController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {
-    var deleteReviewCommand = new DeleteReviewCommand(id);
+    var deleteReviewCommand = reviewMapper.MapDeleteToCommand(id);
 
     ErrorOr<Deleted> deleteReviewResult = await mediator.Send(deleteReviewCommand);
 
@@ -102,55 +85,12 @@ public class ReviewsController : ApiController
     );
   }
 
-  private static UserResponse MapUserResponse(User user)
-  {
-    return new UserResponse(
-       user.Id,
-       user.Email,
-       user.FirstName,
-       user.LastName,
-       user.Address,
-       user.PostalArea,
-       user.PostalCode,
-       user.PhoneNumber,
-       user.DOB,
-       user.Roles
-      );
-  }
-
-  private static ReviewResponse MapResultToResponse(ReviewResult result)
-  {
-    return new ReviewResponse(
-      result.Review.Id,
-      result.Review.Status,
-      result.Review.Text,
-      result.Review.Image,
-      result.Review.Created,
-      result.Review.Updated,
-      result.Review.Creator is not null ? MapUserResponse(result.Review.Creator) : null,
-      result.Review.Editor is not null ? MapUserResponse(result.Review.Editor) : null,
-      result.Review.LocationId
-    );
-  }
-
-  private static List<ReviewResponse> MapResultListToResponseList(List<ReviewResult> resultList)
-  {
-    var mappedList = new List<ReviewResponse>();
-
-    foreach (ReviewResult result in resultList)
-    {
-      mappedList.Add(MapResultToResponse(result));
-    }
-
-    return mappedList;
-  }
-
   private CreatedAtActionResult CreatedAtGetReview(ReviewResult result)
   {
     return CreatedAtAction(
         actionName: nameof(GetReviewById),
         routeValues: new { id = result.Review.Id },
-        value: MapResultToResponse(result)
+        value: reviewMapper.MapResultToResponse(result)
       );
   }
 }

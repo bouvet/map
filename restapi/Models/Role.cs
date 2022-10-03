@@ -10,6 +10,8 @@ public class Role
   public string Name { get; set; } = "User";
   public DateTime Created { get; set; }
   public DateTime? Updated { get; set; }
+  public User? Creator { get; set; }
+  public User? Editor { get; set; }
 
   [JsonIgnore]
   public List<User> Users { get; set; } = new List<User>();

@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
-using restapi.Common.Services;
+using restapi.Common.Services.Storage;
 using restapi.Data;
 using restapi.Models;
 

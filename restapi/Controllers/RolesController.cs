@@ -2,11 +2,9 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Services.Mappers.Roles;
 using restapi.Contracts.Roles;
-using restapi.Services.Roles.Commands.Create;
 using restapi.Services.Roles.Common;
-using restapi.Services.Roles.Queries.GetRoleById;
-using restapi.Services.Roles.Queries.GetRoles;
 
 namespace restapi.Controllers;
 
@@ -14,16 +12,18 @@ namespace restapi.Controllers;
 public class RolesController : ApiController
 {
   private readonly ISender mediator;
+  private readonly IRoleMapper roleMapper;
 
-  public RolesController(ISender mediator)
+  public RolesController(ISender mediator, IRoleMapper roleMapper)
   {
     this.mediator = mediator;
+    this.roleMapper = roleMapper;
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateRole(CreateRoleCommand request)
+  public async Task<IActionResult> CreateRole(CreateRoleRequest request)
   {
-    var createRoleCommand = new CreateRoleCommand(request.Name);
+    var createRoleCommand = roleMapper.MapCreateToCommand(request);
 
     ErrorOr<RoleResult> createRoleCommandResult = await mediator.Send(createRoleCommand);
 
@@ -36,12 +36,12 @@ public class RolesController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetRoleById(Guid id)
   {
-    var getRoleByIdQuery = new GetRoleByIdQuery(id);
+    var getRoleByIdQuery = roleMapper.MapGetByIdToCommand(id);
 
     ErrorOr<RoleResult> getRoleByIdQueryResult = await mediator.Send(getRoleByIdQuery);
 
     return getRoleByIdQueryResult.Match(
-      result => Ok(MapResultToResponse(result)),
+      result => Ok(roleMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -49,38 +49,14 @@ public class RolesController : ApiController
   [HttpGet]
   public async Task<IActionResult> GetRoles()
   {
-    var getRolesQuery = new GetRolesQuery();
+    var getRolesQuery = roleMapper.MapGetRolesToCommand();
 
     ErrorOr<List<RoleResult>> getRolesQueryResult = await mediator.Send(getRolesQuery);
 
     return getRolesQueryResult.Match(
-      result => Ok(MapResultListToResponseList(result)),
+      result => Ok(roleMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
-  }
-
-  private static RoleResponse MapResultToResponse(RoleResult result)
-  {
-    return new RoleResponse(
-      result.Role.Id,
-      result.Role.Name,
-      result.Role.Created,
-      result.Role.Updated,
-      result.Role.Users
-    );
-  }
-
-  // TODO: Make this global as it's being used by all controllers.
-  private static List<RoleResponse> MapResultListToResponseList(List<RoleResult> resultList)
-  {
-    var mappedList = new List<RoleResponse>();
-
-    foreach (RoleResult result in resultList)
-    {
-      mappedList.Add(MapResultToResponse(result));
-    }
-
-    return mappedList;
   }
 
   private CreatedAtActionResult CreatedAtGetRole(RoleResult result)
@@ -88,7 +64,7 @@ public class RolesController : ApiController
     return CreatedAtAction(
         actionName: nameof(GetRoleById),
         routeValues: new { id = result.Role.Id },
-        value: MapResultToResponse(result)
+        value: roleMapper.MapResultToResponse(result)
       );
   }
 }

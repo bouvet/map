@@ -7,7 +7,7 @@ using restapi.Models;
 using restapi.Common.Providers;
 using restapi.Common.Settings;
 
-namespace restapi.Common.Services;
+namespace restapi.Common.Services.Auth;
 
 public class JwtGenerator : IJwtGenerator
 {
