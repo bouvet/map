@@ -1,0 +1,5 @@
+@id=d0efc13f-d13c-4772-b7d9-0d16a098ce09
+
+GET {{host}}/api/reviews/{{id}}
+Authorization: Bearer {{usertoken}}
+# Authorization: Bearer {{admintoken}}

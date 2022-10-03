@@ -1,3 +1,4 @@
+global using restapi.Common.ServiceUtils.ServiceErrors;
 using restapi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ var app = builder.Build();
   app.UseExceptionHandler("/error");
   app.UseResponseCompression();
   app.UseHttpsRedirection();
+  app.UseAuthentication();
   app.UseAuthorization();
   app.MapControllers();
   app.UseDefaultFiles();

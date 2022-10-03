@@ -1,0 +1,7 @@
+POST {{host}}/api/users/role
+Content-Type: application/json
+
+{
+  "userId": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
+  "roleId": "3d2f83c2-82d4-4e3a-d050-08daa2e6b8a8"
+}

@@ -1,68 +1,71 @@
 ﻿using ErrorOr;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos.Categories;
-using restapi.Models;
-using restapi.Services.Categories;
+using restapi.Common.Services.Mappers.Categories;
+using restapi.Contracts.Categories;
+using restapi.Services.Categories.Common;
 
 namespace restapi.Controllers;
 
 public class CategoriesController : ApiController
 {
-  private readonly ICategoryService categoryService;
+  private readonly ISender mediator;
+  private readonly ICategoryMapper categoryMapper;
 
-  public CategoriesController(ICategoryService categoryService)
+  public CategoriesController(ISender mediator, ICategoryMapper categoryMapper)
   {
-    this.categoryService = categoryService;
+    this.mediator = mediator;
+    this.categoryMapper = categoryMapper;
   }
 
   [HttpGet]
   public async Task<IActionResult> GetCategories()
   {
-    ErrorOr<List<Category>> getCategoriesResult = await categoryService.GetCategories();
+    var getCategoriesQuery = categoryMapper.MapGetCategoriesQueryToCommand();
 
-    return getCategoriesResult.Match(
-      categories => Ok(categories),
-      errors => Problem(errors)
-    );
-  }
+    ErrorOr<List<CategoryResult>> getCategoriesQueryResult = await mediator.Send(getCategoriesQuery);
 
-  [HttpGet("inUse")]
-  public async Task<IActionResult> GetCategoriesInUse()
-  {
-    ErrorOr<List<Category>> getCategoriesInUseResult = await categoryService.GetCategoriesInUse();
-
-    return getCategoriesInUseResult.Match(
-      categories => Ok(categories),
+    return getCategoriesQueryResult.Match(
+      result => Ok(categoryMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpGet("{id:guid}")]
-  public async Task<IActionResult> GetCategory(Guid id)
+  public async Task<IActionResult> GetCategoryById(Guid id)
   {
-    ErrorOr<Category> getCategoryResult = await categoryService.GetCategory(id);
+    var getCategoryByIdQuery = categoryMapper.MapGetByIdQueryToCommand(id);
 
-    return getCategoryResult.Match(
-      category => Ok(category),
+    ErrorOr<CategoryResult> getCategoryByIdQueryResult = await mediator.Send(getCategoryByIdQuery);
+
+    return getCategoryByIdQueryResult.Match(
+      result => Ok(categoryMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPost]
-  public async Task<IActionResult> AddCategory(CategoryDto category)
+  public async Task<IActionResult> CreateCategory(CreateCategoryRequest request)
   {
-    ErrorOr<Category> createCategoryResult = await categoryService.AddCategory(category);
+    var createCategoryCommand = categoryMapper.MapCreateRequestToCommand(request);
+
+    ErrorOr<CategoryResult> createCategoryResult = await mediator.Send(createCategoryCommand);
 
     return createCategoryResult.Match(
-      category => CreatedAtGetCategory(category),
+      result => CreatedAtGetCategory(result),
       errors => Problem(errors)
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPut("{id:guid}")]
-  public async Task<IActionResult> UpdateCategory(Guid id, CategoryDto request)
+  public async Task<IActionResult> UpdateCategory(Guid id, UpdateCategoryRequest request)
   {
-    ErrorOr<Updated> updateCategoryResult = await categoryService.UpdateCategory(id, request);
+    var updateCategoryCommand = categoryMapper.MapUpdateRequestToCommand(id, request);
+
+    ErrorOr<Updated> updateCategoryResult = await mediator.Send(updateCategoryCommand);
 
     return updateCategoryResult.Match(
       _ => NoContent(),
@@ -70,10 +73,13 @@ public class CategoriesController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteCategory(Guid id)
   {
-    ErrorOr<Deleted> deleteCategoryResult = await categoryService.DeleteCategory(id);
+    var deleteCommand = categoryMapper.MapDeleteCategoryRequestToCommand(id);
+
+    ErrorOr<Deleted> deleteCategoryResult = await mediator.Send(deleteCommand);
 
     return deleteCategoryResult.Match(
       _ => NoContent(),
@@ -81,12 +87,12 @@ public class CategoriesController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetCategory(Category category)
+  private CreatedAtActionResult CreatedAtGetCategory(CategoryResult result)
   {
     return CreatedAtAction(
-        actionName: nameof(GetCategory),
-        routeValues: new { id = category.Id },
-        value: category
+        actionName: nameof(GetCategoryById),
+        routeValues: new { id = result.Category.Id },
+        value: categoryMapper.MapResultToResponse(result)
       );
   }
 }

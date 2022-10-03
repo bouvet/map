@@ -1,10 +1,4 @@
-@devhost=https://localhost:7107
-@prodhost=https://optimus-verden-venter.azurewebsites.net/
-
 @id=325ee2a3-efc0-4787-a85c-c1d0f2e20a74
 
-DELETE {{devhost}}/api/locations/{{id}}
-
-###
-
-DELETE {{prodhost}}/api/locations/{{id}}
+DELETE {{host}}/api/locations/{{id}}
+Authorization: Bearer {{usertoken}}

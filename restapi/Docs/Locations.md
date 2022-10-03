@@ -16,7 +16,7 @@
   - [Update Location](#update-location)
     - [Update Location Request](#update-location-request)
     - [Update Location Response](#update-location-response)
-  - [Delete Location](#delete-location)
+  - [🔒Delete Location](#delete-location)
     - [Delete Location Request](#delete-location-request)
     - [Delete Location Response](#delete-location-response)
 
@@ -243,12 +243,13 @@ latitude = <number> (58.xxxx)
 204 No Content
 ```
 
-## Delete Location
+## 🔒Delete Location
 
 ### Delete Location Request
 
 ```js
 DELETE {{host}}/api/locations/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete Location Response
