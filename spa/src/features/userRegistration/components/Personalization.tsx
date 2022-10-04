@@ -6,8 +6,8 @@ import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { Category } from '../../../utils/types.d';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkTextCenter, Text, TitleForm } from '../../../components/Form/Text';
-import { SubmitButton } from '../../../components/Form/Buttons';
+import { LinkTextPersonalization, Text, TitleForm } from '../../../components/Form/Text';
+import { SubmitButtonPersonalization } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { mapService } from '../../map';
 
@@ -41,9 +41,9 @@ export const Personalization: FC = () => {
                     <Text>Velg dine favoritter:</Text>
                     <FilterMenuContent>{mappedFilter}</FilterMenuContent>
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <SubmitButton text="white">Velg</SubmitButton>
+                        <SubmitButtonPersonalization text="white">Velg</SubmitButtonPersonalization>
                     </Form>
-                    <LinkTextCenter to="/onboarding">Hopp over</LinkTextCenter>
+                    <LinkTextPersonalization to="/onboarding">Hopp over</LinkTextPersonalization>
                 </SectionWrapper>
             </FormContent>
         </FormWrapper>

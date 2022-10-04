@@ -8,13 +8,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
+import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, Text, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { Form } from '../../../components/Form/Form';
-import { ProgressBarForm } from '../../../components/Form/ProgressBar';
+import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 
 export const EmailConfirmation: FC = () => {
     const navigate = useNavigate();
@@ -50,54 +50,57 @@ export const EmailConfirmation: FC = () => {
     const pageIndex = 1;
 
     return (
-        <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickOpen}>
-                <span className="material-symbols-outlined">close</span>
-            </BackButton>
-            <Dialog open={open}>
-                <DialogTitle id="alert-dialog-title">Avbryt registrering</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">Sikker på at du ønsker å avslutte registreringen?</DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Ja</Button>
-                    <Button onClick={handleCloseDialog}>Nei</Button>
-                </DialogActions>
-            </Dialog>
-            <FormContent>
-                <SectionWrapper>
-                    <TitleForm>Bekreft e-post</TitleForm>
-                    <Form>
-                        <ProgressBarForm pageIndex={pageIndex} />
-                        <Text>Skriv inn koden for å bekrefte e-postadressen {location.state.inputEmail}</Text>
-                        <Box
-                            sx={{
-                                '& .MuiTextField-root': { m: '1%', width: '14%' },
-                            }}
-                        >
-                            {inputCode.map((data, index) => (
-                                <TextField
-                                    type="text"
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={index}
-                                    name={`input-field-${index}`}
-                                    // inputMode="numeric"
-                                    // @ts-ignore
-                                    // pattern: '/^d+$/'
-                                    onChange={(event) => handleInputChange(event, index)}
-                                    inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
-                                    required
-                                    onFocus={(e) => e.target.select}
-                                    autoFocus={index === 0}
-                                />
-                            ))}
-                        </Box>
-                    </Form>
-                    <span>
-                        <LinkText to="/email-input">Tilbake</LinkText>
-                    </span>
-                </SectionWrapper>
-            </FormContent>
-        </FormWrapper>
+        <>
+            <ProgressWrapper>
+                <ProgressBarForm pageIndex={pageIndex} />
+            </ProgressWrapper>
+            <FormWrapperRegistration>
+                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickOpen}>
+                    <span className="material-symbols-outlined">close</span>
+                </BackButton>
+                <Dialog open={open}>
+                    <DialogTitle id="alert-dialog-title">Avbryt registrering</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Sikker på at du ønsker å avslutte registreringen?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Ja</Button>
+                        <Button onClick={handleCloseDialog}>Nei</Button>
+                    </DialogActions>
+                </Dialog>
+                <FormContent>
+                    <SectionWrapper>
+                        <TitleForm>Bekreft e-post</TitleForm>
+                        <Form>
+                            <Text>Skriv inn koden for å bekrefte e-postadressen {location.state.inputEmail}</Text>
+                            <Box
+                                sx={{
+                                    '& .MuiTextField-root': { m: '1%', width: '14%' },
+                                }}
+                            >
+                                {inputCode.map((data, index) => (
+                                    <TextField
+                                        type="text"
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        key={index}
+                                        name={`input-field-${index}`}
+                                        onChange={(event) => handleInputChange(event, index)}
+                                        inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
+                                        required
+                                        onFocus={(e) => e.target.select}
+                                        autoFocus={index === 0}
+                                    />
+                                ))}
+                            </Box>
+                        </Form>
+                        <span>
+                            <LinkText to="/email-input">Endre e-post</LinkText>
+                        </span>
+                    </SectionWrapper>
+                </FormContent>
+            </FormWrapperRegistration>
+        </>
     );
 };

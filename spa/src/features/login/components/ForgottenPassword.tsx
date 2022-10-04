@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SubmitButton } from '../../../components/Form/Buttons';
+import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { InputEmail } from '../../../components/Form/Input';
@@ -35,7 +35,7 @@ export const ForgottenPassword: FC = () => {
                     <Text>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</Text>
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <InputEmail label="E-post*" value={inputEmail} setState={setInputEmail} handleChange={handleFormInputChange} />
-                        <SubmitButton text="white">Tilbakestill passord</SubmitButton>
+                        <SubmitButtonRegistration text="white">Tilbakestill passord</SubmitButtonRegistration>
                     </Form>
                 </SectionWrapper>
             </FormContent>

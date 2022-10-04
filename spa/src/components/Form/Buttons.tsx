@@ -34,6 +34,22 @@ export const SubmitButtonRight = styled(SubmitButton)`
     float: right;
 `;
 
+export const SubmitButtonRegistration = styled(SubmitButton)`
+    position: absolute;
+    bottom: 20px;
+    top: auto;
+    z-index: 10;
+    width: 80%;
+`;
+
+export const SubmitButtonPersonalization = styled(SubmitButton)`
+    position: absolute;
+    bottom: 50px;
+    top: auto;
+    z-index: 10;
+    width: 80%;
+`;
+
 export const VippsLogoWhite = styled.img`
     height: 30px;
 `;

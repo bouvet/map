@@ -6,6 +6,10 @@ interface ProgessCompletionProp {
     completed: boolean;
 }
 
+export const ProgressWrapper = styled.div`
+    padding: 25px;
+`;
+
 export const ProgressBarWrapper = styled.div`
     width: 90%;
     height: 70px;
@@ -54,6 +58,8 @@ export const ProgressBarForm: FC<ProgressBarProps> = ({ pageIndex }) => (
     </ProgressBarWrapper>
 );
 
+// ONBOARDING
+
 export const ProgressBarWrapperOnboarding = styled.div`
     width: 90%;
     height: 70px;
@@ -61,6 +67,7 @@ export const ProgressBarWrapperOnboarding = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 5px;
+    margin-bottom: 25px;
 `;
 
 export const ProgressBarOnboarding: FC<ProgressBarProps> = ({ pageIndex }) => (

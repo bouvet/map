@@ -21,9 +21,26 @@ export const LinkTextCenter = styled(LinkText)`
     text-align: center;
 `;
 
+export const LinkTextPersonalization = styled(LinkText)`
+    position: absolute;
+    bottom: 20px;
+    top: auto;
+    z-index: 10;
+    justify-self: center;
+    text-align: center;
+`;
+
 export const LinkTextOnboarding = styled(LinkText)`
     padding: 5px;
     float: left;
+`;
+
+export const WrapperOnboarding = styled.div`
+    position: absolute;
+    bottom: 20px;
+    top: auto;
+    z-index: 10;
+    width: 80%;
 `;
 
 export const Title = styled.h1`

@@ -58,7 +58,7 @@ export const Login: FC = () => {
                                 {rememberStatus}
                             </LeftFlex>
                             <RightFlex>
-                                <LinkText to="forgotten-password">Glemt passord</LinkText>
+                                <LinkText to="/forgotten-password">Glemt passord</LinkText>
                             </RightFlex>
                         </SplitWrapper>
                         <SubmitButton text="white">LOGG INN</SubmitButton>
