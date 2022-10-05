@@ -21,4 +21,5 @@ public class User
 
   [JsonIgnore]
   public List<Role> Roles { get; set; } = new List<Role>();
+  public List<Category> FavoriteCategories { get; set; } = new List<Category>();
 }

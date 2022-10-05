@@ -21,13 +21,20 @@ Content-Type: application/json
 Required fields:
   - email
   - password (min 8 chars)
+  - firstName
+  - lastName
+  - DOB (Date Of Birth)
 
 ```
 
 ```json
 {
   "email": "",
-  "password": ""
+  "password": "",
+  "firstName": "",
+  "lastName": "",
+  "DOB": "", // Format: Year-Month-Day: 2022-09-27
+  "favoriteCategoryIds": ["", ""]
 }
 ```
 
@@ -43,17 +50,33 @@ Required fields:
   "email": "",
   "firstName": "",
   "lastName": "",
-  "address": "",
-  "postalArea": "",
+  "address": null,
+  "postalArea": null,
   "postalCode": 0,
   "phoneNumber": 0,
-  "dob": null,
+  "dob": "",
   "roles": [
     {
       "id": "",
       "name": "",
       "created": "",
       "updated": null,
+      "creator": null,
+      "editor": null
+    }
+  ],
+  "favoriteCategories": [
+    {
+      "id": "",
+      "name": "",
+      "emoji": "",
+      "creator": null,
+      "editor": null
+    },
+    {
+      "id": "",
+      "name": "",
+      "emoji": "",
       "creator": null,
       "editor": null
     }

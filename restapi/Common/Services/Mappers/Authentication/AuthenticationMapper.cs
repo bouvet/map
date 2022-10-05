@@ -1,3 +1,4 @@
+using restapi.Common.Services.Mappers.Categories;
 using restapi.Common.Services.Mappers.Roles;
 using restapi.Contracts.Authentication;
 using restapi.Services.Authentication.Commands.Register;
@@ -9,10 +10,12 @@ namespace restapi.Common.Services.Mappers.Authentication;
 public class AuthenticationMapper : IAuthenticationMapper
 {
   private readonly IRoleMapper roleMapper;
+  private readonly ICategoryMapper categoryMapper;
 
-  public AuthenticationMapper(IRoleMapper roleMapper)
+  public AuthenticationMapper(IRoleMapper roleMapper, ICategoryMapper categoryMapper)
   {
     this.roleMapper = roleMapper;
+    this.categoryMapper = categoryMapper;
   }
 
   public LoginQuery MapLoginQueryToCommand(LoginRequest request)
@@ -27,7 +30,11 @@ public class AuthenticationMapper : IAuthenticationMapper
   {
     return new RegisterCommand(
       request.Email,
-      request.Password
+      request.Password,
+      request.FirstName,
+      request.LastName,
+      request.DOB,
+      request.FavoriteCategoryIds
     );
   }
 
@@ -44,6 +51,7 @@ public class AuthenticationMapper : IAuthenticationMapper
       result.User.PhoneNumber,
       result.User.DOB,
       roleMapper.MapDbListToResponseList(result.User.Roles),
+      categoryMapper.MapDbListToResponseList(result.User.FavoriteCategories),
       result.Token
     );
   }
