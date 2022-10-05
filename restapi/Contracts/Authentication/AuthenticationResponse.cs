@@ -1,3 +1,4 @@
+using restapi.Contracts.Categories;
 using restapi.Contracts.Roles;
 
 namespace restapi.Contracts.Authentication;
@@ -13,5 +14,6 @@ public record AuthenticationResponse(
   int PhoneNumber,
   DateTime? DOB,
   List<RoleResponse> Roles,
+  List<CategoryResponse> FavoriteCategories,
   string Token
 );

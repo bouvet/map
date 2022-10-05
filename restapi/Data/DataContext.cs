@@ -10,6 +10,8 @@ public class DataContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<User>().HasMany(user => user.Roles).WithMany(r => r.Users);
+    modelBuilder.Entity<User>().HasMany(user => user.FavoriteCategories).WithMany(category => category.Users);
+    modelBuilder.Entity<User>().Navigation(user => user.FavoriteCategories).AutoInclude();
     modelBuilder.Entity<User>().Navigation(user => user.Roles).AutoInclude();
 
     modelBuilder.Entity<Role>().HasOne(role => role.Creator);
@@ -23,8 +25,6 @@ public class DataContext : DbContext
 
     modelBuilder.Entity<Category>().HasOne(c => c.Creator);
     modelBuilder.Entity<Category>().HasOne(c => c.Editor);
-    modelBuilder.Entity<Category>().Navigation(category => category.Creator).AutoInclude();
-    modelBuilder.Entity<Category>().Navigation(category => category.Editor).AutoInclude();
 
     modelBuilder.Entity<Location>().HasOne(location => location.Creator);
     modelBuilder.Entity<Location>().HasOne(location => location.Editor);

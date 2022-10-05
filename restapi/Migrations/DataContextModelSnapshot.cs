@@ -37,6 +37,21 @@ namespace restapi.Migrations
                     b.ToTable("CategoryLocation");
                 });
 
+            modelBuilder.Entity("CategoryUser", b =>
+                {
+                    b.Property<Guid>("FavoriteCategoriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FavoriteCategoriesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("CategoryUser");
+                });
+
             modelBuilder.Entity("restapi.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -255,6 +270,21 @@ namespace restapi.Migrations
                     b.HasOne("restapi.Models.Location", null)
                         .WithMany()
                         .HasForeignKey("LocationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CategoryUser", b =>
+                {
+                    b.HasOne("restapi.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("FavoriteCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("restapi.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

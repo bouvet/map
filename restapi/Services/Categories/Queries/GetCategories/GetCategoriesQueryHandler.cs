@@ -17,7 +17,11 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Err
 
   public async Task<ErrorOr<List<CategoryResult>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
   {
-    var categories = await dataContext.Categories.ToListAsync(cancellationToken: cancellationToken);
+    var categories = await dataContext
+      .Categories
+      .Include(c => c.Creator)
+      .Include(c => c.Editor)
+      .ToListAsync(cancellationToken: cancellationToken);
 
     var categoryResultList = new List<CategoryResult>();
 

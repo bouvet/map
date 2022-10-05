@@ -6,5 +6,9 @@ namespace restapi.Services.Authentication.Commands.Register;
 
 public record RegisterCommand(
   string Email,
-  string Password
+  string Password,
+  string FirstName,
+  string LastName,
+  DateTime? DOB,
+  List<Guid>? FavoriteCategoryIds
 ) : IRequest<ErrorOr<AuthenticationResult>>;
