@@ -34,7 +34,7 @@ export const PersonalInfo: FC = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [age, setAge] = useState<Date | null>(null);
+    const [dob, setDob] = useState<Date | null>(null);
 
     const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -44,7 +44,7 @@ export const PersonalInfo: FC = () => {
         setState(e.target.value);
     };
 
-    const handleChangeAge = (timestamp: Date | null, setState: Dispatch<SetStateAction<Date | null>>) => {
+    const handleChangeDob = (timestamp: Date | null, setState: Dispatch<SetStateAction<Date | null>>) => {
         if (timestamp !== null) {
             setState(timestamp);
         }
@@ -53,17 +53,17 @@ export const PersonalInfo: FC = () => {
     moment.locale('nb');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        if (age === null) {
+        if (dob === null) {
             e.preventDefault();
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {
             e.preventDefault();
             dispatch(userActions.setFirstName(firstName));
             dispatch(userActions.setLastName(lastName));
-            dispatch(userActions.setAge(moment(age).format('L')));
+            dispatch(userActions.setDob(moment(dob).format('L')));
             navigate('/create-password');
             console.log('Name: ', firstName, lastName);
-            console.log('Date of birth: ', moment(age).format('L'));
+            console.log('Date of birth: ', moment(dob).format('L'));
         }
     };
 
@@ -116,8 +116,8 @@ export const PersonalInfo: FC = () => {
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
                                         label="dd.mm.åååå"
-                                        value={age}
-                                        onChange={(newValue) => handleChangeAge(newValue, setAge)}
+                                        value={dob}
+                                        onChange={(newValue) => handleChangeDob(newValue, setDob)}
                                         renderInput={(params) => <TextField {...params} />}
                                         maxDate={new Date()}
                                     />

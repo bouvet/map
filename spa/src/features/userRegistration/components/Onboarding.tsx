@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRight } from '../../../components/Form/Buttons';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
@@ -8,12 +8,11 @@ import { Text, LinkTextOnboarding, TitleForm, WrapperOnboarding } from '../../..
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
+import { ResetPassword } from '../../login/components/ResetPassword';
 import { userService } from '../services/user.services';
 
-const pageIndex = 0;
-
 export const Onboarding: FC = () => {
-    const { email, password, firstName, lastName, age, favorites } = useStateSelector((state) => state.user);
+    const { email, password, firstName, lastName, dob, favorites } = useStateSelector((state) => state.user);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -23,7 +22,7 @@ export const Onboarding: FC = () => {
         dispatch(userActions.setPassword(''));
         dispatch(userActions.setFirstName(''));
         dispatch(userActions.setLastName(''));
-        dispatch(userActions.setAge(''));
+        dispatch(userActions.setDob(''));
         dispatch(userActions.setFavorites([]));
     };
 
@@ -37,15 +36,16 @@ export const Onboarding: FC = () => {
     }, [navigate]);
 
     const uploadContent = async () => {
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('password', password);
-        formData.append('firstName', firstName);
-        formData.append('lastName', lastName);
-        formData.append('age', age);
-        favorites.map((x) => formData.append('favorites', x));
+        const userDetails = {
+            email,
+            password,
+            firstName,
+            lastName,
+            dob,
+            favorites,
+        };
 
-        const successStatus: boolean = await dispatch(userService.registerUser(formData));
+        const successStatus: boolean = await dispatch(userService.registerUser(userDetails));
 
         if (successStatus) {
             dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
@@ -59,16 +59,22 @@ export const Onboarding: FC = () => {
         uploadContent();
     };
 
-    const handleClickComplete = () => {
-        uploadContent();
-    };
-
     // test
     console.log('sjekk1', email);
     console.log('sjekk2', password);
     console.log('sjekk2', firstName, lastName);
-    console.log('sjekk4', age);
+    console.log('sjekk4', dob);
     console.log('sjekk5', favorites);
+
+    const [pageIndex, setPageIndex] = useState(0);
+
+    const handleForwardClick = () => {
+        if (pageIndex === 2) {
+            uploadContent();
+        } else {
+            setPageIndex(pageIndex + 1);
+        }
+    };
 
     return (
         <>
@@ -76,15 +82,59 @@ export const Onboarding: FC = () => {
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>Slik bruker du VerdenVenter</TitleForm>
-                        <Text>...</Text>
-                        <WrapperOnboarding>
-                            <ProgressBarOnboarding pageIndex={pageIndex} />
-                            <SubmitButtonRight text="white">Neste</SubmitButtonRight>
-                            <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
-                        </WrapperOnboarding>
+                        {pageIndex === 0 ? (
+                            <>
+                                <Text>Første side</Text>
+                                <WrapperOnboarding>
+                                    <ProgressBarOnboarding pageIndex={pageIndex} />
+                                    <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                        Neste
+                                    </SubmitButtonRight>
+                                    <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+                                </WrapperOnboarding>
+                            </>
+                        ) : (
+                            <WrapperOnboarding>
+                                {pageIndex === 1 && (
+                                    <>
+                                        <ProgressBarOnboarding pageIndex={pageIndex} />
+                                        <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                            Neste
+                                        </SubmitButtonRight>
+                                        <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+                                    </>
+                                )}
+                                {pageIndex === 2 && (
+                                    <>
+                                        <ProgressBarOnboarding pageIndex={pageIndex} />
+                                        <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                            Fullfør
+                                        </SubmitButtonRight>
+                                    </>
+                                )}
+                            </WrapperOnboarding>
+                        )}
+                        {pageIndex === 1 && <ResetPassword />}
+                        {pageIndex === 2 && <ResetPassword />}
                     </SectionWrapper>
                 </FormContent>
             </FormWrapper>
         </>
+
+        // <>
+        //     <FormWrapper>
+        //         <FormContent>
+        //             <SectionWrapper>
+        //                 <TitleForm>Slik bruker du VerdenVenter</TitleForm>
+        //                 <Text>...</Text>
+        //                 <WrapperOnboarding>
+        //                     <ProgressBarOnboarding pageIndex={pageIndex} />
+        //                     <SubmitButtonRight text="white">Neste</SubmitButtonRight>
+        //                     <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+        //                 </WrapperOnboarding>
+        //             </SectionWrapper>
+        //         </FormContent>
+        //     </FormWrapper>
+        // </>
     );
 };

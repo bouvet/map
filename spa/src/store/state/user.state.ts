@@ -5,7 +5,7 @@ const initialState = {
     password: '',
     firstName: '',
     lastName: '',
-    age: '',
+    dob: '',
     favorites: [] as string[],
 };
 
@@ -25,8 +25,8 @@ const userState = createSlice({
         setLastName(state, action: PayloadAction<string>) {
             state.lastName = action.payload;
         },
-        setAge(state, action: PayloadAction<string>) {
-            state.age = action.payload;
+        setDob(state, action: PayloadAction<string>) {
+            state.dob = action.payload;
         },
         setFavorites(state, action: PayloadAction<string[]>) {
             state.favorites = action.payload;

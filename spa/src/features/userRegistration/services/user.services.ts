@@ -2,10 +2,10 @@ import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 
 export const userService = {
-    registerUser(payload: FormData) {
+    registerUser(payload: any) {
         return async (dispatch: AppDispatch) => {
             try {
-                const postUser = await API.post('/Users', payload, { headers: { 'Content-Type': 'application/json' } });
+                const postUser = await API.post('/auth/register', payload);
                 console.log(postUser);
                 if (postUser.data.success) {
                     return true;
