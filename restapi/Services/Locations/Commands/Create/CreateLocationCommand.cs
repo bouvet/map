@@ -10,5 +10,6 @@ public record CreateLocationCommand(
   IFormFile? Image,
   double Longitude,
   double Latitude,
-  List<Guid>? Category
+  List<Guid>? Category,
+  Guid? UserId
 ) : IRequest<ErrorOr<LocationResult>>;

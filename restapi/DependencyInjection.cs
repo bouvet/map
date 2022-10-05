@@ -15,10 +15,10 @@ public static class DependencyInjection
   {
     await services.AddProvidersAsync(configuration);
 
+    services.AddMappers();
     services.AddMediatR(Assembly.GetExecutingAssembly());
 
     services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
-    services.AddMappings();
 
     services.AddResponseCompression(options => options.EnableForHttps = true);
 

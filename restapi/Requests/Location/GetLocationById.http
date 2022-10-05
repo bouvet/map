@@ -1,0 +1,3 @@
+@id=f6f2ed44-c77b-4b9c-b881-035c877402e4
+
+GET {{host}}/api/locations/{{id}}

@@ -1,6 +1,8 @@
-using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Roles;
+using restapi.Contracts.Users;
+using restapi.Models;
 using restapi.Services.Roles.Commands.Create;
+using restapi.Services.Roles.Commands.Delete;
 using restapi.Services.Roles.Common;
 using restapi.Services.Roles.Queries.GetRoleById;
 using restapi.Services.Roles.Queries.GetRoles;
@@ -9,16 +11,26 @@ namespace restapi.Common.Services.Mappers.Roles;
 
 public class RoleMapper : IRoleMapper
 {
-  private readonly IUserMapper userMapper;
-
-  public RoleMapper(IUserMapper userMapper)
+  public CreateRoleCommand MapCreateToCommand(CreateRoleRequest request, string userId)
   {
-    this.userMapper = userMapper;
+    return new CreateRoleCommand(request.Name, string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId));
   }
 
-  public CreateRoleCommand MapCreateToCommand(CreateRoleRequest request)
+  public List<RoleResult> MapDbListToResultList(List<Role> roles)
   {
-    return new CreateRoleCommand(request.Name);
+    var resultList = new List<RoleResult>();
+
+    foreach (var role in roles)
+    {
+      resultList.Add(new RoleResult(role));
+    }
+
+    return resultList;
+  }
+
+  public DeleteRoleCommand MapDeleteRole(Guid id)
+  {
+    return new DeleteRoleCommand(id);
   }
 
   public GetRoleByIdQuery MapGetByIdToCommand(Guid id)
@@ -29,6 +41,13 @@ public class RoleMapper : IRoleMapper
   public GetRolesQuery MapGetRolesToCommand()
   {
     return new GetRolesQuery();
+  }
+
+  public List<RoleResponse> MapDbListToResponseList(List<Role> roles)
+  {
+    var resultList = MapDbListToResultList(roles);
+
+    return MapResultListToResponseList(resultList);
   }
 
   public List<RoleResponse> MapResultListToResponseList(List<RoleResult> resultList)
@@ -50,9 +69,8 @@ public class RoleMapper : IRoleMapper
       result.Role.Name,
       result.Role.Created,
       result.Role.Updated,
-      result.Role.Creator is not null ? userMapper.MapUserToUserResponse(result.Role.Creator) : null,
-      result.Role.Editor is not null ? userMapper.MapUserToUserResponse(result.Role.Editor) : null,
-      result.Role.Users
+      result.Role.Creator is not null ? new CreatorEditorResponse(result.Role.Creator.Id, result.Role.Creator.Email, result.Role.Creator.FirstName, result.Role.Creator.LastName) : null,
+      result.Role.Editor is not null ? new CreatorEditorResponse(result.Role.Editor.Id, result.Role.Editor.Email, result.Role.Editor.FirstName, result.Role.Editor.LastName) : null
     );
   }
 }

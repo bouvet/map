@@ -9,7 +9,7 @@ namespace restapi.Common.Services.Mappings;
 
 public static class DependencyInjection
 {
-  public static IServiceCollection AddMappings(this IServiceCollection services)
+  public static IServiceCollection AddMappers(this IServiceCollection services)
   {
     services.AddScoped<IAuthenticationMapper, AuthenticationMapper>();
     services.AddScoped<ICategoryMapper, CategoryMapper>();

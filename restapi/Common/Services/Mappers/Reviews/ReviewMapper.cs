@@ -27,8 +27,8 @@ public class ReviewMapper : IReviewMapper
       result.Review.Image,
       result.Review.Created,
       result.Review.Updated,
-      result.Review.Creator is not null ? userMapper.MapUserToUserResponse(result.Review.Creator) : null,
-      result.Review.Editor is not null ? userMapper.MapUserToUserResponse(result.Review.Editor) : null,
+      result.Review.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Review.Creator) : null,
+      result.Review.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Review.Editor) : null,
       result.Review.LocationId
     );
   }

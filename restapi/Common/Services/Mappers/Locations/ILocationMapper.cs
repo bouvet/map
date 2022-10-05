@@ -11,11 +11,11 @@ namespace restapi.Common.Services.Mappers.Locations;
 
 public interface ILocationMapper
 {
-  CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request);
+  CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request, string userId);
   GetLocationsQuery MapGetLocationsQueryToCommand();
   GetLocationByProximityQuery MapGetByProximityToCommand(GetLocationByProximityRequest request);
   GetLocationByIdQuery MapGetByIdToCommand(Guid id);
-  UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request);
+  UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, string userId);
   DeleteLocationCommand MapDeleteToCommand(Guid id);
   LocationResponse MapResultToResponse(LocationResult result);
   List<LocationResponse> MapResultListToResponseList(List<LocationResult> resultList);

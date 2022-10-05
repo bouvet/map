@@ -1,4 +1,4 @@
-using restapi.Models;
+using restapi.Contracts.Roles;
 
 namespace restapi.Contracts.Authentication;
 
@@ -12,6 +12,6 @@ public record AuthenticationResponse(
   int PostalCode,
   int PhoneNumber,
   DateTime? DOB,
-  List<Role>? Roles,
+  List<RoleResponse> Roles,
   string Token
 );

@@ -1,4 +1,7 @@
 using restapi.Common.Providers;
+using restapi.Common.Services.Mappers.Categories;
+using restapi.Common.Services.Mappers.Users;
+using restapi.Contracts.Categories;
 using restapi.Contracts.Locations;
 using restapi.Services.Locations.Commands.Create;
 using restapi.Services.Locations.Commands.Delete;
@@ -12,7 +15,16 @@ namespace restapi.Common.Services.Mappers.Locations;
 
 public class LocationMapper : ILocationMapper
 {
-  public CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request)
+  private readonly IUserMapper userMapper;
+  private readonly ICategoryMapper categoryMapper;
+
+  public LocationMapper(IUserMapper userMapper, ICategoryMapper categoryMapper)
+  {
+    this.userMapper = userMapper;
+    this.categoryMapper = categoryMapper;
+  }
+
+  public CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request, string userId)
   {
     return new CreateLocationCommand(
       request.Title,
@@ -20,7 +32,8 @@ public class LocationMapper : ILocationMapper
       request.Image,
       request.Longitude,
       request.Latitude,
-      request.Category
+      request.Category,
+      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
     );
   }
 
@@ -58,6 +71,13 @@ public class LocationMapper : ILocationMapper
 
   public LocationResponse MapResultToResponse(LocationResult result)
   {
+    var categoryList = new List<CategoryResponse>();
+
+    if (result.Location.Categories.Count > 0)
+    {
+      categoryList = categoryMapper.MapDbListToResponseList(result.Location.Categories);
+    }
+
     var geometry = new LocationGeometry(
       new[] { result.Location.Longitude, result.Location.Latitude }
     );
@@ -69,13 +89,20 @@ public class LocationMapper : ILocationMapper
       result.Location.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
       result.Location.Status,
       result.Location.Rating,
-      result.Location.Categories
+      categoryList
     );
 
-    return new LocationResponse(result.Location.Id, "Feature", properties, geometry);
+    return new LocationResponse(
+        result.Location.Id,
+        "Feature",
+        result.Location.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Location.Creator) : null,
+        result.Location.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Location.Editor) : null,
+        properties,
+        geometry
+      );
   }
 
-  public UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request)
+  public UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, string userId)
   {
     return new UpdateLocationCommand(
       request.Id,
@@ -85,7 +112,8 @@ public class LocationMapper : ILocationMapper
       request.Status,
       request.Longitude,
       request.Latitude,
-      request.Category
+      request.Category,
+      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
     );
   }
 }

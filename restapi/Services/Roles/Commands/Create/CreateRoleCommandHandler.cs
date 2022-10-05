@@ -31,6 +31,16 @@ public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Error
 
     var role = new Role { Name = request.Name, Created = dateTimeProvider.CEST };
 
+    if (request.UserId is not null)
+    {
+      var user = await dataContext.Users.FindAsync(new object?[] { request.UserId }, cancellationToken: cancellationToken);
+
+      if (user is not null)
+      {
+        role.Creator = user;
+      }
+    }
+
     dataContext.Roles.Add(role);
     await dataContext.SaveChangesAsync(cancellationToken);
 

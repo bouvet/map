@@ -1,3 +1,4 @@
+using restapi.Common.Services.Mappers.Roles;
 using restapi.Contracts.Users;
 using restapi.Models;
 using restapi.Services.Users.Commands.AddUserRole;
@@ -11,6 +12,13 @@ namespace restapi.Common.Services.Mappers.Users;
 
 public class UserMapper : IUserMapper
 {
+  private readonly IRoleMapper roleMapper;
+
+  public UserMapper(IRoleMapper roleMapper)
+  {
+    this.roleMapper = roleMapper;
+  }
+
   public UserResponse MapUserToUserResponse(User user)
   {
     return new UserResponse(
@@ -22,8 +30,7 @@ public class UserMapper : IUserMapper
        user.PostalArea,
        user.PostalCode,
        user.PhoneNumber,
-       user.DOB,
-       user.Roles
+       user.DOB
       );
   }
 
@@ -38,8 +45,7 @@ public class UserMapper : IUserMapper
       result.User.PostalArea,
       result.User.PostalCode,
       result.User.PhoneNumber,
-      result.User.DOB,
-      result.User.Roles
+      result.User.DOB
     );
   }
 
@@ -91,5 +97,15 @@ public class UserMapper : IUserMapper
   public DeleteUserCommand MapDeleteToCommand(Guid id)
   {
     return new DeleteUserCommand(id);
+  }
+
+  public CreatorEditorResponse MapUserToCreatorEditor(User user)
+  {
+    return new CreatorEditorResponse(
+      user.Id,
+      user.Email,
+      user.FirstName,
+      user.LastName
+    );
   }
 }

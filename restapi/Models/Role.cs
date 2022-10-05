@@ -12,7 +12,5 @@ public class Role
   public DateTime? Updated { get; set; }
   public User? Creator { get; set; }
   public User? Editor { get; set; }
-
-  [JsonIgnore]
-  public List<User> Users { get; set; } = new List<User>();
+  public List<User>? Users { get; set; }
 }
