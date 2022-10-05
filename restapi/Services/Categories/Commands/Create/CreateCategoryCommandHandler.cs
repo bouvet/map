@@ -42,6 +42,16 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
 
     var category = new Models.Category { Name = request.Name, Emoji = request.Emoji };
 
+    if (request.UserId is not null)
+    {
+      var user = await dataContext.Users.FindAsync(new object?[] { request.UserId }, cancellationToken: cancellationToken);
+
+      if (user is not null)
+      {
+        category.Creator = user;
+      }
+    }
+
     dataContext.Categories.Add(category);
     await dataContext.SaveChangesAsync(cancellationToken);
 

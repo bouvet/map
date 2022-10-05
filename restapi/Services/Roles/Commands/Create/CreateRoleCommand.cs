@@ -4,4 +4,4 @@ using restapi.Services.Roles.Common;
 
 namespace restapi.Services.Roles.Commands.Create;
 
-public record CreateRoleCommand(string Name) : IRequest<ErrorOr<RoleResult>>;
+public record CreateRoleCommand(string Name, Guid? UserId) : IRequest<ErrorOr<RoleResult>>;

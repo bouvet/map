@@ -6,5 +6,6 @@ namespace restapi.Services.Categories.Commands.Update;
 public record UpdateCategoryCommand(
   Guid Id,
   string Name,
-  string Emoji
+  string Emoji,
+  Guid? UserId
 ) : IRequest<ErrorOr<Updated>>;

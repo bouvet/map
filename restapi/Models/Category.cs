@@ -12,6 +12,8 @@ public class Category
   public Guid Id { get; set; } = new Guid();
   public string Name { get; set; } = null!;
   public string Emoji { get; set; } = null!;
+  public User? Creator { get; set; }
+  public User? Editor { get; set; }
 
   [JsonIgnore]
   public List<Location> Locations { get; set; } = new List<Location>();

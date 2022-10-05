@@ -1,13 +1,13 @@
 ### Create Location without image
 
 POST {{host}}/api/locations
+Authorization: Bearer {{admintoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-# Authorization: Bearer {{token}}
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
-A new title!
+Another Location
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="description"
 
@@ -23,7 +23,7 @@ Content-Disposition: form-data; name="latitude"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-60c951f3-d233-442b-7883-08da9ad92895
+429b41f2-fa6d-447c-e53b-08daa6a9cd73
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### Create Location With Image

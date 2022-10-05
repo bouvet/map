@@ -8,7 +8,7 @@ public record ReviewResponse(
   string? Image,
   DateTime Created,
   DateTime? Updated,
-  UserResponse? Creator,
-  UserResponse? Editor,
+  CreatorEditorResponse? Creator,
+  CreatorEditorResponse? Editor,
   Guid LocationId
 );

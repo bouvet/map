@@ -54,6 +54,16 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
       }
     }
 
+    if (request.UserId is not null)
+    {
+      var user = await dataContext.Users.FindAsync(new object?[] { request.UserId }, cancellationToken: cancellationToken);
+
+      if (user is not null)
+      {
+        location.Editor = user;
+      }
+    }
+
     if (request.Image is not null)
     {
       ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);

@@ -1,4 +1,5 @@
 using restapi.Contracts.Categories;
+using restapi.Models;
 using restapi.Services.Categories.Commands.Create;
 using restapi.Services.Categories.Commands.Delete;
 using restapi.Services.Categories.Commands.Update;
@@ -10,11 +11,12 @@ namespace restapi.Common.Services.Mappers.Categories;
 
 public interface ICategoryMapper
 {
-  CreateCategoryCommand MapCreateRequestToCommand(CreateCategoryRequest request);
-  UpdateCategoryCommand MapUpdateRequestToCommand(Guid id, UpdateCategoryRequest request);
+  CreateCategoryCommand MapCreateRequestToCommand(CreateCategoryRequest request, string userId);
+  UpdateCategoryCommand MapUpdateRequestToCommand(Guid id, UpdateCategoryRequest request, string userId);
   GetCategoriesQuery MapGetCategoriesQueryToCommand();
   GetCategoryByIdQuery MapGetByIdQueryToCommand(Guid id);
   DeleteCategoryCommand MapDeleteCategoryRequestToCommand(Guid id);
   CategoryResponse MapResultToResponse(CategoryResult result);
   List<CategoryResponse> MapResultListToResponseList(List<CategoryResult> resultList);
+  List<CategoryResponse> MapDbListToResponseList(List<Category> categories);
 }

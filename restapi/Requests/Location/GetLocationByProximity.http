@@ -1,0 +1,10 @@
+@latitude=58.1234
+@longitude=5.1234
+@category=429b41f2-fa6d-447c-e53b-08daa6a9cd73
+
+
+GET {{host}}/api/locations/{{latitude}}&{{longitude}}
+
+###
+
+GET {{host}}/api/locations/{{latitude}}&{{longitude}}?category={{category}}

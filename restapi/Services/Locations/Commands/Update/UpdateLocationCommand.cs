@@ -11,5 +11,6 @@ public record UpdateLocationCommand(
   string Status,
   double Longitude,
   double Latitude,
-  List<Guid>? Category
+  List<Guid>? Category,
+  Guid? UserId
 ) : IRequest<ErrorOr<Updated>>;

@@ -23,6 +23,8 @@ public class Location
   public double Longitude { get; set; }
   public double Latitude { get; set; }
   public string Status { get; set; } = "Under Review";
+  public User? Creator { get; set; }
+  public User? Editor { get; set; }
   public List<Category> Categories { get; set; } = new List<Category>();
 
   [JsonIgnore]

@@ -22,7 +22,9 @@ public class LocationsController : ApiController
   [HttpPost]
   public async Task<IActionResult> CreateLocation([FromForm] CreateLocationRequest request)
   {
-    var createLocationCommand = locationMapper.MapCreateRequestToCommand(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var createLocationCommand = locationMapper.MapCreateRequestToCommand(request, userId ?? "");
 
     ErrorOr<LocationResult> createLocationCommandResult = await mediator.Send(createLocationCommand);
 
@@ -44,10 +46,10 @@ public class LocationsController : ApiController
     );
   }
 
-  [HttpGet("{latitude}&{longitude}/category")]
-  public async Task<IActionResult> GetLocationByProximity(GetLocationByProximityRequest request)
+  [HttpGet("{latitude}&{longitude}")]
+  public async Task<IActionResult> GetLocationByProximity(double latitude, double longitude, Guid categoryId)
   {
-    var getLocationByProximityQuery = locationMapper.MapGetByProximityToCommand(request);
+    var getLocationByProximityQuery = locationMapper.MapGetByProximityToCommand(latitude, longitude, categoryId);
 
     ErrorOr<LocationResult> getClosestLocationResult = await mediator.Send(getLocationByProximityQuery);
 
@@ -71,10 +73,13 @@ public class LocationsController : ApiController
   }
 
   //TODO: Lock this so only creator and administrator can update?
+  [Authorize(Roles = "User, Administrator")]
   [HttpPut]
   public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationRequest request)
   {
-    var updateLocationCommand = locationMapper.MapUpdateToCommand(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var updateLocationCommand = locationMapper.MapUpdateToCommand(request, userId ?? "");
 
     ErrorOr<Updated> updateLocationResult = await mediator.Send(updateLocationCommand);
 

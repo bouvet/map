@@ -43,6 +43,16 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
     category.Name = request.Name;
     category.Emoji = request.Emoji;
 
+    if (request.UserId is not null)
+    {
+      var user = await dataContext.Users.FindAsync(new object?[] { request.UserId }, cancellationToken: cancellationToken);
+
+      if (user is not null)
+      {
+        category.Editor = user;
+      }
+    }
+
     await dataContext.SaveChangesAsync(cancellationToken);
 
     return Result.Updated;

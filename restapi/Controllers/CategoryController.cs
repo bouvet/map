@@ -49,7 +49,9 @@ public class CategoriesController : ApiController
   [HttpPost]
   public async Task<IActionResult> CreateCategory(CreateCategoryRequest request)
   {
-    var createCategoryCommand = categoryMapper.MapCreateRequestToCommand(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var createCategoryCommand = categoryMapper.MapCreateRequestToCommand(request, userId ?? "");
 
     ErrorOr<CategoryResult> createCategoryResult = await mediator.Send(createCategoryCommand);
 
@@ -63,7 +65,9 @@ public class CategoriesController : ApiController
   [HttpPut("{id:guid}")]
   public async Task<IActionResult> UpdateCategory(Guid id, UpdateCategoryRequest request)
   {
-    var updateCategoryCommand = categoryMapper.MapUpdateRequestToCommand(id, request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var updateCategoryCommand = categoryMapper.MapUpdateRequestToCommand(id, request, userId ?? "");
 
     ErrorOr<Updated> updateCategoryResult = await mediator.Send(updateCategoryCommand);
 

@@ -38,6 +38,11 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
       return Errors.Review.NotFound;
     }
 
+    if (review.Creator?.Id != request.UserId)
+    {
+      return Errors.Authentication.Forbidden;
+    }
+
     if (!string.IsNullOrEmpty(request.Text))
     {
       review.Text = request.Text;

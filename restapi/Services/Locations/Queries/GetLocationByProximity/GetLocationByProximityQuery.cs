@@ -7,5 +7,5 @@ namespace restapi.Services.Locations.Queries.GetLocationByProximity;
 public record GetLocationByProximityQuery(
   double Latitude,
   double Longitude,
-  Guid CategoryId
+  Guid? CategoryId
 ) : IRequest<ErrorOr<LocationResult>>;

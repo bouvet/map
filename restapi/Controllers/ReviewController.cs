@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Services.Mappers.Reviews;
 using restapi.Contracts.Reviews;
@@ -59,11 +60,13 @@ public class ReviewsController : ApiController
     );
   }
 
-  //TODO: Lock so only creator and admin can update
+  [Authorize(Roles = "User, Administrator")]
   [HttpPut]
   public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewRequest request)
   {
-    var updateReviewCommand = reviewMapper.MapUpdateToCommand(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var updateReviewCommand = reviewMapper.MapUpdateToCommand(request, userId ?? "");
 
     ErrorOr<Updated> updateReviewResult = await mediator.Send(updateReviewCommand);
 

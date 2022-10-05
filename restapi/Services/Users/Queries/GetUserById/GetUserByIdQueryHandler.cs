@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using restapi.Data;
 using restapi.Services.Users.Common;
 
@@ -16,7 +17,13 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr
 
   public async Task<ErrorOr<UserResult>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
   {
-    var user = await dataContext.Users.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
+    var user = await dataContext
+      .Users
+      .Include(user => user.Roles)
+      .ThenInclude(role => role.Creator)
+      .Include(user => user.Roles)
+      .ThenInclude(role => role.Editor)
+      .SingleOrDefaultAsync(user => user.Id == request.Id, cancellationToken: cancellationToken);
 
     if (user is null)
     {

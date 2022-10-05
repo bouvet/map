@@ -1,4 +1,4 @@
-using restapi.Models;
+using restapi.Contracts.Roles;
 
 namespace restapi.Contracts.Users;
 
@@ -12,5 +12,5 @@ public record UserResponse(
   int? PostalCode,
   int? PhoneNumber,
   DateTime? DOB,
-  List<Role>? Roles
+  List<RoleResponse> Roles
 );

@@ -1,9 +1,9 @@
 POST {{host}}/api/categories
 Content-Type: application/json
-# Authorization: Bearer {{usertoken}}
 Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}
 
 {
-  "name": "Golf!!!!!!",
+  "name": "Golf",
   "emoji": "🏌️‍♂️"
 }

@@ -41,10 +41,10 @@ Required fields:
 {
   "id": "",
   "email": "",
-  "firstName": null,
-  "lastName": null,
-  "address": null,
-  "postalArea": null,
+  "firstName": "",
+  "lastName": "",
+  "address": "",
+  "postalArea": "",
   "postalCode": 0,
   "phoneNumber": 0,
   "dob": null,
@@ -53,7 +53,9 @@ Required fields:
       "id": "",
       "name": "",
       "created": "",
-      "updated": null
+      "updated": null,
+      "creator": null,
+      "editor": null
     }
   ],
   "token": ""
@@ -98,13 +100,20 @@ Required fields:
   "postalArea": "",
   "postalCode": 0,
   "phoneNumber": 0,
-  "dob": "",
+  "dob": null,
   "roles": [
     {
       "id": "",
       "name": "",
       "created": "",
-      "updated": null
+      "updated": null,
+      "creator": {
+        "id": "",
+        "email": "",
+        "firstName": null,
+        "lastName": null
+      },
+      "editor": null // Same as creator if any, else null
     }
   ],
   "token": ""

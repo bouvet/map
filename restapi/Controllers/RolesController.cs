@@ -23,7 +23,9 @@ public class RolesController : ApiController
   [HttpPost]
   public async Task<IActionResult> CreateRole(CreateRoleRequest request)
   {
-    var createRoleCommand = roleMapper.MapCreateToCommand(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var createRoleCommand = roleMapper.MapCreateToCommand(request, userId ?? "");
 
     ErrorOr<RoleResult> createRoleCommandResult = await mediator.Send(createRoleCommand);
 
@@ -55,6 +57,19 @@ public class RolesController : ApiController
 
     return getRolesQueryResult.Match(
       result => Ok(roleMapper.MapResultListToResponseList(result)),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpDelete("{id:guid}")]
+  public async Task<IActionResult> DeleteRole(Guid id)
+  {
+    var deleteRoleCommand = roleMapper.MapDeleteRole(id);
+
+    ErrorOr<Deleted> deleteRoleCommandResult = await mediator.Send(deleteRoleCommand);
+
+    return deleteRoleCommandResult.Match(
+      _ => NoContent(),
       errors => Problem(errors)
     );
   }

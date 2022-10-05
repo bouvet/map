@@ -1,4 +1,6 @@
+using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Categories;
+using restapi.Models;
 using restapi.Services.Categories.Commands.Create;
 using restapi.Services.Categories.Commands.Delete;
 using restapi.Services.Categories.Commands.Update;
@@ -10,12 +12,32 @@ namespace restapi.Common.Services.Mappers.Categories;
 
 public class CategoryMapper : ICategoryMapper
 {
-  public CreateCategoryCommand MapCreateRequestToCommand(CreateCategoryRequest request)
+  private readonly IUserMapper userMapper;
+
+  public CategoryMapper(IUserMapper userMapper)
+  {
+    this.userMapper = userMapper;
+  }
+
+  public CreateCategoryCommand MapCreateRequestToCommand(CreateCategoryRequest request, string userId)
   {
     return new CreateCategoryCommand(
       request.Name,
-      request.Emoji
+      request.Emoji,
+      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
     );
+  }
+
+  public List<CategoryResponse> MapDbListToResponseList(List<Category> categories)
+  {
+    var resultList = new List<CategoryResult>();
+
+    foreach (Category category in categories)
+    {
+      resultList.Add(new CategoryResult(category));
+    }
+
+    return MapResultListToResponseList(resultList);
   }
 
   public DeleteCategoryCommand MapDeleteCategoryRequestToCommand(Guid id)
@@ -50,12 +72,19 @@ public class CategoryMapper : ICategoryMapper
     return new CategoryResponse(
       result.Category.Id,
       result.Category.Name,
-      result.Category.Emoji
+      result.Category.Emoji,
+      result.Category.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Category.Creator) : null,
+      result.Category.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Category.Editor) : null
     );
   }
 
-  public UpdateCategoryCommand MapUpdateRequestToCommand(Guid id, UpdateCategoryRequest request)
+  public UpdateCategoryCommand MapUpdateRequestToCommand(Guid id, UpdateCategoryRequest request, string userId)
   {
-    return new UpdateCategoryCommand(id, request.Name, request.Emoji);
+    return new UpdateCategoryCommand(
+        id,
+        request.Name,
+        request.Emoji,
+        string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
+      );
   }
 }

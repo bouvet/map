@@ -27,8 +27,8 @@ public class ReviewMapper : IReviewMapper
       result.Review.Image,
       result.Review.Created,
       result.Review.Updated,
-      result.Review.Creator is not null ? userMapper.MapUserToUserResponse(result.Review.Creator) : null,
-      result.Review.Editor is not null ? userMapper.MapUserToUserResponse(result.Review.Editor) : null,
+      result.Review.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Review.Creator) : null,
+      result.Review.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Review.Editor) : null,
       result.Review.LocationId
     );
   }
@@ -66,7 +66,7 @@ public class ReviewMapper : IReviewMapper
     return new GetReviewsQuery(locationId);
   }
 
-  public UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request)
+  public UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request, string userId)
   {
     return new UpdateReviewCommand(
       request.Id,
@@ -74,7 +74,8 @@ public class ReviewMapper : IReviewMapper
       request.Text,
       request.Rating,
       request.Image,
-      request.LocationId
+      request.LocationId,
+      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
     );
   }
 

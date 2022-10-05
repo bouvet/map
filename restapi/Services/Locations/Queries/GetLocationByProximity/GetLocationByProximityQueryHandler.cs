@@ -19,7 +19,7 @@ public class GetLocationByProximityQueryHandler : IRequestHandler<GetLocationByP
   public async Task<ErrorOr<LocationResult>> Handle(GetLocationByProximityQuery request, CancellationToken cancellationToken)
   {
     var locations = await dataContext.Locations.ToListAsync(cancellationToken: cancellationToken);
-    var _category = await dataContext.Categories.FindAsync(new object?[] { request.CategoryId }, cancellationToken: cancellationToken);
+    // var category = await dataContext.Categories.FindAsync(new object?[] { request.CategoryId }, cancellationToken: cancellationToken);
 
     var coord = new GeoCoordinate(request.Latitude, request.Longitude);
 
