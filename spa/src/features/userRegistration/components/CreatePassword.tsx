@@ -17,6 +17,7 @@ import { TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
+import { userActions } from '../../../store/state/user.state';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -36,6 +37,7 @@ export const CreatePassword: FC = () => {
             console.log('Passordene er ikke like');
         } else {
             e.preventDefault();
+            dispatch(userActions.setPassword(createPassword));
             navigate('/personalization');
             console.log('Passord er satt');
         }

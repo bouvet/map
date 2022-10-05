@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -15,16 +16,20 @@ import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
+import { userActions } from '../../../store/state/user.state';
 
 export const EmailConfirmation: FC = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location: any = useLocation();
 
     const [inputCode, setInputCode] = useState<string[]>(new Array(6).fill(''));
 
     const handleSubmit = useCallback(() => {
+        // check if code is valid
+        dispatch(userActions.setEmail(location.state.inputEmail));
         navigate('/personal-info');
-    }, [navigate]);
+    }, [dispatch, location.state.inputEmail, navigate]);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
         const tempArray = [...inputCode];

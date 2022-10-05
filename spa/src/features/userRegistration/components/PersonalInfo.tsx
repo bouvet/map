@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -23,7 +23,7 @@ import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
-import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
@@ -32,24 +32,15 @@ export const PersonalInfo: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [inputName, setInputName] = useState('');
-    const [inputAge, setInputAge] = useState<Date | null>(null);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [age, setAge] = useState<Date | null>(null);
 
-    // const { currentName, currentAge } = useStateSelector((state) => state.user);
+    const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
+        setState(e.target.value);
+    };
 
-    // const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     if (e.target.value === ' ') {
-    //         dispatch(userActions.setCurrentName(''));
-    //     } else {
-    //         dispatch(userActions.setCurrentName(e.target.value));
-    //     }
-    // };
-
-    // const handleChangeAge = (timestamp: any) => {
-    //     dispatch(userActions.setCurrentAge(timestamp));
-    // };
-
-    const handleChangeName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
+    const handleChangeLastName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
     };
 
@@ -62,14 +53,17 @@ export const PersonalInfo: FC = () => {
     moment.locale('nb');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        if (inputAge === null) {
+        if (age === null) {
             e.preventDefault();
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {
             e.preventDefault();
+            dispatch(userActions.setFirstName(firstName));
+            dispatch(userActions.setLastName(lastName));
+            dispatch(userActions.setAge(moment(age).format('L')));
             navigate('/create-password');
-            console.log('Name: ', inputName);
-            console.log('Date of birth: ', moment(inputAge).format('L'));
+            console.log('Name: ', firstName, lastName);
+            console.log('Date of birth: ', moment(age).format('L'));
         }
     };
 
@@ -115,14 +109,15 @@ export const PersonalInfo: FC = () => {
                     <SectionWrapper>
                         <TitleForm>Personlig informasjon</TitleForm>
                         <Form onSubmit={(e) => handleSubmit(e)}>
-                            <InputName label="Navn*" value={inputName} setState={setInputName} handleChange={handleChangeName} />
+                            <InputName label="Fornavn*" value={firstName} setState={setFirstName} handleChange={handleChangeFirstName} />
+                            <InputName label="Etternavn*" value={lastName} setState={setLastName} handleChange={handleChangeLastName} />
                             <Label>Fødselsdato*</Label>
                             <ThemeProvider theme={theme}>
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
                                         label="dd.mm.åååå"
-                                        value={inputAge}
-                                        onChange={(newValue) => handleChangeAge(newValue, setInputAge)}
+                                        value={age}
+                                        onChange={(newValue) => handleChangeAge(newValue, setAge)}
                                         renderInput={(params) => <TextField {...params} />}
                                         maxDate={new Date()}
                                     />

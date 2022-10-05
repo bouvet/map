@@ -4,6 +4,7 @@ import { MyTheme } from '../../styles/global';
 import { mapActions } from '../../store/state/map.state';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { registrationActions } from '../../store/state/registration.state';
+import { userActions } from '../../store/state/user.state';
 
 interface FilterButtonToggledProps {
     clicked: boolean;
@@ -100,6 +101,43 @@ export const RegisterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }
         } else {
             // add
             dispatch(registrationActions.setCurrentCategories([...currentCategories, id]));
+        }
+    };
+
+    return (
+        <FilterButtonStyle clicked={select} onClick={updateGlobalStateForSelectedCategory}>
+            <FilterButtonEmoji>{emoji}</FilterButtonEmoji>
+            <FilterButtonName>{text}</FilterButtonName>
+        </FilterButtonStyle>
+    );
+};
+
+// PERSONALIZATION
+
+export const RegisterButtonFavorites: FC<FilterButtonContentProps> = ({ id, text, emoji }) => {
+    const { favorites } = useStateSelector((state) => state.user);
+    const [select, setSelect] = useState(false);
+    const dispatch = useStateDispatch();
+
+    useEffect(() => {
+        if (id && favorites.includes(id)) {
+            setSelect(true);
+        } else {
+            setSelect(false);
+        }
+    }, [favorites, id]);
+
+    const updateGlobalStateForSelectedCategory = () => {
+        if (favorites.includes(id)) {
+            const index = favorites.indexOf(id);
+            const tempArray = [...favorites];
+            if (index !== -1) {
+                tempArray.splice(index, 1);
+                dispatch(userActions.setFavorites(tempArray));
+            }
+        } else {
+            // add
+            dispatch(userActions.setFavorites([...favorites, id]));
         }
     };
 

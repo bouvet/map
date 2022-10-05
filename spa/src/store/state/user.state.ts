@@ -1,31 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-    currentEmail: '',
-    currentPassword: '',
-    currentName: '',
-    currentAge: '',
-    currentFavorites: [] as string[],
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    age: '',
+    favorites: [] as string[],
 };
 
 const userState = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setCurrentEmail(state, action: PayloadAction<string>) {
-            state.currentEmail = action.payload;
+        setEmail(state, action: PayloadAction<string>) {
+            state.email = action.payload;
         },
-        setCurrentPassword(state, action: PayloadAction<string>) {
-            state.currentPassword = action.payload;
+        setPassword(state, action: PayloadAction<string>) {
+            state.password = action.payload;
         },
-        setCurrentName(state, action: PayloadAction<string>) {
-            state.currentName = action.payload;
+        setFirstName(state, action: PayloadAction<string>) {
+            state.firstName = action.payload;
         },
-        setCurrentAge(state, action: PayloadAction<string>) {
-            state.currentAge = action.payload;
+        setLastName(state, action: PayloadAction<string>) {
+            state.lastName = action.payload;
         },
-        setCurrentFavorites(state, action: PayloadAction<string[]>) {
-            state.currentFavorites = action.payload;
+        setAge(state, action: PayloadAction<string>) {
+            state.age = action.payload;
+        },
+        setFavorites(state, action: PayloadAction<string[]>) {
+            state.favorites = action.payload;
         },
     },
 });

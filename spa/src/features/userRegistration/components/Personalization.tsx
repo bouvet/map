@@ -1,6 +1,6 @@
-import { FC, FormEvent, ReactElement, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RegisterButton } from '../../../components/Filter/Buttons';
+import { RegisterButtonFavorites } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { Category } from '../../../utils/types.d';
@@ -14,18 +14,15 @@ import { mapService } from '../../map';
 export const Personalization: FC = () => {
     const navigate = useNavigate();
     const dispatch = useStateDispatch();
-    const [mappedFilter, setMappedFilter] = useState<ReactElement[]>([]);
+
     const { categories } = useStateSelector((state) => state.map);
+    const mappedFilter = categories.map((item: Category) => (
+        <RegisterButtonFavorites key={item.name} id={item.id} text={item.name} emoji={item.emoji} />
+    ));
 
     useEffect(() => {
         dispatch(mapService.getLocations());
     }, [dispatch]);
-
-    useEffect(() => {
-        setMappedFilter(
-            categories.map((item: Category) => <RegisterButton key={item.name} id={item.id} text={item.name} emoji={item.emoji} />),
-        );
-    }, [categories]);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
