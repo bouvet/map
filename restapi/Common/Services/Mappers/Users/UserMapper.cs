@@ -30,7 +30,8 @@ public class UserMapper : IUserMapper
        user.PostalArea,
        user.PostalCode,
        user.PhoneNumber,
-       user.DOB
+       user.DOB,
+       roleMapper.MapDbListToResponseList(user.Roles)
       );
   }
 
@@ -45,7 +46,8 @@ public class UserMapper : IUserMapper
       result.User.PostalArea,
       result.User.PostalCode,
       result.User.PhoneNumber,
-      result.User.DOB
+      result.User.DOB,
+      roleMapper.MapDbListToResponseList(result.User.Roles)
     );
   }
 

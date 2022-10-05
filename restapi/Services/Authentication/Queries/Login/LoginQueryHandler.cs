@@ -23,7 +23,13 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
   public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
   {
-    var user = await dataContext.Users.SingleOrDefaultAsync(user => user.Email == request.Email, cancellationToken);
+    var user = await dataContext
+      .Users
+      .Include(user => user.Roles)
+      .ThenInclude(role => role.Creator)
+      .Include(user => user.Roles)
+      .ThenInclude(role => role.Editor)
+      .SingleOrDefaultAsync(user => user.Email == request.Email, cancellationToken: cancellationToken);
 
     if (user is null)
     {

@@ -1,5 +1,5 @@
-@id=0182dffe-4e1e-4e0c-0cb5-08daa6a9742f
+@id=f2c5e17b-1b05-43c4-fb53-08daa6c2022c
 
 DELETE {{host}}/api/categories/{{id}}
-# Authorization: Bearer {{usertoken}}
 Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}

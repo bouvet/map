@@ -1,3 +1,5 @@
+using restapi.Contracts.Roles;
+
 namespace restapi.Contracts.Users;
 
 public record UserResponse(
@@ -9,5 +11,6 @@ public record UserResponse(
   string? PostalArea,
   int? PostalCode,
   int? PhoneNumber,
-  DateTime? DOB
+  DateTime? DOB,
+  List<RoleResponse> Roles
 );

@@ -53,11 +53,17 @@ Location: {{host}}/api/roles/{{id}}
 
 ```json
 {
-  "id": "3d2f83c2-82d4-4e3a-d050-08daa2e6b8a8",
-  "name": "Administrator",
-  "created": "2022-09-30T15:21:45.0498161",
+  "id": "",
+  "name": "",
+  "created": "",
   "updated": null,
-  "users": []
+  "creator": {
+    "id": "",
+    "email": "",
+    "firstName": null,
+    "lastName": null
+  },
+  "editor": null
 }
 ```
 
@@ -78,11 +84,17 @@ Authorization: Bearer {{token}}
 
 ```json
 {
-  "id": "04571743-0a86-45f5-901a-08daa13f9828",
-  "name": "User",
-  "created": "2022-09-28T12:52:53.390776",
+  "id": "",
+  "name": "",
+  "created": "",
   "updated": null,
-  "users": []
+  "creator": {
+    "id": "",
+    "email": "",
+    "firstName": null,
+    "lastName": null
+  },
+  "editor": null
 }
 ```
 
@@ -105,11 +117,17 @@ Authorization: Bearer {{token}}
 // If no results an empty array will be provided
 [
   {
-    "id": "04571743-0a86-45f5-901a-08daa13f9828",
-    "name": "User",
-    "created": "2022-09-28T12:52:53.390776",
+    "id": "",
+    "name": "",
+    "created": "",
     "updated": null,
-    "users": []
+    "creator": {
+      "id": "",
+      "email": "",
+      "firstName": null,
+      "lastName": null
+    },
+    "editor": null
   }
 ]
 ```

@@ -7,12 +7,12 @@
   - [Create Location](#create-location)
     - [Create Location Request](#create-location-request)
     - [Create Location Response](#create-location-response)
-  - [Get Nearest Location](#get-nearest-location)
-    - [Get Nearest Location Request](#get-nearest-location-request)
-    - [Get Nearest Location Response](#get-nearest-location-response)
-  - [Get Location](#get-location)
-    - [Get Location Request](#get-location-request)
-    - [Get Location Response](#get-location-response)
+  - [Get Location By Proximity](#get-location-by-proximity)
+    - [Get Location By Proximity Request](#get-location-by-proximity-request)
+    - [Get Location By Proximity Response](#get-location-by-proximity-response)
+  - [Get Location By Id](#get-location-by-id)
+    - [Get Location By Id Request](#get-location-by-id-request)
+    - [Get Location By Id Response](#get-location-by-id-response)
   - [Update Location](#update-location)
     - [Update Location Request](#update-location-request)
     - [Update Location Response](#update-location-response)
@@ -37,26 +37,57 @@ GET {{host}}/api/locations
 ```json
 [
   {
-    "id": "9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+    "id": "",
     "type": "Feature",
+    "creator": {
+      "id": "",
+      "email": "",
+      "firstName": null,
+      "lastName": null
+    },
+    "editor": {
+      "id": "",
+      "email": "",
+      "firstName": null,
+      "lastName": null
+    },
     "properties": {
-      "title": "Lura Ballbinge",
-      "description": "Skikkelig god ballbinge med 2 mål og nett rundt bingen",
-      "image": "https://optimusblobs.azureedge.net/images/9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+      "title": "",
+      "description": "",
+      "image": "",
       "status": "Under Review",
-      "rating": 2,
+      "rating": 0,
       "category": [
         {
-          "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
-          "name": "Fotball",
-          "emoji": "⚽"
+          "id": "",
+          "name": "",
+          "emoji": "",
+          "creator": null,
+          "editor": null
+        },
+        {
+          "id": "",
+          "name": "",
+          "emoji": "",
+          "creator": {
+            "id": "",
+            "email": "",
+            "firstName": null,
+            "lastName": null
+          },
+          "editor": {
+            "id": "",
+            "email": "",
+            "firstName": null,
+            "lastName": null
+          }
         }
       ]
     },
     "geometry": {
       "coordinates": [
-        5.736110748915053,
-        58.88192994269119
+        5.3454362342,
+        58.2345346547
       ]
     }
   }
@@ -101,34 +132,53 @@ Location: {{host}}/api/Locations/{{id}}
 
 ```json
 {
-  "id": "325ee2a3-efc0-4787-a85c-c1d0f2e20a74",
+  "id": "",
   "type": "Feature",
+  "creator": {
+    "id": "",
+    "email": "",
+    "firstName": null,
+    "lastName": null
+  },
+  "editor": null,
   "properties": {
-    "title": "A new title!",
-    "description": "A very long description as it needs 20 chars",
-    "image": "https://optimusblobs.azureedge.net/images/dcdf5038-52fa-4789-911d-50b079a38a7a",
+    "title": "",
+    "description": "",
+    "image": "",
     "status": "Under Review",
     "rating": 0,
     "category": [
       {
-        "id": "60c951f3-d233-442b-7883-08da9ad92895",
-        "name": "Basketball",
-        "emoji": "\uD83C\uDFC0"
+        "id": "",
+        "name": "",
+        "emoji": "",
+        "creator": {
+          "id": "",
+          "email": "",
+          "firstName": null,
+          "lastName": null
+        },
+        "editor": {
+          "id": "",
+          "email": "",
+          "firstName": null,
+          "lastName": null
+        }
       }
     ]
   },
   "geometry": {
     "coordinates": [
-      5.12343456345,
-      58.1234546546
+      5.3454362342,
+      58.2345346547
     ]
   }
 }
 ```
 
-## Get Nearest Location
+## Get Location By Proximity
 
-### Get Nearest Location Request
+### Get Location By Proximity Request
 
 ```yml
 Required fields:
@@ -143,7 +193,7 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category
 GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{category}}
 ```
 
-### Get Nearest Location Response
+### Get Location By Proximity Response
 
 ```js
 200 Ok
@@ -151,19 +201,23 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
 
 ```json
 {
-  "id": "325ee2a3-efc0-4787-a85c-c1d0f2e20a74",
+  "id": "",
   "type": "Feature",
+  "creator": null,
+  "editor": null,
   "properties": {
-    "title": "A new title!",
-    "description": "A very long description as it needs 20 chars",
-    "image": "https://optimusblobs.azureedge.net/images/dcdf5038-52fa-4789-911d-50b079a38a7a",
-    "status": "Under Review",
+    "title": "",
+    "description": "",
+    "image": "",
+    "status": "Approved",
     "rating": 0,
     "category": [
       {
-        "id": "60c951f3-d233-442b-7883-08da9ad92895",
-        "name": "Basketball",
-        "emoji": "\uD83C\uDFC0"
+        "id": "",
+        "name": "",
+        "emoji": "",
+        "creator": null,
+        "editor": null
       }
     ]
   },
@@ -176,15 +230,15 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
 }
 ```
 
-## Get Location
+## Get Location By Id
 
-### Get Location Request
+### Get Location By Id Request
 
 ```js
 GET {{host}}/api/locations/{{id}}
 ```
 
-### Get Location Response
+### Get Location By Id Response
 
 ```js
 200 Ok
@@ -192,26 +246,57 @@ GET {{host}}/api/locations/{{id}}
 
 ```json
 {
-  "id": "9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+  "id": "",
   "type": "Feature",
+  "creator": {
+    "id": "",
+    "email": "",
+    "firstName": null,
+    "lastName": null
+  },
+  "editor": {
+    "id": "",
+    "email": "",
+    "firstName": null,
+    "lastName": null
+  },
   "properties": {
-    "title": "Lura Ballbinge",
-    "description": "Skikkelig god ballbinge med 2 mål og nett rundt bingen",
-    "image": "https://optimusblobs.azureedge.net/images/9fbf46b3-c5a5-450a-9b28-1a3167e2625a",
+    "title": "",
+    "description": "",
+    "image": "",
     "status": "Under Review",
-    "rating": 2,
+    "rating": 0,
     "category": [
       {
-        "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
-        "name": "Fotball",
-        "emoji": "⚽"
+        "id": "",
+        "name": "",
+        "emoji": "",
+        "creator": null,
+        "editor": null
+      },
+      {
+        "id": "",
+        "name": "",
+        "emoji": "",
+        "creator": {
+          "id": "",
+          "email": "",
+          "firstName": null,
+          "lastName": null
+        },
+        "editor": {
+          "id": "",
+          "email": "",
+          "firstName": null,
+          "lastName": null
+        }
       }
     ]
   },
   "geometry": {
     "coordinates": [
-      5.736110748915053,
-      58.88192994269119
+      5.3454362342,
+      58.2345346547
     ]
   }
 }

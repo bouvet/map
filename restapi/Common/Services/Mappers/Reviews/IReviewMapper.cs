@@ -11,7 +11,7 @@ namespace restapi.Common.Services.Mappers.Reviews;
 public interface IReviewMapper
 {
   CreateReviewCommand MapCreateToCommand(CreateReviewRequest request, string userId);
-  UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request);
+  UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request, string userId);
   GetReviewByIdQuery MapGetByIdToCommand(Guid id);
   DeleteReviewCommand MapDeleteToCommand(Guid id);
   GetReviewsQuery MapGetReviewsToCommand(Guid locationId);

@@ -46,10 +46,10 @@ public class LocationsController : ApiController
     );
   }
 
-  [HttpGet("{latitude}&{longitude}/category")]
-  public async Task<IActionResult> GetLocationByProximity(GetLocationByProximityRequest request)
+  [HttpGet("{latitude}&{longitude}")]
+  public async Task<IActionResult> GetLocationByProximity(double latitude, double longitude, Guid categoryId)
   {
-    var getLocationByProximityQuery = locationMapper.MapGetByProximityToCommand(request);
+    var getLocationByProximityQuery = locationMapper.MapGetByProximityToCommand(latitude, longitude, categoryId);
 
     ErrorOr<LocationResult> getClosestLocationResult = await mediator.Send(getLocationByProximityQuery);
 

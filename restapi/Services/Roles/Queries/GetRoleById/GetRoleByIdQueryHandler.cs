@@ -17,7 +17,11 @@ public class GetRoleByIdQueryHandler : IRequestHandler<GetRoleByIdQuery, ErrorOr
 
   public async Task<ErrorOr<RoleResult>> Handle(GetRoleByIdQuery request, CancellationToken cancellationToken)
   {
-    var role = await dataContext.Roles.SingleOrDefaultAsync(r => r.Id == request.Id, cancellationToken: cancellationToken);
+    var role = await dataContext
+      .Roles
+      .Include(role => role.Creator)
+      .Include(role => role.Editor)
+      .SingleOrDefaultAsync(role => role.Id == request.Id, cancellationToken: cancellationToken);
 
     if (role is null)
     {

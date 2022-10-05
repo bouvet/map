@@ -47,9 +47,9 @@ public class LocationMapper : ILocationMapper
     return new GetLocationByIdQuery(id);
   }
 
-  public GetLocationByProximityQuery MapGetByProximityToCommand(GetLocationByProximityRequest request)
+  public GetLocationByProximityQuery MapGetByProximityToCommand(double latitude, double longitude, Guid categoryId)
   {
-    return new GetLocationByProximityQuery(request.Latitude, request.Longitude, request.CategoryId);
+    return new GetLocationByProximityQuery(latitude, longitude, categoryId);
   }
 
   public GetLocationsQuery MapGetLocationsQueryToCommand()

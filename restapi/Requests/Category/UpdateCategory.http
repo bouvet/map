@@ -2,10 +2,10 @@
 
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json
-# Authorization: Bearer {{usertoken}}
 Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}
 
 {
-  "name": "Golf!!!!!",
-  "emoji": "🚧"
+  "name": "Golf",
+  "emoji": "🏌️‍♂️"
 }

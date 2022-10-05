@@ -1,11 +1,12 @@
-@id=d0efc13f-d13c-4772-b7d9-0d16a098ce09
+@id=ac5c2811-cb94-4113-a4eb-d431642c8331
 @locationId=9fbf46b3-c5a5-450a-9b28-1a3167e2625a
 
 ### Update Review Without Image
 
 PUT {{host}}/api/reviews
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+# Authorization: Bearer {{admintoken}}
 Authorization: Bearer {{usertoken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="id"
@@ -32,6 +33,7 @@ Content-Disposition: form-data; name="locationId"
 ### Update Review With Image
 
 PUT {{host}}/api/reviews
+Authorization: Bearer {{usertoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW

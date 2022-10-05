@@ -9,7 +9,7 @@ public class DataContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    modelBuilder.Entity<User>().HasMany(u => u.Roles).WithMany(r => r.Users);
+    modelBuilder.Entity<User>().HasMany(user => user.Roles).WithMany(r => r.Users);
     modelBuilder.Entity<User>().Navigation(user => user.Roles).AutoInclude();
 
     modelBuilder.Entity<Role>().HasOne(role => role.Creator);

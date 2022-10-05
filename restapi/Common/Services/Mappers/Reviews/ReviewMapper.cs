@@ -66,7 +66,7 @@ public class ReviewMapper : IReviewMapper
     return new GetReviewsQuery(locationId);
   }
 
-  public UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request)
+  public UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request, string userId)
   {
     return new UpdateReviewCommand(
       request.Id,
@@ -74,7 +74,8 @@ public class ReviewMapper : IReviewMapper
       request.Text,
       request.Rating,
       request.Image,
-      request.LocationId
+      request.LocationId,
+      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
     );
   }
 

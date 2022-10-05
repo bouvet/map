@@ -13,7 +13,7 @@ public interface ILocationMapper
 {
   CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request, string userId);
   GetLocationsQuery MapGetLocationsQueryToCommand();
-  GetLocationByProximityQuery MapGetByProximityToCommand(GetLocationByProximityRequest request);
+  GetLocationByProximityQuery MapGetByProximityToCommand(double latitude, double longitude, Guid categoryId);
   GetLocationByIdQuery MapGetByIdToCommand(Guid id);
   UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, string userId);
   DeleteLocationCommand MapDeleteToCommand(Guid id);

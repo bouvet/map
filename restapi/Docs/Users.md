@@ -37,21 +37,28 @@ Authorization: Bearer {{token}}
 
 ```json
 {
-  "id": "20b2cb67-df41-49b6-bf2a-3628c136f07d",
-  "email": "email56@gmail.com",
-  "firstName": null,
-  "lastName": null,
-  "address": null,
-  "postalArea": null,
+  "id": "",
+  "email": "",
+  "firstName": "",
+  "lastName": "",
+  "address": "",
+  "postalArea": "",
   "postalCode": 0,
   "phoneNumber": 0,
   "dob": null,
   "roles": [
     {
-      "id": "04571743-0a86-45f5-901a-08daa13f9828",
-      "name": "User",
-      "created": "2022-09-28T12:52:53.390776",
-      "updated": null
+      "id": "",
+      "name": "",
+      "created": "",
+      "updated": null,
+      "creator": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "editor": null
     }
   ]
 }
@@ -75,40 +82,28 @@ Authorization: Bearer {{token}}
 ```json
 [
   {
-    "id": "20b2cb67-df41-49b6-bf2a-3628c136f07d",
-    "email": "email56@gmail.com",
-    "firstName": null,
-    "lastName": null,
-    "address": null,
-    "postalArea": null,
+    "id": "",
+    "email": "",
+    "firstName": "",
+    "lastName": "",
+    "address": "",
+    "postalArea": "",
     "postalCode": 0,
     "phoneNumber": 0,
     "dob": null,
     "roles": [
       {
-        "id": "04571743-0a86-45f5-901a-08daa13f9828",
-        "name": "User",
-        "created": "2022-09-28T12:52:53.390776",
-        "updated": null
-      }
-    ]
-  },
-  {
-    "id": "b0d82eb1-592a-4a8b-ad59-8c284178764f",
-    "email": "email@gmail.com",
-    "firstName": null,
-    "lastName": null,
-    "address": null,
-    "postalArea": null,
-    "postalCode": 0,
-    "phoneNumber": 0,
-    "dob": null,
-    "roles": [
-      {
-        "id": "04571743-0a86-45f5-901a-08daa13f9828",
-        "name": "User",
-        "created": "2022-09-28T12:52:53.390776",
-        "updated": null
+        "id": "",
+        "name": "",
+        "created": "",
+        "updated": "",
+        "creator": {
+          "id": "",
+          "email": "",
+          "firstName": "",
+          "lastName": ""
+        },
+        "editor": null
       }
     ]
   }

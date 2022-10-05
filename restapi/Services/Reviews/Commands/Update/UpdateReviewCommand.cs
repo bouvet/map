@@ -9,5 +9,6 @@ public record UpdateReviewCommand(
   string? Text,
   float Rating,
   IFormFile? Image,
-  Guid? LocationId
+  Guid? LocationId,
+  Guid? UserId
 ) : IRequest<ErrorOr<Updated>>;
