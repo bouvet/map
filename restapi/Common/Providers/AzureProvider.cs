@@ -1,6 +1,7 @@
 using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Azure.Storage.Blobs;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
@@ -12,10 +13,10 @@ public class AzureProvider
   public const string KeyVaultUriName = "KeyVaultUri";
   public const string KeyVaultNameForDbConnectionString = "DbConnectionString";
   public const string KeyVaultNameForBlobStorageConnectionString = "azureBlobStorageConnectionString";
-  public string BlobStorageContainerName { get; set; } = "images";
   public const string AzureBlobStorageServer = ".blob.core.windows.net";
   public const string AzureCDNserver = ".azureedge.net";
 
+  public string BlobStorageContainerName { get; set; } = "images";
   public string KeyVaultUri { get; set; } = null!;
   public string DbConnectionString { get; set; } = null!;
   public string BlobStorageConnectionString { get; set; } = null!;
@@ -33,11 +34,16 @@ public class AzureProvider
     return new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
   }
 
-  public async Task<CloudBlobContainer> GetImageBlobContainer(SecretClient client)
+  public async Task<Response<KeyVaultSecret>> GetKeyVaultSecret(SecretClient client, string? keyVaultSecretName)
+  {
+    return await client.GetSecretAsync(keyVaultSecretName);
+  }
+
+  public async Task<CloudBlobContainer> GetImageBlobContainer()
   {
     if (string.IsNullOrEmpty(BlobStorageConnectionString))
     {
-      Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(client, KeyVaultNameForBlobStorageConnectionString);
+      Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(GetKeyVaultClient(), KeyVaultNameForBlobStorageConnectionString);
       BlobStorageConnectionString = keyVaultResponse.Value.Value;
     }
 
@@ -48,8 +54,8 @@ public class AzureProvider
     return imageBlobContainer;
   }
 
-  public async Task<Response<KeyVaultSecret>> GetKeyVaultSecret(SecretClient client, string? keyVaultSecretName)
+  public Uri GetCdnUri(Uri blockBlobUri)
   {
-    return await client.GetSecretAsync(keyVaultSecretName);
+    return new Uri(blockBlobUri.ToString().Replace(AzureBlobStorageServer, AzureCDNserver));
   }
 }

@@ -81,6 +81,41 @@ namespace restapi.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("restapi.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BlobUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CdnUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Uploaded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UploaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UploaderId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("restapi.Models.Location", b =>
                 {
                     b.Property<Guid>("Id")
@@ -142,9 +177,8 @@ namespace restapi.Migrations
                     b.Property<Guid?>("EditorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uniqueidentifier");
@@ -167,6 +201,8 @@ namespace restapi.Migrations
                     b.HasIndex("CreatorId");
 
                     b.HasIndex("EditorId");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("LocationId");
 
@@ -304,6 +340,15 @@ namespace restapi.Migrations
                     b.Navigation("Editor");
                 });
 
+            modelBuilder.Entity("restapi.Models.Image", b =>
+                {
+                    b.HasOne("restapi.Models.User", "Uploader")
+                        .WithMany()
+                        .HasForeignKey("UploaderId");
+
+                    b.Navigation("Uploader");
+                });
+
             modelBuilder.Entity("restapi.Models.Location", b =>
                 {
                     b.HasOne("restapi.Models.User", "Creator")
@@ -329,6 +374,10 @@ namespace restapi.Migrations
                         .WithMany()
                         .HasForeignKey("EditorId");
 
+                    b.HasOne("restapi.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("restapi.Models.Location", "Location")
                         .WithMany("Reviews")
                         .HasForeignKey("LocationId")
@@ -338,6 +387,8 @@ namespace restapi.Migrations
                     b.Navigation("Creator");
 
                     b.Navigation("Editor");
+
+                    b.Navigation("Image");
 
                     b.Navigation("Location");
                 });

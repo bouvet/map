@@ -1,25 +1,25 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
-using restapi.Common.Services.Storage;
 using restapi.Data;
 using restapi.Models;
+using restapi.Services.ImageStorages.Commands.Upload;
+using restapi.Services.ImageStorages.Common;
 
 namespace restapi.Services.Reviews.Commands.Update;
 
 public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, ErrorOr<Updated>>
 {
   private readonly DataContext dataContext;
-  private readonly IAzureBlobStorage azureBlobStorage;
   private readonly IDateTimeProvider dateTimeProvider;
+  private readonly ISender mediator;
 
-  public UpdateReviewCommandHandler(DataContext dataContext, IAzureBlobStorage azureBlobStorage, IDateTimeProvider dateTimeProvider)
+  public UpdateReviewCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
   {
     this.dataContext = dataContext;
-    this.azureBlobStorage = azureBlobStorage;
     this.dateTimeProvider = dateTimeProvider;
+    this.mediator = mediator;
   }
 
   public async Task<ErrorOr<Updated>> Handle(UpdateReviewCommand request, CancellationToken cancellationToken)
@@ -72,16 +72,16 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
 
     if (request.Image is not null)
     {
-      // TODO: Delete old image before uploading new
+      //TODO: Delete old images before updating!
 
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);
+      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(new UploadImageCommand(request.Image, review.Creator), cancellationToken);
 
-      if (fileUploadResult.IsError)
+      if (uploadResult.IsError)
       {
-        return Errors.AzureBlobStorage.UploadFailed;
+        return Errors.ImageStorage.UploadFailed;
       }
 
-      review.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
+      review.Image = uploadResult.Value.Image;
     }
 
     review.Updated = dateTimeProvider.CEST;

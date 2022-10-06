@@ -12,7 +12,7 @@ public class Review
   public string Status { get; set; } = "Under Review";
   public string? Text { get; set; } = string.Empty;
   public float Rating { get; set; }
-  public string Image { get; set; } = string.Empty;
+  public Image? Image { get; set; }
   public DateTime Created { get; set; }
   public DateTime? Updated { get; set; }
   public User? Creator { get; set; }

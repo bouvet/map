@@ -4,7 +4,7 @@ namespace restapi.Common.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
 {
-  public static class AzureBlobStorage
+  public static class ImageStorage
   {
     public static Error UploadFailed => Error.Failure(
       code: "AzureBlobStorage.UploadFailed",

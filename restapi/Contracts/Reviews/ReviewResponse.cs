@@ -1,11 +1,13 @@
 using restapi.Contracts.Users;
+using restapi.Models;
+
 namespace restapi.Contracts.Reviews;
 
 public record ReviewResponse(
   Guid Id,
   string Status,
   string? Text,
-  string? Image,
+  Image? Image,
   DateTime Created,
   DateTime? Updated,
   CreatorEditorResponse? Creator,

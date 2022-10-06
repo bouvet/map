@@ -19,9 +19,11 @@ public class DataContext : DbContext
 
     modelBuilder.Entity<Review>().HasOne(review => review.Creator);
     modelBuilder.Entity<Review>().HasOne(review => review.Editor);
+    modelBuilder.Entity<Review>().HasOne(review => review.Image);
     modelBuilder.Entity<Review>().HasOne(review => review.Location).WithMany(l => l.Reviews);
     modelBuilder.Entity<Review>().Navigation(review => review.Creator).AutoInclude();
     modelBuilder.Entity<Review>().Navigation(review => review.Editor).AutoInclude();
+    modelBuilder.Entity<Review>().Navigation(review => review.Image).AutoInclude();
 
     modelBuilder.Entity<Category>().HasOne(c => c.Creator);
     modelBuilder.Entity<Category>().HasOne(c => c.Editor);
@@ -32,6 +34,9 @@ public class DataContext : DbContext
     modelBuilder.Entity<Location>().Navigation(location => location.Editor).AutoInclude();
     modelBuilder.Entity<Location>().Navigation(location => location.Categories).AutoInclude();
     modelBuilder.Entity<Location>().Navigation(location => location.Reviews).AutoInclude();
+
+    modelBuilder.Entity<Image>().HasOne(image => image.Uploader);
+    modelBuilder.Entity<Image>().Navigation(image => image.Uploader).AutoInclude();
   }
 
   public DbSet<Location> Locations => Set<Location>();
@@ -39,4 +44,5 @@ public class DataContext : DbContext
   public DbSet<Review> Reviews => Set<Review>();
   public DbSet<User> Users => Set<User>();
   public DbSet<Role> Roles => Set<Role>();
+  public DbSet<Image> Images => Set<Image>();
 }

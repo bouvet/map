@@ -73,7 +73,7 @@ public class CreateLocationCommandHandler : IRequestHandler<CreateLocationComman
 
       if (fileUploadResult.IsError)
       {
-        return Errors.AzureBlobStorage.UploadFailed;
+        return Errors.ImageStorage.UploadFailed;
       }
 
       location.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);

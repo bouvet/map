@@ -27,9 +27,7 @@ public class AzureBlobStorage : IAzureBlobStorage
       return Errors.ImageProvider.ConvertionFail;
     }
 
-    SecretClient client = azureProvider.GetKeyVaultClient();
-
-    CloudBlobContainer imageBlobContainer = await azureProvider.GetImageBlobContainer(client);
+    CloudBlobContainer imageBlobContainer = await azureProvider.GetImageBlobContainer();
 
     CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(Guid.NewGuid().ToString());
 
@@ -42,9 +40,7 @@ public class AzureBlobStorage : IAzureBlobStorage
 
   public async Task<ErrorOr<Deleted>> DeleteFile(Guid id)
   {
-    SecretClient client = azureProvider.GetKeyVaultClient();
-
-    CloudBlobContainer imageBlobContainer = await azureProvider.GetImageBlobContainer(client);
+    CloudBlobContainer imageBlobContainer = await azureProvider.GetImageBlobContainer();
 
     CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(id.ToString());
 
@@ -52,7 +48,7 @@ public class AzureBlobStorage : IAzureBlobStorage
 
     if (!wasDeleted)
     {
-      return Errors.AzureBlobStorage.DeleteFailed;
+      return Errors.ImageStorage.DeleteFailed;
     }
 
     return Result.Deleted;
