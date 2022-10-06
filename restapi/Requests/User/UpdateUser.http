@@ -1,10 +1,16 @@
-@devhost=https://localhost:7107
-@id=46a7a71f-4190-4756-b86e-a706b6f18183
+@id=1e295e62-4efa-4470-af15-d9ebff887190
 
-PUT {{devhost}}/api/users/{{id}}
+PUT {{host}}/api/users/{{id}}
 Content-Type: application/json
+# Authorization: Bearer {{token}}
 
 {
-  "email": "glen.sorbo@bouvet.com",
-  "password": "12345"
+  "Email": "email567@gmail.com",
+  "FirstName": "Email",
+  "LastName": "Gmail",
+  "Address": "EmailStreet 5",
+  "PostalArea": "Stavanger",
+  "PostalCode": 4034,
+  "PhoneNumber": 87654321,
+  "DOB": "1987-04-25"
 }

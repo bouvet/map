@@ -1,0 +1,3 @@
+@id=429b41f2-fa6d-447c-e53b-08daa6a9cd73
+
+GET {{host}}/api/categories/{{id}}

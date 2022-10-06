@@ -1,0 +1,8 @@
+POST {{host}}/api/users/role
+Content-Type: application/json
+Authorization: Bearer {{admintoken}}
+
+{
+  "userId": "6281e1e8-3d85-45b8-bba2-594dbf2969cb",
+  "roleId": "a518c442-02ea-420b-1d25-08daa6be5af1"
+}

@@ -1,21 +1,9 @@
-@devhost=https://localhost:7107
-@prodhost=https://optimus-verden-venter.azurewebsites.net/
-
-
-POST {{devhost}}/api/categories
+POST {{host}}/api/categories
 Content-Type: application/json
+Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}
 
 {
-  "name": "Styrke",
-  "emoji": "💪"
-}
-
-###
-
-POST {{prodhost}}/api/categories
-Content-Type: application/json
-
-{
-  "name": "Fotball2",
-  "emoji": "⚽"
+  "name": "Golf",
+  "emoji": "🏌️‍♂️"
 }

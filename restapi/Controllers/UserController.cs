@@ -1,48 +1,72 @@
 using ErrorOr;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos.Users;
-using restapi.Models;
-using restapi.Services.Users;
+using restapi.Common.Services.Mappers.Users;
+using restapi.Contracts.Users;
+using restapi.Services.Users.Common;
 
 namespace restapi.Controllers;
 
+[Authorize(Roles = "Administrator")]
 public class UsersController : ApiController
 {
-  private readonly IUserService userService;
+  private readonly ISender mediator;
+  private readonly IUserMapper userMapper;
 
-  public UsersController(IUserService userService)
+  public UsersController(ISender mediator, IUserMapper userMapper)
   {
-    this.userService = userService;
+    this.mediator = mediator;
+    this.userMapper = userMapper;
   }
 
   [HttpGet]
   public async Task<IActionResult> GetUsers()
   {
-    ErrorOr<List<UserResponseDto>> getUsersResult = await userService.GetUsers();
+    var getUsersQuery = userMapper.MapGetUsersToCommand();
 
-    return getUsersResult.Match(
-      users => Ok(users),
+    ErrorOr<List<UserResult>> getUsersQueryResult = await mediator.Send(getUsersQuery);
+
+    return getUsersQueryResult.Match(
+      result => Ok(userMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpGet("{id:guid}")]
-  public async Task<IActionResult> GetUser(Guid id)
+  public async Task<IActionResult> GetUserById(Guid id)
   {
-    ErrorOr<UserResponseDto> getUserResult = await userService.GetUser(id);
+    var getUserByIdQuery = userMapper.MapGetByIdToCommand(id);
 
-    return getUserResult.Match(
-      user => Ok(user),
+    ErrorOr<UserResult> getUserByIdQueryResult = await mediator.Send(getUserByIdQuery);
+
+    return getUserByIdQueryResult.Match(
+      result => Ok(userMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpPut("{id:guid}")]
-  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserDto updatedUser)
+  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request)
   {
-    ErrorOr<Updated> updateUserResult = await userService.UpdateUser(id, updatedUser);
+    var updateUserCommand = userMapper.MapUpdateToCommand(id, request);
 
-    return updateUserResult.Match(
+    ErrorOr<Updated> updateUserCommandResult = await mediator.Send(updateUserCommand);
+
+    return updateUserCommandResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPost("role")]
+  public async Task<IActionResult> AddUserRole(AddUserRoleRequest request)
+  {
+    var addUserRoleCommand = userMapper.MapAddRoleToCommand(request);
+
+    ErrorOr<UserResult> addUserRoleCommandResult = await mediator.Send(addUserRoleCommand);
+
+    return addUserRoleCommandResult.Match(
       _ => NoContent(),
       errors => Problem(errors)
     );
@@ -51,20 +75,13 @@ public class UsersController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteUser(Guid id)
   {
-    ErrorOr<Deleted> deleteUserResult = await userService.DeleteUser(id);
+    var deleteUserCommand = userMapper.MapDeleteToCommand(id);
+
+    ErrorOr<Deleted> deleteUserResult = await mediator.Send(deleteUserCommand);
 
     return deleteUserResult.Match(
       _ => NoContent(),
       errors => Problem(errors)
     );
-  }
-
-  private CreatedAtActionResult CreatedAtGetUser(UserResponseDto user)
-  {
-    return CreatedAtAction(
-        actionName: nameof(GetUser),
-        routeValues: new { id = user.Id },
-        value: user
-      );
   }
 }

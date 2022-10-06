@@ -1,10 +1,10 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using restapi.Common.Services.Jwt;
+using restapi.Common.Providers;
+using restapi.Common.Services.Auth;
 using restapi.Data;
 using restapi.Services.Authentication.Common;
-using restapi.ServiceUtils.ServiceErrors;
 
 namespace restapi.Services.Authentication.Queries.Login;
 
@@ -12,40 +12,42 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 {
   private readonly DataContext dataContext;
   private readonly IJwtGenerator jwtGenerator;
+  private readonly IPasswordProvider passwordProvider;
 
-  public LoginQueryHandler(DataContext dataContext, IJwtGenerator jwtGenerator)
+  public LoginQueryHandler(DataContext dataContext, IJwtGenerator jwtGenerator, IPasswordProvider passwordProvider)
   {
     this.dataContext = dataContext;
     this.jwtGenerator = jwtGenerator;
+    this.passwordProvider = passwordProvider;
   }
 
-  public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+  public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
   {
-    var user = await dataContext.Users.SingleOrDefaultAsync(user => user.Email == query.Email, cancellationToken);
+    var user = await dataContext
+      .Users
+      .Include(user => user.Roles)
+      .ThenInclude(role => role.Creator)
+      .Include(user => user.Roles)
+      .ThenInclude(role => role.Editor)
+      .SingleOrDefaultAsync(user => user.Email == request.Email, cancellationToken: cancellationToken);
 
     if (user is null)
     {
       return Errors.Authentication.InvalidCredentials;
     }
 
-    bool passwordIsValid = BCrypt.Net.BCrypt.Verify(query.Password, user.Password);
+    bool passwordIsValid = passwordProvider.VerifyPassword(request.Password, user.Password);
 
     if (!passwordIsValid)
     {
       return Errors.Authentication.InvalidCredentials;
     }
 
-    var token = jwtGenerator.GenerateToken(user.Id, user.Email);
+    var token = jwtGenerator.GenerateToken(user);
 
     return new AuthenticationResult(
-      user.Id,
-      user.Email,
-      user.Name,
-      user.Address,
-      user.PostalArea,
-      token,
-      user.PostalCode,
-      user.BirthYear
+      user,
+      token
     );
   }
 }

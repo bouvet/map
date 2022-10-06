@@ -1,17 +1,9 @@
-@devhost=https://localhost:7107
-@prodhost=https://optimus-verden-venter.azurewebsites.net/
-@locationId=9c3bd097-5606-4865-a14c-30c076a5a35d
+@locationId=9fbf46b3-c5a5-450a-9b28-1a3167e2625a
 
-GET {{devhost}}/api/reviews
+### Get All Reviews
 
-###
+GET {{host}}/api/reviews
 
-GET {{prodhost}}/api/reviews
+### Get Reviews For A Specific Location
 
-###
-
-GET {{devhost}}/api/reviews?locationId={{locationId}}
-
-###
-
-GET {{prodhost}}/api/reviews?locationId={{locationId}}
+GET {{host}}/api/reviews?locationId={{locationId}}

@@ -1,73 +1,35 @@
-# 🚧Users
+# Users 🔒
 
-- [🚧Users](#users)
-  - [Create User](#create-user)
-    - [Create User Request](#create-user-request)
-    - [Create User Response](#create-user-response)
-  - [Get User](#get-user)
-    - [Get User Request](#get-user-request)
-    - [Get User Response](#get-user-response)
+> **All endpoints require Authorization header!**
+> **Access level: Administrator**
+
+- [Users 🔒](#users-)
+  - [Get User By Id](#get-user-by-id)
+    - [Get User By Id Request](#get-user-by-id-request)
+    - [Get User By Id Response](#get-user-by-id-response)
+  - [Get Users](#get-users)
+    - [Get Users Request](#get-users-request)
+    - [Get Users Response](#get-users-response)
   - [Update User](#update-user)
     - [Update User Request](#update-user-request)
     - [Update User Response](#update-user-response)
+  - [Add User Role](#add-user-role)
+    - [Add User Role Request](#add-user-role-request)
+    - [Add User Role Response](#add-user-role-response)
   - [Delete User](#delete-user)
     - [Delete User Request](#delete-user-request)
     - [Delete User Response](#delete-user-response)
 
-## Create User
+## Get User By Id
 
-### Create User Request
-
-```js
-POST {{host}}/api/users
-Content-Type: application/json
-```
-
-```yml
-Required fields:
-  - email
-  - password (min 5 chars)
-```
-
-```json
-{
-  "email": "",
-  "password": ""
-}
-```
-
-### Create User Response
-
-```js
-201 Created
-```
-
-```yml
-Location: {{host}}/api/users/{{id}}
-```
-
-```json
-{
-  "id": "",
-  "email": "",
-  "name": "",
-  "address": "",
-  "postalArea": "",
-  "token": "",
-  "postalCode": 0,
-  "birthYear": 0
-}
-```
-
-## Get User
-
-### Get User Request
+### Get User By Id Request
 
 ```js
 GET {{host}}/api/users/{{id}}
+Authorization: Bearer {{token}}
 ```
 
-### Get User Response
+### Get User By Id Response
 
 ```js
 200 OK
@@ -77,13 +39,75 @@ GET {{host}}/api/users/{{id}}
 {
   "id": "",
   "email": "",
-  "name": "",
+  "firstName": "",
+  "lastName": "",
   "address": "",
   "postalArea": "",
-  "token": "",
   "postalCode": 0,
-  "birthYear": 0
+  "phoneNumber": 0,
+  "dob": null,
+  "roles": [
+    {
+      "id": "",
+      "name": "",
+      "created": "",
+      "updated": null,
+      "creator": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "editor": null
+    }
+  ]
 }
+```
+
+## Get Users
+
+### Get Users Request
+
+```js
+GET {{host}}/api/users
+Authorization: Bearer {{token}}
+```
+
+### Get Users Response
+
+```js
+200 OK
+```
+
+```json
+[
+  {
+    "id": "",
+    "email": "",
+    "firstName": "",
+    "lastName": "",
+    "address": "",
+    "postalArea": "",
+    "postalCode": 0,
+    "phoneNumber": 0,
+    "dob": null,
+    "roles": [
+      {
+        "id": "",
+        "name": "",
+        "created": "",
+        "updated": "",
+        "creator": {
+          "id": "",
+          "email": "",
+          "firstName": "",
+          "lastName": ""
+        },
+        "editor": null
+      }
+    ]
+  }
+]
 ```
 
 ## Update User
@@ -93,15 +117,20 @@ GET {{host}}/api/users/{{id}}
 ```js
 POST {{host}}/api/users/{{id}}
 Content-Type: application/json
-```
-
-```yml
-Required fields:
-  - 
+Authorization: Bearer {{token}}
 ```
 
 ```json
-
+{
+  "Email": "",
+  "FirstName": "",
+  "LastName": "",
+  "Address": "",
+  "PostalArea": "",
+  "PostalCode": 0,
+  "PhoneNumber": 0,
+  "DOB": "" // (DateOfBirth) Format: Year-Month-Day : 2022-09-30
+}
 ```
 
 ### Update User Response
@@ -110,8 +139,27 @@ Required fields:
 204 No Content
 ```
 
-```yml
-Location: {{host}}/api/users/{{id}}
+## Add User Role
+
+### Add User Role Request
+
+```js
+POST {{host}}/api/users/role
+Content-Type: application/json
+Authorization: Bearer {{token}}
+```
+
+```json
+{
+  "UserId": "",
+  "RoleId": ""
+}
+```
+
+### Add User Role Response
+
+```js
+204 No Content
 ```
 
 ## Delete User
@@ -120,6 +168,7 @@ Location: {{host}}/api/users/{{id}}
 
 ```js
 DELETE {{host}}/api/users/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete User Response

@@ -1,0 +1,4 @@
+@id=d548ed27-e792-4d26-f116-08daa6b20c29
+
+GET {{host}}/api/roles/{{id}}
+Authorization: Bearer {{admintoken}}

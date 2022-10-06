@@ -1,37 +1,60 @@
 ﻿using ErrorOr;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos.Locations;
-using restapi.Services.Locations;
+using restapi.Common.Services.Mappers.Locations;
+using restapi.Contracts.Locations;
+using restapi.Services.Locations.Common;
 
 namespace restapi.Controllers;
 
 public class LocationsController : ApiController
 {
-  private readonly ILocationService locationService;
+  private readonly ISender mediator;
+  private readonly ILocationMapper locationMapper;
 
-  public LocationsController(ILocationService locationService)
+  public LocationsController(ISender mediator, ILocationMapper locationMapper)
   {
-    this.locationService = locationService;
+    this.mediator = mediator;
+    this.locationMapper = locationMapper;
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> CreateLocation([FromForm] CreateLocationRequest request)
+  {
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var createLocationCommand = locationMapper.MapCreateRequestToCommand(request, userId ?? "");
+
+    ErrorOr<LocationResult> createLocationCommandResult = await mediator.Send(createLocationCommand);
+
+    return createLocationCommandResult.Match(
+      result => CreatedAtGetLocation(result),
+      errors => Problem(errors)
+    );
   }
 
   [HttpGet]
   public async Task<IActionResult> GetLocations()
   {
-    ErrorOr<List<LocationResponseDto>> getLocationsResult = await locationService.GetLocations();
+    var getLocationsQuery = locationMapper.MapGetLocationsQueryToCommand();
+    ErrorOr<List<LocationResult>> getLocationsResult = await mediator.Send(getLocationsQuery);
 
     return getLocationsResult.Match(
-      locations => Ok(locations),
+      result => Ok(locationMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
 
-  [HttpGet("{latitude}&{longitude}/category")]
-  public async Task<IActionResult> GetClosestLocation(double latitude, double longitude, Guid category)
+  [HttpGet("{latitude}&{longitude}")]
+  public async Task<IActionResult> GetLocationByProximity(double latitude, double longitude, Guid categoryId)
   {
-    ErrorOr<LocationResponseDto> getClosestLocationResult = await locationService.GetClosestLocation(latitude, longitude, category);
+    var getLocationByProximityQuery = locationMapper.MapGetByProximityToCommand(latitude, longitude, categoryId);
+
+    ErrorOr<LocationResult> getClosestLocationResult = await mediator.Send(getLocationByProximityQuery);
 
     return getClosestLocationResult.Match(
-      location => Ok(location),
+      result => Ok(locationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
@@ -39,29 +62,26 @@ public class LocationsController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetLocationById(Guid id)
   {
-    ErrorOr<LocationResponseDto> getLocationByIdResult = await locationService.GetLocationById(id);
+    var getLocationByIdQuery = locationMapper.MapGetByIdToCommand(id);
+
+    ErrorOr<LocationResult> getLocationByIdResult = await mediator.Send(getLocationByIdQuery);
 
     return getLocationByIdResult.Match(
-      location => Ok(location),
+      result => Ok(locationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
 
-  [HttpPost]
-  public async Task<IActionResult> AddLocation([FromForm] AddLocationDto request)
-  {
-    ErrorOr<LocationResponseDto> addLocationResult = await locationService.AddLocation(request);
-
-    return addLocationResult.Match(
-      location => CreatedAtGetLocation(location),
-      errors => Problem(errors)
-    );
-  }
-
+  //TODO: Lock this so only creator and administrator can update?
+  [Authorize(Roles = "User, Administrator")]
   [HttpPut]
-  public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationDto request)
+  public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationRequest request)
   {
-    ErrorOr<Updated> updateLocationResult = await locationService.UpdateLocation(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var updateLocationCommand = locationMapper.MapUpdateToCommand(request, userId ?? "");
+
+    ErrorOr<Updated> updateLocationResult = await mediator.Send(updateLocationCommand);
 
     return updateLocationResult.Match(
       _ => NoContent(),
@@ -69,10 +89,13 @@ public class LocationsController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {
-    ErrorOr<Deleted> deleteLocationResult = await locationService.DeleteLocation(id);
+    var deleteLocationCommand = locationMapper.MapDeleteToCommand(id);
+
+    ErrorOr<Deleted> deleteLocationResult = await mediator.Send(deleteLocationCommand);
 
     return deleteLocationResult.Match(
       _ => NoContent(),
@@ -80,12 +103,12 @@ public class LocationsController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetLocation(LocationResponseDto location)
+  private CreatedAtActionResult CreatedAtGetLocation(LocationResult result)
   {
     return CreatedAtAction(
         actionName: nameof(GetLocationById),
-        routeValues: new { id = location.Id },
-        value: location
+        routeValues: new { id = result.Location.Id },
+        value: locationMapper.MapResultToResponse(result)
       );
   }
 }

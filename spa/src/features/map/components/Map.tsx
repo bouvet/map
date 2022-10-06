@@ -4,7 +4,7 @@ import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapService } from '../services/map.services';
 import { LatLong, Location } from '../../../utils/types.d';
-import { mapActions } from '../../../store/state/map.state';
+import { mapActions, mapReducer } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -53,12 +53,18 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
 
+    const calculateCameraView = () => {
+        // @ts-ignore
+        console.log(mapRef.current.getCenter());
+    };
+
     const onMapLoad = useCallback(
         (event: any) => {
             if (mapRef.current) {
                 // @ts-ignore
                 mapRef.current.on('move', () => {
                     setViewState(event.viewState);
+                    calculateCameraView();
                 });
                 // @ts-ignore
                 mapRef.current.on('moveend', () => {
@@ -97,26 +103,30 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         >
             {!addingLocation &&
                 selectedFilterCategory &&
-                filteredLocations.map((locaction) => (
-                    <CustomMarker
-                        key={locaction.id}
-                        coordinates={locaction.geometry.coordinates}
-                        onClickHandler={onClickHandler}
-                        locaction={locaction}
-                        selectedMarker={selectedMarker}
-                    />
-                ))}
+                filteredLocations
+                    .filter((location) => location.properties.status === 'Approved')
+                    .map((locaction) => (
+                        <CustomMarker
+                            key={locaction.id}
+                            coordinates={locaction.geometry.coordinates}
+                            onClickHandler={onClickHandler}
+                            markerLocation={locaction}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
             {!addingLocation &&
                 !selectedFilterCategory &&
-                locations.map((locaction) => (
-                    <CustomMarker
-                        key={locaction.id}
-                        coordinates={locaction.geometry.coordinates}
-                        onClickHandler={onClickHandler}
-                        locaction={locaction}
-                        selectedMarker={selectedMarker}
-                    />
-                ))}
+                locations
+                    .filter((location) => location.properties.status === 'Approved')
+                    .map((location) => (
+                        <CustomMarker
+                            key={location.id}
+                            coordinates={location.geometry.coordinates}
+                            onClickHandler={onClickHandler}
+                            markerLocation={location}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
         </ReactMap>
     );
 };

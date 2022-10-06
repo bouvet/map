@@ -1,56 +1,74 @@
 using ErrorOr;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using restapi.Dtos.Reviews;
-using restapi.Services.Reviews;
+using restapi.Common.Services.Mappers.Reviews;
+using restapi.Contracts.Reviews;
+using restapi.Services.Reviews.Common;
 
 namespace restapi.Controllers;
 
 public class ReviewsController : ApiController
 {
-  private readonly IReviewService reviewService;
+  private readonly ISender mediator;
+  private readonly IReviewMapper reviewMapper;
 
-  public ReviewsController(IReviewService reviewService)
+  public ReviewsController(ISender mediator, IReviewMapper reviewMapper)
   {
-    this.reviewService = reviewService;
+    this.mediator = mediator;
+    this.reviewMapper = reviewMapper;
   }
 
   [HttpPost]
-  public async Task<IActionResult> AddReview([FromForm] AddReviewDto request)
+  public async Task<IActionResult> CreateReview([FromForm] CreateReviewRequest request)
   {
-    ErrorOr<ReviewResponseDto> addReviewResult = await reviewService.AddReview(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
 
-    return addReviewResult.Match(
-      addReviewResult => CreatedAtGetReview(addReviewResult),
+    var createReviewCommand = reviewMapper.MapCreateToCommand(request, userId ?? "");
+
+    ErrorOr<ReviewResult> createReviewResult = await mediator.Send(createReviewCommand);
+
+    return createReviewResult.Match(
+      result => CreatedAtGetReview(result),
       errors => Problem(errors)
     );
   }
 
   [HttpGet("{id:guid}")]
-  public async Task<IActionResult> GetReview(Guid id)
+  public async Task<IActionResult> GetReviewById(Guid id)
   {
-    ErrorOr<ReviewResponseDto> getReviewResult = await reviewService.GetReview(id);
+    var getReviewByIdQuery = reviewMapper.MapGetByIdToCommand(id);
 
-    return getReviewResult.Match(
-      review => Ok(review),
+    ErrorOr<ReviewResult> getReviewByIdResult = await mediator.Send(getReviewByIdQuery);
+
+    return getReviewByIdResult.Match(
+      result => Ok(reviewMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );
   }
 
   [HttpGet]
-  public async Task<IActionResult> GetAllReviews(Guid locationId)
+  public async Task<IActionResult> GetReviews(Guid locationId)
   {
-    ErrorOr<List<ReviewResponseDto>> getReviewsResult = await reviewService.GetReviews(locationId);
+    var getReviewsQuery = reviewMapper.MapGetReviewsToCommand(locationId);
+
+    ErrorOr<List<ReviewResult>> getReviewsResult = await mediator.Send(getReviewsQuery);
 
     return getReviewsResult.Match(
-      reviews => Ok(reviews),
+      result => Ok(reviewMapper.MapResultListToResponseList(result)),
       errors => Problem(errors)
     );
   }
 
+  [Authorize(Roles = "User, Administrator")]
   [HttpPut]
-  public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewDto request)
+  public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewRequest request)
   {
-    ErrorOr<Updated> updateReviewResult = await reviewService.UpdateReview(request);
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var updateReviewCommand = reviewMapper.MapUpdateToCommand(request, userId ?? "");
+
+    ErrorOr<Updated> updateReviewResult = await mediator.Send(updateReviewCommand);
 
     return updateReviewResult.Match(
       _ => NoContent(),
@@ -58,10 +76,13 @@ public class ReviewsController : ApiController
     );
   }
 
+  //TODO: Lock so only creator and admin can delete
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {
-    ErrorOr<Deleted> deleteReviewResult = await reviewService.DeleteReview(id);
+    var deleteReviewCommand = reviewMapper.MapDeleteToCommand(id);
+
+    ErrorOr<Deleted> deleteReviewResult = await mediator.Send(deleteReviewCommand);
 
     return deleteReviewResult.Match(
       _ => NoContent(),
@@ -69,12 +90,12 @@ public class ReviewsController : ApiController
     );
   }
 
-  private CreatedAtActionResult CreatedAtGetReview(ReviewResponseDto review)
+  private CreatedAtActionResult CreatedAtGetReview(ReviewResult result)
   {
     return CreatedAtAction(
-        actionName: nameof(GetReview),
-        routeValues: new { id = review.Id },
-        value: review
+        actionName: nameof(GetReviewById),
+        routeValues: new { id = result.Review.Id },
+        value: reviewMapper.MapResultToResponse(result)
       );
   }
 }

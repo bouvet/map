@@ -4,19 +4,16 @@
   - [Get Categories](#get-categories)
     - [Get Categories Request](#get-categories-request)
     - [Get Categories Response](#get-categories-response)
-  - [Create Category](#create-category)
+  - [🔒Create Category](#create-category)
     - [Create Category Request](#create-category-request)
     - [Create Category Response](#create-category-response)
-  - [Get Categories In Use](#get-categories-in-use)
-    - [Get Categories In Use Request](#get-categories-in-use-request)
-    - [Get Categories In Use Response](#get-categories-in-use-response)
-  - [Get Category](#get-category)
-    - [Get Category Request](#get-category-request)
-    - [Get Category Response](#get-category-response)
-  - [Update Category](#update-category)
+  - [Get Category By Id](#get-category-by-id)
+    - [Get Category By Id Request](#get-category-by-id-request)
+    - [Get Category By Id Response](#get-category-by-id-response)
+  - [🔒Update Category](#update-category)
     - [Update Category Request](#update-category-request)
     - [Update Category Response](#update-category-response)
-  - [Delete Category](#delete-category)
+  - [🔒Delete Category](#delete-category)
     - [Delete Category Request](#delete-category-request)
     - [Delete Category Response](#delete-category-response)
 
@@ -39,23 +36,38 @@ GET {{host}}/api/categories
   {
     "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
     "name": "Fotball",
-    "emoji": "⚽"
+    "emoji": "⚽",
+    "creator": null,
+    "editor": null
   },
   {
-    "id": "60c951f3-d233-442b-7883-08da9ad92895",
-    "name": "Basketball",
-    "emoji": "\uD83C\uDFC0"
+    "id": "f2c5e17b-1b05-43c4-fb53-08daa6c2022c",
+    "name": "Golf",
+    "emoji": "🏌️‍♂️",
+    "creator": {
+      "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
+      "email": "admin@email.com",
+      "firstName": null,
+      "lastName": null
+    },
+    "editor": {
+      "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
+      "email": "admin@email.com",
+      "firstName": null,
+      "lastName": null
+    }
   }
 ]
 ```
 
-## Create Category
+## 🔒Create Category
 
 ### Create Category Request
 
 ```js
 POST /api/categories
 Content-Type: application/json
+Authorization: Bearer {{admintoken}}
 ```
 
 ```yml
@@ -66,8 +78,8 @@ Required fields:
 
 ```json
 {
-  "name": "Fotball",
-  "emoji": "⚽"
+  "name": "Golf",
+  "emoji": "🏌️‍♂️"
 }
 ```
 
@@ -83,50 +95,28 @@ Location: {{host}}/api/Categories/{{id}}
 
 ```json
 {
-  "id": "735fbdfd-ab84-4cc8-ddbf-08da9b08fa95",
-  "name": "Styrke",
-  "emoji": "\uD83D\uDCAA"
+  "id": "f2c5e17b-1b05-43c4-fb53-08daa6c2022c",
+  "name": "Golf",
+  "emoji": "🏌️‍♂️",
+  "creator": {
+    "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
+    "email": "admin@email.com",
+    "firstName": null,
+    "lastName": null
+  },
+  "editor": null
 }
 ```
 
-## Get Categories In Use
+## Get Category By Id
 
-### Get Categories In Use Request
-
-```js
-GET {{host}}/api/categories/InUse
-```
-
-### Get Categories In Use Response
-
-```js
-200 Ok
-```
-
-```json
-[
-  {
-    "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
-    "name": "Fotball",
-    "emoji": "⚽"
-  },
-  {
-    "id": "60c951f3-d233-442b-7883-08da9ad92895",
-    "name": "Basketball",
-    "emoji": "\uD83C\uDFC0"
-  }
-]
-```
-
-## Get Category
-
-### Get Category Request
+### Get Category By Id Request
 
 ```js
 GET {{host}}/api/categories/{{id}}
 ```
 
-### Get Category Response
+### Get Category By Id Response
 
 ```js
 200 Ok
@@ -134,19 +124,32 @@ GET {{host}}/api/categories/{{id}}
 
 ```json
 {
-  "id": "3e061bac-93c0-46b9-a502-08da96e466d8",
-  "name": "Fotball",
-  "emoji": "⚽"
+  "id": "429b41f2-fa6d-447c-e53b-08daa6a9cd73",
+  "name": "Golf",
+  "emoji": "🏌️‍♂️",
+  "creator": {
+    "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
+    "email": "admin@email.com",
+    "firstName": null,
+    "lastName": null
+  },
+  "editor": {
+    "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
+    "email": "admin@email.com",
+    "firstName": null,
+    "lastName": null
+  }
 }
 ```
 
-## Update Category
+## 🔒Update Category
 
 ### Update Category Request
 
 ```js
 PUT {{host}}/api/categories/{{id}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 ```
 
 ```yml
@@ -168,12 +171,13 @@ Required fields:
 204 No Content
 ```
 
-## Delete Category
+## 🔒Delete Category
 
 ### Delete Category Request
 
 ```js
 DELETE {{host}}/api/categories/{{id}}
+Authorization: Bearer {{token}}
 ```
 
 ### Delete Category Response

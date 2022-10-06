@@ -11,7 +11,7 @@ interface ButtonStylingProps {
  * @param backgroundColor
  * @param textColor
  */
-export const RoundButton = styled.div<ButtonStylingProps>`
+export const RoundButton = styled.button<ButtonStylingProps>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     height: 50px;
     width: 50px;
@@ -25,6 +25,7 @@ export const RoundButton = styled.div<ButtonStylingProps>`
     position: fixed;
     bottom: 30px;
     right: 30px;
+    border: none;
 `;
 
 export const BackButton = styled(RoundButton)`

@@ -1,0 +1,4 @@
+@id=04571743-0a86-45f5-901a-08daa13f9828
+
+Delete {{host}}/api/roles/{{id}}
+Authorization: Bearer {{admintoken}}

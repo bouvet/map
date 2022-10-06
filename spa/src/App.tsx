@@ -4,6 +4,8 @@ import { LocationInfo } from './pages/LocationInfo';
 import { Login } from './pages/Login';
 import { LocationRegistration } from './pages/LocationRegistration';
 import { CustomizedSnackbars } from './components/Snackbar/Snackbar';
+import { AdminPanel } from './pages/AdminPanel';
+import { ProfilePage } from './pages/ProfilePage';
 import { EmailConfirmation } from './features/userRegistration/components/EmailConfirmation';
 import { EmailInput } from './features/userRegistration/components/EmailInput';
 import { UserRegistration } from './pages/UserRegistration';
@@ -20,7 +22,8 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/location-info" element={<LocationInfo />} />
             <Route path="/location-registration" element={<LocationRegistration />} />
-
+            <Route path="/location-approval-panel" element={<AdminPanel />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user-registration" element={<UserRegistration />} />
             <Route path="/email-input" element={<EmailInput />} />

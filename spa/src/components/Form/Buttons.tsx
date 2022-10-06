@@ -16,7 +16,7 @@ export const Button = styled.button<ButtonProps>`
     width: 100%;
     font-size: ${MyTheme.fontSize.icon};
     padding: 5px 10px;
-    border-radius: 35px;
+    border-radius: 20px;
     background-color: ${({ disabled }) => (!disabled ? ({ background }) => background : MyTheme.colors.grey)};
     color: ${(props) => props.text};
     display: inline-flex;

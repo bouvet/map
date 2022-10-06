@@ -3,9 +3,10 @@ import styled from 'styled-components';
 export const FormWrapper = styled.div`
     width: 100%;
     height: 100vh;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 570px;
 `;
 
 export const FormWrapperRegistration = styled(FormWrapper)`
@@ -18,5 +19,5 @@ export const FormContent = styled.div`
     max-width: 350px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    margin-top: -25px;
 `;

@@ -1,3 +1,2 @@
-@devhost=https://localhost:7107
-
-GET {{devhost}}/api/users
+GET {{host}}/api/users
+Authorization: Bearer {{admintoken}}

@@ -50,7 +50,7 @@ export const Home: FC = () => {
             {!homeMarkerFocus ? (
                 <>
                     <FilterMenu>{mappedFilter}</FilterMenu>
-                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="5px" />
+                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="16px" />
                 </>
             ) : (
                 <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleBackClick}>
@@ -70,7 +70,7 @@ export const Home: FC = () => {
                                     name={currentlySelectedLocation.properties.title}
                                     description={currentlySelectedLocation.properties.description}
                                     rating={currentlySelectedLocation.properties.rating}
-                                    image={currentlySelectedLocation.properties.img}
+                                    image={currentlySelectedLocation.properties.image}
                                 />
                             </>
                         )}
