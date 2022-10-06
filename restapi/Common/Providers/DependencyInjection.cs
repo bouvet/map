@@ -1,6 +1,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using restapi.Data;
 
@@ -48,7 +49,7 @@ public static class DependencyInjection
       azureProvider.DbConnectionString = keyVaultDbConnection.Value.Value;
     }
 
-    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureProvider.DbConnectionString));
+    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureProvider.DbConnectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
     return services;
   }
