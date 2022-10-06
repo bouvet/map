@@ -7,9 +7,12 @@ import { InputEmail } from '../../../components/Form/Input';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
+import { useStateDispatch } from '../../../hooks/useRedux';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
 
 export const ForgottenPassword: FC = () => {
+    const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
     const [inputEmail, setInputEmail] = useState('');
@@ -20,8 +23,13 @@ export const ForgottenPassword: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // navigate('/email-confirmation');
-        console.log('Email: ', inputEmail);
+        dispatch(
+            snackbarActions.setNotify({
+                message: `En link for å tilbakestille passordet er sendt til ${inputEmail}`,
+                severity: 'success',
+            }),
+        );
+        navigate('/login');
     };
 
     return (

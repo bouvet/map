@@ -115,29 +115,29 @@ export const RegisterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }
 // PERSONALIZATION
 
 export const RegisterButtonFavorites: FC<FilterButtonContentProps> = ({ id, text, emoji }) => {
-    const { favorites } = useStateSelector((state) => state.user);
+    const { favoriteCategoryIds } = useStateSelector((state) => state.user);
     const [select, setSelect] = useState(false);
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        if (id && favorites.includes(id)) {
+        if (id && favoriteCategoryIds.includes(id)) {
             setSelect(true);
         } else {
             setSelect(false);
         }
-    }, [favorites, id]);
+    }, [favoriteCategoryIds, id]);
 
     const updateGlobalStateForSelectedCategory = () => {
-        if (favorites.includes(id)) {
-            const index = favorites.indexOf(id);
-            const tempArray = [...favorites];
+        if (favoriteCategoryIds.includes(id)) {
+            const index = favoriteCategoryIds.indexOf(id);
+            const tempArray = [...favoriteCategoryIds];
             if (index !== -1) {
                 tempArray.splice(index, 1);
-                dispatch(userActions.setFavorites(tempArray));
+                dispatch(userActions.setFavoriteCategoryIds(tempArray));
             }
         } else {
             // add
-            dispatch(userActions.setFavorites([...favorites, id]));
+            dispatch(userActions.setFavoriteCategoryIds([...favoriteCategoryIds, id]));
         }
     };
 

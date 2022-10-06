@@ -18,7 +18,11 @@ export const UserRegistration: FC = () => {
                     </span>
                     <span>
                         <Title>Registrer ny bruker</Title>
-                        <Text>Ved å opprette bruker kan du...</Text>
+                        <Text>Ved å opprette bruker kan du:</Text>
+                        <ul>
+                            <li>- Legge til lokasjoner</li>
+                            <li>- Få personlig tilpasning og anbefalinger</li>
+                        </ul>
                     </span>
                     <Google text="google">
                         <GoogleLogoWhite src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google" />
@@ -36,7 +40,7 @@ export const UserRegistration: FC = () => {
                             <Text>Allerede bruker?</Text>
                         </LeftFlex>
                         <RightFlex>
-                            <LinkText to="/user-registration">Logg inn</LinkText>
+                            <LinkText to="/login">Logg inn</LinkText>
                         </RightFlex>
                     </SplitWrapper>
                 </SectionWrapper>

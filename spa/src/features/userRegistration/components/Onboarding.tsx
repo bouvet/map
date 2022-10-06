@@ -8,11 +8,12 @@ import { Text, LinkTextOnboarding, TitleForm, WrapperOnboarding } from '../../..
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
-import { ResetPassword } from '../../login/components/ResetPassword';
 import { userService } from '../services/user.services';
+import { HowAddLocation } from './HowAddLocation';
+import { HowAddReview } from './HowAddReview';
 
 export const Onboarding: FC = () => {
-    const { email, password, firstName, lastName, dob, favorites } = useStateSelector((state) => state.user);
+    const { email, password, firstName, lastName, dob, favoriteCategoryIds } = useStateSelector((state) => state.user);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const Onboarding: FC = () => {
         dispatch(userActions.setFirstName(''));
         dispatch(userActions.setLastName(''));
         dispatch(userActions.setDob(''));
-        dispatch(userActions.setFavorites([]));
+        dispatch(userActions.setFavoriteCategoryIds([]));
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +43,7 @@ export const Onboarding: FC = () => {
             firstName,
             lastName,
             dob,
-            favorites,
+            favoriteCategoryIds,
         };
 
         const successStatus: boolean = await dispatch(userService.registerUser(userDetails));
@@ -64,7 +65,7 @@ export const Onboarding: FC = () => {
     console.log('sjekk2', password);
     console.log('sjekk2', firstName, lastName);
     console.log('sjekk4', dob);
-    console.log('sjekk5', favorites);
+    console.log('sjekk5', favoriteCategoryIds);
 
     const [pageIndex, setPageIndex] = useState(0);
 
@@ -84,7 +85,7 @@ export const Onboarding: FC = () => {
                         <TitleForm>Slik bruker du VerdenVenter</TitleForm>
                         {pageIndex === 0 ? (
                             <>
-                                <Text>Første side</Text>
+                                <Text>Tips & triks</Text>
                                 <WrapperOnboarding>
                                     <ProgressBarOnboarding pageIndex={pageIndex} />
                                     <SubmitButtonRight text="white" onClick={handleForwardClick}>
@@ -114,27 +115,11 @@ export const Onboarding: FC = () => {
                                 )}
                             </WrapperOnboarding>
                         )}
-                        {pageIndex === 1 && <ResetPassword />}
-                        {pageIndex === 2 && <ResetPassword />}
+                        {pageIndex === 1 && <HowAddLocation />}
+                        {pageIndex === 2 && <HowAddReview />}
                     </SectionWrapper>
                 </FormContent>
             </FormWrapper>
         </>
-
-        // <>
-        //     <FormWrapper>
-        //         <FormContent>
-        //             <SectionWrapper>
-        //                 <TitleForm>Slik bruker du VerdenVenter</TitleForm>
-        //                 <Text>...</Text>
-        //                 <WrapperOnboarding>
-        //                     <ProgressBarOnboarding pageIndex={pageIndex} />
-        //                     <SubmitButtonRight text="white">Neste</SubmitButtonRight>
-        //                     <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
-        //                 </WrapperOnboarding>
-        //             </SectionWrapper>
-        //         </FormContent>
-        //     </FormWrapper>
-        // </>
     );
 };

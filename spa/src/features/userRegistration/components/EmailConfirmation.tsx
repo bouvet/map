@@ -1,22 +1,15 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, Text, TitleForm } from '../../../components/Form/Text';
-import { BackButton } from '../../../components/Navigation/Buttons';
-import { MyTheme } from '../../../styles/global';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
+import { DialogButton } from '../../../components/Form/DialogButton';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch();
@@ -26,7 +19,7 @@ export const EmailConfirmation: FC = () => {
     const [inputCode, setInputCode] = useState<string[]>(new Array(6).fill(''));
 
     const handleSubmit = useCallback(() => {
-        // check if code is valid
+        // check if code is valid, else snackbar message
         dispatch(userActions.setEmail(location.state.inputEmail));
         navigate('/personal-info');
     }, [dispatch, location.state.inputEmail, navigate]);
@@ -47,11 +40,6 @@ export const EmailConfirmation: FC = () => {
         }
     }, [inputCode, handleSubmit]);
 
-    const [open, setOpen] = useState(false);
-    const handleClickOpen = () => setOpen(true);
-    const handleClose = () => navigate('/user-registration');
-    const handleCloseDialog = () => setOpen(false);
-
     const pageIndex = 1;
 
     return (
@@ -60,21 +48,7 @@ export const EmailConfirmation: FC = () => {
                 <ProgressBarForm pageIndex={pageIndex} />
             </ProgressWrapper>
             <FormWrapperRegistration>
-                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickOpen}>
-                    <span className="material-symbols-outlined">close</span>
-                </BackButton>
-                <Dialog open={open}>
-                    <DialogTitle id="alert-dialog-title">Avbryt registrering</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Sikker på at du ønsker å avslutte registreringen?
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose}>Ja</Button>
-                        <Button onClick={handleCloseDialog}>Nei</Button>
-                    </DialogActions>
-                </Dialog>
+                <DialogButton />
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>Bekreft e-post</TitleForm>

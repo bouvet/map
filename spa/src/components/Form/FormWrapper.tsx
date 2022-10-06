@@ -8,12 +8,8 @@ export const FormWrapper = styled.div`
     justify-content: center;
 `;
 
-export const FormWrapperRegistration = styled.div`
-    width: 100%;
+export const FormWrapperRegistration = styled(FormWrapper)`
     height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 export const FormContent = styled.div`

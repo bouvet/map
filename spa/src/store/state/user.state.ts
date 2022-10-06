@@ -6,7 +6,7 @@ const initialState = {
     firstName: '',
     lastName: '',
     dob: '',
-    favorites: [] as string[],
+    favoriteCategoryIds: [] as string[],
 };
 
 const userState = createSlice({
@@ -28,8 +28,8 @@ const userState = createSlice({
         setDob(state, action: PayloadAction<string>) {
             state.dob = action.payload;
         },
-        setFavorites(state, action: PayloadAction<string[]>) {
-            state.favorites = action.payload;
+        setFavoriteCategoryIds(state, action: PayloadAction<string[]>) {
+            state.favoriteCategoryIds = action.payload;
         },
     },
 });

@@ -17,20 +17,19 @@ export const LinkText = styled(Link)`
     margin: 0px;
 `;
 
-export const LinkTextCenter = styled(LinkText)`
-    text-align: center;
-`;
-
 export const LinkTextPersonalization = styled(LinkText)`
     position: absolute;
     bottom: 20px;
-    top: auto;
-    z-index: 10;
-    justify-self: center;
+    width: 80%;
     text-align: center;
 `;
 
-export const LinkTextOnboarding = styled(LinkText)`
+export const LinkTextOnboarding = styled.p`
+    color: ${MyTheme.colors.accent};
+    font-size: ${MyTheme.fontSize.header};
+    text-decoration: none;
+    margin: 0px;
+    text-align: center;
     padding: 5px;
     float: left;
 `;
