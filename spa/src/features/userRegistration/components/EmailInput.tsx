@@ -4,7 +4,7 @@ import { BackButton } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { InputEmail } from '../../../components/Form/Input';
+import { CenterFlex, InputEmail } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
@@ -46,7 +46,9 @@ export const EmailInput: FC = () => {
                         <Text>Fyll inn din e-postadresse for å motta en bekreftelseskode.</Text>
                         <Form onSubmit={(e) => handleSubmit(e)}>
                             <InputEmail label="E-post*" value={inputEmail} setState={setInputEmail} handleChange={handleFormInputChange} />
-                            <SubmitButtonRegistration text="white">Send kode</SubmitButtonRegistration>
+                            <CenterFlex>
+                                <SubmitButtonRegistration text="white">Send kode</SubmitButtonRegistration>
+                            </CenterFlex>
                         </Form>
                     </SectionWrapper>
                 </FormContent>

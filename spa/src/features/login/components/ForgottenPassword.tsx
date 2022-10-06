@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { InputEmail } from '../../../components/Form/Input';
+import { CenterFlex, InputEmail } from '../../../components/Form/Input';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
@@ -43,7 +43,9 @@ export const ForgottenPassword: FC = () => {
                     <Text>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</Text>
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <InputEmail label="E-post*" value={inputEmail} setState={setInputEmail} handleChange={handleFormInputChange} />
-                        <SubmitButtonRegistration text="white">Tilbakestill passord</SubmitButtonRegistration>
+                        <CenterFlex>
+                            <SubmitButtonRegistration text="white">Tilbakestill passord</SubmitButtonRegistration>
+                        </CenterFlex>
                     </Form>
                 </SectionWrapper>
             </FormContent>

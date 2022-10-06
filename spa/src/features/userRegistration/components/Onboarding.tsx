@@ -2,6 +2,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRight } from '../../../components/Form/Buttons';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
+import { CenterFlex } from '../../../components/Form/Input';
 import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, LinkTextOnboarding, TitleForm, WrapperOnboarding } from '../../../components/Form/Text';
@@ -86,34 +87,44 @@ export const Onboarding: FC = () => {
                         {pageIndex === 0 ? (
                             <>
                                 <Text>Tips & triks</Text>
-                                <WrapperOnboarding>
-                                    <ProgressBarOnboarding pageIndex={pageIndex} />
-                                    <SubmitButtonRight text="white" onClick={handleForwardClick}>
-                                        Neste
-                                    </SubmitButtonRight>
-                                    <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
-                                </WrapperOnboarding>
-                            </>
-                        ) : (
-                            <WrapperOnboarding>
-                                {pageIndex === 1 && (
-                                    <>
+                                <CenterFlex>
+                                    <WrapperOnboarding>
                                         <ProgressBarOnboarding pageIndex={pageIndex} />
                                         <SubmitButtonRight text="white" onClick={handleForwardClick}>
                                             Neste
                                         </SubmitButtonRight>
                                         <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+                                    </WrapperOnboarding>
+                                </CenterFlex>
+                            </>
+                        ) : (
+                            <>
+                                {pageIndex === 1 && (
+                                    <>
+                                        <CenterFlex>
+                                            <WrapperOnboarding>
+                                                <ProgressBarOnboarding pageIndex={pageIndex} />
+                                                <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                                    Neste
+                                                </SubmitButtonRight>
+                                                <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+                                            </WrapperOnboarding>
+                                        </CenterFlex>
                                     </>
                                 )}
                                 {pageIndex === 2 && (
                                     <>
-                                        <ProgressBarOnboarding pageIndex={pageIndex} />
-                                        <SubmitButtonRight text="white" onClick={handleForwardClick}>
-                                            Fullfør
-                                        </SubmitButtonRight>
+                                        <CenterFlex>
+                                            <WrapperOnboarding>
+                                                <ProgressBarOnboarding pageIndex={pageIndex} />
+                                                <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                                    Fullfør
+                                                </SubmitButtonRight>
+                                            </WrapperOnboarding>
+                                        </CenterFlex>
                                     </>
                                 )}
-                            </WrapperOnboarding>
+                            </>
                         )}
                         {pageIndex === 1 && <HowAddLocation />}
                         {pageIndex === 2 && <HowAddReview />}

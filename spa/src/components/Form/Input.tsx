@@ -36,6 +36,11 @@ export const RightFlex = styled.div`
     justify-content: right;
 `;
 
+export const CenterFlex = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
 interface InputProps {
     label: string;
     value: string;

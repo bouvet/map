@@ -4,7 +4,7 @@ import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { InputPassword } from '../../../components/Form/Input';
+import { CenterFlex, InputPassword } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { TitleForm } from '../../../components/Form/Text';
@@ -60,7 +60,9 @@ export const CreatePassword: FC = () => {
                                 setState={setConfirmPassword}
                                 handleChange={handleFormInputChange}
                             />
-                            <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
+                            <CenterFlex>
+                                <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
+                            </CenterFlex>
                         </Form>
                     </SectionWrapper>
                 </FormContent>

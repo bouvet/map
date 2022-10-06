@@ -10,6 +10,7 @@ import { LinkTextPersonalization, Text, TitleForm } from '../../../components/Fo
 import { SubmitButtonPersonalization } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { mapService } from '../../map';
+import { CenterFlex } from '../../../components/Form/Input';
 
 export const Personalization: FC = () => {
     const navigate = useNavigate();
@@ -38,9 +39,13 @@ export const Personalization: FC = () => {
                     <Text>Velg dine favoritter:</Text>
                     <FilterMenuContent>{mappedFilter}</FilterMenuContent>
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <SubmitButtonPersonalization text="white">Velg</SubmitButtonPersonalization>
+                        <CenterFlex>
+                            <SubmitButtonPersonalization text="white">Velg</SubmitButtonPersonalization>
+                        </CenterFlex>
                     </Form>
-                    <LinkTextPersonalization to="/onboarding">Hopp over</LinkTextPersonalization>
+                    <CenterFlex>
+                        <LinkTextPersonalization to="/onboarding">Hopp over</LinkTextPersonalization>
+                    </CenterFlex>
                 </SectionWrapper>
             </FormContent>
         </FormWrapper>

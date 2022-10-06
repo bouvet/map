@@ -11,7 +11,7 @@ import moment from 'moment';
 import 'moment/locale/en-ca';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { InputName, Label } from '../../../components/Form/Input';
+import { CenterFlex, InputName, Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { TitleForm } from '../../../components/Form/Text';
@@ -97,7 +97,9 @@ export const PersonalInfo: FC = () => {
                                     />
                                 </LocalizationProvider>
                             </ThemeProvider>
-                            <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
+                            <CenterFlex>
+                                <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
+                            </CenterFlex>
                         </Form>
                     </SectionWrapper>
                 </FormContent>

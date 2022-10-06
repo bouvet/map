@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { InputPassword } from '../../../components/Form/Input';
+import { CenterFlex, InputPassword } from '../../../components/Form/Input';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
@@ -54,7 +54,9 @@ export const ResetPassword: FC = () => {
                             setState={setConfirmNewPassword}
                             handleChange={handleFormInputChange}
                         />
-                        <SubmitButtonRegistration text="white">Endre passord</SubmitButtonRegistration>
+                        <CenterFlex>
+                            <SubmitButtonRegistration text="white">Endre passord</SubmitButtonRegistration>
+                        </CenterFlex>
                     </Form>
                 </SectionWrapper>
             </FormContent>
