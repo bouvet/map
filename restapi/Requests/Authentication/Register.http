@@ -2,10 +2,10 @@ POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "userTest5@email.com",
+  "email": "user@email.com",
   "password": "12345qwerty",
-  "firstname": "ola",
-  "lastname": "normann",
-  "DOB": "1987-04-25",
-  "favoritecategoryIds": ["3e061bac-93c0-46b9-a502-08da96e466d8", "60c951f3-d233-442b-7883-08da9ad92895"]
+  "firstname": "User",
+  "lastname": "Userdottir",
+  "DOB": "2022-10-06",
+  "favoritecategoryIds": []
 }

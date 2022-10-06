@@ -62,8 +62,8 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
       Uploader = request.Creator
     };
 
-    // dataContext.Images.Add(image);
-    // await dataContext.SaveChangesAsync(cancellationToken);
+    dataContext.Images.Add(image);
+    await dataContext.SaveChangesAsync(cancellationToken);
 
     return new ImageStorageResult(image);
   }

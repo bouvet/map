@@ -44,9 +44,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       return Errors.User.InvalidPassword;
     }
 
-    var userRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken) ??
-                  new Role { Name = "User", Created = dateTimeProvider.CEST };
-
     // TODO: Validate user-input!
 
     var user = new User
@@ -56,10 +53,32 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       Password = passwordProvider.HashPassword(request.Password),
       FirstName = request.FirstName,
       LastName = request.LastName,
-      DOB = request.DOB
+      DOB = request.DOB,
+      Registered = dateTimeProvider.CEST
     };
 
-    user.Roles.Add(userRole);
+    var users = await dataContext.Users.ToListAsync(cancellationToken: cancellationToken);
+
+    if (users.Count == 0)
+    {
+      var adminRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "Administrator", cancellationToken: cancellationToken) ??
+                  new Role { Id = Guid.NewGuid(), Name = "Administrator", Created = dateTimeProvider.CEST, Creator = user };
+
+      dataContext.Roles.Add(adminRole);
+      user.Roles.Add(adminRole);
+    }
+    else
+    {
+      var userRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
+
+      if (userRole is null)
+      {
+        userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.CEST };
+        dataContext.Roles.Add(userRole);
+      }
+
+      user.Roles.Add(userRole);
+    }
 
     if (request.FavoriteCategoryIds?.Count > 0)
     {

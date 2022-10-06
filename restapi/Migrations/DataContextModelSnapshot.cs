@@ -275,6 +275,9 @@ namespace restapi.Migrations
                     b.Property<int>("PostalCode")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Registered")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
