@@ -1,8 +1,8 @@
-import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import { Button, IconButton } from '@mui/material';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { Button, IconButton } from '@mui/material';
+import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
 import { BackButton, GoogleIcon } from '../../components/Navigation/Buttons';
 import { MyTheme } from '../../styles/global';
 import { ProfilePictureProps } from './ProfileImage';
@@ -69,8 +69,8 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
 
     const { handleClick } = props;
 
-    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { files } = event.target;
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target;
         if (files) {
             setImage(files[0]);
         }
@@ -110,7 +110,7 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
                                 hidden
                                 accept="image/png, image/jpeg, image/webp, image/jpg"
                                 type="file"
-                                onChange={(event) => handleImageChange(event)}
+                                onChange={(e) => handleImageChange(e)}
                             />
                             Last opp
                         </Button>

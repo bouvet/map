@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { RequiredStar } from '../../../components/Common/RequiredStar';
@@ -48,19 +48,19 @@ export const Information: FC = () => {
     const dispatch = useDispatch();
     const { currentTitle, currentDescription } = useStateSelector((state) => state.registration);
 
-    const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value === ' ') {
+    const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === ' ') {
             dispatch(registrationActions.setCurrentTitle(''));
         } else {
-            dispatch(registrationActions.setCurrentTitle(event.target.value));
+            dispatch(registrationActions.setCurrentTitle(e.target.value));
         }
     };
 
-    const handleChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if (event.target.value === ' ') {
+    const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        if (e.target.value === ' ') {
             dispatch(registrationActions.setCurrentDescription(''));
         } else {
-            dispatch(registrationActions.setCurrentDescription(event.target.value));
+            dispatch(registrationActions.setCurrentDescription(e.target.value));
         }
     };
 

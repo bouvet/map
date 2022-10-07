@@ -11,6 +11,7 @@ export const FormWrapper = styled.div`
 
 export const FormWrapperRegistration = styled(FormWrapper)`
     height: 50vh;
+    min-height: 350px;
 `;
 
 export const FormContent = styled.div`

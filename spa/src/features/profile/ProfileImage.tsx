@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { FC, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import { GoogleIcon } from '../../components/Navigation/Buttons';

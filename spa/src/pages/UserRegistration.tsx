@@ -5,6 +5,8 @@ import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
 import { SectionWrapper } from '../components/Form/SectionWrapper';
 import { LinkText, Text, Title } from '../components/Form/Text';
+import { BackButton } from '../components/Navigation/Buttons';
+import { MyTheme } from '../styles/global';
 
 export const UserRegistration: FC = () => {
     const navigate = useNavigate();
@@ -13,15 +15,19 @@ export const UserRegistration: FC = () => {
         <FormWrapper>
             <FormContent>
                 <SectionWrapper>
-                    <span>
-                        <LinkText to="/login">Tilbake</LinkText>
-                    </span>
+                    <BackButton
+                        backgroundColor={MyTheme.colors.opaque}
+                        textColor={MyTheme.colors.lightbase}
+                        onClick={() => navigate('/login')}
+                    >
+                        <span className="material-symbols-outlined">arrow_back</span>
+                    </BackButton>
                     <span>
                         <Title>Registrer ny bruker</Title>
                         <Text>Ved å opprette bruker kan du:</Text>
                         <ul>
-                            <li>- Legge til lokasjoner</li>
-                            <li>- Få personlig tilpasning og anbefalinger</li>
+                            <li>Legge til lokasjoner</li>
+                            <li>Få personlig tilpasning og anbefalinger</li>
                         </ul>
                     </span>
                     <Google text="google">

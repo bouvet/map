@@ -9,6 +9,8 @@ import { SectionWrapper } from '../components/Form/SectionWrapper';
 import { LinkText, Text, Title } from '../components/Form/Text';
 import { useStateDispatch } from '../hooks/useRedux';
 import { authActions } from '../store/state/auth.state';
+import { BackButton } from '../components/Navigation/Buttons';
+import { MyTheme } from '../styles/global';
 
 export const Login: FC = () => {
     const [userEmail, setUserEmail] = useState('');
@@ -35,9 +37,9 @@ export const Login: FC = () => {
         <FormWrapper>
             <FormContent>
                 <SectionWrapper>
-                    <span>
-                        <LinkText to="/">Tilbake</LinkText>
-                    </span>
+                    <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate('/')}>
+                        <span className="material-symbols-outlined">arrow_back</span>
+                    </BackButton>
                     <span>
                         <Title>Login</Title>
                         <Text>Verden venter... på deg!</Text>
@@ -52,7 +54,7 @@ export const Login: FC = () => {
                     </Vipps>
                     <DivideLine />
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <InputEmail label="Email" value={userEmail} setState={setUserEmail} handleChange={handleFormInputChange} />
+                        <InputEmail label="E-post" value={userEmail} setState={setUserEmail} handleChange={handleFormInputChange} />
                         <InputPassword
                             label="Passord"
                             value={userPassword}

@@ -111,3 +111,12 @@ export interface ReviewTypeGet {
     created: string;
     image?: string;
 }
+
+export interface UserType {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    dob: string;
+    favoriteCategoryIds?: Array<string>;
+}

@@ -11,22 +11,26 @@ import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/Progr
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 
+interface LocationType {
+    inputEmail: string;
+}
+
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location: any = useLocation();
+    const location = useLocation().state as LocationType;
 
     const [inputCode, setInputCode] = useState<string[]>(new Array(6).fill(''));
 
     const handleSubmit = useCallback(() => {
         // check if code is valid, else snackbar message
-        dispatch(userActions.setEmail(location.state.inputEmail));
+        dispatch(userActions.setEmail(location.inputEmail));
         navigate('/personal-info');
-    }, [dispatch, location.state.inputEmail, navigate]);
+    }, [dispatch, location.inputEmail, navigate]);
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
         const tempArray = [...inputCode];
-        tempArray[index] = event.target.value;
+        tempArray[index] = e.target.value;
         setInputCode(tempArray);
         const nextInput = document.querySelector(`input[name=input-field-${index + 1}]`) as HTMLElement | null;
         if (nextInput !== null) {
@@ -53,7 +57,7 @@ export const EmailConfirmation: FC = () => {
                     <SectionWrapper>
                         <TitleForm>Bekreft e-post</TitleForm>
                         <Form>
-                            <Text>Skriv inn koden for å bekrefte e-postadressen {location.state.inputEmail}</Text>
+                            <Text>Skriv inn koden for å bekrefte e-postadressen {location.inputEmail}</Text>
                             <Box
                                 sx={{
                                     '& .MuiTextField-root': { m: '1%', width: '14%' },
@@ -65,7 +69,7 @@ export const EmailConfirmation: FC = () => {
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                         name={`input-field-${index}`}
-                                        onChange={(event) => handleInputChange(event, index)}
+                                        onChange={(e) => handleInputChange(e, index)}
                                         inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
                                         required
                                         onFocus={(e) => e.target.select}

@@ -1,8 +1,10 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
+import { UserType } from '../../../utils/types.d';
 
 export const userService = {
-    registerUser(payload: any) {
+    registerUser(payload: UserType) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return async (dispatch: AppDispatch) => {
             try {
                 const postUser = await API.post('/auth/register', payload);

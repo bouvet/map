@@ -37,6 +37,7 @@ export const Onboarding: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
+    // upload unless redirected from Vipps or Google signup
     const uploadContent = async () => {
         const userDetails = {
             email,
