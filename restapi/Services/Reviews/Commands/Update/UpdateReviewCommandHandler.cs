@@ -11,11 +11,11 @@ namespace restapi.Services.Reviews.Commands.Update;
 
 public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, ErrorOr<Updated>>
 {
-  private readonly DataContext dataContext;
+  private readonly Data.DataContext dataContext;
   private readonly IDateTimeProvider dateTimeProvider;
   private readonly ISender mediator;
 
-  public UpdateReviewCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
+  public UpdateReviewCommandHandler(Data.DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
   {
     this.dataContext = dataContext;
     this.dateTimeProvider = dateTimeProvider;
@@ -74,14 +74,22 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
     {
       //TODO: Delete old images before updating!
 
-      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(new UploadImageCommand(request.Image, review.Creator), cancellationToken);
+      var uploadImageCommand = new UploadImageCommand(
+        request.Image,
+        review.Creator,
+        review.LocationId,
+        review.Id
+      );
+
+      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(uploadImageCommand, cancellationToken);
 
       if (uploadResult.IsError)
       {
         return Errors.ImageStorage.UploadFailed;
       }
 
-      review.Image = uploadResult.Value.Image;
+      review.OriginalImage = uploadResult.Value.OriginalImage;
+      review.WebpImage = uploadResult.Value.WebpImage;
     }
 
     review.Updated = dateTimeProvider.CEST;

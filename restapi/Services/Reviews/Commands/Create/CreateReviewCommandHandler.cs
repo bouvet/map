@@ -70,14 +70,27 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
 
     if (request.Image is not null)
     {
-      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(new UploadImageCommand(request.Image, review.Creator), cancellationToken);
+      var uploadImageCommand = new UploadImageCommand(
+        request.Image,
+        review.Creator,
+        review.LocationId,
+        review.Id
+      );
+
+      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(uploadImageCommand, cancellationToken);
 
       if (uploadResult.IsError)
       {
         return Errors.ImageStorage.UploadFailed;
       }
 
-      review.Image = uploadResult.Value.Image;
+      review.OriginalImage = uploadResult.Value.OriginalImage;
+      review.WebpImage = uploadResult.Value.WebpImage;
+    }
+
+    if (string.IsNullOrEmpty(request.Text) && request.Image is null)
+    {
+      review.Status = "Approved";
     }
 
     await dataContext.Reviews.AddAsync(review, cancellationToken);

@@ -1,15 +1,15 @@
-@locationId=87fcc676-2efd-4f31-956a-672fcdcd9ffa
+@locationId=9892a8b3-1211-4326-b845-f6747264134b
 
 ### Create Review Without Image
 
 POST {{host}}/api/reviews
-Authorization: Bearer {{admintoken}}
+Authorization: Bearer {{usertoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="rating"
 
-1
+2
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
@@ -23,6 +23,7 @@ Content-Disposition: form-data; name="locationId"
 ### Create Review With Image
 
 POST {{host}}/api/reviews
+Authorization: Bearer {{usertoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -32,14 +33,14 @@ Content-Disposition: form-data; name="rating"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
-Skikkelig bra ja
+Perfekt for nybegynnere!
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="locationId"
 
 {{locationId}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="park.png"
+Content-Disposition: form-data; name="image"; filename="Lura-Skatepark-Review.png"
 Content-Type: image/png
 
-< ../Images/park.png
+< ../Images/Lura-Skatepark-Review.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

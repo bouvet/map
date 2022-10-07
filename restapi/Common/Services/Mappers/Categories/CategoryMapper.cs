@@ -73,8 +73,8 @@ public class CategoryMapper : ICategoryMapper
       result.Category.Id,
       result.Category.Name,
       result.Category.Emoji,
-      result.Category.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Category.Creator) : null,
-      result.Category.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Category.Editor) : null
+      result.Category.Creator is not null ? userMapper.MapUserToMinifiedUserResponse(result.Category.Creator) : null,
+      result.Category.Editor is not null ? userMapper.MapUserToMinifiedUserResponse(result.Category.Editor) : null
     );
   }
 

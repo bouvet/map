@@ -1,3 +1,4 @@
+using restapi.Contracts.ImageStorage;
 using restapi.Contracts.Users;
 using restapi.Models;
 
@@ -7,10 +8,11 @@ public record ReviewResponse(
   Guid Id,
   string Status,
   string? Text,
-  Image? Image,
+  ImageStorageResponse? OriginalImage,
+  ImageStorageResponse? WebpImage,
   DateTime Created,
   DateTime? Updated,
-  CreatorEditorResponse? Creator,
-  CreatorEditorResponse? Editor,
+  MinifiedUserResponse? Creator,
+  MinifiedUserResponse? Editor,
   Guid LocationId
 );

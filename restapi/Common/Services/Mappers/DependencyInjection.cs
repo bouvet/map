@@ -1,5 +1,6 @@
 using restapi.Common.Services.Mappers.Authentication;
 using restapi.Common.Services.Mappers.Categories;
+using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Locations;
 using restapi.Common.Services.Mappers.Reviews;
 using restapi.Common.Services.Mappers.Roles;
@@ -17,6 +18,7 @@ public static class DependencyInjection
     services.AddScoped<IReviewMapper, ReviewMapper>();
     services.AddScoped<IRoleMapper, RoleMapper>();
     services.AddScoped<IUserMapper, UserMapper>();
+    services.AddScoped<IImageStorageMapper, ImageStorageMapper>();
 
     return services;
   }

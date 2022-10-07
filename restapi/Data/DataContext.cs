@@ -19,11 +19,13 @@ public class DataContext : DbContext
 
     modelBuilder.Entity<Review>().HasOne(review => review.Creator);
     modelBuilder.Entity<Review>().HasOne(review => review.Editor);
-    modelBuilder.Entity<Review>().HasOne(review => review.Image);
+    modelBuilder.Entity<Review>().HasOne(review => review.OriginalImage);
+    modelBuilder.Entity<Review>().HasOne(review => review.WebpImage);
     modelBuilder.Entity<Review>().HasOne(review => review.Location).WithMany(l => l.Reviews);
     modelBuilder.Entity<Review>().Navigation(review => review.Creator).AutoInclude();
     modelBuilder.Entity<Review>().Navigation(review => review.Editor).AutoInclude();
-    modelBuilder.Entity<Review>().Navigation(review => review.Image).AutoInclude();
+    modelBuilder.Entity<Review>().Navigation(review => review.OriginalImage).AutoInclude();
+    modelBuilder.Entity<Review>().Navigation(review => review.WebpImage).AutoInclude();
 
     modelBuilder.Entity<Category>().HasOne(c => c.Creator);
     modelBuilder.Entity<Category>().HasOne(c => c.Editor);

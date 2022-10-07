@@ -6,8 +6,8 @@ namespace restapi.Contracts.Locations;
 public record LocationResponse(
   Guid Id,
   string Type,
-  CreatorEditorResponse? Creator,
-  CreatorEditorResponse? Editor,
+  MinifiedUserResponse? Creator,
+  MinifiedUserResponse? Editor,
   LocationProperties Properties,
   LocationGeometry Geometry
 );

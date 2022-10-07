@@ -95,8 +95,8 @@ public class LocationMapper : ILocationMapper
     return new LocationResponse(
         result.Location.Id,
         "Feature",
-        result.Location.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Location.Creator) : null,
-        result.Location.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Location.Editor) : null,
+        result.Location.Creator is not null ? userMapper.MapUserToMinifiedUserResponse(result.Location.Creator) : null,
+        result.Location.Editor is not null ? userMapper.MapUserToMinifiedUserResponse(result.Location.Editor) : null,
         properties,
         geometry
       );

@@ -15,7 +15,6 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
   private readonly DataContext dataContext;
   private readonly AzureProvider azureProvider;
   private readonly IDateTimeProvider dateTimeProvider;
-
   public UploadImageCommandHandler(DataContext dataContext, IOptions<AzureProvider> azureOptions, IDateTimeProvider dateTimeProvider)
   {
     this.dataContext = dataContext;
@@ -27,7 +26,8 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
   {
     CloudBlobContainer blobContainer = await azureProvider.GetImageBlobContainer();
 
-    Guid imageId = Guid.NewGuid();
+    Guid originalImageId = Guid.NewGuid();
+    Guid webpImageId = Guid.NewGuid();
 
     var originalImageStream = new MemoryStream();
     var webpImageStream = new MemoryStream();
@@ -38,8 +38,8 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
     originalImageStream.Position = 0;
     webpImageStream.Position = 0;
 
-    CloudBlockBlob originalImageBlob = blobContainer.GetBlockBlobReference($"originals/{imageId}");
-    CloudBlockBlob webpImageBlob = blobContainer.GetBlockBlobReference($"webp/{imageId}");
+    CloudBlockBlob originalImageBlob = blobContainer.GetBlockBlobReference($"originals/{originalImageId}");
+    CloudBlockBlob webpImageBlob = blobContainer.GetBlockBlobReference($"webp/{webpImageId}");
 
     originalImageBlob.Properties.ContentType = request.Image.ContentType;
     webpImageBlob.Properties.ContentType = "image/webp";
@@ -47,24 +47,41 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
     await originalImageBlob.UploadFromStreamAsync(originalImageStream);
 
     var webpCopy = SKData.CreateCopy(webpImageStream.GetBuffer());
-    SKData webpImage = SKImage.FromEncodedData(webpCopy).Encode(SKEncodedImageFormat.Webp, 50);
+    SKData webpImageEncoded = SKImage.FromEncodedData(webpCopy).Encode(SKEncodedImageFormat.Webp, 50);
 
-    await webpImageBlob.UploadFromStreamAsync(webpImage.AsStream());
+    await webpImageBlob.UploadFromStreamAsync(webpImageEncoded.AsStream());
 
-    var image = new Image
+    var originalImage = new Image
     {
-      Id = imageId,
-      Name = request.Image.FileName,
+      Id = originalImageId,
+      OriginalFileName = request.Image.FileName,
       BlobUri = originalImageBlob.Uri,
       CdnUri = azureProvider.GetCdnUri(originalImageBlob.Uri),
       ContentType = request.Image.ContentType,
       Uploaded = dateTimeProvider.CEST,
-      Uploader = request.Creator
+      Uploader = request.Creator,
+      LocationId = request.LocationId,
+      ReviewId = request.ReviewId
     };
 
-    dataContext.Images.Add(image);
+    var webpImage = new Image
+    {
+      Id = webpImageId,
+      OriginalFileName = request.Image.FileName,
+      BlobUri = webpImageBlob.Uri,
+      CdnUri = azureProvider.GetCdnUri(webpImageBlob.Uri),
+      ContentType = "image/webp",
+      Uploaded = dateTimeProvider.CEST,
+      Uploader = request.Creator,
+      LocationId = request.LocationId,
+      ReviewId = request.ReviewId,
+      OriginalImageId = originalImageId
+    };
+
+    dataContext.Images.Add(originalImage);
+    dataContext.Images.Add(webpImage);
     await dataContext.SaveChangesAsync(cancellationToken);
 
-    return new ImageStorageResult(image);
+    return new ImageStorageResult(originalImage, webpImage);
   }
 }
