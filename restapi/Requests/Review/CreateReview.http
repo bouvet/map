@@ -42,5 +42,5 @@ Content-Disposition: form-data; name="locationId"
 Content-Disposition: form-data; name="image"; filename="Lura-Skatepark-Review.png"
 Content-Type: image/png
 
-< ../Images/Lura-Skatepark-Review.png
+< ../Assets/Lura-Skatepark-Review.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
