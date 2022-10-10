@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRight } from '../../../components/Form/Buttons';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
@@ -16,6 +16,8 @@ import { HowAddReview } from './HowAddReview';
 export const Onboarding: FC = () => {
     const { email, password, firstName, lastName, dob, favoriteCategoryIds } = useStateSelector((state) => state.user);
 
+    const [pageIndex, setPageIndex] = useState(0);
+
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
@@ -28,14 +30,10 @@ export const Onboarding: FC = () => {
         dispatch(userActions.setFavoriteCategoryIds([]));
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => handleClearData(), []);
-
-    const handleRedirect = useCallback(() => {
+    const handleRedirect = () => {
         navigate('/', { replace: true });
         handleClearData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [navigate]);
+    };
 
     // upload unless redirected from Vipps or Google signup
     const uploadContent = async () => {
@@ -48,7 +46,7 @@ export const Onboarding: FC = () => {
             favoriteCategoryIds,
         };
 
-        const successStatus: boolean = await dispatch(userService.registerUser(userDetails));
+        const successStatus: boolean = await dispatch(userService.postUser(userDetails));
 
         if (successStatus) {
             dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
@@ -62,15 +60,6 @@ export const Onboarding: FC = () => {
         uploadContent();
     };
 
-    // test
-    console.log('sjekk1', email);
-    console.log('sjekk2', password);
-    console.log('sjekk2', firstName, lastName);
-    console.log('sjekk4', dob);
-    console.log('sjekk5', favoriteCategoryIds);
-
-    const [pageIndex, setPageIndex] = useState(0);
-
     const handleForwardClick = () => {
         if (pageIndex === 2) {
             uploadContent();
@@ -78,6 +67,13 @@ export const Onboarding: FC = () => {
             setPageIndex(pageIndex + 1);
         }
     };
+
+    // test
+    console.log('sjekk1', email);
+    console.log('sjekk2', password);
+    console.log('sjekk2', firstName, lastName);
+    console.log('sjekk4', dob);
+    console.log('sjekk5', favoriteCategoryIds);
 
     return (
         <>

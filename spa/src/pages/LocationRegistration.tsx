@@ -67,9 +67,9 @@ export const LocationRegistration: FC = () => {
         setIsLoading(false);
 
         if (successStatus) {
-            dispatch(snackbarActions.setNotify({ message: 'Successfully added location', severity: 'success' }));
+            dispatch(snackbarActions.setNotify({ message: 'Lokasjon er lagt til', severity: 'success' }));
         } else {
-            dispatch(snackbarActions.setNotify({ message: 'Something went wrong', severity: 'error', autohideDuration: null }));
+            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
         }
         handleRedirect();
     };
@@ -78,7 +78,21 @@ export const LocationRegistration: FC = () => {
         if (pageIndex === 2) {
             uploadContent();
         } else if (pageIndex === 1) {
-            if (currentTitle && currentDescription && currentCategories[0]) {
+            if (currentTitle.length < 5) {
+                dispatch(
+                    snackbarActions.setNotify({ message: 'Tittel må bestå av minst 5 tegn', severity: 'error', autohideDuration: null }),
+                );
+            } else if (currentDescription.length < 20) {
+                dispatch(
+                    snackbarActions.setNotify({
+                        message: 'Beskrivelse må bestå av minst 20 tegn',
+                        severity: 'error',
+                        autohideDuration: null,
+                    }),
+                );
+            } else if (!currentCategories[0]) {
+                dispatch(snackbarActions.setNotify({ message: 'Vennligst velg kategori', severity: 'error', autohideDuration: null }));
+            } else {
                 setPageIndex(pageIndex + 1);
             }
         } else {
@@ -156,7 +170,11 @@ export const LocationRegistration: FC = () => {
                                     <RegistrationButtonRight
                                         text={MyTheme.colors.lightbase}
                                         background={MyTheme.colors.accent}
-                                        disabled={!(currentTitle && currentCategories[0] && currentDescription)}
+                                        disabled={
+                                            !(currentTitle && currentCategories[0] && currentDescription) ||
+                                            currentTitle.length < 5 ||
+                                            currentDescription.length < 20
+                                        }
                                         onClick={handleForwardClick}
                                     >
                                         Videre

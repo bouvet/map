@@ -55,7 +55,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const calculateCameraView = () => {
         // @ts-ignore
-        console.log(mapRef.current.getCenter());
+        // console.log(mapRef.current.getCenter());
     };
 
     const onMapLoad = useCallback(

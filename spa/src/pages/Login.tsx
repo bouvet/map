@@ -11,10 +11,12 @@ import { useStateDispatch } from '../hooks/useRedux';
 import { authActions } from '../store/state/auth.state';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
+import { loginService } from '../features/login/services/login.services';
+import { snackbarActions } from '../store/state/snackbar.state';
 
 export const Login: FC = () => {
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [rememberStatus, setRememberStatus] = useState(false);
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
@@ -26,11 +28,32 @@ export const Login: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Email: ', userEmail);
-        console.log('Password: ', userPassword);
+        console.log('Email: ', email);
+        console.log('Password: ', password);
         console.log('Stay signed in: ', rememberStatus.toString());
-        dispatch(authActions.logIn());
-        navigate('/');
+        validateUserLogin();
+        // dispatch(authActions.logIn());
+    };
+
+    const validateUserLogin = async () => {
+        const loginDetails = {
+            email,
+            password,
+        };
+
+        const successStatus: boolean = await dispatch(loginService.validateUser(loginDetails));
+
+        if (successStatus) {
+            dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
+            dispatch(authActions.logIn());
+        } else {
+            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+        }
+        handleRedirect();
+    };
+
+    const handleRedirect = () => {
+        navigate('/', { replace: true });
     };
 
     return (
@@ -54,13 +77,8 @@ export const Login: FC = () => {
                     </Vipps>
                     <DivideLine />
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <InputEmail label="E-post" value={userEmail} setState={setUserEmail} handleChange={handleFormInputChange} />
-                        <InputPassword
-                            label="Passord"
-                            value={userPassword}
-                            setState={setUserPassword}
-                            handleChange={handleFormInputChange}
-                        />
+                        <InputEmail label="E-post" value={email} setState={setEmail} handleChange={handleFormInputChange} />
+                        <InputPassword label="Passord" value={password} setState={setPassword} handleChange={handleFormInputChange} />
                         <SplitWrapper>
                             <LeftFlex>
                                 <Checkbox type="checkbox" checked={rememberStatus} onChange={(e) => setRememberStatus(e.target.checked)} />

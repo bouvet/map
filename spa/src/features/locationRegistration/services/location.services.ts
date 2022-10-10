@@ -11,7 +11,7 @@ export const locationServices = {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
                 console.log(postResponse);
-                if (postResponse.data.success) {
+                if (postResponse.status === 201) {
                     return true;
                 }
                 return false;

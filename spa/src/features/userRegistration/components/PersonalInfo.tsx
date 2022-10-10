@@ -89,7 +89,7 @@ export const PersonalInfo: FC = () => {
                             <ThemeProvider theme={theme}>
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
-                                        label="dd.mm.åååå"
+                                        label="åååå.mm.dd"
                                         value={dob}
                                         onChange={(newValue) => handleChangeDob(newValue, setDob)}
                                         renderInput={(params) => <TextField {...params} />}

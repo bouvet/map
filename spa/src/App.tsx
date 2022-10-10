@@ -15,6 +15,7 @@ import { Personalization } from './features/userRegistration/components/Personal
 import { Onboarding } from './features/userRegistration/components/Onboarding';
 import { ForgottenPassword } from './features/login/components/ForgottenPassword';
 import { ResetPassword } from './features/login/components/ResetPassword';
+import { ChangePassword } from './features/profile/ChangePassword';
 
 const App = () => (
     <Router>
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/location-registration" element={<LocationRegistration />} />
             <Route path="/location-approval-panel" element={<AdminPanel />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user-registration" element={<UserRegistration />} />
             <Route path="/email-input" element={<EmailInput />} />
