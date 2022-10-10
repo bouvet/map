@@ -12,8 +12,8 @@ using restapi.Data;
 namespace restapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221010073013_CategoryCreatedUpdated")]
-    partial class CategoryCreatedUpdated
+    [Migration("20221010121816_RestartEverything")]
+    partial class RestartEverything
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
