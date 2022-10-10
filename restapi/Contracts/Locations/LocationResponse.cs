@@ -1,4 +1,5 @@
 using restapi.Contracts.Categories;
+using restapi.Contracts.ImageStorage;
 using restapi.Contracts.Users;
 
 namespace restapi.Contracts.Locations;
@@ -15,7 +16,8 @@ public record LocationResponse(
 public record LocationProperties(
   string Title,
   string Description,
-  string Image,
+  ImageStorageResponse? OriginalImage,
+  ImageStorageResponse? WebpImage,
   string Status,
   float Rating,
   List<CategoryResponse> Category

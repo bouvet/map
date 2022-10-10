@@ -151,6 +151,9 @@ namespace restapi.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("float");
 
+                    b.Property<Guid?>("OriginalImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<float>("Rating")
                         .HasColumnType("real");
 
@@ -162,11 +165,18 @@ namespace restapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("WebpImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
 
                     b.HasIndex("EditorId");
+
+                    b.HasIndex("OriginalImageId");
+
+                    b.HasIndex("WebpImageId");
 
                     b.ToTable("Locations");
                 });
@@ -376,9 +386,21 @@ namespace restapi.Migrations
                         .WithMany()
                         .HasForeignKey("EditorId");
 
+                    b.HasOne("restapi.Models.Image", "OriginalImage")
+                        .WithMany()
+                        .HasForeignKey("OriginalImageId");
+
+                    b.HasOne("restapi.Models.Image", "WebpImage")
+                        .WithMany()
+                        .HasForeignKey("WebpImageId");
+
                     b.Navigation("Creator");
 
                     b.Navigation("Editor");
+
+                    b.Navigation("OriginalImage");
+
+                    b.Navigation("WebpImage");
                 });
 
             modelBuilder.Entity("restapi.Models.Review", b =>
