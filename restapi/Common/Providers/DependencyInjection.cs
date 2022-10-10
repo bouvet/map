@@ -1,7 +1,6 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using restapi.Data;
 

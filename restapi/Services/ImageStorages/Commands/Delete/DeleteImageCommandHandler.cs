@@ -17,7 +17,7 @@ public class DeleteImageCommandHandler : IRequestHandler<DeleteImageCommand, Err
 
   public async Task<ErrorOr<Deleted>> Handle(DeleteImageCommand request, CancellationToken cancellationToken)
   {
-    CloudBlobContainer imageBlobContainer = await azureProvider.GetImageBlobContainer();
+    CloudBlobContainer imageBlobContainer = await azureProvider.GetImageBlobContainer(cancellationToken);
 
     CloudBlockBlob blockBlob = imageBlobContainer.GetBlockBlobReference(request.Id.ToString());
 

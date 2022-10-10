@@ -1,7 +1,6 @@
 using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Azure.Storage.Blobs;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
@@ -34,16 +33,18 @@ public class AzureProvider
     return new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
   }
 
-  public async Task<Response<KeyVaultSecret>> GetKeyVaultSecret(SecretClient client, string? keyVaultSecretName)
+  public async Task<Response<KeyVaultSecret>> GetKeyVaultSecret(string keyVaultSecretName, CancellationToken cancellationToken)
   {
-    return await client.GetSecretAsync(keyVaultSecretName);
+    var client = GetKeyVaultClient();
+
+    return await client.GetSecretAsync(keyVaultSecretName, cancellationToken: cancellationToken);
   }
 
-  public async Task<CloudBlobContainer> GetImageBlobContainer()
+  public async Task<CloudBlobContainer> GetImageBlobContainer(CancellationToken cancellationToken)
   {
     if (string.IsNullOrEmpty(BlobStorageConnectionString))
     {
-      Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(GetKeyVaultClient(), KeyVaultNameForBlobStorageConnectionString);
+      Response<KeyVaultSecret> keyVaultResponse = await GetKeyVaultSecret(KeyVaultNameForBlobStorageConnectionString, cancellationToken);
       BlobStorageConnectionString = keyVaultResponse.Value.Value;
     }
 

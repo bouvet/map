@@ -38,56 +38,69 @@ GET {{host}}/api/locations
 [
   {
     "id": "",
-    "type": "Feature",
+    "type": "",
     "creator": {
       "id": "",
       "email": "",
-      "firstName": null,
-      "lastName": null
+      "firstName": "",
+      "lastName": ""
     },
-    "editor": {
-      "id": "",
-      "email": "",
-      "firstName": null,
-      "lastName": null
-    },
+    "editor": null,
     "properties": {
       "title": "",
       "description": "",
-      "image": "",
-      "status": "Under Review",
+      "originalImage": {
+        "id": "",
+        "originalFileName": "",
+        "blobUri": "",
+        "cdnUri": "",
+        "contentType": "",
+        "uploaded": "",
+        "uploader": {
+          "id": "",
+          "email": "",
+          "firstName": "",
+          "lastName": ""
+        },
+        "originalImageId": null,
+        "locationId": "",
+        "reviewId": null
+      },
+      "webpImage": {
+        "id": "",
+        "originalFileName": "",
+        "blobUri": "",
+        "cdnUri": "",
+        "contentType": "",
+        "uploaded": "",
+        "uploader": {
+          "id": "",
+          "email": "",
+          "firstName": "",
+          "lastName": ""
+        },
+        "originalImageId": "",
+        "locationId": "",
+        "reviewId": null
+      },
+      "status": "",
       "rating": 0,
       "category": [
         {
           "id": "",
           "name": "",
           "emoji": "",
+          "created": "",
+          "updated": "",
           "creator": null,
           "editor": null
-        },
-        {
-          "id": "",
-          "name": "",
-          "emoji": "",
-          "creator": {
-            "id": "",
-            "email": "",
-            "firstName": null,
-            "lastName": null
-          },
-          "editor": {
-            "id": "",
-            "email": "",
-            "firstName": null,
-            "lastName": null
-          }
         }
       ]
     },
     "geometry": {
       "coordinates": [
-        5.3454362342,
-        58.2345346547
+        5.7379152,
+        58.8812732
       ]
     }
   }
@@ -133,44 +146,69 @@ Location: {{host}}/api/Locations/{{id}}
 ```json
 {
   "id": "",
-  "type": "Feature",
+  "type": "",
   "creator": {
     "id": "",
     "email": "",
-    "firstName": null,
-    "lastName": null
+    "firstName": "",
+    "lastName": ""
   },
   "editor": null,
   "properties": {
     "title": "",
     "description": "",
-    "image": "",
-    "status": "Under Review",
+    "originalImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": null,
+      "locationId": "",
+      "reviewId": null
+    },
+    "webpImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": "",
+      "locationId": "",
+      "reviewId": null
+    },
+    "status": "",
     "rating": 0,
     "category": [
       {
         "id": "",
         "name": "",
         "emoji": "",
-        "creator": {
-          "id": "",
-          "email": "",
-          "firstName": null,
-          "lastName": null
-        },
-        "editor": {
-          "id": "",
-          "email": "",
-          "firstName": null,
-          "lastName": null
-        }
+        "created": "",
+        "updated": "",
+        "creator": null,
+        "editor": null
       }
     ]
   },
   "geometry": {
     "coordinates": [
-      5.3454362342,
-      58.2345346547
+      5.7379152,
+      58.8812732
     ]
   }
 }
@@ -202,20 +240,60 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
 ```json
 {
   "id": "",
-  "type": "Feature",
-  "creator": null,
+  "type": "",
+  "creator": {
+    "id": "",
+    "email": "",
+    "firstName": "",
+    "lastName": ""
+  },
   "editor": null,
   "properties": {
     "title": "",
     "description": "",
-    "image": "",
-    "status": "Approved",
+    "originalImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": null,
+      "locationId": "",
+      "reviewId": null
+    },
+    "webpImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": "",
+      "locationId": "",
+      "reviewId": null
+    },
+    "status": "",
     "rating": 0,
     "category": [
       {
         "id": "",
         "name": "",
         "emoji": "",
+        "created": "",
+        "updated": "",
         "creator": null,
         "editor": null
       }
@@ -223,8 +301,8 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
   },
   "geometry": {
     "coordinates": [
-      5.12343456345,
-      58.1234546546
+      5.7379152,
+      58.8812732
     ]
   }
 }
@@ -247,56 +325,69 @@ GET {{host}}/api/locations/{{id}}
 ```json
 {
   "id": "",
-  "type": "Feature",
+  "type": "",
   "creator": {
     "id": "",
     "email": "",
-    "firstName": null,
-    "lastName": null
+    "firstName": "",
+    "lastName": ""
   },
-  "editor": {
-    "id": "",
-    "email": "",
-    "firstName": null,
-    "lastName": null
-  },
+  "editor": null,
   "properties": {
     "title": "",
     "description": "",
-    "image": "",
-    "status": "Under Review",
+    "originalImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": null,
+      "locationId": "",
+      "reviewId": null
+    },
+    "webpImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": "",
+      "locationId": "",
+      "reviewId": null
+    },
+    "status": "",
     "rating": 0,
     "category": [
       {
         "id": "",
         "name": "",
         "emoji": "",
+        "created": "",
+        "updated": "",
         "creator": null,
         "editor": null
-      },
-      {
-        "id": "",
-        "name": "",
-        "emoji": "",
-        "creator": {
-          "id": "",
-          "email": "",
-          "firstName": null,
-          "lastName": null
-        },
-        "editor": {
-          "id": "",
-          "email": "",
-          "firstName": null,
-          "lastName": null
-        }
       }
     ]
   },
   "geometry": {
     "coordinates": [
-      5.3454362342,
-      58.2345346547
+      5.7379152,
+      58.8812732
     ]
   }
 }

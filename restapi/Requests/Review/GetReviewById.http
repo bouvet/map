@@ -1,4 +1,4 @@
-@id=d0efc13f-d13c-4772-b7d9-0d16a098ce09
+@id=1111112b-e28a-4dbe-b2b3-a9606ff24d35
 
 GET {{host}}/api/reviews/{{id}}
 # Authorization: Bearer {{admintoken}}

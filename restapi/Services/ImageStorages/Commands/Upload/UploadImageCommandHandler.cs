@@ -24,7 +24,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
 
   public async Task<ErrorOr<ImageStorageResult>> Handle(UploadImageCommand request, CancellationToken cancellationToken)
   {
-    CloudBlobContainer blobContainer = await azureProvider.GetImageBlobContainer();
+    CloudBlobContainer blobContainer = await azureProvider.GetImageBlobContainer(cancellationToken);
 
     Guid originalImageId = Guid.NewGuid();
     Guid webpImageId = Guid.NewGuid();
