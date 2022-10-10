@@ -4,7 +4,7 @@ import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapService } from '../services/map.services';
 import { LatLong, Location } from '../../../utils/types.d';
-import { mapActions, mapReducer } from '../../../store/state/map.state';
+import { mapActions } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -55,15 +55,15 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const calculateCameraView = () => {
         // @ts-ignore
-        console.log(mapRef.current.getCenter());
+        // console.log(mapRef.current.getCenter());
     };
 
     const onMapLoad = useCallback(
-        (event: any) => {
+        (e: any) => {
             if (mapRef.current) {
                 // @ts-ignore
                 mapRef.current.on('move', () => {
-                    setViewState(event.viewState);
+                    setViewState(e.viewState);
                     calculateCameraView();
                 });
                 // @ts-ignore

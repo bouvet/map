@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
 import { MyTheme } from '../../styles/global';
-import { RoundButton } from '../Navigation/Buttons';
+import { CloseButton, RoundButton } from '../Navigation/Buttons';
 import { StarRating } from '../StarRating/StarRating';
 
 interface PopupContentProps {
@@ -46,16 +46,6 @@ const PopupImage = styled.div<PopUpImageProp>`
     border-radius: 10px 0px 0px 10px;
 `;
 
-const CloseBtn = styled(RoundButton)`
-    position: absolute;
-    height: 40px;
-    width: 40px;
-    top: 10px;
-    left: 10px;
-    &:active {
-        background-color: ${MyTheme.colors.darkbase};
-    }
-`;
 const ExpandLink: FC = () => <span className="material-symbols-outlined">open_in_full</span>;
 
 const ExpandBtn = styled(RoundButton)`
@@ -122,9 +112,9 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     return (
         <PopupWrapper>
             <PopupImage imageURL={image}>
-                <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickClose}>
+                <CloseButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickClose}>
                     <span className="material-symbols-outlined">close</span>
-                </CloseBtn>
+                </CloseButton>
             </PopupImage>
             <PopupContent>
                 <ExpandBtn

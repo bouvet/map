@@ -104,10 +104,81 @@ export interface ReviewType {
 }
 
 export interface ReviewTypeGet {
-    id: string;
+    id: '';
+    status: '';
+    text: '';
     rating: number;
-    text?: string;
-    locationId: string;
-    created: string;
-    image?: string;
+    originalImage?: {
+        id: '';
+        originalFileName: '';
+        blobUri: '';
+        cdnUri: '';
+        contentType: '';
+        uploaded: '';
+        uploader?: {
+            id: '';
+            email: '';
+            firstName: '';
+            lastName: '';
+        };
+        originalImageId: null;
+        locationId: '';
+        reviewId: '';
+    };
+    webpImage?: {
+        id: '';
+        originalFileName: '';
+        blobUri: '';
+        cdnUri: '';
+        contentType: '';
+        uploaded: '';
+        uploader?: {
+            id: '';
+            email: '';
+            firstName: '';
+            lastName: '';
+        };
+        originalImageId: '';
+        locationId: '';
+        reviewId: '';
+    };
+    created: '';
+    updated?: '';
+    creator?: {
+        id: '';
+        email: '';
+        firstName: '';
+        lastName: '';
+    };
+    editor?: {
+        id: '';
+        email: '';
+        firstName: '';
+        lastName: '';
+    };
+    locationId: '';
+}
+
+export interface UserType {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    dob: string;
+    favoriteCategoryIds?: Array<string>;
+}
+
+export interface UserTypeGet {
+    id: string;
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    dob: string;
+    favoriteCategoryIds?: Array<string>;
+}
+
+export interface LoginType {
+    email: string;
+    password: string;
 }
