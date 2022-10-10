@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { LeftFlex, RightFlex, SplitWrapper } from '../../components/Form/Input';
+import { Text } from '../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { MyTheme } from '../../styles/global';
 import { Location, PutLocation } from '../../utils/types.d';
-import { LeftFlex, RightFlex, SplitWrapper } from '../login/components/Input';
-import { Text } from '../login/components/Text';
 import { mapService } from '../map';
 import { ApproveButton, RejectButton } from './ApprovalButton';
 import { approvalServices } from './services/approval.services';

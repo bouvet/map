@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
+import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { BackButtonAdmin, FilterSelect } from '../features/adminPanel/FilterSelect';
 import { LocationBlock, LocationWrapper } from '../features/adminPanel/LocationBlock';
-import { LeftFlex, RightFlex, SplitWrapper } from '../features/login/components/Input';
 import { mapService } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { Location } from '../utils/types.d';

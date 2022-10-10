@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
     loading: true,
-    isAuthenticated: true,
+    isAuthenticated: false,
     users: [],
 };
 

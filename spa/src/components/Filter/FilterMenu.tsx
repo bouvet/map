@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 
 type FilterMenuContentProps = {
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 const FilterMenuWrapper = styled.div`

@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import { FC, forwardRef } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="standard" {...props} />;
 });
 
 export const CustomizedSnackbars: FC = () => {

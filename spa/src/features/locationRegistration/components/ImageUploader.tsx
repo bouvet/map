@@ -1,8 +1,8 @@
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Button, IconButton } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import styled from 'styled-components';
 import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
 
@@ -26,8 +26,8 @@ export const ImageUploader: FC = () => {
 
     const dispatch = useStateDispatch();
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { files } = event.target;
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target;
         if (files) {
             setImage(files[0]);
         }
@@ -60,7 +60,7 @@ export const ImageUploader: FC = () => {
                         hidden
                         accept="image/png, image/jpeg, image/webp, image/jpg"
                         type="file"
-                        onChange={(event) => handleImageChange(event)}
+                        onChange={(e) => handleImageChange(e)}
                     />
                     Last opp
                 </Button>
