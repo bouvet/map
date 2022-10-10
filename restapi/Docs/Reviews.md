@@ -54,6 +54,7 @@ Location: {{host}}/api/reviews/{{id}}
   "id": "",
   "status": "",
   "text": "",
+  "rating": 0,
   "originalImage": {
     "id": "",
     "originalFileName": "",
@@ -120,6 +121,7 @@ GET {{host}}/api/reviews/{{id}}
   "id": "",
   "status": "",
   "text": "",
+  "rating": 0,
   "originalImage": {
     "id": "",
     "originalFileName": "",
@@ -192,6 +194,7 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
     "id": "",
     "status": "",
     "text": "",
+    "rating": 0,
     "originalImage": {
       "id": "",
       "originalFileName": "",

@@ -27,6 +27,7 @@ public class ReviewMapper : IReviewMapper
       result.Review.Id,
       result.Review.Status,
       result.Review.Text,
+      result.Review.Rating,
       result.Review.OriginalImage is not null ? imageStorageMapper.MapDbResultToResponse(result.Review.OriginalImage) : null,
       result.Review.WebpImage is not null ? imageStorageMapper.MapDbResultToResponse(result.Review.WebpImage) : null,
       result.Review.Created,

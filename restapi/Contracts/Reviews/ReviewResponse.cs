@@ -1,6 +1,5 @@
 using restapi.Contracts.ImageStorage;
 using restapi.Contracts.Users;
-using restapi.Models;
 
 namespace restapi.Contracts.Reviews;
 
@@ -8,6 +7,7 @@ public record ReviewResponse(
   Guid Id,
   string Status,
   string? Text,
+  float Rating,
   ImageStorageResponse? OriginalImage,
   ImageStorageResponse? WebpImage,
   DateTime Created,
