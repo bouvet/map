@@ -4,6 +4,7 @@ import { authReducer } from './state/auth.state';
 import { registrationReducer } from './state/registration.state';
 import { reviewReducer } from './state/review.state';
 import { snackbarReducer } from './state/snackbar.state';
+import { userReducer } from './state/user.state';
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         registration: registrationReducer,
         review: reviewReducer,
         snackbar: snackbarReducer,
+        user: userReducer,
     },
 });
 

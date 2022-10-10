@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { MyTheme } from '../../../styles/global';
+import { MyTheme } from '../../styles/global';
 
-const Label = styled.label`
+export const Label = styled.label`
     display: block;
     margin-bottom: -15px;
 `;
@@ -34,6 +34,11 @@ export const LeftFlex = styled.div`
 export const RightFlex = styled.div`
     display: flex;
     justify-content: right;
+`;
+
+export const CenterFlex = styled.div`
+    display: flex;
+    justify-content: center;
 `;
 
 interface InputProps {
@@ -72,6 +77,16 @@ export const InputPassword: FC<InputProps> = (props) => {
                 required
                 onChange={(e) => handleChange(e, setState)}
             />
+        </>
+    );
+};
+
+export const InputName: FC<InputProps> = (props) => {
+    const { label, value, handleChange, setState } = props;
+    return (
+        <>
+            <Label>{label}</Label>
+            <InputField type="text" value={value} required onChange={(e) => handleChange(e, setState)} />
         </>
     );
 };

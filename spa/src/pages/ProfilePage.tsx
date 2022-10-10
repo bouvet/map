@@ -19,8 +19,8 @@ export const ProfilePage: FC = () => {
         { type: 'password', value: '********', icon: 'key' },
     ];
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         console.log('submitted');
     };
 
@@ -33,9 +33,8 @@ export const ProfilePage: FC = () => {
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
 
             <ProfileHeader handleClick={ToggleImageModal} />
-            <Form onSubmit={(event) => handleSubmit(event)}>
+            <Form onSubmit={(e) => handleSubmit(e)}>
                 {inputs}
-
                 <span>
                     <PasswordLink to="/change-password">Endre passord</PasswordLink>
                 </span>

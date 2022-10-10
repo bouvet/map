@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LoginWrapper = styled.div`
+export const FormWrapper = styled.div`
     width: 100%;
     height: 100vh;
     display: inline-flex;
@@ -9,7 +9,12 @@ export const LoginWrapper = styled.div`
     min-height: 570px;
 `;
 
-export const LoginContent = styled.div`
+export const FormWrapperRegistration = styled(FormWrapper)`
+    height: 50vh;
+    min-height: 350px;
+`;
+
+export const FormContent = styled.div`
     width: 80%;
     padding: 5px;
     max-width: 350px;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { ReactMapGL } from '../../map';
@@ -12,7 +12,7 @@ const MapWrapper = styled.div`
 interface ButtonContentProps {
     text: string;
     emoji: string;
-    onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    onClick: MouseEventHandler<HTMLButtonElement> | undefined;
     top?: string;
     bottom?: string;
     right?: string;
@@ -109,7 +109,7 @@ export const EmojiButton: FC<ButtonContentProps> = ({
 );
 
 interface MapViewProp {
-    handleClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    handleClick: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export const MapView: FC<MapViewProp> = ({ handleClick }) => (

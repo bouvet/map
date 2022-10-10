@@ -109,8 +109,8 @@ export const SwipeableEdgeDrawer: FC = () => {
     const updateCurrentImageCallback = useCallback(() => {
         if (currentReviews) {
             const temp = currentReviews
-                .filter((item) => item.image)
-                .map((item: ReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.image} />);
+                .filter((item) => item.webpImage)
+                .map((item: ReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (currentlySelectedLocation.properties.image) {
                 const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.image} />;

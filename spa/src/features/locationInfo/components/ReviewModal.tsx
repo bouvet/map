@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { Box, Button, Modal, Rating, Stack, IconButton } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
-import { RoundButton } from '../../../components/Navigation/Buttons';
+import { CloseButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { ReviewType } from '../../../utils/types.d';
@@ -39,17 +39,6 @@ const StyledRating = styled(Rating)({
     },
 });
 
-const CloseBtn = styled(RoundButton)`
-    position: absolute;
-    height: 40px;
-    width: 40px;
-    top: 10px;
-    left: 10px;
-    &:active {
-        background-color: ${MyTheme.colors.darkbase};
-    }
-`;
-
 const Backdrop = styled.div`
     height: 100vh;
     width: 100%;
@@ -76,8 +65,8 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
 
     const handleOpenSuccessMessage = () => success();
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { files } = event.target;
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target;
         if (files) {
             setImage(files[0]);
         }
@@ -94,15 +83,15 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     }, [image]);
 
-    const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if (event.target.value !== ' ') {
-            setReview(event.target.value);
+    const handleReviewChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        if (e.target.value !== ' ') {
+            setReview(e.target.value);
         }
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
-            event.preventDefault();
+            e.preventDefault();
         } else {
             const payload: ReviewType = {
                 rating: value,
@@ -113,7 +102,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                 payload.image = image;
             }
             dispatch(reviewServices.postReview(payload));
-            event.preventDefault();
+            e.preventDefault();
             handleCloseAddReview();
             handleOpenSuccessMessage();
         }
@@ -123,7 +112,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         <Modal open={open}>
             <>
                 <Backdrop onClick={handleCloseAddReview} />
-                <form onSubmit={(event) => handleSubmit(event)}>
+                <form onSubmit={(e) => handleSubmit(e)}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{
@@ -135,7 +124,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                     name="simple-controlled"
                                     size="large"
                                     value={value}
-                                    onChange={(event, newValue) => {
+                                    onChange={(e, newValue) => {
                                         setValue(newValue);
                                     }}
                                 />
@@ -150,7 +139,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 style={{ padding: 5, resize: 'none' }}
                                 maxLength={120}
                                 value={review}
-                                onChange={(event) => handleReviewChange(event)}
+                                onChange={(e) => handleReviewChange(e)}
                             />
                             {review.length} / 120
                             {image ? (
@@ -167,7 +156,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                         hidden
                                         accept="image/png, image/webp, image/jpg, image/jpeg"
                                         type="file"
-                                        onChange={(event) => handleImageChange(event)}
+                                        onChange={(e) => handleImageChange(e)}
                                     />
                                 </Button>
                             )}
@@ -181,13 +170,13 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 </Button>
                             )}
                         </Stack>
-                        <CloseBtn
+                        <CloseButton
                             backgroundColor={MyTheme.colors.opaque}
                             textColor={MyTheme.colors.lightbase}
                             onClick={handleCloseAddReview}
                         >
                             <span className="material-symbols-outlined">close</span>
-                        </CloseBtn>
+                        </CloseButton>
                     </Box>
                 </form>
             </>

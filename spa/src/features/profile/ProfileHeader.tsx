@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { BackButton, GoogleIcon } from '../../components/Navigation/Buttons';
