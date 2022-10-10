@@ -13,6 +13,7 @@ public record AuthenticationResponse(
   int PostalCode,
   int PhoneNumber,
   DateTime? DOB,
+  DateTime Registered,
   List<RoleResponse> Roles,
   List<CategoryResponse> FavoriteCategories,
   string Token

@@ -1,5 +1,5 @@
-using restapi.Common.Providers;
 using restapi.Common.Services.Mappers.Categories;
+using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Categories;
 using restapi.Contracts.Locations;
@@ -17,11 +17,13 @@ public class LocationMapper : ILocationMapper
 {
   private readonly IUserMapper userMapper;
   private readonly ICategoryMapper categoryMapper;
+  private readonly IImageStorageMapper imageStorageMapper;
 
-  public LocationMapper(IUserMapper userMapper, ICategoryMapper categoryMapper)
+  public LocationMapper(IUserMapper userMapper, ICategoryMapper categoryMapper, IImageStorageMapper imageStorageMapper)
   {
     this.userMapper = userMapper;
     this.categoryMapper = categoryMapper;
+    this.imageStorageMapper = imageStorageMapper;
   }
 
   public CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request, string userId)
@@ -86,7 +88,8 @@ public class LocationMapper : ILocationMapper
     (
       result.Location.Title,
       result.Location.Description,
-      result.Location.Image.Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver),
+      result.Location.OriginalImage is not null ? imageStorageMapper.MapDbResultToResponse(result.Location.OriginalImage) : null,
+      result.Location.WebpImage is not null ? imageStorageMapper.MapDbResultToResponse(result.Location.WebpImage) : null,
       result.Location.Status,
       result.Location.Rating,
       categoryList
@@ -95,8 +98,8 @@ public class LocationMapper : ILocationMapper
     return new LocationResponse(
         result.Location.Id,
         "Feature",
-        result.Location.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Location.Creator) : null,
-        result.Location.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Location.Editor) : null,
+        result.Location.Creator is not null ? userMapper.MapUserToMinifiedUserResponse(result.Location.Creator) : null,
+        result.Location.Editor is not null ? userMapper.MapUserToMinifiedUserResponse(result.Location.Editor) : null,
         properties,
         geometry
       );

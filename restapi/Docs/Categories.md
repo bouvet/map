@@ -95,14 +95,16 @@ Location: {{host}}/api/Categories/{{id}}
 
 ```json
 {
-  "id": "f2c5e17b-1b05-43c4-fb53-08daa6c2022c",
-  "name": "Golf",
-  "emoji": "🏌️‍♂️",
+  "id": "",
+  "name": "",
+  "emoji": "",
+  "created": "",
+  "updated": null,
   "creator": {
-    "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
-    "email": "admin@email.com",
-    "firstName": null,
-    "lastName": null
+    "id": "",
+    "email": "",
+    "firstName": "",
+    "lastName": ""
   },
   "editor": null
 }
@@ -124,21 +126,18 @@ GET {{host}}/api/categories/{{id}}
 
 ```json
 {
-  "id": "429b41f2-fa6d-447c-e53b-08daa6a9cd73",
-  "name": "Golf",
-  "emoji": "🏌️‍♂️",
+  "id": "",
+  "name": "",
+  "emoji": "",
+  "created": "",
+  "updated": null,
   "creator": {
-    "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
-    "email": "admin@email.com",
-    "firstName": null,
-    "lastName": null
+    "id": "",
+    "email": "",
+    "firstName": "",
+    "lastName": ""
   },
-  "editor": {
-    "id": "5e5b4c22-48b1-46c9-8572-7f22d67a748c",
-    "email": "admin@email.com",
-    "firstName": null,
-    "lastName": null
-  }
+  "editor": null
 }
 ```
 

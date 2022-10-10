@@ -52,16 +52,50 @@ Location: {{host}}/api/reviews/{{id}}
 ```json
 {
   "id": "",
-  "status": "Under Review",
+  "status": "",
   "text": "",
-  "image": "",
+  "rating": 0,
+  "originalImage": {
+    "id": "",
+    "originalFileName": "",
+    "blobUri": "",
+    "cdnUri": "",
+    "contentType": "",
+    "uploaded": "",
+    "uploader": {
+      "id": "",
+      "email": "",
+      "firstName": "",
+      "lastName": ""
+    },
+    "originalImageId": null,
+    "locationId": "",
+    "reviewId": ""
+  },
+  "webpImage": {
+    "id": "",
+    "originalFileName": "",
+    "blobUri": "",
+    "cdnUri": "",
+    "contentType": "",
+    "uploaded": "",
+    "uploader": {
+      "id": "",
+      "email": "",
+      "firstName": "",
+      "lastName": ""
+    },
+    "originalImageId": "",
+    "locationId": "",
+    "reviewId": ""
+  },
   "created": "",
   "updated": null,
   "creator": {
     "id": "",
     "email": "",
-    "firstName": null,
-    "lastName": null
+    "firstName": "",
+    "lastName": ""
   },
   "editor": null,
   "locationId": ""
@@ -85,16 +119,50 @@ GET {{host}}/api/reviews/{{id}}
 ```json
 {
   "id": "",
-  "status": "Under Review",
+  "status": "",
   "text": "",
-  "image": "",
+  "rating": 0,
+  "originalImage": {
+    "id": "",
+    "originalFileName": "",
+    "blobUri": "",
+    "cdnUri": "",
+    "contentType": "",
+    "uploaded": "",
+    "uploader": {
+      "id": "",
+      "email": "",
+      "firstName": "",
+      "lastName": ""
+    },
+    "originalImageId": null,
+    "locationId": "",
+    "reviewId": ""
+  },
+  "webpImage": {
+    "id": "",
+    "originalFileName": "",
+    "blobUri": "",
+    "cdnUri": "",
+    "contentType": "",
+    "uploaded": "",
+    "uploader": {
+      "id": "",
+      "email": "",
+      "firstName": "",
+      "lastName": ""
+    },
+    "originalImageId": "",
+    "locationId": "",
+    "reviewId": ""
+  },
   "created": "",
   "updated": null,
   "creator": {
     "id": "",
     "email": "",
-    "firstName": null,
-    "lastName": null
+    "firstName": "",
+    "lastName": ""
   },
   "editor": null,
   "locationId": ""
@@ -123,21 +191,55 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
 // If no results an empty array will be provided
 [
   {
-  "id": "",
-  "status": "Under Review",
-  "text": "",
-  "image": "",
-  "created": "",
-  "updated": null,
-  "creator": {
     "id": "",
-    "email": "",
-    "firstName": null,
-    "lastName": null
-  },
-  "editor": null,
-  "locationId": ""
-}
+    "status": "",
+    "text": "",
+    "rating": 0,
+    "originalImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": null,
+      "locationId": "",
+      "reviewId": ""
+    },
+    "webpImage": {
+      "id": "",
+      "originalFileName": "",
+      "blobUri": "",
+      "cdnUri": "",
+      "contentType": "",
+      "uploaded": "",
+      "uploader": {
+        "id": "",
+        "email": "",
+        "firstName": "",
+        "lastName": ""
+      },
+      "originalImageId": "",
+      "locationId": "",
+      "reviewId": ""
+    },
+    "created": "",
+    "updated": null,
+    "creator": {
+      "id": "",
+      "email": "",
+      "firstName": "",
+      "lastName": ""
+    },
+    "editor": null,
+    "locationId": ""
+  }
 ]
 ```
 

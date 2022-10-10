@@ -50,6 +50,7 @@ public class AuthenticationMapper : IAuthenticationMapper
       result.User.PostalCode,
       result.User.PhoneNumber,
       result.User.DOB,
+      result.User.Registered,
       roleMapper.MapDbListToResponseList(result.User.Roles),
       categoryMapper.MapDbListToResponseList(result.User.FavoriteCategories),
       result.Token

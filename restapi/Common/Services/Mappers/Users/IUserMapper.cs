@@ -18,6 +18,6 @@ public interface IUserMapper
   DeleteUserCommand MapDeleteToCommand(Guid id);
   UserResponse MapUserToUserResponse(User user);
   UserResponse MapResultToResponse(UserResult result);
-  CreatorEditorResponse MapUserToCreatorEditor(User user);
+  MinifiedUserResponse MapUserToMinifiedUserResponse(User user);
   List<UserResponse> MapResultListToResponseList(List<UserResult> resultList);
 }

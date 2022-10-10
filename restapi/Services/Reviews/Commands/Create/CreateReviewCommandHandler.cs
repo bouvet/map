@@ -1,11 +1,11 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
-using restapi.Common.Services.Storage;
 using restapi.Data;
 using restapi.Models;
+using restapi.Services.ImageStorages.Commands.Upload;
+using restapi.Services.ImageStorages.Common;
 using restapi.Services.Reviews.Common;
 
 namespace restapi.Services.Reviews.Commands.Create;
@@ -14,13 +14,13 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
 {
   private readonly DataContext dataContext;
   private readonly IDateTimeProvider dateTimeProvider;
-  private readonly IAzureBlobStorage azureBlobStorage;
+  private readonly ISender mediator;
 
-  public CreateReviewCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider, IAzureBlobStorage azureBlobStorage)
+  public CreateReviewCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
   {
     this.dataContext = dataContext;
     this.dateTimeProvider = dateTimeProvider;
-    this.azureBlobStorage = azureBlobStorage;
+    this.mediator = mediator;
   }
 
   public async Task<ErrorOr<ReviewResult>> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
@@ -70,14 +70,27 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
 
     if (request.Image is not null)
     {
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);
+      var uploadImageCommand = new UploadImageCommand(
+        request.Image,
+        review.Creator,
+        review.LocationId,
+        review.Id
+      );
 
-      if (fileUploadResult.IsError)
+      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(uploadImageCommand, cancellationToken);
+
+      if (uploadResult.IsError)
       {
-        return Errors.AzureBlobStorage.UploadFailed;
+        return Errors.ImageStorage.UploadFailed;
       }
 
-      review.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
+      review.OriginalImage = uploadResult.Value.OriginalImage;
+      review.WebpImage = uploadResult.Value.WebpImage;
+    }
+
+    if (string.IsNullOrEmpty(request.Text) && request.Image is null)
+    {
+      review.Status = "Approved";
     }
 
     await dataContext.Reviews.AddAsync(review, cancellationToken);

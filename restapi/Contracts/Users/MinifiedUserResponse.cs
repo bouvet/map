@@ -1,6 +1,6 @@
 namespace restapi.Contracts.Users;
 
-public record CreatorEditorResponse(
+public record MinifiedUserResponse(
   Guid Id,
   string Email,
   string? FirstName,

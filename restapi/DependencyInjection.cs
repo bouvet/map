@@ -3,7 +3,6 @@ using MediatR;
 using restapi.Common.Providers;
 using restapi.Common.Services.Auth;
 using restapi.Common.Services.Mappings;
-using restapi.Common.Services.Storage;
 
 namespace restapi;
 
@@ -17,8 +16,6 @@ public static class DependencyInjection
 
     services.AddMappers();
     services.AddMediatR(Assembly.GetExecutingAssembly());
-
-    services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
 
     services.AddResponseCompression(options => options.EnableForHttps = true);
 

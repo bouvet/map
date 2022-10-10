@@ -67,5 +67,5 @@ Content-Disposition: form-data; name="category"
 Content-Disposition: form-data; name="image"; filename="fotball.png"
 Content-Type: image/png
 
-< ../Images/fotball.png
+< ../Assets/fotball.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

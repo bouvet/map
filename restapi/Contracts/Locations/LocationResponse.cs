@@ -1,4 +1,5 @@
 using restapi.Contracts.Categories;
+using restapi.Contracts.ImageStorage;
 using restapi.Contracts.Users;
 
 namespace restapi.Contracts.Locations;
@@ -6,8 +7,8 @@ namespace restapi.Contracts.Locations;
 public record LocationResponse(
   Guid Id,
   string Type,
-  CreatorEditorResponse? Creator,
-  CreatorEditorResponse? Editor,
+  MinifiedUserResponse? Creator,
+  MinifiedUserResponse? Editor,
   LocationProperties Properties,
   LocationGeometry Geometry
 );
@@ -15,7 +16,8 @@ public record LocationResponse(
 public record LocationProperties(
   string Title,
   string Description,
-  string Image,
+  ImageStorageResponse? OriginalImage,
+  ImageStorageResponse? WebpImage,
   string Status,
   float Rating,
   List<CategoryResponse> Category

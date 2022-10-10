@@ -1,3 +1,4 @@
+using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Reviews;
 using restapi.Services.Reviews.Commands.Create;
@@ -12,10 +13,12 @@ namespace restapi.Common.Services.Mappers.Reviews;
 public class ReviewMapper : IReviewMapper
 {
   private readonly IUserMapper userMapper;
+  private readonly IImageStorageMapper imageStorageMapper;
 
-  public ReviewMapper(IUserMapper userMapper)
+  public ReviewMapper(IUserMapper userMapper, IImageStorageMapper imageStorageMapper)
   {
     this.userMapper = userMapper;
+    this.imageStorageMapper = imageStorageMapper;
   }
 
   public ReviewResponse MapResultToResponse(ReviewResult result)
@@ -24,11 +27,13 @@ public class ReviewMapper : IReviewMapper
       result.Review.Id,
       result.Review.Status,
       result.Review.Text,
-      result.Review.Image,
+      result.Review.Rating,
+      result.Review.OriginalImage is not null ? imageStorageMapper.MapDbResultToResponse(result.Review.OriginalImage) : null,
+      result.Review.WebpImage is not null ? imageStorageMapper.MapDbResultToResponse(result.Review.WebpImage) : null,
       result.Review.Created,
       result.Review.Updated,
-      result.Review.Creator is not null ? userMapper.MapUserToCreatorEditor(result.Review.Creator) : null,
-      result.Review.Editor is not null ? userMapper.MapUserToCreatorEditor(result.Review.Editor) : null,
+      result.Review.Creator is not null ? userMapper.MapUserToMinifiedUserResponse(result.Review.Creator) : null,
+      result.Review.Editor is not null ? userMapper.MapUserToMinifiedUserResponse(result.Review.Editor) : null,
       result.Review.LocationId
     );
   }

@@ -48,7 +48,7 @@ public static class DependencyInjection
       azureProvider.DbConnectionString = keyVaultDbConnection.Value.Value;
     }
 
-    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureProvider.DbConnectionString));
+    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureProvider.DbConnectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
     return services;
   }

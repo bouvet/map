@@ -101,9 +101,9 @@ public class UserMapper : IUserMapper
     return new DeleteUserCommand(id);
   }
 
-  public CreatorEditorResponse MapUserToCreatorEditor(User user)
+  public MinifiedUserResponse MapUserToMinifiedUserResponse(User user)
   {
-    return new CreatorEditorResponse(
+    return new MinifiedUserResponse(
       user.Id,
       user.Email,
       user.FirstName,

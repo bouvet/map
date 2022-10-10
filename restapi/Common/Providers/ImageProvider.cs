@@ -9,9 +9,9 @@ public class ImageProvider : IImageProvider
 
   public async Task<SKData> ConvertImageToWebp(IFormFile file)
   {
-    var streamFromUpload = new MemoryStream();
-    await file.CopyToAsync(streamFromUpload);
-    var uploadData = SKData.CreateCopy(streamFromUpload.GetBuffer());
+    var memoryStream = new MemoryStream();
+    await file.CopyToAsync(memoryStream);
+    var uploadData = SKData.CreateCopy(memoryStream.GetBuffer());
     return SKImage.FromEncodedData(uploadData).Encode(SKEncodedImageFormat.Webp, CompressedImageQuality);
   }
 }
