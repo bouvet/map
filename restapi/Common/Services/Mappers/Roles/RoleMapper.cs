@@ -69,8 +69,8 @@ public class RoleMapper : IRoleMapper
       result.Role.Name,
       result.Role.Created,
       result.Role.Updated,
-      result.Role.Creator is not null ? new CreatorEditorResponse(result.Role.Creator.Id, result.Role.Creator.Email, result.Role.Creator.FirstName, result.Role.Creator.LastName) : null,
-      result.Role.Editor is not null ? new CreatorEditorResponse(result.Role.Editor.Id, result.Role.Editor.Email, result.Role.Editor.FirstName, result.Role.Editor.LastName) : null
+      result.Role.Creator is not null ? new MinifiedUserResponse(result.Role.Creator.Id, result.Role.Creator.Email, result.Role.Creator.FirstName, result.Role.Creator.LastName) : null,
+      result.Role.Editor is not null ? new MinifiedUserResponse(result.Role.Editor.Id, result.Role.Editor.Email, result.Role.Editor.FirstName, result.Role.Editor.LastName) : null
     );
   }
 }

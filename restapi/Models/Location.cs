@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace restapi.Models;
@@ -29,4 +30,10 @@ public class Location
 
   [JsonIgnore]
   public List<Review> Reviews { get; set; } = new List<Review>();
+
+  [ForeignKey("OriginalImageId")]
+  public Image? OriginalImage { get; set; }
+
+  [ForeignKey("WebpImageId")]
+  public Image? WebpImage { get; set; }
 }

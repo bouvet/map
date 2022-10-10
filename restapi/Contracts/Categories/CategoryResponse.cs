@@ -6,6 +6,8 @@ public record CategoryResponse(
   Guid Id,
   string Name,
   string Emoji,
-  CreatorEditorResponse? Creator,
-  CreatorEditorResponse? Editor
+  DateTime Created,
+  DateTime? Updated,
+  MinifiedUserResponse? Creator,
+  MinifiedUserResponse? Editor
 );

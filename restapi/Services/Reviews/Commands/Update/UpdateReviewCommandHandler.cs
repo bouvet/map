@@ -1,25 +1,25 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
-using restapi.Common.Services.Storage;
 using restapi.Data;
 using restapi.Models;
+using restapi.Services.ImageStorages.Commands.Upload;
+using restapi.Services.ImageStorages.Common;
 
 namespace restapi.Services.Reviews.Commands.Update;
 
 public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, ErrorOr<Updated>>
 {
-  private readonly DataContext dataContext;
-  private readonly IAzureBlobStorage azureBlobStorage;
+  private readonly Data.DataContext dataContext;
   private readonly IDateTimeProvider dateTimeProvider;
+  private readonly ISender mediator;
 
-  public UpdateReviewCommandHandler(DataContext dataContext, IAzureBlobStorage azureBlobStorage, IDateTimeProvider dateTimeProvider)
+  public UpdateReviewCommandHandler(Data.DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
   {
     this.dataContext = dataContext;
-    this.azureBlobStorage = azureBlobStorage;
     this.dateTimeProvider = dateTimeProvider;
+    this.mediator = mediator;
   }
 
   public async Task<ErrorOr<Updated>> Handle(UpdateReviewCommand request, CancellationToken cancellationToken)
@@ -72,16 +72,24 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
 
     if (request.Image is not null)
     {
-      // TODO: Delete old image before uploading new
+      //TODO: Delete old images before updating!
 
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);
+      var uploadImageCommand = new UploadImageCommand(
+        request.Image,
+        review.Creator,
+        review.LocationId,
+        review.Id
+      );
 
-      if (fileUploadResult.IsError)
+      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(uploadImageCommand, cancellationToken);
+
+      if (uploadResult.IsError)
       {
-        return Errors.AzureBlobStorage.UploadFailed;
+        return Errors.ImageStorage.UploadFailed;
       }
 
-      review.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
+      review.OriginalImage = uploadResult.Value.OriginalImage;
+      review.WebpImage = uploadResult.Value.WebpImage;
     }
 
     review.Updated = dateTimeProvider.CEST;

@@ -41,7 +41,7 @@ Required fields:
 ### Register Response
 
 ```js
-200 OK
+200 Ok
 ```
 
 ```json

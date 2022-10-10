@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using restapi.Common.Providers;
 using restapi.Data;
 using restapi.Models;
 
@@ -8,10 +9,12 @@ namespace restapi.Services.Categories.Commands.Update;
 public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ErrorOr<Updated>>
 {
   private readonly DataContext dataContext;
+  private readonly IDateTimeProvider dateTimeProvider;
 
-  public UpdateCategoryCommandHandler(DataContext dataContext)
+  public UpdateCategoryCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider)
   {
     this.dataContext = dataContext;
+    this.dateTimeProvider = dateTimeProvider;
   }
 
   public async Task<ErrorOr<Updated>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
@@ -42,6 +45,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
     category.Name = request.Name;
     category.Emoji = request.Emoji;
+    category.Updated = dateTimeProvider.CEST;
 
     if (request.UserId is not null)
     {

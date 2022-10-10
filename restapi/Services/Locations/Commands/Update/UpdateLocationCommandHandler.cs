@@ -1,22 +1,21 @@
 using ErrorOr;
 using MediatR;
-using Microsoft.WindowsAzure.Storage.Blob;
-using restapi.Common.Providers;
-using restapi.Common.Services.Storage;
 using restapi.Data;
 using restapi.Models;
+using restapi.Services.ImageStorages.Commands.Upload;
+using restapi.Services.ImageStorages.Common;
 
 namespace restapi.Services.Locations.Commands.Update;
 
 public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, ErrorOr<Updated>>
 {
   private readonly DataContext dataContext;
-  private readonly IAzureBlobStorage azureBlobStorage;
+  private readonly ISender mediator;
 
-  public UpdateLocationCommandHandler(DataContext dataContext, IAzureBlobStorage azureBlobStorage)
+  public UpdateLocationCommandHandler(DataContext dataContext, ISender mediator)
   {
     this.dataContext = dataContext;
-    this.azureBlobStorage = azureBlobStorage;
+    this.mediator = mediator;
   }
 
   public async Task<ErrorOr<Updated>> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
@@ -66,14 +65,22 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
 
     if (request.Image is not null)
     {
-      ErrorOr<CloudBlockBlob> fileUploadResult = await azureBlobStorage.UploadFile(request.Image);
+      var uploadImageCommand = new UploadImageCommand(
+        request.Image,
+        location.Creator,
+        location.Id,
+        null
+      );
 
-      if (fileUploadResult.IsError)
+      ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(uploadImageCommand, cancellationToken);
+
+      if (uploadResult.IsError)
       {
-        return Errors.AzureBlobStorage.UploadFailed;
+        return Errors.ImageStorage.UploadFailed;
       }
 
-      location.Image = fileUploadResult.Value.Uri.ToString().Replace(AzureProvider.AzureBlobStorageServer, AzureProvider.AzureCDNserver);
+      location.OriginalImage = uploadResult.Value.OriginalImage;
+      location.WebpImage = uploadResult.Value.WebpImage;
     }
 
     await dataContext.SaveChangesAsync(cancellationToken);

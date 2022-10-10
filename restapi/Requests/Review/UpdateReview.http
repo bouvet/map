@@ -60,5 +60,5 @@ Content-Disposition: form-data; name="locationId"
 Content-Disposition: form-data; name="image"; filename="park.png"
 Content-Type: image/png
 
-< ../Images/park.png
+< ../Assets/park.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

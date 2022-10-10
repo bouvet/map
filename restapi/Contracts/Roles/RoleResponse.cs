@@ -7,6 +7,6 @@ public record RoleResponse(
   string Name,
   DateTime Created,
   DateTime? Updated,
-  CreatorEditorResponse? Creator,
-  CreatorEditorResponse? Editor
+  MinifiedUserResponse? Creator,
+  MinifiedUserResponse? Editor
 );

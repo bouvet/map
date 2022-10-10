@@ -1,14 +1,18 @@
+using restapi.Contracts.ImageStorage;
 using restapi.Contracts.Users;
+using restapi.Models;
+
 namespace restapi.Contracts.Reviews;
 
 public record ReviewResponse(
   Guid Id,
   string Status,
   string? Text,
-  string? Image,
+  ImageStorageResponse? OriginalImage,
+  ImageStorageResponse? WebpImage,
   DateTime Created,
   DateTime? Updated,
-  CreatorEditorResponse? Creator,
-  CreatorEditorResponse? Editor,
+  MinifiedUserResponse? Creator,
+  MinifiedUserResponse? Editor,
   Guid LocationId
 );

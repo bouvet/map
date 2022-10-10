@@ -1,17 +1,21 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using restapi.Common.Providers;
 using restapi.Data;
+using restapi.Models;
 
 namespace restapi.Services.Categories.Commands.Create;
 
 public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ErrorOr<Common.CategoryResult>>
 {
   private readonly DataContext dataContext;
+  private readonly IDateTimeProvider dateTimeProvider;
 
-  public CreateCategoryCommandHandler(DataContext dataContext)
+  public CreateCategoryCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider)
   {
     this.dataContext = dataContext;
+    this.dateTimeProvider = dateTimeProvider;
   }
 
   public async Task<ErrorOr<Common.CategoryResult>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
@@ -40,7 +44,12 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
       return errors;
     }
 
-    var category = new Models.Category { Name = request.Name, Emoji = request.Emoji };
+    var category = new Category
+    {
+      Name = request.Name,
+      Emoji = request.Emoji,
+      Created = dateTimeProvider.CEST
+    };
 
     if (request.UserId is not null)
     {
