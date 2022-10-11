@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../utils/types.d';
 
 const initialState = {
     loading: true,
     isAuthenticated: false,
     users: [],
+    user: {} as IUser | null,
 };
 
 const authState = createSlice({
@@ -13,12 +15,15 @@ const authState = createSlice({
         setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
         },
-        logIn(state) {
+        logIn(state, action) {
             state.isAuthenticated = true;
+            state.user = action.payload;
             console.log(state.isAuthenticated);
         },
         logOut(state) {
             state.isAuthenticated = false;
+            state.user = null;
+            localStorage.removeItem('token');
             console.log(state.isAuthenticated);
         },
     },

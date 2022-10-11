@@ -8,7 +8,6 @@ import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
 import { SectionWrapper } from '../components/Form/SectionWrapper';
 import { LinkText, Text, Title } from '../components/Form/Text';
 import { useStateDispatch } from '../hooks/useRedux';
-import { authActions } from '../store/state/auth.state';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { loginService } from '../features/login/services/login.services';
@@ -32,7 +31,6 @@ export const Login: FC = () => {
         console.log('Password: ', password);
         console.log('Stay signed in: ', rememberStatus.toString());
         validateUserLogin();
-        // dispatch(authActions.logIn());
     };
 
     const validateUserLogin = async () => {
@@ -45,7 +43,6 @@ export const Login: FC = () => {
 
         if (successStatus) {
             dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
-            dispatch(authActions.logIn());
         } else {
             dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
         }
