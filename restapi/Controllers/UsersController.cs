@@ -8,7 +8,7 @@ using restapi.Services.Users.Common;
 
 namespace restapi.Controllers;
 
-[Authorize(Roles = "Administrator")]
+[Authorize]
 public class UsersController : ApiController
 {
   private readonly ISender mediator;
@@ -20,6 +20,7 @@ public class UsersController : ApiController
     this.userMapper = userMapper;
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpGet]
   public async Task<IActionResult> GetUsers()
   {
@@ -36,6 +37,20 @@ public class UsersController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetUserById(Guid id)
   {
+    var tokenUserId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var isAdmin = HttpContext.User.IsInRole("Administrator");
+
+    if (tokenUserId != id.ToString() && !isAdmin)
+    {
+      return Problem(
+        detail: $"User must have the Admin role or have the id '{id}'.",
+        instance: HttpContext.Request.Path,
+        statusCode: StatusCodes.Status403Forbidden,
+        title: "Authenticated user is not authorized.",
+        type: "User.IsNotCorrectUserOrAdmin");
+    }
+
     var getUserByIdQuery = userMapper.MapGetByIdToCommand(id);
 
     ErrorOr<UserResult> getUserByIdQueryResult = await mediator.Send(getUserByIdQuery);
@@ -49,6 +64,20 @@ public class UsersController : ApiController
   [HttpPut("{id:guid}")]
   public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request)
   {
+    var tokenUserId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var isAdmin = HttpContext.User.IsInRole("Administrator");
+
+    if (tokenUserId != id.ToString() && !isAdmin)
+    {
+      return Problem(
+        detail: $"User must have the Admin role or have the id '{id}'.",
+        instance: HttpContext.Request.Path,
+        statusCode: StatusCodes.Status403Forbidden,
+        title: "Authenticated user is not authorized.",
+        type: "User.IsNotCorrectUserOrAdmin");
+    }
+
     var updateUserCommand = userMapper.MapUpdateToCommand(id, request);
 
     ErrorOr<Updated> updateUserCommandResult = await mediator.Send(updateUserCommand);
@@ -59,6 +88,7 @@ public class UsersController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpPost("role")]
   public async Task<IActionResult> AddUserRole(AddUserRoleRequest request)
   {
@@ -72,6 +102,7 @@ public class UsersController : ApiController
     );
   }
 
+  [Authorize(Roles = "Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteUser(Guid id)
   {
