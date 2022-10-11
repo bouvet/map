@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LatLong } from '../../utils/types.d';
+import { ILatLong } from '../../utils/types.d';
 
 const initialState = {
-    currentMapCenter: {} as LatLong,
+    currentMapCenter: {} as ILatLong,
     currentTitle: '',
     currentDescription: '',
     currentCategories: [] as string[],
     currentImage: '' as string,
-    currentUserLocation: {} as LatLong,
+    currentUserLocation: {} as ILatLong,
     hasUserLocation: false,
 };
 
@@ -15,7 +15,7 @@ const registrationState = createSlice({
     name: 'registration',
     initialState,
     reducers: {
-        setCurrentMapCenter(state, action: PayloadAction<LatLong>) {
+        setCurrentMapCenter(state, action: PayloadAction<ILatLong>) {
             state.currentMapCenter = action.payload;
         },
         setCurrentTitle(state, action: PayloadAction<string>) {
@@ -30,7 +30,7 @@ const registrationState = createSlice({
         setCurrentImage(state, action: PayloadAction<string>) {
             state.currentImage = action.payload;
         },
-        setCurrentUserLocation(state, action: PayloadAction<LatLong>) {
+        setCurrentUserLocation(state, action: PayloadAction<ILatLong>) {
             state.currentUserLocation = action.payload;
         },
         setHasUserLocation(state, action: PayloadAction<boolean>) {

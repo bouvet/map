@@ -1,165 +1,111 @@
-// category types, TODO: fetch these from DB
-// export const category = ['Basketball', 'Fotball', 'Skating', 'Pumptrack', 'Tennis', 'Volleyball', 'Other'];
-// export type Category = typeof category[number];
-
-export interface Category {
+export interface ICategory {
     [index: string]: string;
     emoji: string;
     name: string;
 }
 
-/**
- * interface for coordinates in Location interface
- * @param coordinate @type Array\<number\>
- * @param type mapbox variable
- */
-export interface Geometry {
-    /** @param coordinate @type Array\<number\> */
+export interface IGeometry {
     coordinates: Array<number>;
-
-    /** @param type mapbox variable */
-    type: 'Point';
+    type: 'Point' /** mapbox type */;
 }
 
-/**
- * interface for properties in Location interface
- * @param title string name of a park
- * @param description string description of park
- * @param category array with park categories
- * @param img string with image data
- * @param status string with approval status
- * @param rating number to indicate star rating on park
- */
-export interface Properties {
-    /** @param title string name of a park */
+export interface IProperties {
     title: string;
-
-    /** @param description string description of park */
     description: string;
-
-    /** @param category array with park categories */
-    category: Array<Category>;
-
-    /** @param img string with image data */
+    category: Array<ICategory>;
     image: string;
-
-    /** @param status string with image data */
     status: string;
-
-    /** @param rating number to indicate star rating on park */
     rating: number;
 }
 
-/**
- * @param type: Feature for mapbox pins
- * @param properties interface with info about location
- * @param geometry interface with coordinates
- * @param pinColor mapbox variable
- */
-export interface Location {
-    /** needed to make Location arrays */
+export interface ILocation {
     id: string;
-
-    /** @param type mapbox type: Feature */
-    type: 'Feature';
-
-    /** @param Properties interface holds info about the Location */
-    properties: Properties;
-
-    /** @param geometry interface with coordinate */
-    geometry: Geometry;
-
-    /** @param pinColor mapbox pin color variable */
+    type: 'Feature' /** mapbox type */;
+    properties: IProperties;
+    geometry: IGeometry;
     pinColor?: string;
 }
 
-export interface PutLocation {
+export interface IPutLocation {
     id: string;
-
     title: string;
-
     description: string;
-
-    Img?: File;
-
+    image?: File;
     status?: string;
-
     category?: string;
-
     longitude?: number;
-
     latitude?: number;
 }
 
-export interface LatLong {
+export interface ILatLong {
     lat: number;
     long: number;
 }
 
-export interface ReviewType {
+export interface IReviewType {
     rating: number;
     text?: string;
     image?: File;
     locationId: string;
 }
 
-export interface ReviewTypeGet {
-    id: '';
-    status: '';
-    text: '';
+export interface IReviewTypeGet {
+    id: string;
+    status: string;
+    text: string;
     rating: number;
     originalImage?: {
-        id: '';
-        originalFileName: '';
-        blobUri: '';
-        cdnUri: '';
-        contentType: '';
-        uploaded: '';
+        id: string;
+        originalFileName: string;
+        blobUri: string;
+        cdnUri: string;
+        contentType: string;
+        uploaded: string;
         uploader?: {
-            id: '';
-            email: '';
-            firstName: '';
-            lastName: '';
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
         };
         originalImageId: null;
-        locationId: '';
-        reviewId: '';
+        locationId: string;
+        reviewId: string;
     };
     webpImage?: {
-        id: '';
-        originalFileName: '';
-        blobUri: '';
-        cdnUri: '';
-        contentType: '';
-        uploaded: '';
+        id: string;
+        originalFileName: string;
+        blobUri: string;
+        cdnUri: string;
+        contentType: string;
+        uploaded: string;
         uploader?: {
-            id: '';
-            email: '';
-            firstName: '';
-            lastName: '';
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
         };
-        originalImageId: '';
-        locationId: '';
-        reviewId: '';
+        originalImageId: string;
+        locationId: string;
+        reviewId: string;
     };
-    created: '';
-    updated?: '';
+    created: string;
+    updated?: string;
     creator?: {
-        id: '';
-        email: '';
-        firstName: '';
-        lastName: '';
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
     };
     editor?: {
-        id: '';
-        email: '';
-        firstName: '';
-        lastName: '';
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
     };
-    locationId: '';
+    locationId: string;
 }
 
-export interface UserType {
+export interface IUserType {
     email: string;
     password: string;
     firstName: string;
@@ -168,17 +114,58 @@ export interface UserType {
     favoriteCategoryIds?: Array<string>;
 }
 
-export interface UserTypeGet {
+export interface ILoginType {
+    email: string;
+    password: string;
+}
+
+export interface IUser {
     id: string;
     email: string;
-    password: string;
     firstName: string;
     lastName: string;
+    address?: string;
+    postalArea?: string;
+    postalCode?: number;
+    phoneNumber?: number;
     dob: string;
-    favoriteCategoryIds?: Array<string>;
-}
-
-export interface LoginType {
-    email: string;
-    password: string;
+    registered: string;
+    roles: {
+        id: string;
+        name: string;
+        created: string;
+        updated: string;
+        creator?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+        };
+        editor?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+        };
+    };
+    favoriteCategories?: {
+        id: string;
+        name: string;
+        emoji: string;
+        created: string;
+        updated?: string;
+        creator?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+        };
+        editor?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+        };
+    };
+    token: string;
 }

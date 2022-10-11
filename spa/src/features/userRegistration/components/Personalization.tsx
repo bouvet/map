@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RegisterButtonFavorites } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { Category } from '../../../utils/types.d';
+import { ICategory } from '../../../utils/types.d';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkTextPersonalization, Text, TitleForm } from '../../../components/Form/Text';
@@ -17,7 +17,7 @@ export const Personalization: FC = () => {
     const dispatch = useStateDispatch();
 
     const { categories } = useStateSelector((state) => state.map);
-    const mappedFilter = categories.map((item: Category) => (
+    const mappedFilter = categories.map((item: ICategory) => (
         <RegisterButtonFavorites key={item.name} id={item.id} text={item.name} emoji={item.emoji} />
     ));
 

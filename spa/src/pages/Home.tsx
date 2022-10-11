@@ -10,7 +10,7 @@ import { SwipeableEdgeDrawer } from '../features/locationInfo/components/Locatio
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
-import { Category, LatLong } from '../utils/types.d';
+import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../components/FabMenu/FabMenu';
@@ -20,7 +20,7 @@ export const Home: FC = () => {
     const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus, selectedFilterCategory } =
         useStateSelector((state) => state.map);
     const { currentUserLocation } = useStateSelector((state) => state.registration);
-    const mappedFilter = categoriesWithLocations.map((item: Category) =>
+    const mappedFilter = categoriesWithLocations.map((item: ICategory) =>
         item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
     );
     const dispatch = useStateDispatch();
@@ -36,7 +36,7 @@ export const Home: FC = () => {
         } else {
             console.log('isGettingLocation');
             navigator.geolocation.getCurrentPosition((position) => {
-                const userLocation: LatLong = {
+                const userLocation: ILatLong = {
                     lat: position.coords.latitude,
                     long: position.coords.longitude,
                 };

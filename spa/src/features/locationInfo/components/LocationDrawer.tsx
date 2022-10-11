@@ -10,7 +10,7 @@ import { Review } from './Review';
 import { ReviewModal } from './ReviewModal';
 import { StarRating } from '../../../components/StarRating/StarRating';
 import { reviewServices } from '../services/locationinfo.services';
-import { ReviewTypeGet } from '../../../utils/types.d';
+import { IReviewTypeGet } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 
 const drawerBleeding = 56;
@@ -99,7 +99,7 @@ export const SwipeableEdgeDrawer: FC = () => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.text)
-                .map((item: ReviewTypeGet) => (
+                .map((item: IReviewTypeGet) => (
                     <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
                 ));
             setReviewList(temp);
@@ -110,7 +110,7 @@ export const SwipeableEdgeDrawer: FC = () => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.webpImage)
-                .map((item: ReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
+                .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (currentlySelectedLocation.properties.image) {
                 const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.image} />;

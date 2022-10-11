@@ -1,6 +1,6 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
-import { LatLong } from '../../../utils/types.d';
+import { ILatLong } from '../../../utils/types.d';
 
 export const locationServices = {
     postLocation(payload: FormData) {
@@ -22,7 +22,7 @@ export const locationServices = {
             }
         };
     },
-    getClosestLocation(userLocation: LatLong, selectedFilterCategory: string) {
+    getClosestLocation(userLocation: ILatLong, selectedFilterCategory: string) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return async (dispatch: AppDispatch) => {
             try {
@@ -31,7 +31,7 @@ export const locationServices = {
                 console.log(selectedFilterCategory);
                 if (selectedFilterCategory) {
                     const response = await API.get(
-                        `/Locations/${userLocation.lat}&${userLocation.long}/category?category=${selectedFilterCategory}`,
+                        `/Locations/${userLocation.lat}&${userLocation.long}?category=${selectedFilterCategory}`,
                     );
                     return response;
                 }

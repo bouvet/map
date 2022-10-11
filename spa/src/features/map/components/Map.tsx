@@ -3,7 +3,7 @@ import { Map as ReactMap } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapService } from '../services/map.services';
-import { LatLong, Location } from '../../../utils/types.d';
+import { ILatLong, ILocation } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
 
@@ -40,7 +40,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
     useEffect(() => {
         if (currentUserLocation.lat && hasUserLocation) {
             setViewState((prevState) => ({ ...prevState, longitude: currentUserLocation.long, latitude: currentUserLocation.lat }));
-            const updateLocation: LatLong = {
+            const updateLocation: ILatLong = {
                 lat: currentUserLocation.lat,
                 long: currentUserLocation.long,
             };
@@ -70,7 +70,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
                 mapRef.current.on('moveend', () => {
                     // @ts-ignore
                     const currentCenter = mapRef.current.getCenter();
-                    const currentCenterObj: LatLong = {
+                    const currentCenterObj: ILatLong = {
                         long: currentCenter.lng,
                         lat: currentCenter.lat,
                     };
@@ -81,7 +81,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         [dispatch],
     );
 
-    const onClickHandler = (location: Location) => {
+    const onClickHandler = (location: ILocation) => {
         if (selectedMarker === location.id) {
             dispatch(mapActions.setSelectedMarker(''));
             dispatch(mapActions.setPopupVisibility(false));

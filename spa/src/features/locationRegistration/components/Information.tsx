@@ -7,7 +7,7 @@ import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
 import { MyTheme } from '../../../styles/global';
-import { Category } from '../../../utils/types.d';
+import { ICategory } from '../../../utils/types.d';
 
 const InformationWrapper = styled.div`
     width: 100%;
@@ -41,7 +41,7 @@ const TextArea = styled.textarea`
 
 export const Information: FC = () => {
     const { categories } = useStateSelector((state) => state.map);
-    const mappedFilter = categories.map((item: Category) => (
+    const mappedFilter = categories.map((item: ICategory) => (
         <RegisterButton key={item.name} id={item.id} text={item.name} emoji={item.emoji} />
     ));
 
