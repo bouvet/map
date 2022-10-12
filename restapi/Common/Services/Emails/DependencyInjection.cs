@@ -17,12 +17,12 @@ public static class DependencyInjection
 
     if (string.IsNullOrEmpty(sendGridSettings.FromEmail))
     {
-      sendGridSettings.FromEmail = Environment.GetEnvironmentVariable("FromEmail")!;
+      sendGridSettings.FromEmail = Environment.GetEnvironmentVariable("SGFromEmail")!;
     }
 
     if (string.IsNullOrEmpty(sendGridSettings.FromName))
     {
-      sendGridSettings.FromName = Environment.GetEnvironmentVariable("FromName")!;
+      sendGridSettings.FromName = Environment.GetEnvironmentVariable("SGFromName")!;
     }
 
     services.AddScoped<IEmailService, EmailService>();
