@@ -17,7 +17,7 @@ public class User
   public string? PostalArea { get; set; }
   public int PostalCode { get; set; }
   public int PhoneNumber { get; set; }
-  public DateTime? DOB { get; set; }
+  public DateTime DOB { get; set; }
   public DateTime Registered { get; set; }
 
   [JsonIgnore]

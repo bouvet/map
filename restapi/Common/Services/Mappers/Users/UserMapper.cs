@@ -107,7 +107,8 @@ public class UserMapper : IUserMapper
       user.Id,
       user.Email,
       user.FirstName,
-      user.LastName
+      user.LastName,
+      user.DOB
     );
   }
 }
