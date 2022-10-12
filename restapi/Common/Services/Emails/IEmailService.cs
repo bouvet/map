@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace restapi.Common.Services.Email;
+namespace restapi.Common.Services.Emails;
 
 public interface IEmailService
 {

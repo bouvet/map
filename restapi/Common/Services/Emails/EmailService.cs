@@ -7,7 +7,7 @@ using restapi.Common.Settings;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace restapi.Common.Services.Email;
+namespace restapi.Common.Services.Emails;
 
 public class EmailService : IEmailService
 {

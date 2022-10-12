@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using restapi.Common.Settings;
 
-namespace restapi.Common.Services.Email;
+namespace restapi.Common.Services.Emails;
 
 public static class DependencyInjection
 {

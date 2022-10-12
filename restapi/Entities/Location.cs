@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace restapi.Models;
+namespace restapi.Entities;
 
 public class Location
 {

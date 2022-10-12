@@ -24,7 +24,6 @@ Required fields:
   - firstName
   - lastName
   - DOB (Date Of Birth)
-
 ```
 
 ```json

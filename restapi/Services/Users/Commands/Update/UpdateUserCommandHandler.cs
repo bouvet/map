@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Services.Users.Commands.Update;
 

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.ImageStorages.Common;
 using SkiaSharp;
 

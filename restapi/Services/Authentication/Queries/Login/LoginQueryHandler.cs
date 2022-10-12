@@ -29,7 +29,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
       .ThenInclude(role => role.Creator)
       .Include(user => user.Roles)
       .ThenInclude(role => role.Editor)
-      .SingleOrDefaultAsync(user => user.Email == request.Email, cancellationToken: cancellationToken);
+      .SingleOrDefaultAsync(user => user.Email.ToLower() == request.Email, cancellationToken: cancellationToken);
 
     if (user is null)
     {
@@ -43,7 +43,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
       return Errors.Authentication.InvalidCredentials;
     }
 
-    var token = jwtGenerator.GenerateToken(user);
+    var token = jwtGenerator.GenerateUserToken(user);
 
     return new AuthenticationResult(
       user,

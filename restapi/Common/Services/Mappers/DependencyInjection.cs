@@ -1,5 +1,6 @@
 using restapi.Common.Services.Mappers.Authentication;
 using restapi.Common.Services.Mappers.Categories;
+using restapi.Common.Services.Mappers.Emails;
 using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Locations;
 using restapi.Common.Services.Mappers.Reviews;
@@ -19,6 +20,7 @@ public static class DependencyInjection
     services.AddScoped<IRoleMapper, RoleMapper>();
     services.AddScoped<IUserMapper, UserMapper>();
     services.AddScoped<IImageStorageMapper, ImageStorageMapper>();
+    services.AddScoped<IEmailMapper, EmailMapper>();
 
     return services;
   }

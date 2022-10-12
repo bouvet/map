@@ -87,6 +87,36 @@ namespace restapi.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("restapi.Models.Email", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CodeValidTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ConfirmationCode")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Confirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emails");
+                });
+
             modelBuilder.Entity("restapi.Models.Image", b =>
                 {
                     b.Property<Guid>("Id")

@@ -1,4 +1,4 @@
-namespace restapi.Common.Services.Email;
+namespace restapi.Common.Services.Emails;
 
 public record SendEmailRequest(
   string Subject,

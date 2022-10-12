@@ -2,7 +2,7 @@ using ErrorOr;
 using MediatR;
 using restapi.Common.Providers;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Services.Categories.Commands.Update;
 

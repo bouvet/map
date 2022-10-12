@@ -2,7 +2,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Locations.Common;
 
 namespace restapi.Services.Locations.Queries.GetLocations;

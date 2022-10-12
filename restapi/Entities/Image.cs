@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace restapi.Models;
+namespace restapi.Entities;
 
 public class Image
 {

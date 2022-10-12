@@ -2,7 +2,7 @@ using System.Reflection;
 using MediatR;
 using restapi.Common.Providers;
 using restapi.Common.Services.Auth;
-using restapi.Common.Services.Email;
+using restapi.Common.Services.Emails;
 using restapi.Common.Services.Mappings;
 
 namespace restapi;

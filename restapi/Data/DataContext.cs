@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Data;
 
@@ -51,4 +51,5 @@ public class DataContext : DbContext
   public DbSet<User> Users => Set<User>();
   public DbSet<Role> Roles => Set<Role>();
   public DbSet<Image> Images => Set<Image>();
+  public DbSet<Email> Emails => Set<Email>();
 }

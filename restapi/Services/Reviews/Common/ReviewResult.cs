@@ -1,4 +1,4 @@
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Services.Reviews.Common;
 
