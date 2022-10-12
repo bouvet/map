@@ -1,5 +1,5 @@
 using restapi.Contracts.Roles;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Roles.Commands.Create;
 using restapi.Services.Roles.Commands.Delete;
 using restapi.Services.Roles.Common;

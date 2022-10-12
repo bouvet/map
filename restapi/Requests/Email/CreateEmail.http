@@ -1,0 +1,6 @@
+POST {{host}}/api/email
+Content-Type: application/json
+
+{
+  "email": "verden.venter.app@gmail.com"
+}

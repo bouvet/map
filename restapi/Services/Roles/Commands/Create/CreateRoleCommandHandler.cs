@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Common.Providers;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Roles.Commands.Create;
 using restapi.Services.Roles.Common;
 

@@ -1,8 +1,9 @@
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Common.Services.Auth;
 
 public interface IJwtGenerator
 {
-  string GenerateToken(User user);
+  string GenerateUserToken(User user);
+  string GenerateRegistrationToken(Email email);
 }

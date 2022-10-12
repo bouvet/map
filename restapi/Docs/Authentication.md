@@ -24,7 +24,6 @@ Required fields:
   - firstName
   - lastName
   - DOB (Date Of Birth)
-
 ```
 
 ```json
@@ -123,22 +122,19 @@ Required fields:
   "postalArea": "",
   "postalCode": 0,
   "phoneNumber": 0,
-  "dob": null,
+  "dob": "",
+  "registered": "",
   "roles": [
     {
       "id": "",
       "name": "",
       "created": "",
       "updated": null,
-      "creator": {
-        "id": "",
-        "email": "",
-        "firstName": null,
-        "lastName": null
-      },
-      "editor": null // Same as creator if any, else null
+      "creator": null,
+      "editor": null
     }
   ],
+  "favoriteCategories": [],
   "token": ""
 }
 ```

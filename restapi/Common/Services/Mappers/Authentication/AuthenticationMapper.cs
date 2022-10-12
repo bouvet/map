@@ -21,7 +21,7 @@ public class AuthenticationMapper : IAuthenticationMapper
   public LoginQuery MapLoginQueryToCommand(LoginRequest request)
   {
     return new LoginQuery(
-      request.Email,
+      request.Email.ToLower(),
       request.Password
     );
   }
@@ -29,7 +29,7 @@ public class AuthenticationMapper : IAuthenticationMapper
   public RegisterCommand MapRegisterRequestToCommand(RegisterRequest request)
   {
     return new RegisterCommand(
-      request.Email,
+      request.Email.ToLower(),
       request.Password,
       request.FirstName,
       request.LastName,
@@ -42,7 +42,7 @@ public class AuthenticationMapper : IAuthenticationMapper
   {
     return new AuthenticationResponse(
       result.User.Id,
-      result.User.Email,
+      result.User.Email.ToLower(),
       result.User.FirstName,
       result.User.LastName,
       result.User.Address,

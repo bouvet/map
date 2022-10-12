@@ -1,6 +1,6 @@
 using ErrorOr;
 using MediatR;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.ImageStorages.Common;
 
 namespace restapi.Services.ImageStorages.Commands.Upload;

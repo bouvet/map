@@ -2,7 +2,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Users.Common;
 
 namespace restapi.Services.Users.Queries.GetUsers;

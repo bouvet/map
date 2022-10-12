@@ -1,6 +1,6 @@
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.ImageStorage;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.ImageStorages.Common;
 
 namespace restapi.Common.Services.Mappers.ImageStorage;

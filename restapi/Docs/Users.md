@@ -1,9 +1,8 @@
-# Users 🔒
+# Users🔒
 
 > **All endpoints require Authorization header!**
-> **Access level: Administrator**
 
-- [Users 🔒](#users-)
+- [Users🔒](#users)
   - [Get User By Id](#get-user-by-id)
     - [Get User By Id Request](#get-user-by-id-request)
     - [Get User By Id Response](#get-user-by-id-response)
@@ -28,6 +27,9 @@
 GET {{host}}/api/users/{{id}}
 Authorization: Bearer {{token}}
 ```
+
+> User can fetch own details
+> Admin has free access
 
 ### Get User By Id Response
 
@@ -70,7 +72,7 @@ Authorization: Bearer {{token}}
 
 ```js
 GET {{host}}/api/users
-Authorization: Bearer {{token}}
+Authorization: Bearer {{admintoken}}
 ```
 
 ### Get Users Response
@@ -119,6 +121,9 @@ POST {{host}}/api/users/{{id}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 ```
+
+> User can update their own details
+> Admin has free access
 
 ```json
 {

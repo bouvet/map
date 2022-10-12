@@ -2,7 +2,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Reviews.Common;
 
 namespace restapi.Services.Reviews.Queries.GetReviews;

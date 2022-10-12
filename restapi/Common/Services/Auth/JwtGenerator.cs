@@ -3,9 +3,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
-using restapi.Models;
 using restapi.Common.Providers;
 using restapi.Common.Settings;
+using restapi.Entities;
 
 namespace restapi.Common.Services.Auth;
 
@@ -20,7 +20,7 @@ public class JwtGenerator : IJwtGenerator
     jwtSettings = jwtOptions.Value;
   }
 
-  public string GenerateToken(User user)
+  public string GenerateUserToken(User user)
   {
     var signingCredentials = new SigningCredentials(
       new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
@@ -30,9 +30,9 @@ public class JwtGenerator : IJwtGenerator
     var claims = new List<Claim>
     {
       new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-      new Claim("userId", user.Id.ToString()),
       new Claim(JwtRegisteredClaimNames.Email, user.Email),
       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+      new Claim("userId", user.Id.ToString()),
     };
 
     foreach (Role role in user.Roles)
@@ -44,6 +44,33 @@ public class JwtGenerator : IJwtGenerator
       issuer: jwtSettings.Issuer,
       audience: jwtSettings.Audience,
       expires: dateTimeProvider.UtcNow.AddMinutes(jwtSettings.ExpiryMinutes),
+      claims: claims,
+      signingCredentials: signingCredentials
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(securityToken);
+  }
+
+  public string GenerateRegistrationToken(Email email)
+  {
+    var signingCredentials = new SigningCredentials(
+      new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+      SecurityAlgorithms.HmacSha256
+    );
+
+    var claims = new List<Claim>
+    {
+      new Claim(JwtRegisteredClaimNames.Sub, email.Id.ToString()),
+      new Claim(JwtRegisteredClaimNames.Email, email.Address),
+      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+      new Claim("emailId", email.Id.ToString()),
+      new Claim("roles", "Registering")
+    };
+
+    var securityToken = new JwtSecurityToken(
+      issuer: jwtSettings.Issuer,
+      audience: jwtSettings.Audience,
+      expires: dateTimeProvider.UtcNow.AddMinutes(48),
       claims: claims,
       signingCredentials: signingCredentials
     );

@@ -1,6 +1,6 @@
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Categories;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Categories.Commands.Create;
 using restapi.Services.Categories.Commands.Delete;
 using restapi.Services.Categories.Commands.Update;

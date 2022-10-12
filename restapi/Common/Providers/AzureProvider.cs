@@ -33,7 +33,7 @@ public class AzureProvider
     return new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
   }
 
-  public async Task<Response<KeyVaultSecret>> GetKeyVaultSecret(string keyVaultSecretName, CancellationToken cancellationToken)
+  public async Task<Response<KeyVaultSecret>> GetKeyVaultSecret(string keyVaultSecretName, CancellationToken cancellationToken = default)
   {
     var client = GetKeyVaultClient();
 

@@ -1,0 +1,8 @@
+POST {{host}}/api/email/confirm
+Content-Type: application/json
+Authorization: Bearer {{registrationtoken}}
+
+{
+  "email": "verden.venter.app@gmail.com",
+  "confirmationCode": 657642
+}

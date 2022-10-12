@@ -1,6 +1,6 @@
 using restapi.Common.Services.Mappers.Roles;
 using restapi.Contracts.Users;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Users.Commands.AddUserRole;
 using restapi.Services.Users.Commands.Delete;
 using restapi.Services.Users.Commands.Update;

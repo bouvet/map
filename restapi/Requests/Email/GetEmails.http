@@ -1,0 +1,3 @@
+GET {{host}}/api/email
+Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}

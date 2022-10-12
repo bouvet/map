@@ -20,7 +20,7 @@ public static partial class Errors
 
     public static Error InvalidPassword => Error.Validation(
       code: "User.InvalidPassword",
-      description: $"Password must be at least {Models.User.MinPasswordLength} characters long"
+      description: $"Password must be at least {Entities.User.MinPasswordLength} characters long"
     );
 
     public static Error InvalidEmail => Error.Validation(

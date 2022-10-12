@@ -2,6 +2,7 @@ using System.Reflection;
 using MediatR;
 using restapi.Common.Providers;
 using restapi.Common.Services.Auth;
+using restapi.Common.Services.Emails;
 using restapi.Common.Services.Mappings;
 
 namespace restapi;
@@ -24,6 +25,8 @@ public static class DependencyInjection
     services.AddControllers();
 
     services.AddAuth(configuration);
+
+    services.AddEmail(configuration);
 
     return services;
   }
