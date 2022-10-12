@@ -52,7 +52,7 @@ namespace restapi.Migrations
                     b.ToTable("CategoryUser");
                 });
 
-            modelBuilder.Entity("restapi.Models.Category", b =>
+            modelBuilder.Entity("restapi.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace restapi.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("restapi.Models.Email", b =>
+            modelBuilder.Entity("restapi.Entities.Email", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,7 +117,7 @@ namespace restapi.Migrations
                     b.ToTable("Emails");
                 });
 
-            modelBuilder.Entity("restapi.Models.Image", b =>
+            modelBuilder.Entity("restapi.Entities.Image", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,7 +161,7 @@ namespace restapi.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace restapi.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("restapi.Models.Review", b =>
+            modelBuilder.Entity("restapi.Entities.Review", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +269,7 @@ namespace restapi.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("restapi.Models.Role", b =>
+            modelBuilder.Entity("restapi.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,7 +300,7 @@ namespace restapi.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("restapi.Models.User", b =>
+            modelBuilder.Entity("restapi.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,7 +309,7 @@ namespace restapi.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DOB")
+                    b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -360,13 +360,13 @@ namespace restapi.Migrations
 
             modelBuilder.Entity("CategoryLocation", b =>
                 {
-                    b.HasOne("restapi.Models.Category", null)
+                    b.HasOne("restapi.Entities.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.Location", null)
+                    b.HasOne("restapi.Entities.Location", null)
                         .WithMany()
                         .HasForeignKey("LocationsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -375,26 +375,26 @@ namespace restapi.Migrations
 
             modelBuilder.Entity("CategoryUser", b =>
                 {
-                    b.HasOne("restapi.Models.Category", null)
+                    b.HasOne("restapi.Entities.Category", null)
                         .WithMany()
                         .HasForeignKey("FavoriteCategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.User", null)
+                    b.HasOne("restapi.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("restapi.Models.Category", b =>
+            modelBuilder.Entity("restapi.Entities.Category", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
@@ -403,30 +403,30 @@ namespace restapi.Migrations
                     b.Navigation("Editor");
                 });
 
-            modelBuilder.Entity("restapi.Models.Image", b =>
+            modelBuilder.Entity("restapi.Entities.Image", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Uploader")
+                    b.HasOne("restapi.Entities.User", "Uploader")
                         .WithMany()
                         .HasForeignKey("UploaderId");
 
                     b.Navigation("Uploader");
                 });
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
-                    b.HasOne("restapi.Models.Image", "OriginalImage")
+                    b.HasOne("restapi.Entities.Image", "OriginalImage")
                         .WithMany()
                         .HasForeignKey("OriginalImageId");
 
-                    b.HasOne("restapi.Models.Image", "WebpImage")
+                    b.HasOne("restapi.Entities.Image", "WebpImage")
                         .WithMany()
                         .HasForeignKey("WebpImageId");
 
@@ -439,27 +439,27 @@ namespace restapi.Migrations
                     b.Navigation("WebpImage");
                 });
 
-            modelBuilder.Entity("restapi.Models.Review", b =>
+            modelBuilder.Entity("restapi.Entities.Review", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
-                    b.HasOne("restapi.Models.Location", "Location")
+                    b.HasOne("restapi.Entities.Location", "Location")
                         .WithMany("Reviews")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.Image", "OriginalImage")
+                    b.HasOne("restapi.Entities.Image", "OriginalImage")
                         .WithMany()
                         .HasForeignKey("OriginalImageId");
 
-                    b.HasOne("restapi.Models.Image", "WebpImage")
+                    b.HasOne("restapi.Entities.Image", "WebpImage")
                         .WithMany()
                         .HasForeignKey("WebpImageId");
 
@@ -474,13 +474,13 @@ namespace restapi.Migrations
                     b.Navigation("WebpImage");
                 });
 
-            modelBuilder.Entity("restapi.Models.Role", b =>
+            modelBuilder.Entity("restapi.Entities.Role", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
@@ -491,20 +491,20 @@ namespace restapi.Migrations
 
             modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.HasOne("restapi.Models.Role", null)
+                    b.HasOne("restapi.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.User", null)
+                    b.HasOne("restapi.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
                     b.Navigation("Reviews");
                 });
