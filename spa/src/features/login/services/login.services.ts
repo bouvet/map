@@ -2,25 +2,37 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 import { IEmailType, ILoginType, IPasswordType } from '../../../utils/types.d';
 
 export const loginService = {
-    validateUser(payload: ILoginType) {
+    loginUser(payload: ILoginType) {
         return async (dispatch: AppDispatch) => {
             try {
-                const validateUser = await API.post('/auth/login', payload);
-                console.log(validateUser);
-                if (validateUser.status === 200) {
-                    localStorage.setItem('token', validateUser.data.token);
-                    localStorage.setItem('user', JSON.stringify(validateUser.data));
-                    console.log(validateUser.data);
-                    dispatch(authActions.logIn(validateUser.data));
-                    return true;
+                const { data } = await API.post('/auth/login', payload);
+
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data));
+
+                setTimeout(() => {
+                    dispatch(authActions.userLogin(data));
+                    dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
+                }, 2000);
+
+                return true;
+            } catch (error: any) {
+                const invalidCreds = error.response.data.errors['Authentication.InvalidCredentials'][0];
+
+                if (invalidCreds) {
+                    dispatch(snackbarActions.setNotify({ message: 'Feil epost eller passord', severity: 'error', autohideDuration: null }));
+                    dispatch(authActions.setLoading(false));
+                    return false;
                 }
-                return false;
-            } catch (error) {
-                // TODO: Push error to error state
-                console.error('error', error);
+
+                console.error('error', error.response.data.errors['Authentication.InvalidCredentials'][0]);
+
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(authActions.setLoading(false));
                 return false;
             }
         };

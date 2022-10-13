@@ -55,7 +55,7 @@ export const Onboarding: FC = () => {
         const successStatus: boolean = await dispatch(userService.postUser(userDetails));
 
         if (successStatus) {
-            await dispatch(loginService.validateUser(loginDetails));
+            await dispatch(loginService.loginUser(loginDetails));
             dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
         } else {
             dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
