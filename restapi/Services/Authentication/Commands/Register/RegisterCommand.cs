@@ -9,6 +9,6 @@ public record RegisterCommand(
   string Password,
   string FirstName,
   string LastName,
-  DateTime? DOB,
+  DateTime DOB,
   List<Guid>? FavoriteCategoryIds
 ) : IRequest<ErrorOr<AuthenticationResult>>;

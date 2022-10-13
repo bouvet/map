@@ -8,5 +8,7 @@ public record UpdateUserRequest(
   string? PostalArea,
   int PostalCode,
   int PhoneNumber,
-  DateTime? DOB
+  DateTime? DOB,
+  List<Guid>? FavoriteCategoryIds,
+  IFormFile? ProfileImage
 );

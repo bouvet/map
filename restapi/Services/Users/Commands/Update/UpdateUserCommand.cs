@@ -5,12 +5,13 @@ namespace restapi.Services.Users.Commands.Update;
 
 public record UpdateUserCommand(
   Guid Id,
-  string? Email,
   string? FirstName,
   string? LastName,
   string? Address,
   string? PostalArea,
   int PostalCode,
   int PhoneNumber,
-  DateTime? DOB
+  DateTime? DOB,
+  List<Guid>? FavoriteCategoryIds,
+  IFormFile? ProfileImage
 ) : IRequest<ErrorOr<Updated>>;

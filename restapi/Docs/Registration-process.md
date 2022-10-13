@@ -6,6 +6,20 @@ The user will then receive an email from the system with the confirmation code. 
 Once all digits are entered a new request will be sent to the server confirming the code. User email will then be confirmed and the user can proceed with entering their
 name, date of birth and password.
 
+- [Registration Process](#registration-process)
+  - [Create Email](#create-email)
+    - [Create Email Request](#create-email-request)
+    - [Create Email Response](#create-email-response)
+  - [🔒Confirm Email](#confirm-email)
+    - [Confirm Email Request](#confirm-email-request)
+    - [Confirm Email Response](#confirm-email-response)
+  - [🔒Delete Email](#delete-email)
+    - [Delete Email Request](#delete-email-request)
+    - [Delete Email Response](#delete-email-response)
+  - [🔒Get Emails](#get-emails)
+    - [Get Emails Request](#get-emails-request)
+    - [Get Emails Response](#get-emails-response)
+
 ## Create Email
 
 ### Create Email Request

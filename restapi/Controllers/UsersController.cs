@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Users;
+using restapi.Services.Users.Commands.UpdatePassword;
 using restapi.Services.Users.Common;
 
 namespace restapi.Controllers;
@@ -62,7 +63,7 @@ public class UsersController : ApiController
   }
 
   [HttpPut("{id:guid}")]
-  public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request)
+  public async Task<IActionResult> UpdateUser(Guid id, [FromForm] UpdateUserRequest request)
   {
     var tokenUserId = HttpContext.User.FindFirst("userId")?.Value;
 
@@ -111,6 +112,26 @@ public class UsersController : ApiController
     ErrorOr<Deleted> deleteUserResult = await mediator.Send(deleteUserCommand);
 
     return deleteUserResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [Authorize(Roles = "ResettingPassword")]
+  [HttpPut("password")]
+  public async Task<IActionResult> UpdatePassword(UpdatePasswordRequest request)
+  {
+    var userId = HttpContext.User.FindFirst("userId")?.Value;
+
+    var updatePasswordCommand = new UpdatePasswordCommand(
+      userId ?? "",
+      request.Password,
+      request.ConfirmPassword
+    );
+
+    ErrorOr<Updated> updatePasswordResult = await mediator.Send(updatePasswordCommand);
+
+    return updatePasswordResult.Match(
       _ => NoContent(),
       errors => Problem(errors)
     );

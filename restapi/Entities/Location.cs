@@ -19,7 +19,6 @@ public class Location
   public Guid Id { get; set; } = new Guid();
   public string Title { get; set; } = string.Empty;
   public string Description { get; set; } = string.Empty;
-  public string Image { get; set; } = string.Empty;
   public float Rating { get; set; }
   public double Longitude { get; set; }
   public double Latitude { get; set; }

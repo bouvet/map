@@ -4,7 +4,6 @@ namespace restapi.Contracts.ImageStorage;
 
 public record ImageStorageResponse(
   Guid Id,
-  string OriginalFileName,
   Uri BlobUri,
   Uri CdnUri,
   string ContentType,

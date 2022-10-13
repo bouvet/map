@@ -6,4 +6,5 @@ public interface IJwtGenerator
 {
   string GenerateUserToken(User user);
   string GenerateRegistrationToken(Email email);
+  string GenerateResetPasswordToken(User user);
 }

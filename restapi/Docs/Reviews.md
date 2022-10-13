@@ -57,7 +57,6 @@ Location: {{host}}/api/reviews/{{id}}
   "rating": 0,
   "originalImage": {
     "id": "",
-    "originalFileName": "",
     "blobUri": "",
     "cdnUri": "",
     "contentType": "",
@@ -66,7 +65,8 @@ Location: {{host}}/api/reviews/{{id}}
       "id": "",
       "email": "",
       "firstName": "",
-      "lastName": ""
+      "lastName": "",
+      "dob": ""
     },
     "originalImageId": null,
     "locationId": "",
@@ -74,7 +74,6 @@ Location: {{host}}/api/reviews/{{id}}
   },
   "webpImage": {
     "id": "",
-    "originalFileName": "",
     "blobUri": "",
     "cdnUri": "",
     "contentType": "",
@@ -83,7 +82,8 @@ Location: {{host}}/api/reviews/{{id}}
       "id": "",
       "email": "",
       "firstName": "",
-      "lastName": ""
+      "lastName": "",
+      "dob": ""
     },
     "originalImageId": "",
     "locationId": "",
@@ -95,7 +95,8 @@ Location: {{host}}/api/reviews/{{id}}
     "id": "",
     "email": "",
     "firstName": "",
-    "lastName": ""
+    "lastName": "",
+    "dob": ""
   },
   "editor": null,
   "locationId": ""
@@ -124,7 +125,6 @@ GET {{host}}/api/reviews/{{id}}
   "rating": 0,
   "originalImage": {
     "id": "",
-    "originalFileName": "",
     "blobUri": "",
     "cdnUri": "",
     "contentType": "",
@@ -133,7 +133,8 @@ GET {{host}}/api/reviews/{{id}}
       "id": "",
       "email": "",
       "firstName": "",
-      "lastName": ""
+      "lastName": "",
+      "dob": ""
     },
     "originalImageId": null,
     "locationId": "",
@@ -141,7 +142,6 @@ GET {{host}}/api/reviews/{{id}}
   },
   "webpImage": {
     "id": "",
-    "originalFileName": "",
     "blobUri": "",
     "cdnUri": "",
     "contentType": "",
@@ -150,7 +150,8 @@ GET {{host}}/api/reviews/{{id}}
       "id": "",
       "email": "",
       "firstName": "",
-      "lastName": ""
+      "lastName": "",
+      "dob": ""
     },
     "originalImageId": "",
     "locationId": "",
@@ -162,7 +163,8 @@ GET {{host}}/api/reviews/{{id}}
     "id": "",
     "email": "",
     "firstName": "",
-    "lastName": ""
+    "lastName": "",
+    "dob": ""
   },
   "editor": null,
   "locationId": ""
@@ -197,7 +199,7 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
     "rating": 0,
     "originalImage": {
       "id": "",
-      "originalFileName": "",
+
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -206,7 +208,8 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
         "id": "",
         "email": "",
         "firstName": "",
-        "lastName": ""
+        "lastName": "",
+        "dob": ""
       },
       "originalImageId": null,
       "locationId": "",
@@ -214,7 +217,7 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
     },
     "webpImage": {
       "id": "",
-      "originalFileName": "",
+
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -223,7 +226,8 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
         "id": "",
         "email": "",
         "firstName": "",
-        "lastName": ""
+        "lastName": "",
+        "dob": ""
       },
       "originalImageId": "",
       "locationId": "",
@@ -235,7 +239,8 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
       "id": "",
       "email": "",
       "firstName": "",
-      "lastName": ""
+      "lastName": "",
+      "dob": ""
     },
     "editor": null,
     "locationId": ""
@@ -249,7 +254,7 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
 
 ```js
 PUT {{host}}/api/reviews
-Authorization: Bearer {{usertoken}}
+Authorization: Bearer {{token}}
 Content-Type: multipart/form-data
 ```
 
