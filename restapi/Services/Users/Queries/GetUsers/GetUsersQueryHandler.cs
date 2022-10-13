@@ -2,7 +2,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Users.Common;
 
 namespace restapi.Services.Users.Queries.GetUsers;
@@ -18,7 +18,11 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, ErrorOr<List<
 
   public async Task<ErrorOr<List<UserResult>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
   {
-    var users = await dataContext.Users.ToListAsync(cancellationToken: cancellationToken);
+    var users = await dataContext
+      .Users
+      .Include(user => user.OriginalProfileImage)
+      .Include(user => user.WebpProfileImage)
+      .ToListAsync(cancellationToken: cancellationToken);
 
     var userResultList = new List<UserResult>();
 

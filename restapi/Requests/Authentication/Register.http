@@ -2,10 +2,38 @@ POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "rnd4@email.com",
+  "email": "admin@email.com",
   "password": "12345qwerty",
-  "firstname": "Random",
-  "lastname": "User",
-  "DOB": "2022-10-10",
+  "firstname": "Admin",
+  "lastname": "Adminson",
+  "DOB": "2000-01-29",
   "favoritecategoryIds": []
+}
+
+###
+
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "user3@email.com",
+  "password": "12345qwerty",
+  "firstname": "User",
+  "lastname": "Userdottir",
+  "DOB": "2000-02-27",
+  "favoritecategoryIds": []
+}
+
+###
+
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "glensorbo@gmail.com",
+  "password": "12345qwerty",
+  "firstname": "Glen",
+  "lastname": "Sørbø",
+  "DOB": "1987-04-25",
+  "favoritecategoryIds": ["9a6415fa-57dd-4698-dabf-08daaabaac26"]
 }

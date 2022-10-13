@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage.Blob;
 using restapi.Common.Providers;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.ImageStorages.Common;
 using SkiaSharp;
 
@@ -54,7 +54,6 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
     var originalImage = new Image
     {
       Id = originalImageId,
-      OriginalFileName = request.Image.FileName,
       BlobUri = originalImageBlob.Uri,
       CdnUri = azureProvider.GetCdnUri(originalImageBlob.Uri),
       ContentType = request.Image.ContentType,
@@ -67,7 +66,6 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
     var webpImage = new Image
     {
       Id = webpImageId,
-      OriginalFileName = request.Image.FileName,
       BlobUri = webpImageBlob.Uri,
       CdnUri = azureProvider.GetCdnUri(webpImageBlob.Uri),
       ContentType = "image/webp",

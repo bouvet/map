@@ -1,4 +1,5 @@
 using ErrorOr;
+
 namespace restapi.Common.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
@@ -17,7 +18,7 @@ public static partial class Errors
 
     public static Error InvalidName => Error.Validation(
      code: "Category.InvalidName",
-     description: $"Category Name must be between {Models.Category.MinNameLength} and {Models.Category.MaxNameLength} characters"
+     description: $"Category Name must be between {Entities.Category.MinNameLength} and {Entities.Category.MaxNameLength} characters"
    );
 
     public static Error InvalidEmoji => Error.Validation(

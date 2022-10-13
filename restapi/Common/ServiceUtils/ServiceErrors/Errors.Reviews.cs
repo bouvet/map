@@ -1,4 +1,5 @@
 using ErrorOr;
+
 namespace restapi.Common.ServiceUtils.ServiceErrors;
 
 public static partial class Errors
@@ -12,7 +13,7 @@ public static partial class Errors
 
     public static Error InvalidRating => Error.Validation(
      code: "Review.InvalidRating",
-     description: $"Review Rating must be between {Models.Review.MinRatingValue} and {Models.Review.MaxRatingValue}"
+     description: $"Review Rating must be between {Entities.Review.MinRatingValue} and {Entities.Review.MaxRatingValue}"
    );
 
     public static Error LocationNotFound => Error.NotFound(

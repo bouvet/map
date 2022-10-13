@@ -1,7 +1,6 @@
 namespace restapi.Contracts.Users;
 
 public record UpdateUserRequest(
-  Guid Id,
   string? Email,
   string? FirstName,
   string? LastName,
@@ -9,5 +8,7 @@ public record UpdateUserRequest(
   string? PostalArea,
   int PostalCode,
   int PhoneNumber,
-  DateTime? DOB
+  DateTime? DOB,
+  List<Guid>? FavoriteCategoryIds,
+  IFormFile? ProfileImage
 );

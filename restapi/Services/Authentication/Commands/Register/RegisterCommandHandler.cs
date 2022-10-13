@@ -5,7 +5,7 @@ using restapi.Common.Providers;
 using restapi.Common.Services.Auth;
 using restapi.Common.ServiceUtils.ServiceValidators.Common;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Authentication.Common;
 
 namespace restapi.Services.Authentication.Commands.Register;
@@ -32,7 +32,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       return Errors.Authentication.InvalidEmail;
     }
 
-    var emailInUse = await dataContext.Users.AnyAsync(user => user.Email == request.Email, cancellationToken);
+    var emailInUse = await dataContext.Users.AnyAsync(user => user.Email.ToLower() == request.Email, cancellationToken);
 
     if (emailInUse)
     {
@@ -42,6 +42,13 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
     if (request.Password.Length < User.MinPasswordLength)
     {
       return Errors.User.InvalidPassword;
+    }
+
+    var email = await dataContext.Emails.FirstOrDefaultAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
+
+    if (email is null || !email.Confirmed)
+    {
+      return Errors.EmailService.EmailNotConfirmed;
     }
 
     // TODO: Validate user-input!
@@ -93,7 +100,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       }
     }
 
-    var token = jwtGenerator.GenerateToken(user);
+    var token = jwtGenerator.GenerateUserToken(user);
 
     dataContext.Users.Add(user);
     await dataContext.SaveChangesAsync(cancellationToken);

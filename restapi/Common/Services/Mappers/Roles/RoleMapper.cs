@@ -1,6 +1,6 @@
 using restapi.Contracts.Roles;
 using restapi.Contracts.Users;
-using restapi.Models;
+using restapi.Entities;
 using restapi.Services.Roles.Commands.Create;
 using restapi.Services.Roles.Commands.Delete;
 using restapi.Services.Roles.Common;
@@ -69,8 +69,20 @@ public class RoleMapper : IRoleMapper
       result.Role.Name,
       result.Role.Created,
       result.Role.Updated,
-      result.Role.Creator is not null ? new MinifiedUserResponse(result.Role.Creator.Id, result.Role.Creator.Email, result.Role.Creator.FirstName, result.Role.Creator.LastName) : null,
-      result.Role.Editor is not null ? new MinifiedUserResponse(result.Role.Editor.Id, result.Role.Editor.Email, result.Role.Editor.FirstName, result.Role.Editor.LastName) : null
+      result.Role.Creator is not null ? new MinifiedUserResponse(
+        result.Role.Creator.Id,
+        result.Role.Creator.Email,
+        result.Role.Creator.FirstName,
+        result.Role.Creator.LastName,
+        result.Role.Creator.DOB
+      ) : null,
+      result.Role.Editor is not null ? new MinifiedUserResponse(
+        result.Role.Editor.Id,
+        result.Role.Editor.Email,
+        result.Role.Editor.FirstName,
+        result.Role.Editor.LastName,
+        result.Role.Editor.DOB
+      ) : null
     );
   }
 }

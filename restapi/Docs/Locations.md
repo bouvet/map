@@ -51,7 +51,7 @@ GET {{host}}/api/locations
       "description": "",
       "originalImage": {
         "id": "",
-        "originalFileName": "",
+
         "blobUri": "",
         "cdnUri": "",
         "contentType": "",
@@ -68,7 +68,7 @@ GET {{host}}/api/locations
       },
       "webpImage": {
         "id": "",
-        "originalFileName": "",
+
         "blobUri": "",
         "cdnUri": "",
         "contentType": "",
@@ -159,7 +159,6 @@ Location: {{host}}/api/Locations/{{id}}
     "description": "",
     "originalImage": {
       "id": "",
-      "originalFileName": "",
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -176,7 +175,6 @@ Location: {{host}}/api/Locations/{{id}}
     },
     "webpImage": {
       "id": "",
-      "originalFileName": "",
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -253,7 +251,6 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
     "description": "",
     "originalImage": {
       "id": "",
-      "originalFileName": "",
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -270,7 +267,6 @@ GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{catego
     },
     "webpImage": {
       "id": "",
-      "originalFileName": "",
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -338,7 +334,6 @@ GET {{host}}/api/locations/{{id}}
     "description": "",
     "originalImage": {
       "id": "",
-      "originalFileName": "",
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",
@@ -355,7 +350,6 @@ GET {{host}}/api/locations/{{id}}
     },
     "webpImage": {
       "id": "",
-      "originalFileName": "",
       "blobUri": "",
       "cdnUri": "",
       "contentType": "",

@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Common.Providers;
 using restapi.Data;
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Services.Categories.Commands.Create;
 
@@ -29,7 +29,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
       return Errors.Category.AlreadyExists;
     }
 
-    if (request.Name.Length is < Models.Category.MinNameLength or > Models.Category.MaxNameLength)
+    if (request.Name.Length is < Category.MinNameLength or > Category.MaxNameLength)
     {
       errors.Add(Errors.Category.InvalidName);
     }

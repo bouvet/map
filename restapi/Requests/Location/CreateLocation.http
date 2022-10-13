@@ -35,7 +35,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
-Lura Skatepark
+testing Jpeg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="description"
 
@@ -43,18 +43,18 @@ Helt OK skatepark med betong elementer.
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="longitude"
 
-5.7379152
+5.12345
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="latitude"
 
-58.8812732
+58.12345
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-8d478fbe-ea5b-44b7-ebc1-08daaa918de8
+9a6415fa-57dd-4698-dabf-08daaabaac26
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="Lura-Skatepark.png"
-Content-Type: image/png
+Content-Disposition: form-data; name="image"; filename="notpng.jpeg"
+Content-Type: image/jpeg
 
-< ../Assets/Lura-Skatepark.png
+< ../Assets/notpng.jpeg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

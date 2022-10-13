@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using restapi.Models;
+using restapi.Entities;
 
 namespace restapi.Data;
 
@@ -11,6 +11,8 @@ public class DataContext : DbContext
   {
     modelBuilder.Entity<User>().HasMany(user => user.Roles).WithMany(r => r.Users);
     modelBuilder.Entity<User>().HasMany(user => user.FavoriteCategories).WithMany(category => category.Users);
+    modelBuilder.Entity<User>().HasOne(user => user.OriginalProfileImage);
+    modelBuilder.Entity<User>().HasOne(user => user.WebpProfileImage);
     modelBuilder.Entity<User>().Navigation(user => user.FavoriteCategories).AutoInclude();
     modelBuilder.Entity<User>().Navigation(user => user.Roles).AutoInclude();
 
@@ -51,4 +53,5 @@ public class DataContext : DbContext
   public DbSet<User> Users => Set<User>();
   public DbSet<Role> Roles => Set<Role>();
   public DbSet<Image> Images => Set<Image>();
+  public DbSet<Email> Emails => Set<Email>();
 }

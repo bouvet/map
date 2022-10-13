@@ -10,475 +10,522 @@ using restapi.Data;
 
 namespace restapi.Migrations
 {
-    [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+  [DbContext(typeof(DataContext))]
+  partial class DataContextModelSnapshot : ModelSnapshot
+  {
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "6.0.8")
+          .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+      SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CategoryLocation", b =>
-                {
-                    b.Property<Guid>("CategoriesId")
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("CategoryLocation", b =>
+          {
+            b.Property<Guid>("CategoriesId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LocationsId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("LocationsId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CategoriesId", "LocationsId");
+            b.HasKey("CategoriesId", "LocationsId");
 
-                    b.HasIndex("LocationsId");
+            b.HasIndex("LocationsId");
 
-                    b.ToTable("CategoryLocation");
-                });
+            b.ToTable("CategoryLocation", (string)null);
+          });
 
-            modelBuilder.Entity("CategoryUser", b =>
-                {
-                    b.Property<Guid>("FavoriteCategoriesId")
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("CategoryUser", b =>
+          {
+            b.Property<Guid>("FavoriteCategoriesId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UsersId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("FavoriteCategoriesId", "UsersId");
+            b.HasKey("FavoriteCategoriesId", "UsersId");
 
-                    b.HasIndex("UsersId");
+            b.HasIndex("UsersId");
 
-                    b.ToTable("CategoryUser");
-                });
+            b.ToTable("CategoryUser", (string)null);
+          });
 
-            modelBuilder.Entity("restapi.Models.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("restapi.Entities.Category", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+            b.Property<DateTime>("Created")
+                      .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("CreatorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EditorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("EditorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Emoji")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Emoji")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Name")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
+            b.Property<DateTime?>("Updated")
+                      .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+            b.HasIndex("CreatorId");
 
-                    b.HasIndex("EditorId");
+            b.HasIndex("EditorId");
 
-                    b.ToTable("Categories");
-                });
+            b.ToTable("Categories", (string)null);
+          });
 
-            modelBuilder.Entity("restapi.Models.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("restapi.Entities.Email", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BlobUri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Address")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CdnUri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<DateTime>("CodeValidTo")
+                      .HasColumnType("datetime2");
 
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<int>("ConfirmationCode")
+                      .HasColumnType("int");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<bool>("Confirmed")
+                      .HasColumnType("bit");
 
-                    b.Property<string>("OriginalFileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<DateTime>("Created")
+                      .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("OriginalImageId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<DateTime?>("Updated")
+                      .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ReviewId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasKey("Id");
 
-                    b.Property<DateTime>("Uploaded")
-                        .HasColumnType("datetime2");
+            b.ToTable("Emails", (string)null);
+          });
 
-                    b.Property<Guid?>("UploaderId")
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("restapi.Entities.Image", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.Property<string>("BlobUri")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("UploaderId");
+            b.Property<string>("CdnUri")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Images");
-                });
+            b.Property<string>("ContentType")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("LocationId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("OriginalImageId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<Guid?>("ReviewId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EditorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<DateTime>("Uploaded")
+                      .HasColumnType("datetime2");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<Guid?>("UploaderId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
+            b.HasKey("Id");
 
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
+            b.HasIndex("UploaderId");
 
-                    b.Property<Guid?>("OriginalImageId")
-                        .HasColumnType("uniqueidentifier");
+            b.ToTable("Images", (string)null);
+          });
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
+      modelBuilder.Entity("restapi.Entities.Location", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<Guid?>("CreatorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Description")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("WebpImageId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("EditorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.Property<double>("Latitude")
+                      .HasColumnType("float");
 
-                    b.HasIndex("CreatorId");
+            b.Property<double>("Longitude")
+                      .HasColumnType("float");
 
-                    b.HasIndex("EditorId");
+            b.Property<Guid?>("OriginalImageId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("OriginalImageId");
+            b.Property<float>("Rating")
+                      .HasColumnType("real");
 
-                    b.HasIndex("WebpImageId");
+            b.Property<string>("Status")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Locations");
-                });
+            b.Property<string>("Title")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("restapi.Models.Review", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("WebpImageId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+            b.HasKey("Id");
 
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasIndex("CreatorId");
 
-                    b.Property<Guid?>("EditorId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasIndex("EditorId");
 
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasIndex("OriginalImageId");
 
-                    b.Property<Guid?>("OriginalImageId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasIndex("WebpImageId");
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
+            b.ToTable("Locations", (string)null);
+          });
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+      modelBuilder.Entity("restapi.Entities.Review", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<DateTime>("Created")
+                      .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
+            b.Property<Guid?>("CreatorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("WebpImageId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("EditorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.Property<Guid>("LocationId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("CreatorId");
+            b.Property<Guid?>("OriginalImageId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("EditorId");
+            b.Property<float>("Rating")
+                      .HasColumnType("real");
 
-                    b.HasIndex("LocationId");
+            b.Property<string>("Status")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("OriginalImageId");
+            b.Property<string>("Text")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("WebpImageId");
+            b.Property<DateTime?>("Updated")
+                      .HasColumnType("datetime2");
 
-                    b.ToTable("Reviews");
-                });
+            b.Property<Guid?>("WebpImageId")
+                      .HasColumnType("uniqueidentifier");
 
-            modelBuilder.Entity("restapi.Models.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+            b.HasKey("Id");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+            b.HasIndex("CreatorId");
 
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasIndex("EditorId");
 
-                    b.Property<Guid?>("EditorId")
-                        .HasColumnType("uniqueidentifier");
+            b.HasIndex("LocationId");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.HasIndex("OriginalImageId");
 
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
+            b.HasIndex("WebpImageId");
 
-                    b.HasKey("Id");
+            b.ToTable("Reviews", (string)null);
+          });
 
-                    b.HasIndex("CreatorId");
+      modelBuilder.Entity("restapi.Entities.Role", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("EditorId");
+            b.Property<DateTime>("Created")
+                      .HasColumnType("datetime2");
 
-                    b.ToTable("Roles");
-                });
+            b.Property<Guid?>("CreatorId")
+                      .HasColumnType("uniqueidentifier");
 
-            modelBuilder.Entity("restapi.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("EditorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Name")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DOB")
-                        .HasColumnType("datetime2");
+            b.Property<DateTime?>("Updated")
+                      .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.HasKey("Id");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+            b.HasIndex("CreatorId");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+            b.HasIndex("EditorId");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.ToTable("Roles", (string)null);
+          });
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
+      modelBuilder.Entity("restapi.Entities.User", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PostalArea")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Address")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PostalCode")
-                        .HasColumnType("int");
+            b.Property<DateTime>("DOB")
+                      .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Registered")
-                        .HasColumnType("datetime2");
+            b.Property<string>("Email")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+            b.Property<string>("FirstName")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Users");
-                });
+            b.Property<string>("LastName")
+                      .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("OriginalImageId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<string>("Password")
+                      .IsRequired()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RolesId", "UsersId");
+            b.Property<int>("PhoneNumber")
+                      .HasColumnType("int");
 
-                    b.HasIndex("UsersId");
+            b.Property<string>("PostalArea")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("RoleUser");
-                });
+            b.Property<int>("PostalCode")
+                      .HasColumnType("int");
 
-            modelBuilder.Entity("CategoryLocation", b =>
-                {
-                    b.HasOne("restapi.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.Property<DateTime>("Registered")
+                      .HasColumnType("datetime2");
 
-                    b.HasOne("restapi.Models.Location", null)
-                        .WithMany()
-                        .HasForeignKey("LocationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            b.Property<Guid?>("WebpImageId")
+                      .HasColumnType("uniqueidentifier");
 
-            modelBuilder.Entity("CategoryUser", b =>
-                {
-                    b.HasOne("restapi.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("FavoriteCategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasKey("Id");
 
-                    b.HasOne("restapi.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            b.HasIndex("OriginalImageId");
 
-            modelBuilder.Entity("restapi.Models.Category", b =>
-                {
-                    b.HasOne("restapi.Models.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
+            b.HasIndex("WebpImageId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
-                        .WithMany()
-                        .HasForeignKey("EditorId");
+            b.ToTable("Users", (string)null);
+          });
 
-                    b.Navigation("Creator");
+      modelBuilder.Entity("RoleUser", b =>
+          {
+            b.Property<Guid>("RolesId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("Editor");
-                });
+            b.Property<Guid>("UsersId")
+                      .HasColumnType("uniqueidentifier");
 
-            modelBuilder.Entity("restapi.Models.Image", b =>
-                {
-                    b.HasOne("restapi.Models.User", "Uploader")
-                        .WithMany()
-                        .HasForeignKey("UploaderId");
+            b.HasKey("RolesId", "UsersId");
 
-                    b.Navigation("Uploader");
-                });
+            b.HasIndex("UsersId");
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
-                {
-                    b.HasOne("restapi.Models.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
+            b.ToTable("RoleUser", (string)null);
+          });
 
-                    b.HasOne("restapi.Models.User", "Editor")
-                        .WithMany()
-                        .HasForeignKey("EditorId");
+      modelBuilder.Entity("CategoryLocation", b =>
+          {
+            b.HasOne("restapi.Entities.Category", null)
+                      .WithMany()
+                      .HasForeignKey("CategoriesId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("restapi.Models.Image", "OriginalImage")
-                        .WithMany()
-                        .HasForeignKey("OriginalImageId");
+            b.HasOne("restapi.Entities.Location", null)
+                      .WithMany()
+                      .HasForeignKey("LocationsId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-                    b.HasOne("restapi.Models.Image", "WebpImage")
-                        .WithMany()
-                        .HasForeignKey("WebpImageId");
+      modelBuilder.Entity("CategoryUser", b =>
+          {
+            b.HasOne("restapi.Entities.Category", null)
+                      .WithMany()
+                      .HasForeignKey("FavoriteCategoriesId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Creator");
+            b.HasOne("restapi.Entities.User", null)
+                      .WithMany()
+                      .HasForeignKey("UsersId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-                    b.Navigation("Editor");
+      modelBuilder.Entity("restapi.Entities.Category", b =>
+          {
+            b.HasOne("restapi.Entities.User", "Creator")
+                      .WithMany()
+                      .HasForeignKey("CreatorId");
 
-                    b.Navigation("OriginalImage");
+            b.HasOne("restapi.Entities.User", "Editor")
+                      .WithMany()
+                      .HasForeignKey("EditorId");
 
-                    b.Navigation("WebpImage");
-                });
+            b.Navigation("Creator");
 
-            modelBuilder.Entity("restapi.Models.Review", b =>
-                {
-                    b.HasOne("restapi.Models.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
+            b.Navigation("Editor");
+          });
 
-                    b.HasOne("restapi.Models.User", "Editor")
-                        .WithMany()
-                        .HasForeignKey("EditorId");
+      modelBuilder.Entity("restapi.Entities.Image", b =>
+          {
+            b.HasOne("restapi.Entities.User", "Uploader")
+                      .WithMany()
+                      .HasForeignKey("UploaderId");
 
-                    b.HasOne("restapi.Models.Location", "Location")
-                        .WithMany("Reviews")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.Navigation("Uploader");
+          });
 
-                    b.HasOne("restapi.Models.Image", "OriginalImage")
-                        .WithMany()
-                        .HasForeignKey("OriginalImageId");
+      modelBuilder.Entity("restapi.Entities.Location", b =>
+          {
+            b.HasOne("restapi.Entities.User", "Creator")
+                      .WithMany()
+                      .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.Image", "WebpImage")
-                        .WithMany()
-                        .HasForeignKey("WebpImageId");
+            b.HasOne("restapi.Entities.User", "Editor")
+                      .WithMany()
+                      .HasForeignKey("EditorId");
 
-                    b.Navigation("Creator");
+            b.HasOne("restapi.Entities.Image", "OriginalImage")
+                      .WithMany()
+                      .HasForeignKey("OriginalImageId");
 
-                    b.Navigation("Editor");
+            b.HasOne("restapi.Entities.Image", "WebpImage")
+                      .WithMany()
+                      .HasForeignKey("WebpImageId");
 
-                    b.Navigation("Location");
+            b.Navigation("Creator");
 
-                    b.Navigation("OriginalImage");
+            b.Navigation("Editor");
 
-                    b.Navigation("WebpImage");
-                });
+            b.Navigation("OriginalImage");
 
-            modelBuilder.Entity("restapi.Models.Role", b =>
-                {
-                    b.HasOne("restapi.Models.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
+            b.Navigation("WebpImage");
+          });
 
-                    b.HasOne("restapi.Models.User", "Editor")
-                        .WithMany()
-                        .HasForeignKey("EditorId");
+      modelBuilder.Entity("restapi.Entities.Review", b =>
+          {
+            b.HasOne("restapi.Entities.User", "Creator")
+                      .WithMany()
+                      .HasForeignKey("CreatorId");
 
-                    b.Navigation("Creator");
+            b.HasOne("restapi.Entities.User", "Editor")
+                      .WithMany()
+                      .HasForeignKey("EditorId");
 
-                    b.Navigation("Editor");
-                });
+            b.HasOne("restapi.Entities.Location", "Location")
+                      .WithMany("Reviews")
+                      .HasForeignKey("LocationId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.HasOne("restapi.Models.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasOne("restapi.Entities.Image", "OriginalImage")
+                      .WithMany()
+                      .HasForeignKey("OriginalImageId");
 
-                    b.HasOne("restapi.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            b.HasOne("restapi.Entities.Image", "WebpImage")
+                      .WithMany()
+                      .HasForeignKey("WebpImageId");
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
-                {
-                    b.Navigation("Reviews");
-                });
+            b.Navigation("Creator");
+
+            b.Navigation("Editor");
+
+            b.Navigation("Location");
+
+            b.Navigation("OriginalImage");
+
+            b.Navigation("WebpImage");
+          });
+
+      modelBuilder.Entity("restapi.Entities.Role", b =>
+          {
+            b.HasOne("restapi.Entities.User", "Creator")
+                      .WithMany()
+                      .HasForeignKey("CreatorId");
+
+            b.HasOne("restapi.Entities.User", "Editor")
+                      .WithMany()
+                      .HasForeignKey("EditorId");
+
+            b.Navigation("Creator");
+
+            b.Navigation("Editor");
+          });
+
+      modelBuilder.Entity("restapi.Entities.User", b =>
+          {
+            b.HasOne("restapi.Entities.Image", "OriginalProfileImage")
+                      .WithMany()
+                      .HasForeignKey("OriginalImageId");
+
+            b.HasOne("restapi.Entities.Image", "WebpProfileImage")
+                      .WithMany()
+                      .HasForeignKey("WebpImageId");
+
+            b.Navigation("OriginalProfileImage");
+
+            b.Navigation("WebpProfileImage");
+          });
+
+      modelBuilder.Entity("RoleUser", b =>
+          {
+            b.HasOne("restapi.Entities.Role", null)
+                      .WithMany()
+                      .HasForeignKey("RolesId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+
+            b.HasOne("restapi.Entities.User", null)
+                      .WithMany()
+                      .HasForeignKey("UsersId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
+
+      modelBuilder.Entity("restapi.Entities.Location", b =>
+          {
+            b.Navigation("Reviews");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

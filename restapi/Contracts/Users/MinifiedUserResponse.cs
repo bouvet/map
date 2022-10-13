@@ -4,5 +4,6 @@ public record MinifiedUserResponse(
   Guid Id,
   string Email,
   string? FirstName,
-  string? LastName
+  string? LastName,
+  DateTime DOB
 );

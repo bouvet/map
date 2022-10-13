@@ -24,10 +24,7 @@ There is a few Azure resources you need to get started.
     - Secrets:
       - "DbConnectionString"
       - "azureBlobStorageConnectionString"
-      - "JwtSecret"
-      - "JwtIssuer"
-      - "JwtAudience"
-      - "JwtExpiryMinutes"
+      - "SendGridApiKey"
   - Azure SQL Server
     - Azure SQL database
   - Azure Storage Account
@@ -41,10 +38,15 @@ Set some secrets in user-secrets for development:
 ```bash
 $dotnet user-secrets set "AzureProvider:KeyVaultUri" "<your Azure KeyVault connection string>"
 $dotnet user-secrets set "AzureProvider:DbConnectionString" "<your DB connection string>"
+
 $dotnet user-secrets set "JwtSettings:Secret" "<Jwt secret for this project>"
 $dotnet user-secrets set "JwtSettings:ExpiryMinutes" "<How long JWT should be valid>"
 $dotnet user-secrets set "JwtSettings:Issuer" "<JWT Issuer>"
 $dotnet user-secrets set "JwtSettings:Audience" "<JWT Audience>"
+
+$dotnet user-secrets set "SendGridSettings:ApiKey" "<SendGrid ApiKey>"
+$dotnet user-secrets set "SendGridSettings:FromEmail" "<From which emails will be sent from>"
+$dotnet user-secrets set "SendGridSettings:FromName" "<Sender name which receiver sees>"
 ```
 
 List all user secrets:
@@ -84,6 +86,8 @@ If you are using VSCode you need to:
   - ExpiryMinutes
   - JwtIssuer
   - JwtAudience
+  - SGFromEmail
+  - SGFromName
 
 Make sure your application have access to the KeyVault!
 

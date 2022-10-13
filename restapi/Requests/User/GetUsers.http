@@ -1,2 +1,3 @@
 GET {{host}}/api/users
 Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}

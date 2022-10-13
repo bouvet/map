@@ -1,29 +1,21 @@
-using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.ImageStorage;
-using restapi.Models;
+using restapi.Contracts.Users;
+using restapi.Entities;
 using restapi.Services.ImageStorages.Common;
 
 namespace restapi.Common.Services.Mappers.ImageStorage;
 
 public class ImageStorageMapper : IImageStorageMapper
 {
-  private readonly IUserMapper userMapper;
-
-  public ImageStorageMapper(IUserMapper userMapper)
-  {
-    this.userMapper = userMapper;
-  }
-
   public ImageStorageResponse MapDbResultToResponse(Image image)
   {
     return new ImageStorageResponse(
       image.Id,
-      image.OriginalFileName,
       image.BlobUri,
       image.CdnUri,
       image.ContentType,
       image.Uploaded,
-      image.Uploader is not null ? userMapper.MapUserToMinifiedUserResponse(image.Uploader) : null,
+      image.Uploader is not null ? MapUserToMinifiedUserResponse(image.Uploader) : null,
       image.OriginalImageId,
       image.LocationId,
       image.ReviewId
@@ -33,5 +25,16 @@ public class ImageStorageMapper : IImageStorageMapper
   public ImageStorageResponse MapResultToResponse(ImageStorageResult result)
   {
     throw new NotImplementedException();
+  }
+
+  public MinifiedUserResponse MapUserToMinifiedUserResponse(User user)
+  {
+    return new MinifiedUserResponse(
+      user.Id,
+      user.Email,
+      user.FirstName,
+      user.LastName,
+      user.DOB
+    );
   }
 }
