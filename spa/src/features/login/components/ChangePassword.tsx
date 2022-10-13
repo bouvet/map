@@ -57,7 +57,7 @@ export const ChangePassword: FC = () => {
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <InputEmail label="E-post*" value={email} setState={setEmail} handleChange={handleFormInputChange} />
                         <CenterFlex>
-                            <SubmitButtonRegistration text="white">Send e-post</SubmitButtonRegistration>
+                            <SubmitButtonRegistration text="white">Send link</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
                 </SectionWrapper>

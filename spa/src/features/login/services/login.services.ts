@@ -12,6 +12,8 @@ export const loginService = {
                 console.log(validateUser);
                 if (validateUser.status === 200) {
                     localStorage.setItem('token', validateUser.data.token);
+                    localStorage.setItem('user', JSON.stringify(validateUser.data));
+                    console.log(validateUser.data);
                     dispatch(authActions.logIn(validateUser.data));
                     return true;
                 }
@@ -42,9 +44,9 @@ export const loginService = {
     changePassword(payload: IPasswordType) {
         return async (dispatch: AppDispatch) => {
             try {
-                const changePassword = await API.put('/user/password', payload);
+                const changePassword = await API.put('/users/password', payload);
                 console.log(changePassword);
-                if (changePassword.status === 200) {
+                if (changePassword.status === 204) {
                     return true;
                 }
                 return false;

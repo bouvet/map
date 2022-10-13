@@ -1,5 +1,5 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, Dispatch, FC, FormEvent, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
@@ -15,11 +15,18 @@ import { loginService } from '../services/login.services';
 export const ResetPassword: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
-    // token localstorage get from queryparams
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const token = queryParams.get('token');
+        if (token) {
+            localStorage.setItem('token', token);
+        }
+    }, [location.search]);
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -37,9 +44,11 @@ export const ResetPassword: FC = () => {
 
     const changePassword = async () => {
         const inputPassword = {
-            newPassword,
-            confirmNewPassword,
+            password: newPassword,
+            confirmPassword: confirmNewPassword,
         };
+
+        console.log(inputPassword);
 
         const successStatus: boolean = await dispatch(loginService.changePassword(inputPassword));
 

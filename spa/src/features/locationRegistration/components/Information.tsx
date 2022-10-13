@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { RequiredStar } from '../../../components/Common/RequiredStar';
 import { RegisterButton } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
+import { Text } from '../../../components/Form/Text';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
 import { MyTheme } from '../../../styles/global';
@@ -71,7 +72,7 @@ export const Information: FC = () => {
                     Navn på lokasjon:
                     <RequiredStar />
                 </Label>
-                <Input onChange={handleChangeName} value={currentTitle} maxLength={30} minLength={5} />
+                <Input onChange={handleChangeName} value={currentTitle} maxLength={30} minLength={5} placeholder="Min. 5 karakterer" />
             </InputWrapper>
             <CategorySelectWrapper>
                 <Label>
@@ -85,6 +86,7 @@ export const Information: FC = () => {
                     Beskriv stedet:
                     <RequiredStar />
                 </Label>
+                <Text>Tips til info:</Text>
                 <TextArea onChange={handleChangeDescription} value={currentDescription} maxLength={200} minLength={20} />
                 {currentDescription.length}/200
             </InputWrapper>

@@ -43,14 +43,10 @@ export const Login: FC = () => {
 
         if (successStatus) {
             dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
+            navigate('/', { replace: true });
         } else {
             dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
         }
-        handleRedirect();
-    };
-
-    const handleRedirect = () => {
-        navigate('/', { replace: true });
     };
 
     return (

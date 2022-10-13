@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Slide from '@mui/material/Slide';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
@@ -14,6 +14,8 @@ import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../components/FabMenu/FabMenu';
+import { authActions } from '../store/state/auth.state';
+import { userService } from '../features/userRegistration/services/user.services';
 
 export const Home: FC = () => {
     useFilterEvent();
@@ -44,6 +46,17 @@ export const Home: FC = () => {
             });
         }
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        // @ts-ignore
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && token) {
+            // @ts-ignore
+            // const userDetail = dispatch(userService.getUser(user.id));
+            // dispatch(authActions.logIn(userDetail));
+        }
+    }, [dispatch]);
 
     return (
         <div className="App">

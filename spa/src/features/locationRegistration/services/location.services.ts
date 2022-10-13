@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { ILatLong } from '../../../utils/types.d';
 
 export const locationServices = {
     postLocation(payload: FormData) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return async (dispatch: AppDispatch) => {
             try {
                 const postResponse = await API.post('/Locations', payload, {
@@ -23,7 +23,6 @@ export const locationServices = {
         };
     },
     getClosestLocation(userLocation: ILatLong, selectedFilterCategory: string) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return async (dispatch: AppDispatch) => {
             try {
                 console.log('yes');

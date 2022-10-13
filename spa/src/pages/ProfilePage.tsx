@@ -52,30 +52,29 @@ export const ProfilePage: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        editUserDetails();
+        // editUserDetails();
         console.log('submitted');
     };
 
     // check: values cannot be empty
     // callback?
-    const editUserDetails = async () => {
-        const userDetails = {
-            id,
-            firstName,
-            lastName,
-            dob,
-            email,
-            categories,
-        };
 
-        const successStatus: boolean = await dispatch(userService.editUser(userDetails));
+    // const editUserDetails = async () => {
+    //     const formData = new FormData();
+    //     formData.append('firstName', firstName);
+    //     formData.append('lastName', lastName);
+    //     formData.append('dob', dob);
+    //     // favorites
+    //     // profile photo
 
-        if (successStatus) {
-            dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
-        } else {
-            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-        }
-    };
+    //     const successStatus: boolean = await dispatch(userService.editUser(formData));
+
+    //     if (successStatus) {
+    //         dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
+    //     } else {
+    //         dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+    //     }
+    // };
 
     const [imageModalIsActive, setImageModalIsActive] = useState(false);
     const ToggleImageModal = () => setImageModalIsActive((current) => !current);

@@ -194,6 +194,6 @@ export interface IConfirmCode {
 }
 
 export interface IPasswordType {
-    newPassword: string;
-    confirmNewPassword: string;
+    password: string;
+    confirmPassword: string;
 }

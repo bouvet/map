@@ -20,10 +20,22 @@ export const userService = {
             }
         };
     },
+    getUser(payload: { id: string }) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const getUser = await API.get(`/users/${payload.id}`);
+                return getUser.data;
+            } catch (error) {
+                // TODO: Push error to error state
+                console.error('error', error);
+                return false;
+            }
+        };
+    },
     editUser(payload: IUserTypeEdit) {
         return async (dispatch: AppDispatch) => {
             try {
-                const editUser = await API.put(`/users/${payload.id}`);
+                const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log(editUser);
                 if (editUser.status === 200) {
                     return true;
