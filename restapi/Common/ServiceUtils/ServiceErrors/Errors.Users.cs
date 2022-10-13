@@ -23,6 +23,11 @@ public static partial class Errors
       description: $"Password must be at least {Entities.User.MinPasswordLength} characters long"
     );
 
+    public static Error PasswordsDoesNotMatch => Error.Validation(
+      code: "User.PasswordsDoesNotMatch",
+      description: "Passwords must match"
+    );
+
     public static Error InvalidEmail => Error.Validation(
       code: "User.InvalidEmail",
       description: "Given email is invalid."
@@ -30,7 +35,7 @@ public static partial class Errors
 
     public static Error NotFound => Error.NotFound(
       code: "User.NotFound",
-      description: "User with given id was not found."
+      description: "User with given id or email was not found."
     );
   }
 }

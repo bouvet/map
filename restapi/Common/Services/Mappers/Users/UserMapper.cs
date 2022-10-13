@@ -1,3 +1,4 @@
+using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Roles;
 using restapi.Contracts.Users;
 using restapi.Entities;
@@ -13,25 +14,29 @@ namespace restapi.Common.Services.Mappers.Users;
 public class UserMapper : IUserMapper
 {
   private readonly IRoleMapper roleMapper;
+  private readonly IImageStorageMapper imageStorageMapper;
 
-  public UserMapper(IRoleMapper roleMapper)
+  public UserMapper(IRoleMapper roleMapper, IImageStorageMapper imageStorageMapper)
   {
     this.roleMapper = roleMapper;
+    this.imageStorageMapper = imageStorageMapper;
   }
 
   public UserResponse MapUserToUserResponse(User user)
   {
     return new UserResponse(
-       user.Id,
-       user.Email,
-       user.FirstName,
-       user.LastName,
-       user.Address,
-       user.PostalArea,
-       user.PostalCode,
-       user.PhoneNumber,
-       user.DOB,
-       roleMapper.MapDbListToResponseList(user.Roles)
+        user.Id,
+        user.Email,
+        user.FirstName,
+        user.LastName,
+        user.Address,
+        user.PostalArea,
+        user.PostalCode,
+        user.PhoneNumber,
+        user.DOB,
+        roleMapper.MapDbListToResponseList(user.Roles),
+        user.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.OriginalProfileImage) : null,
+        user.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.WebpProfileImage) : null
       );
   }
 
@@ -47,7 +52,9 @@ public class UserMapper : IUserMapper
       result.User.PostalCode,
       result.User.PhoneNumber,
       result.User.DOB,
-      roleMapper.MapDbListToResponseList(result.User.Roles)
+      roleMapper.MapDbListToResponseList(result.User.Roles),
+      result.User.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.OriginalProfileImage) : null,
+      result.User.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.WebpProfileImage) : null
     );
   }
 
@@ -77,14 +84,15 @@ public class UserMapper : IUserMapper
   {
     return new UpdateUserCommand(
       id,
-      request.Email,
       request.FirstName,
       request.LastName,
       request.Address,
       request.PostalArea,
       request.PostalCode,
       request.PhoneNumber,
-      request.DOB
+      request.DOB,
+      request.FavoriteCategoryIds,
+      request.ProfileImage
     );
   }
 

@@ -1,16 +1,57 @@
-@id=1e295e62-4efa-4470-af15-d9ebff887190
+@id=7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba
 
 PUT {{host}}/api/users/{{id}}
-Content-Type: application/json
 # Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-{
-  "Email": "email567@gmail.com",
-  "FirstName": "Email",
-  "LastName": "Gmail",
-  "Address": "EmailStreet 5",
-  "PostalArea": "Stavanger",
-  "PostalCode": 4034,
-  "PhoneNumber": 87654321,
-  "DOB": "1987-04-25"
-}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="firstname"
+
+testing Jpeg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="lastname"
+
+Helt OK skatepark med betong elementer.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="address"
+
+5.12345
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="postalarea"
+
+58.12345
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="postalcode"
+
+9a6415fa-57dd-4698-dabf-08daaabaac26
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="phonenumber"
+
+9a6415fa-57dd-4698-dabf-08daaabaac26
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="dob"
+
+9a6415fa-57dd-4698-dabf-08daaabaac26
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="FavoriteCategoryIds"
+
+9a6415fa-57dd-4698-dabf-08daaabaac26
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="ProfileImage"; filename="notpng.jpeg"
+Content-Type: image/jpeg
+
+< ../Assets/notpng.jpeg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+PUT {{host}}/api/users/{{id}}
+Authorization: Bearer {{usertoken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="ProfileImage"; filename="notpng.jpeg"
+Content-Type: image/jpeg
+
+< ../Assets/notpng.jpeg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

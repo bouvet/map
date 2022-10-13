@@ -34,7 +34,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("LocationsId");
 
-                    b.ToTable("CategoryLocation");
+                    b.ToTable("CategoryLocation", (string)null);
                 });
 
             modelBuilder.Entity("CategoryUser", b =>
@@ -49,7 +49,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("CategoryUser");
+                    b.ToTable("CategoryUser", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.Category", b =>
@@ -84,7 +84,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("EditorId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.Email", b =>
@@ -114,7 +114,7 @@ namespace restapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Emails");
+                    b.ToTable("Emails", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.Image", b =>
@@ -138,10 +138,6 @@ namespace restapi.Migrations
                     b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("OriginalFileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("OriginalImageId")
                         .HasColumnType("uniqueidentifier");
 
@@ -158,7 +154,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("UploaderId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.Location", b =>
@@ -176,10 +172,6 @@ namespace restapi.Migrations
 
                     b.Property<Guid?>("EditorId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
@@ -214,7 +206,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("WebpImageId");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.Review", b =>
@@ -266,7 +258,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("WebpImageId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.Role", b =>
@@ -297,7 +289,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("EditorId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("restapi.Entities.User", b =>
@@ -322,6 +314,9 @@ namespace restapi.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OriginalImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -338,9 +333,16 @@ namespace restapi.Migrations
                     b.Property<DateTime>("Registered")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("WebpImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("OriginalImageId");
+
+                    b.HasIndex("WebpImageId");
+
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -355,7 +357,7 @@ namespace restapi.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("RoleUser");
+                    b.ToTable("RoleUser", (string)null);
                 });
 
             modelBuilder.Entity("CategoryLocation", b =>
@@ -487,6 +489,21 @@ namespace restapi.Migrations
                     b.Navigation("Creator");
 
                     b.Navigation("Editor");
+                });
+
+            modelBuilder.Entity("restapi.Entities.User", b =>
+                {
+                    b.HasOne("restapi.Entities.Image", "OriginalProfileImage")
+                        .WithMany()
+                        .HasForeignKey("OriginalImageId");
+
+                    b.HasOne("restapi.Entities.Image", "WebpProfileImage")
+                        .WithMany()
+                        .HasForeignKey("WebpImageId");
+
+                    b.Navigation("OriginalProfileImage");
+
+                    b.Navigation("WebpProfileImage");
                 });
 
             modelBuilder.Entity("RoleUser", b =>

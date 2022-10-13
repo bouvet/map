@@ -23,3 +23,17 @@ Content-Type: application/json
   "DOB": "2000-02-27",
   "favoritecategoryIds": []
 }
+
+###
+
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "glensorbo@gmail.com",
+  "password": "12345qwerty",
+  "firstname": "Glen",
+  "lastname": "Sørbø",
+  "DOB": "1987-04-25",
+  "favoritecategoryIds": ["9a6415fa-57dd-4698-dabf-08daaabaac26"]
+}

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace restapi.Entities;
@@ -23,4 +24,10 @@ public class User
   [JsonIgnore]
   public List<Role> Roles { get; set; } = new List<Role>();
   public List<Category> FavoriteCategories { get; set; } = new List<Category>();
+
+  [ForeignKey("OriginalImageId")]
+  public Image? OriginalProfileImage { get; set; }
+
+  [ForeignKey("WebpImageId")]
+  public Image? WebpProfileImage { get; set; }
 }
