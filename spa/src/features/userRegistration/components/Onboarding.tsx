@@ -9,6 +9,7 @@ import { Text, LinkTextOnboarding, TitleForm, WrapperOnboarding } from '../../..
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
+import { loginService } from '../../login/services/login.services';
 import { userService } from '../services/user.services';
 import { HowAddLocation } from './HowAddLocation';
 import { HowAddReview } from './HowAddReview';
@@ -46,9 +47,15 @@ export const Onboarding: FC = () => {
             favoriteCategoryIds,
         };
 
+        const loginDetails = {
+            email,
+            password,
+        };
+
         const successStatus: boolean = await dispatch(userService.postUser(userDetails));
 
         if (successStatus) {
+            await dispatch(loginService.validateUser(loginDetails));
             dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
         } else {
             dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));

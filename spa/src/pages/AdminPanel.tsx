@@ -4,7 +4,7 @@ import { BackButtonAdmin, FilterSelect } from '../features/adminPanel/FilterSele
 import { LocationBlock, LocationWrapper } from '../features/adminPanel/LocationBlock';
 import { mapService } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { Location } from '../utils/types.d';
+import { ILocation } from '../utils/types.d';
 
 type ApprovalFilterCategories = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
 
@@ -30,8 +30,8 @@ export const AdminPanel: FC = () => {
 
     useEffect(() => {
         const temp = locations
-            .filter((item: Location) => item.properties.status === selectedFilter)
-            .map((item: Location) => <LocationBlock key={item.id} item={item} />);
+            .filter((item: ILocation) => item.properties.status === selectedFilter)
+            .map((item: ILocation) => <LocationBlock key={item.id} item={item} />);
         setMappedLocation(temp);
     }, [locations, selectedFilter]);
 

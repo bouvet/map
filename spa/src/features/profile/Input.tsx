@@ -36,7 +36,7 @@ const InputWrapper = styled.div`
     align-items: center;
 `;
 
-export const PasswordLink = styled(Link)`
+export const ProfileLink = styled(Link)`
     color: ${MyTheme.colors.accent};
     text-decoration: underline;
     font-size: ${MyTheme.fontSize.body};

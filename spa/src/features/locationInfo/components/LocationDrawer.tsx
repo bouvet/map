@@ -3,6 +3,8 @@ import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
+import moment from 'moment';
+import 'moment/locale/nb';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -10,7 +12,7 @@ import { Review } from './Review';
 import { ReviewModal } from './ReviewModal';
 import { StarRating } from '../../../components/StarRating/StarRating';
 import { reviewServices } from '../services/locationinfo.services';
-import { ReviewTypeGet } from '../../../utils/types.d';
+import { IReviewTypeGet } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 
 const drawerBleeding = 56;
@@ -95,12 +97,22 @@ export const SwipeableEdgeDrawer: FC = () => {
         dispatch(reviewServices.getReviews(id));
     }, [id, dispatch]);
 
+    moment.locale('nb');
+
     const updateCurrentReviewsCallback = useCallback(() => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.text)
-                .map((item: ReviewTypeGet) => (
-                    <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
+                .map((item: IReviewTypeGet) => (
+                    <Review
+                        key={item.id}
+                        date={moment(item.created).format('L')}
+                        // @ts-ignore
+                        name={item.creator?.firstName}
+                        age={moment(item.creator?.dob).fromNow(true)}
+                        rating={item.rating}
+                        review={item.text}
+                    />
                 ));
             setReviewList(temp);
         }
@@ -110,7 +122,7 @@ export const SwipeableEdgeDrawer: FC = () => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.webpImage)
-                .map((item: ReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
+                .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (currentlySelectedLocation.properties.image) {
                 const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.image} />;
