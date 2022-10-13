@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
-import { userActions } from '../../../store/state/user.state';
-import { UserType } from '../../../utils/types.d';
+import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit } from '../../../utils/types.d';
 
 export const userService = {
-    postUser(payload: UserType) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    postUser(payload: IUserType) {
         return async (dispatch: AppDispatch) => {
             try {
                 const postUser = await API.post('/auth/register', payload);
@@ -21,19 +20,64 @@ export const userService = {
             }
         };
     },
-    getUser() {
+    getUser(payload: { id: string }) {
         return async (dispatch: AppDispatch) => {
             try {
-                const { data: UserData } = await API.get('/users');
-                dispatch(userActions.setEmail(UserData));
-                dispatch(userActions.setPassword(UserData));
-                dispatch(userActions.setFirstName(UserData));
-                dispatch(userActions.setLastName(UserData));
-                dispatch(userActions.setDob(UserData));
-                dispatch(userActions.setFavoriteCategoryIds(UserData));
+                const getUser = await API.get(`/users/${payload.id}`);
+                return getUser.data;
             } catch (error) {
                 // TODO: Push error to error state
                 console.error('error', error);
+                return false;
+            }
+        };
+    },
+    editUser(payload: IUserTypeEdit) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
+                console.log(editUser);
+                if (editUser.status === 200) {
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                // TODO: Push error to error state
+                console.error('error', error);
+                return false;
+            }
+        };
+    },
+    getCode(payload: IEmailType) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const getCode = await API.post('/email', payload);
+                console.log(getCode);
+                if (getCode.status === 200) {
+                    localStorage.setItem('token', getCode.data.token);
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                // TODO: Push error to error state
+                console.error('error', error);
+                return false;
+            }
+        };
+    },
+    confirmCode(payload: IConfirmCode) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const confirmCode = await API.post('/email/confirm', payload);
+                console.log(confirmCode);
+                if (confirmCode.status === 200) {
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                // TODO: Push error to error state
+                console.error('error', error);
+                return false;
             }
         };
     },

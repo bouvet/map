@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Slide from '@mui/material/Slide';
 import { FilterButton } from '../components/Filter/Buttons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
@@ -10,17 +10,19 @@ import { SwipeableEdgeDrawer } from '../features/locationInfo/components/Locatio
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
-import { Category, LatLong } from '../utils/types.d';
+import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../components/FabMenu/FabMenu';
+import { authActions } from '../store/state/auth.state';
+import { userService } from '../features/userRegistration/services/user.services';
 
 export const Home: FC = () => {
     useFilterEvent();
     const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus, selectedFilterCategory } =
         useStateSelector((state) => state.map);
     const { currentUserLocation } = useStateSelector((state) => state.registration);
-    const mappedFilter = categoriesWithLocations.map((item: Category) =>
+    const mappedFilter = categoriesWithLocations.map((item: ICategory) =>
         item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
     );
     const dispatch = useStateDispatch();
@@ -36,7 +38,7 @@ export const Home: FC = () => {
         } else {
             console.log('isGettingLocation');
             navigator.geolocation.getCurrentPosition((position) => {
-                const userLocation: LatLong = {
+                const userLocation: ILatLong = {
                     lat: position.coords.latitude,
                     long: position.coords.longitude,
                 };
@@ -44,6 +46,17 @@ export const Home: FC = () => {
             });
         }
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        // @ts-ignore
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && token) {
+            // @ts-ignore
+            // const userDetail = dispatch(userService.getUser(user.id));
+            // dispatch(authActions.logIn(userDetail));
+        }
+    }, [dispatch]);
 
     return (
         <div className="App">

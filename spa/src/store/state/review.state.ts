@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ReviewTypeGet } from '../../utils/types.d';
+import { IReviewTypeGet } from '../../utils/types.d';
 
 const initialState = {
-    currentReviews: [] as ReviewTypeGet[],
+    currentReviews: [] as IReviewTypeGet[],
 };
 
 const reviewState = createSlice({
     name: 'review',
     initialState,
     reducers: {
-        setCurrentReviews(state, action: PayloadAction<ReviewTypeGet[]>) {
+        setCurrentReviews(state, action: PayloadAction<IReviewTypeGet[]>) {
             state.currentReviews = action.payload;
         },
     },

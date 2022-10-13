@@ -2,7 +2,7 @@ import { useEffect, useState, FC } from 'react';
 import { Marker } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import { MyTheme } from '../../../styles/global';
-import { Location } from '../../../utils/types.d';
+import { ILocation } from '../../../utils/types.d';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
@@ -10,8 +10,8 @@ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 
 type Props = {
     coordinates: number[];
-    onClickHandler: (obj: Location) => void;
-    markerLocation: Location;
+    onClickHandler: (obj: ILocation) => void;
+    markerLocation: ILocation;
     selectedMarker: string;
 };
 

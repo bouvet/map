@@ -1,8 +1,8 @@
 import { API } from '../../../lib/api';
-import { PutLocation } from '../../../utils/types.d';
+import { IPutLocation } from '../../../utils/types.d';
 
 export const approvalServices = {
-    putLocation(payload: PutLocation) {
+    putLocation(payload: IPutLocation) {
         return async () => {
             try {
                 const putResponse = await API.put('Locations', payload, {

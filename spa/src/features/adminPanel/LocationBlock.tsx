@@ -4,7 +4,7 @@ import { LeftFlex, RightFlex, SplitWrapper } from '../../components/Form/Input';
 import { Text } from '../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { MyTheme } from '../../styles/global';
-import { Location, PutLocation } from '../../utils/types.d';
+import { ILocation, IPutLocation } from '../../utils/types.d';
 import { mapService } from '../map';
 import { ApproveButton, RejectButton } from './ApprovalButton';
 import { approvalServices } from './services/approval.services';
@@ -46,7 +46,7 @@ const ButtonWrapper = styled.div`
 `;
 
 interface LocationProps {
-    item: Location;
+    item: ILocation;
 }
 
 const LocationInformation = styled.div`
@@ -78,7 +78,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
 
     const handleApprove = async () => {
         const location = locations.filter((location) => location.id === item.id)[0];
-        const payload: PutLocation = {
+        const payload: IPutLocation = {
             id: location.id,
             title: location.properties.title,
             description: location.properties.description,
@@ -90,7 +90,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
 
     const handleReject = async () => {
         const location = locations.filter((location) => location.id === item.id)[0];
-        const payload: PutLocation = {
+        const payload: IPutLocation = {
             id: location.id,
             title: location.properties.title,
             description: location.properties.description,

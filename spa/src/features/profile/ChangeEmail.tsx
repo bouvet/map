@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRegistration } from '../../components/Form/Buttons';
 import { Form } from '../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
-import { CenterFlex, InputPassword } from '../../components/Form/Input';
+import { CenterFlex, InputEmail } from '../../components/Form/Input';
 import { TitleForm } from '../../components/Form/Text';
 import { BackButton } from '../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../hooks/useRedux';
@@ -11,26 +11,23 @@ import { snackbarActions } from '../../store/state/snackbar.state';
 import { MyTheme } from '../../styles/global';
 import { SectionWrapper } from '../login/components/SectionWrapper';
 
-export const ChangePassword: FC = () => {
+export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [changedPassword, setChangedPassword] = useState('');
-    const [confirmChangedPassword, setConfirmChangedPassword] = useState('');
+    const [newEmail, setNewEmail] = useState('');
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
     };
 
+    // email validation?
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (changedPassword !== confirmChangedPassword) {
-            dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
-        } else {
-            e.preventDefault();
-            dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
-            navigate('/profile');
-        }
+        dispatch(snackbarActions.setNotify({ message: 'E-posten er endret', severity: 'success' }));
+        navigate('/profile');
+        console.log('Email: ', newEmail);
     };
 
     return (
@@ -40,22 +37,11 @@ export const ChangePassword: FC = () => {
             </BackButton>
             <FormContent>
                 <SectionWrapper>
-                    <TitleForm>Endre passord</TitleForm>
+                    <TitleForm>Endre e-post</TitleForm>
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <InputPassword
-                            label="Nytt passord*"
-                            value={changedPassword}
-                            setState={setChangedPassword}
-                            handleChange={handleFormInputChange}
-                        />
-                        <InputPassword
-                            label="Gjenta nytt passord*"
-                            value={confirmChangedPassword}
-                            setState={setConfirmChangedPassword}
-                            handleChange={handleFormInputChange}
-                        />
+                        <InputEmail label="E-post*" value={newEmail} setState={setNewEmail} handleChange={handleFormInputChange} />
                         <CenterFlex>
-                            <SubmitButtonRegistration text="white">Endre passord</SubmitButtonRegistration>
+                            <SubmitButtonRegistration text="white">Endre e-post</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
                 </SectionWrapper>

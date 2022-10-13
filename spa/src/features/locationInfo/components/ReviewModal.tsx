@@ -7,7 +7,7 @@ import { MyTheme } from '../../../styles/global';
 import { CloseButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
-import { ReviewType } from '../../../utils/types.d';
+import { IReviewType } from '../../../utils/types.d';
 import { Img } from '../../locationRegistration/components/ImageUploader';
 
 interface ReviewProps {
@@ -93,7 +93,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         if (value === 0 || value === null) {
             e.preventDefault();
         } else {
-            const payload: ReviewType = {
+            const payload: IReviewType = {
                 rating: value,
                 text: review,
                 locationId: currentlySelectedLocation.id,

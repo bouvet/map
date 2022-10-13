@@ -13,9 +13,9 @@ import { PersonalInfo } from './features/userRegistration/components/PersonalInf
 import { CreatePassword } from './features/userRegistration/components/CreatePassword';
 import { Personalization } from './features/userRegistration/components/Personalization';
 import { Onboarding } from './features/userRegistration/components/Onboarding';
-import { ForgottenPassword } from './features/login/components/ForgottenPassword';
+import { ChangePassword } from './features/login/components/ChangePassword';
 import { ResetPassword } from './features/login/components/ResetPassword';
-import { ChangePassword } from './features/profile/ChangePassword';
+import { ChangeEmail } from './features/profile/ChangeEmail';
 
 const App = () => (
     <Router>
@@ -26,6 +26,7 @@ const App = () => (
             <Route path="/location-approval-panel" element={<AdminPanel />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/change-email" element={<ChangeEmail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user-registration" element={<UserRegistration />} />
             <Route path="/email-input" element={<EmailInput />} />
@@ -34,7 +35,6 @@ const App = () => (
             <Route path="/create-password" element={<CreatePassword />} />
             <Route path="/personalization" element={<Personalization />} />
             <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/forgotten-password" element={<ForgottenPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
         <CustomizedSnackbars />

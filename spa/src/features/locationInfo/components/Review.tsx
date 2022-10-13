@@ -7,7 +7,7 @@ import { MyTheme } from '../../../styles/global';
 
 interface ReviewProps {
     name: string;
-    age?: number;
+    age?: string;
     date: string;
     rating: number;
     review?: string;
@@ -45,7 +45,7 @@ export const Review: FC<ReviewProps> = ({ name, age, date, rating, review }) => 
         <ReviewHeader>
             <ReviewerWrapper>
                 <ReviewerInfo>
-                    {name}, {age} år
+                    {name}, {age}
                 </ReviewerInfo>
                 <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx="14px" />
             </ReviewerWrapper>

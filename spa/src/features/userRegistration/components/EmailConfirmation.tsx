@@ -10,9 +10,11 @@ import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
+import { userService } from '../services/user.services';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 
 interface LocationType {
-    inputEmail: string;
+    email: string;
 }
 
 export const EmailConfirmation: FC = () => {
@@ -20,18 +22,40 @@ export const EmailConfirmation: FC = () => {
     const navigate = useNavigate();
     const location = useLocation().state as LocationType;
 
-    const [inputCode, setInputCode] = useState<string[]>(new Array(6).fill(''));
+    const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
-    const handleSubmit = useCallback(() => {
-        // check if code is valid, else snackbar message
-        dispatch(userActions.setEmail(location.inputEmail));
-        navigate('/personal-info');
-    }, [dispatch, location.inputEmail, navigate]);
+    const handleSubmit = useCallback(
+        (code: any) => {
+            dispatch(userActions.setEmail(location.email));
+            confirmCode(code);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [dispatch],
+    );
+
+    const confirmCode = async (code: any) => {
+        const inputCode = {
+            email: location.email,
+            confirmationCode: code,
+        };
+
+        console.log(inputCode);
+
+        // @ts-ignore
+        const successStatus: boolean = await dispatch(userService.confirmCode(inputCode));
+
+        if (successStatus) {
+            dispatch(snackbarActions.setNotify({ message: 'Kode er bekreftet', severity: 'success' }));
+            navigate('/personal-info');
+        } else {
+            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+        }
+    };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
-        const tempArray = [...inputCode];
+        const tempArray = [...confirmationCode];
         tempArray[index] = e.target.value;
-        setInputCode(tempArray);
+        setConfirmationCode(tempArray);
         const nextInput = document.querySelector(`input[name=input-field-${index + 1}]`) as HTMLElement | null;
         if (nextInput !== null) {
             nextInput.focus();
@@ -39,10 +63,10 @@ export const EmailConfirmation: FC = () => {
     };
 
     useEffect(() => {
-        if (!inputCode.includes('')) {
-            handleSubmit();
+        if (!confirmationCode.includes('')) {
+            handleSubmit(confirmationCode.join(''));
         }
-    }, [inputCode, handleSubmit]);
+    }, [confirmationCode, handleSubmit]);
 
     const pageIndex = 1;
 
@@ -57,13 +81,13 @@ export const EmailConfirmation: FC = () => {
                     <SectionWrapper>
                         <TitleForm>Bekreft e-post</TitleForm>
                         <Form>
-                            <Text>Skriv inn koden for å bekrefte e-postadressen {location.inputEmail}</Text>
+                            <Text>Skriv inn koden for å bekrefte e-postadressen {location.email}</Text>
                             <Box
                                 sx={{
                                     '& .MuiTextField-root': { m: '1%', width: '14%' },
                                 }}
                             >
-                                {inputCode.map((data, index) => (
+                                {confirmationCode.map((data, index) => (
                                     <TextField
                                         type="text"
                                         // eslint-disable-next-line react/no-array-index-key
