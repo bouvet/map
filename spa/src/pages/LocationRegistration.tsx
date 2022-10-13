@@ -59,8 +59,9 @@ export const LocationRegistration: FC = () => {
         currentCategories.map((x) => formData.append('category', x));
 
         const response = await fetch(currentImage);
+        const contentType = response.headers.get('content-type');
         const buffer = await response.arrayBuffer();
-        const file = new File([buffer], currentImage, { type: 'image' });
+        const file = new File([buffer], currentImage, { type: contentType?.toString() });
 
         formData.append('image', file);
         const successStatus: boolean = await dispatch(locationServices.postLocation(formData));

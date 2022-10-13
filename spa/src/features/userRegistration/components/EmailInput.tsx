@@ -9,11 +9,15 @@ import { FormContent, FormWrapperRegistration } from '../../../components/Form/F
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
+import { useStateDispatch } from '../../../hooks/useRedux';
+import { snackbarActions } from '../../../store/state/snackbar.state';
+import { userService } from '../services/user.services';
 
 export const EmailInput: FC = () => {
+    const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [inputEmail, setInputEmail] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -21,8 +25,23 @@ export const EmailInput: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('/email-confirmation', { state: { inputEmail } });
-        console.log('Email: ', inputEmail);
+        console.log('Email: ', email);
+        sendCode();
+        navigate('/email-confirmation', { state: { email } });
+    };
+
+    const sendCode = async () => {
+        const inputEmail = {
+            email,
+        };
+
+        const successStatus: boolean = await dispatch(userService.getCode(inputEmail));
+
+        if (successStatus) {
+            dispatch(snackbarActions.setNotify({ message: 'Kode er sendt', severity: 'success' }));
+        } else {
+            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+        }
     };
 
     const pageIndex = 0;
@@ -45,7 +64,7 @@ export const EmailInput: FC = () => {
                         <TitleForm>E-post</TitleForm>
                         <Text>Fyll inn din e-postadresse for å motta en bekreftelseskode.</Text>
                         <Form onSubmit={(e) => handleSubmit(e)}>
-                            <InputEmail label="E-post*" value={inputEmail} setState={setInputEmail} handleChange={handleFormInputChange} />
+                            <InputEmail label="E-post*" value={email} setState={setEmail} handleChange={handleFormInputChange} />
                             <CenterFlex>
                                 <SubmitButtonRegistration text="white">Send kode</SubmitButtonRegistration>
                             </CenterFlex>

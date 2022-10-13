@@ -83,11 +83,11 @@ export const Login: FC = () => {
                                 {rememberStatus}
                             </LeftFlex>
                             <RightFlex>
-                                <LinkText to="/forgotten-password">Glemt passord</LinkText>
+                                <LinkText to="/change-password">Glemt passord</LinkText>
                             </RightFlex>
                         </SplitWrapper>
                         <SubmitButton text="white" type="submit">
-                            LOGG INN
+                            Logg inn
                         </SubmitButton>
                     </Form>
                     <SplitWrapper>

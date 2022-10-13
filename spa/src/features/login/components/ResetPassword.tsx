@@ -10,6 +10,7 @@ import { BackButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
+import { loginService } from '../services/login.services';
 
 export const ResetPassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -17,6 +18,8 @@ export const ResetPassword: FC = () => {
 
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+    // token localstorage get from queryparams
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -28,8 +31,23 @@ export const ResetPassword: FC = () => {
             dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
         } else {
             e.preventDefault();
+            changePassword();
+        }
+    };
+
+    const changePassword = async () => {
+        const inputPassword = {
+            newPassword,
+            confirmNewPassword,
+        };
+
+        const successStatus: boolean = await dispatch(loginService.changePassword(inputPassword));
+
+        if (successStatus) {
             dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
             navigate('/login');
+        } else {
+            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
         }
     };
 

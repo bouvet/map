@@ -16,6 +16,20 @@ const InputField = styled.input`
     width: calc(100% - 22px);
 `;
 
+const VisibilityButton = styled.div`
+    position: relative;
+    border-radius: 50%;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${MyTheme.colors.lightbase};
+`;
+
+const PasswordWrapper = styled.div`
+    display: flex;
+`;
+
 export const Checkbox = styled.input`
     margin-right: 7px;
 `;
@@ -44,12 +58,14 @@ export const CenterFlex = styled.div`
 interface InputProps {
     label: string;
     value: string;
-    setState: Function;
+    setState?: Function;
     handleChange: Function;
+    show?: boolean;
+    toggleShow?: any;
 }
 
 export const InputEmail: FC<InputProps> = (props) => {
-    const { label, value, handleChange, setState } = props;
+    const { label, value, handleChange, setState, show, toggleShow } = props;
     return (
         <>
             <Label>{label}</Label>
@@ -65,28 +81,39 @@ export const InputEmail: FC<InputProps> = (props) => {
 };
 
 export const InputPassword: FC<InputProps> = (props) => {
-    const { label, value, handleChange, setState } = props;
+    const { label, value, handleChange, setState, show, toggleShow } = props;
     return (
         <>
             <Label>{label}</Label>
-            <InputField
-                type="password"
-                minLength={8}
-                placeholder="Min. 8 tegn"
-                value={value}
-                required
-                onChange={(e) => handleChange(e, setState)}
-            />
+            <PasswordWrapper>
+                <InputField
+                    type={show ? 'text' : 'password'}
+                    minLength={8}
+                    placeholder="Min. 8 tegn"
+                    value={value}
+                    required
+                    onChange={(e) => handleChange(e, setState)}
+                />
+                {!show ? (
+                    <VisibilityButton onClick={toggleShow}>
+                        <span className="material-symbols-outlined">visibility</span>
+                    </VisibilityButton>
+                ) : (
+                    <VisibilityButton onClick={toggleShow}>
+                        <span className="material-symbols-outlined">visibility_off</span>
+                    </VisibilityButton>
+                )}
+            </PasswordWrapper>
         </>
     );
 };
 
 export const InputName: FC<InputProps> = (props) => {
-    const { label, value, handleChange, setState } = props;
+    const { label, value, handleChange, setState, show, toggleShow } = props;
     return (
         <>
             <Label>{label}</Label>
-            <InputField type="text" value={value} required onChange={(e) => handleChange(e, setState)} />
+            <InputField type="text" value={value} required onChange={(e) => handleChange(e)} />
         </>
     );
 };

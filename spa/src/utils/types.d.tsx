@@ -95,6 +95,7 @@ export interface IReviewTypeGet {
         email: string;
         firstName: string;
         lastName: string;
+        dob: string;
     };
     editor?: {
         id: string;
@@ -114,9 +115,13 @@ export interface IUserType {
     favoriteCategoryIds?: Array<string>;
 }
 
-export interface ILoginType {
-    email: string;
-    password: string;
+export interface IUserTypeEdit {
+    id: string;
+    firstName?: string;
+    lastName?: string;
+    dob?: string;
+    email?: string;
+    favoriteCategoryIds?: Array<string>;
 }
 
 export interface IUser {
@@ -130,42 +135,65 @@ export interface IUser {
     phoneNumber?: number;
     dob: string;
     registered: string;
-    roles: {
-        id: string;
-        name: string;
-        created: string;
-        updated: string;
-        creator?: {
+    roles: [
+        {
             id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-        };
-        editor?: {
+            name: string;
+            created: string;
+            updated: string;
+            creator?: {
+                id: string;
+                email: string;
+                firstName: string;
+                lastName: string;
+            };
+            editor?: {
+                id: string;
+                email: string;
+                firstName: string;
+                lastName: string;
+            };
+        },
+    ];
+    favoriteCategories?: [
+        {
             id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-        };
-    };
-    favoriteCategories?: {
-        id: string;
-        name: string;
-        emoji: string;
-        created: string;
-        updated?: string;
-        creator?: {
-            id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-        };
-        editor?: {
-            id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-        };
-    };
+            name: string;
+            emoji: string;
+            created: string;
+            updated?: string;
+            creator?: {
+                id: string;
+                email: string;
+                firstName: string;
+                lastName: string;
+            };
+            editor?: {
+                id: string;
+                email: string;
+                firstName: string;
+                lastName: string;
+            };
+        },
+    ];
     token: string;
+}
+
+export interface ILoginType {
+    email: string;
+    password: string;
+}
+
+export interface IEmailType {
+    email: string;
+}
+
+export interface IConfirmCode {
+    email: string;
+    confirmationCode: number;
+}
+
+export interface IPasswordType {
+    newPassword: string;
+    confirmNewPassword: string;
 }

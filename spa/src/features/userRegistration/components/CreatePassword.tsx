@@ -7,7 +7,7 @@ import { Form } from '../../../components/Form/Form';
 import { CenterFlex, InputPassword } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { TitleForm } from '../../../components/Form/Text';
+import { LinkText, TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
@@ -18,6 +18,16 @@ export const CreatePassword: FC = () => {
 
     const [createPassword, setCreatePassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showCreatePassword, setShowCreatePassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const toggleShowCreatePassword = () => {
+        setShowCreatePassword(!showCreatePassword);
+    };
+
+    const toggleShowConfirmPassword = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -53,17 +63,24 @@ export const CreatePassword: FC = () => {
                                 value={createPassword}
                                 setState={setCreatePassword}
                                 handleChange={handleFormInputChange}
+                                show={showCreatePassword}
+                                toggleShow={toggleShowCreatePassword}
                             />
                             <InputPassword
                                 label="Gjenta passord*"
                                 value={confirmPassword}
                                 setState={setConfirmPassword}
                                 handleChange={handleFormInputChange}
+                                show={showConfirmPassword}
+                                toggleShow={toggleShowConfirmPassword}
                             />
                             <CenterFlex>
                                 <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
                             </CenterFlex>
                         </Form>
+                        <span>
+                            <LinkText to="/personal-info">Gå tilbake</LinkText>
+                        </span>
                     </SectionWrapper>
                 </FormContent>
             </FormWrapperRegistration>

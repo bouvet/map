@@ -10,12 +10,13 @@ import { BackButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
+import { loginService } from '../services/login.services';
 
-export const ForgottenPassword: FC = () => {
+export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [inputEmail, setInputEmail] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -23,28 +24,40 @@ export const ForgottenPassword: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(
-            snackbarActions.setNotify({
-                message: `En link for å tilbakestille passordet er sendt til ${inputEmail}`,
-                severity: 'success',
-            }),
-        );
-        navigate('/login');
+        console.log('Email: ', email);
+        sendToken();
+    };
+
+    const sendToken = async () => {
+        const inputEmail = {
+            email,
+        };
+
+        const successStatus: boolean = await dispatch(loginService.getToken(inputEmail));
+
+        if (successStatus) {
+            dispatch(
+                snackbarActions.setNotify({ message: `En link for å tilbakestille passordet er sendt til ${email}`, severity: 'success' }),
+            );
+            navigate(-1);
+        } else {
+            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+        }
     };
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate('/login')}>
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate(-1)}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
             <FormContent>
                 <SectionWrapper>
-                    <TitleForm>Glemt passord</TitleForm>
+                    <TitleForm>Endre passord</TitleForm>
                     <Text>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</Text>
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <InputEmail label="E-post*" value={inputEmail} setState={setInputEmail} handleChange={handleFormInputChange} />
+                        <InputEmail label="E-post*" value={email} setState={setEmail} handleChange={handleFormInputChange} />
                         <CenterFlex>
-                            <SubmitButtonRegistration text="white">Tilbakestill passord</SubmitButtonRegistration>
+                            <SubmitButtonRegistration text="white">Send e-post</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
                 </SectionWrapper>

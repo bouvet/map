@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
+import { ChangeEvent, FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import TextField from '@mui/material/TextField';
@@ -15,31 +15,28 @@ import { CenterFlex, InputName, Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { TitleForm } from '../../../components/Form/Text';
-import { useStateDispatch } from '../../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 
 export const PersonalInfo: FC = () => {
+    const { firstName, lastName, dob } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [dob, setDob] = useState<Date | null>(null);
-
-    const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-        setState(e.target.value);
+    const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(userActions.setFirstName(e.target.value));
     };
 
-    const handleChangeLastName = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-        setState(e.target.value);
+    const handleChangeLastName = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(userActions.setLastName(e.target.value));
     };
 
-    const handleChangeDob = (timestamp: Date | null, setState: Dispatch<SetStateAction<Date | null>>) => {
+    const handleChangeDob = (timestamp: Date | null) => {
         if (timestamp !== null) {
-            setState(timestamp);
+            dispatch(userActions.setDob(moment(timestamp).format('L')));
         }
     };
 
@@ -51,9 +48,6 @@ export const PersonalInfo: FC = () => {
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {
             e.preventDefault();
-            dispatch(userActions.setFirstName(firstName));
-            dispatch(userActions.setLastName(lastName));
-            dispatch(userActions.setDob(moment(dob).format('L')));
             navigate('/create-password');
             console.log('Name: ', firstName, lastName);
             console.log('Date of birth: ', moment(dob).format('L'));
@@ -83,15 +77,15 @@ export const PersonalInfo: FC = () => {
                     <SectionWrapper>
                         <TitleForm>Personlig informasjon</TitleForm>
                         <Form onSubmit={(e) => handleSubmit(e)}>
-                            <InputName label="Fornavn*" value={firstName} setState={setFirstName} handleChange={handleChangeFirstName} />
-                            <InputName label="Etternavn*" value={lastName} setState={setLastName} handleChange={handleChangeLastName} />
+                            <InputName label="Fornavn*" value={firstName} handleChange={handleChangeFirstName} />
+                            <InputName label="Etternavn*" value={lastName} handleChange={handleChangeLastName} />
                             <Label>Fødselsdato*</Label>
                             <ThemeProvider theme={theme}>
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
                                         label="åååå.mm.dd"
                                         value={dob}
-                                        onChange={(newValue) => handleChangeDob(newValue, setDob)}
+                                        onChange={(newValue) => handleChangeDob(newValue)}
                                         renderInput={(params) => <TextField {...params} />}
                                         maxDate={new Date()}
                                     />

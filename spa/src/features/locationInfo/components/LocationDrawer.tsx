@@ -3,6 +3,8 @@ import { Global } from '@emotion/react';
 import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
+import moment from 'moment';
+import 'moment/locale/nb';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -95,12 +97,22 @@ export const SwipeableEdgeDrawer: FC = () => {
         dispatch(reviewServices.getReviews(id));
     }, [id, dispatch]);
 
+    moment.locale('nb');
+
     const updateCurrentReviewsCallback = useCallback(() => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.text)
                 .map((item: IReviewTypeGet) => (
-                    <Review key={item.id} date={item.created} name="Ola Nordmann" age={25} rating={item.rating} review={item.text} />
+                    <Review
+                        key={item.id}
+                        date={moment(item.created).format('L')}
+                        // @ts-ignore
+                        name={item.creator?.firstName}
+                        age={moment(item.creator?.dob).fromNow(true)}
+                        rating={item.rating}
+                        review={item.text}
+                    />
                 ));
             setReviewList(temp);
         }
