@@ -47,13 +47,11 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       request.Email,
       "Verden Venter",
       $"Confirmation code: {randomNumber}",
-      /* spellchecker: disable */
       $@"
-      <h1>Takk for at du ønsker å registere deg hos oss!</h1>
-      <p>Her er din bekreftelseskode: <strong>{randomNumber}</strong></p>
+      <h1>Takk for at du ønsker å registrere deg hos oss!</h1>
+      <p>Her er din bekreftelse-kode: <strong>{randomNumber}</strong></p>
       <p>Koden er gyldig i 46 timer. Etter det må du be om ny kode.</p>
       "
-    /* spellchecker: enable */
     );
 
     ErrorOr<SendGrid.Response> emailResult = await emailService.SendEmail(emailRequest);
