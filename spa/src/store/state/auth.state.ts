@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../utils/types.d';
 
 const initialState = {
-    loading: true,
+    loading: false,
     isAuthenticated: false,
     users: [],
     user: {} as IUser | null,
@@ -15,10 +15,10 @@ const authState = createSlice({
         setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
         },
-        logIn(state, action) {
+        userLogin(state, action) {
             state.isAuthenticated = true;
             state.user = action.payload;
-            console.log(state.isAuthenticated);
+            state.loading = false;
         },
         logOut(state) {
             state.isAuthenticated = false;

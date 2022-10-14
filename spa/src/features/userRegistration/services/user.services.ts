@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
+import { authActions } from '../../../store/state/auth.state';
 import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit } from '../../../utils/types.d';
 
 export const userService = {
@@ -20,14 +21,20 @@ export const userService = {
             }
         };
     },
-    getUser(payload: { id: string }) {
+    getUser(payload: string) {
         return async (dispatch: AppDispatch) => {
             try {
-                const getUser = await API.get(`/users/${payload.id}`);
-                return getUser.data;
+                const { data } = await API.get(`/users/${payload}`);
+
+                // localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data));
+
+                dispatch(authActions.userLogin(data));
+
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
-                console.error('error', error);
+                dispatch(authActions.logOut());
+
                 return false;
             }
         };
