@@ -74,6 +74,11 @@ public class EmailController : ApiController
     var emailId = HttpContext.User.FindFirst("emailId")?.Value;
     var isAdmin = HttpContext.User.IsInRole("Administrator");
 
+    if (string.IsNullOrEmpty(emailId) && !isAdmin)
+    {
+      return Forbid();
+    }
+
     var deleteEmailCommand = new DeleteEmailCommand(
         email.ToLower(),
         isAdmin,

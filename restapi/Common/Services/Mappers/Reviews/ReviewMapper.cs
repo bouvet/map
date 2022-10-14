@@ -1,6 +1,7 @@
 using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Reviews;
+using restapi.Entities;
 using restapi.Services.Reviews.Commands.Create;
 using restapi.Services.Reviews.Commands.Delete;
 using restapi.Services.Reviews.Commands.Update;
@@ -71,16 +72,16 @@ public class ReviewMapper : IReviewMapper
     return new GetReviewsQuery(locationId);
   }
 
-  public UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request, string userId)
+  public UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request, Review? review, Guid? userId)
   {
     return new UpdateReviewCommand(
-      request.Id,
       request.Status,
       request.Text,
       request.Rating,
       request.Image,
       request.LocationId,
-      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
+      review,
+      userId
     );
   }
 

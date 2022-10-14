@@ -1,0 +1,78 @@
+[
+  {
+    "id": "f64dc21c-a812-4186-a596-0f0e19b6a52c",
+    "status": "Under Review",
+    "text": "oppdatering fra userToken",
+    "rating": 3,
+    "originalImage": {
+      "id": "9da8010a-8453-4009-85a5-b3b79a3c9dce",
+      "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/9da8010a-8453-4009-85a5-b3b79a3c9dce",
+      "cdnUri": "https://optimusblobs.azureedge.net/images/originals/9da8010a-8453-4009-85a5-b3b79a3c9dce",
+      "contentType": "image/png",
+      "uploaded": "2022-10-14T13:40:49.9689434",
+      "uploader": {
+        "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+        "email": "user@email.com",
+        "firstName": "User",
+        "lastName": "Userdottir",
+        "dob": "2000-02-27T00:00:00"
+      },
+      "originalImageId": null,
+      "locationId": "8e322b1a-5193-47e6-8527-7dd01d61d777",
+      "reviewId": "f64dc21c-a812-4186-a596-0f0e19b6a52c"
+    },
+    "webpImage": {
+      "id": "f2f04114-8d3f-4956-8776-038ccdf41260",
+      "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/f2f04114-8d3f-4956-8776-038ccdf41260",
+      "cdnUri": "https://optimusblobs.azureedge.net/images/webp/f2f04114-8d3f-4956-8776-038ccdf41260",
+      "contentType": "image/webp",
+      "uploaded": "2022-10-14T13:40:49.9689503",
+      "uploader": {
+        "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+        "email": "user@email.com",
+        "firstName": "User",
+        "lastName": "Userdottir",
+        "dob": "2000-02-27T00:00:00"
+      },
+      "originalImageId": "9da8010a-8453-4009-85a5-b3b79a3c9dce",
+      "locationId": "8e322b1a-5193-47e6-8527-7dd01d61d777",
+      "reviewId": "f64dc21c-a812-4186-a596-0f0e19b6a52c"
+    },
+    "created": "2022-10-14T11:30:34.6229078",
+    "updated": "2022-10-14T13:40:50.0888061",
+    "creator": {
+      "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+      "email": "user@email.com",
+      "firstName": "User",
+      "lastName": "Userdottir",
+      "dob": "2000-02-27T00:00:00"
+    },
+    "editor": {
+      "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+      "email": "user@email.com",
+      "firstName": "User",
+      "lastName": "Userdottir",
+      "dob": "2000-02-27T00:00:00"
+    },
+    "locationId": "8e322b1a-5193-47e6-8527-7dd01d61d777"
+  },
+  {
+    "id": "1ac66626-7a1d-42fb-bbf2-4b3d9073077b",
+    "status": "Approved",
+    "text": "",
+    "rating": 5,
+    "originalImage": null,
+    "webpImage": null,
+    "created": "2022-10-13T10:23:20.4330083",
+    "updated": null,
+    "creator": {
+      "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
+      "email": "admin@email.com",
+      "firstName": "Admin",
+      "lastName": "Adminson",
+      "dob": "2000-01-29T00:00:00"
+    },
+    "editor": null,
+    "locationId": "8e322b1a-5193-47e6-8527-7dd01d61d777"
+  }
+]
