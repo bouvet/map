@@ -40,11 +40,6 @@ public class LocationMapper : ILocationMapper
     );
   }
 
-  public DeleteLocationCommand MapDeleteToCommand(Guid id)
-  {
-    return new DeleteLocationCommand(id);
-  }
-
   public GetLocationByIdQuery MapGetByIdToCommand(Guid id)
   {
     return new GetLocationByIdQuery(id);

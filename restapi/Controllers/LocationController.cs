@@ -6,6 +6,7 @@ using restapi.Common.Providers.Authorization;
 using restapi.Common.Services.Mappers.Locations;
 using restapi.Contracts.Locations;
 using restapi.Data;
+using restapi.Services.Locations.Commands.Delete;
 using restapi.Services.Locations.Common;
 
 namespace restapi.Controllers;
@@ -107,11 +108,20 @@ public class LocationsController : ApiController
     );
   }
 
-  [Authorize(Roles = "Administrator")]
+  [Authorize(Roles = "User, Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {
-    var deleteLocationCommand = locationMapper.MapDeleteToCommand(id);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+
+    var location = await dataContext.Locations.FindAsync(id);
+
+    if (!authResult.IsAdmin && location?.Creator?.Id != authResult.UserId)
+    {
+      return Forbid();
+    }
+
+    var deleteLocationCommand = new DeleteLocationCommand(location);
 
     ErrorOr<Deleted> deleteLocationResult = await mediator.Send(deleteLocationCommand);
 
