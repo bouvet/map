@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Box, Button, Modal, Rating, Stack, IconButton } from '@mui/material';
+import { Box, Button, Modal, Rating, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { CloseButton } from '../../../components/Navigation/Buttons';
@@ -43,6 +44,11 @@ const Backdrop = styled.div`
     height: 100vh;
     width: 100%;
     z-index: 0;
+`;
+
+const IconWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
@@ -145,9 +151,17 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                             {image ? (
                                 <>
                                     <Img src={imageUrl} alt="blobb" />
-                                    <IconButton aria-label="delete" onClick={removeImage}>
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    <IconWrapper>
+                                        <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
+                                        <Button size="large" component="label" startIcon={<Autorenew />}>
+                                            <input
+                                                hidden
+                                                accept="image/png, image/webp, image/jpg, image/jpeg"
+                                                type="file"
+                                                onChange={(e) => handleImageChange(e)}
+                                            />
+                                        </Button>
+                                    </IconWrapper>
                                 </>
                             ) : (
                                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>

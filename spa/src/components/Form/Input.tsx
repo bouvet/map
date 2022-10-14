@@ -16,6 +16,15 @@ const InputField = styled.input`
     width: calc(100% - 22px);
 `;
 
+const InputFieldPassword = styled.input`
+    border: 1px solid rgb(193, 193, 193);
+    font-size: ${MyTheme.fontSize.header};
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    width: calc(100% - 22px);
+`;
+
 const VisibilityButton = styled.div`
     position: relative;
     border-radius: 50%;
@@ -23,7 +32,7 @@ const VisibilityButton = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: ${MyTheme.colors.lightbase};
+    transform: translateX(-30px);
 `;
 
 const PasswordWrapper = styled.div`
@@ -86,7 +95,7 @@ export const InputPassword: FC<InputProps> = (props) => {
         <>
             <Label>{label}</Label>
             <PasswordWrapper>
-                <InputField
+                <InputFieldPassword
                     type={show ? 'text' : 'password'}
                     minLength={8}
                     placeholder="Min. 8 tegn"

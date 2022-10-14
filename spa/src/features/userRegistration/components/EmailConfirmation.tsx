@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkText, Text, TitleForm } from '../../../components/Form/Text';
+import { LinkText, Text, TextAccent, TitleForm } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
@@ -68,6 +68,15 @@ export const EmailConfirmation: FC = () => {
         }
     }, [confirmationCode, handleSubmit]);
 
+    const resendCode = () => {
+        dispatch(
+            // @ts-ignore
+            userService.getCode({
+                email: location.email,
+            }),
+        );
+    };
+
     const pageIndex = 1;
 
     return (
@@ -104,6 +113,9 @@ export const EmailConfirmation: FC = () => {
                         </Form>
                         <span>
                             <LinkText to="/email-input">Endre e-post</LinkText>
+                        </span>
+                        <span>
+                            <TextAccent onClick={resendCode}>Send ny kode</TextAccent>
                         </span>
                     </SectionWrapper>
                 </FormContent>

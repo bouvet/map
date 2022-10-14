@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
@@ -18,6 +19,11 @@ const ImageUploaderWrapper = styled.div`
 export const Img = styled.img`
     max-width: 80%;
     max-height: 40vh;
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 
 export const ImageUploader: FC = () => {
@@ -50,9 +56,17 @@ export const ImageUploader: FC = () => {
             {image ? (
                 <>
                     <Img src={imageUrl} alt="blobb" />
-                    <IconButton onClick={removeImage}>
-                        <DeleteIcon />
-                    </IconButton>
+                    <Wrapper>
+                        <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
+                        <Button size="large" component="label" startIcon={<Autorenew />}>
+                            <input
+                                hidden
+                                accept="image/png, image/jpeg, image/webp, image/jpg"
+                                type="file"
+                                onChange={(e) => handleImageChange(e)}
+                            />
+                        </Button>
+                    </Wrapper>
                 </>
             ) : (
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>

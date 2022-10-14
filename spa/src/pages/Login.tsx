@@ -16,9 +16,14 @@ import { authActions } from '../store/state/auth.state';
 export const Login: FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [rememberStatus, setRememberStatus] = useState(false);
 
     const { isAuthenticated, loading } = useStateSelector((state) => state.auth);
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
         setState(e.target.value);
@@ -65,7 +70,14 @@ export const Login: FC = () => {
                     <DivideLine />
                     <Form onSubmit={onSubmitHandler}>
                         <InputEmail label="E-post" value={email} setState={setEmail} handleChange={handleFormInputChange} />
-                        <InputPassword label="Passord" value={password} setState={setPassword} handleChange={handleFormInputChange} />
+                        <InputPassword
+                            label="Passord"
+                            value={password}
+                            setState={setPassword}
+                            handleChange={handleFormInputChange}
+                            show={showPassword}
+                            toggleShow={toggleShowPassword}
+                        />
                         <SplitWrapper>
                             <LeftFlex>
                                 <Checkbox type="checkbox" checked={rememberStatus} onChange={(e) => setRememberStatus(e.target.checked)} />

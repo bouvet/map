@@ -22,7 +22,17 @@ export const ChangePassword: FC = () => {
         setState(e.target.value);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    // const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     dispatch(
+    //         loginService.getToken({
+    //             email,
+    //         }),
+    //     );
+    //     // navigate(-1);
+    // };
+
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Email: ', email);
         sendToken();
@@ -54,7 +64,7 @@ export const ChangePassword: FC = () => {
                 <SectionWrapper>
                     <TitleForm>Endre passord</TitleForm>
                     <Text>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</Text>
-                    <Form onSubmit={(e) => handleSubmit(e)}>
+                    <Form onSubmit={onSubmitHandler}>
                         <InputEmail label="E-post*" value={email} setState={setEmail} handleChange={handleFormInputChange} />
                         <CenterFlex>
                             <SubmitButtonRegistration text="white">Send link</SubmitButtonRegistration>

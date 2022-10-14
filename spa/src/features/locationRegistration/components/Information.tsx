@@ -72,7 +72,7 @@ export const Information: FC = () => {
                     Navn på lokasjon:
                     <RequiredStar />
                 </Label>
-                <Input onChange={handleChangeName} value={currentTitle} maxLength={30} minLength={5} placeholder="Min. 5 karakterer" />
+                <Input onChange={handleChangeName} value={currentTitle} maxLength={30} minLength={5} placeholder="Min. 5 tegn" />
             </InputWrapper>
             <CategorySelectWrapper>
                 <Label>
@@ -87,6 +87,13 @@ export const Information: FC = () => {
                     <RequiredStar />
                 </Label>
                 <Text>Tips til info:</Text>
+                <ul>
+                    <li>Hva slags utstyr finner man der?</li>
+                    <li>Er utstyret i god stand?</li>
+                    <li>Hvordan kommer man seg dit?</li>
+                    <li>Er stedet ofte opptatt?</li>
+                    <li>Har stedet belysning som slås av på kvelden?</li>
+                </ul>
                 <TextArea onChange={handleChangeDescription} value={currentDescription} maxLength={200} minLength={20} />
                 {currentDescription.length}/200
             </InputWrapper>

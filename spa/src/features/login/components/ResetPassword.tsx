@@ -19,6 +19,16 @@ export const ResetPassword: FC = () => {
 
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
+    const toggleShowNewPassword = () => {
+        setShowNewPassword(!showNewPassword);
+    };
+
+    const toggleShowConfirmNewPassword = () => {
+        setShowConfirmNewPassword(!showConfirmNewPassword);
+    };
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -74,12 +84,16 @@ export const ResetPassword: FC = () => {
                             value={newPassword}
                             setState={setNewPassword}
                             handleChange={handleFormInputChange}
+                            show={showNewPassword}
+                            toggleShow={toggleShowNewPassword}
                         />
                         <InputPassword
                             label="Gjenta nytt passord*"
                             value={confirmNewPassword}
                             setState={setConfirmNewPassword}
                             handleChange={handleFormInputChange}
+                            show={showConfirmNewPassword}
+                            toggleShow={toggleShowConfirmNewPassword}
                         />
                         <CenterFlex>
                             <SubmitButtonRegistration text="white">Endre passord</SubmitButtonRegistration>

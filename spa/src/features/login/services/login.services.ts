@@ -51,6 +51,22 @@ export const loginService = {
                 console.error('error', error);
                 return false;
             }
+            // try {
+            //     await API.post('/auth/reset-password', payload);
+
+            //     dispatch(
+            //         snackbarActions.setNotify({
+            //             message: `En link for å tilbakestille passordet er sendt til ${payload.email}`,
+            //             severity: 'success',
+            //         }),
+            //     );
+
+            //     return true;
+            // } catch (error) {
+            //     console.error('error', error);
+            //     dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+            //     return false;
+            // }
         };
     },
     changePassword(payload: IPasswordType) {
