@@ -31,7 +31,6 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
 
     var token = jwtGenerator.GenerateResetPasswordToken(user);
 
-    /* spellchecker: disable */
     var sendEmailRequest = new SendEmailRequest(
       "Reset passord",
       user.Email,
@@ -47,7 +46,6 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
         <p>Lenken er gyldig i 10 minutter, etter det må du be om ny lenke</p>
       "
     );
-    /* spellchecker: enable */
 
     ErrorOr<SendGrid.Response> sendMailResult = await emailService.SendEmail(sendEmailRequest);
 
