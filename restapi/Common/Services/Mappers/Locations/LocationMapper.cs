@@ -3,6 +3,7 @@ using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Categories;
 using restapi.Contracts.Locations;
+using restapi.Entities;
 using restapi.Services.Locations.Commands.Create;
 using restapi.Services.Locations.Commands.Delete;
 using restapi.Services.Locations.Commands.Update;
@@ -105,7 +106,7 @@ public class LocationMapper : ILocationMapper
       );
   }
 
-  public UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, string userId)
+  public UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, Location? location, Guid? userId)
   {
     return new UpdateLocationCommand(
       request.Id,
@@ -116,7 +117,8 @@ public class LocationMapper : ILocationMapper
       request.Longitude,
       request.Latitude,
       request.Category,
-      string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId)
+      location,
+      userId
     );
   }
 }

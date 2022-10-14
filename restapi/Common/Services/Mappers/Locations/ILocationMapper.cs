@@ -1,4 +1,5 @@
 using restapi.Contracts.Locations;
+using restapi.Entities;
 using restapi.Services.Locations.Commands.Create;
 using restapi.Services.Locations.Commands.Delete;
 using restapi.Services.Locations.Commands.Update;
@@ -15,7 +16,7 @@ public interface ILocationMapper
   GetLocationsQuery MapGetLocationsQueryToCommand();
   GetLocationByProximityQuery MapGetByProximityToCommand(double latitude, double longitude, Guid categoryId);
   GetLocationByIdQuery MapGetByIdToCommand(Guid id);
-  UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, string userId);
+  UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, Location? location, Guid? userId);
   DeleteLocationCommand MapDeleteToCommand(Guid id);
   LocationResponse MapResultToResponse(LocationResult result);
   List<LocationResponse> MapResultListToResponseList(List<LocationResult> resultList);
