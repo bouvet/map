@@ -25,3 +25,13 @@ Content-Type: application/json
   "email": "verden.venter.app@gmail.com",
   "password": "testtest"
 }
+
+###
+
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "regtest@test.no",
+  "password": "testtest"
+}

@@ -3,30 +3,56 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using restapi.Data;
 using restapi.Entities;
+using restapi.Services.ImageStorages.Commands.Delete;
 
 namespace restapi.Services.Reviews.Commands.Delete;
 
 public class DeleteReviewCommandHandler : IRequestHandler<DeleteReviewCommand, ErrorOr<Deleted>>
 {
   private readonly DataContext dataContext;
+  private readonly ISender mediator;
 
-  public DeleteReviewCommandHandler(DataContext dataContext)
+  public DeleteReviewCommandHandler(DataContext dataContext, ISender mediator)
   {
     this.dataContext = dataContext;
+    this.mediator = mediator;
   }
 
   public async Task<ErrorOr<Deleted>> Handle(DeleteReviewCommand request, CancellationToken cancellationToken)
   {
-    var review = await dataContext.Reviews.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
-
-    if (review == null)
+    if (request.Review == null)
     {
       return Errors.Review.NotFound;
     }
 
-    dataContext.Reviews.Remove(review);
+    if (request.Review.OriginalImage is not null)
+    {
+      var deleteImageCommand = new DeleteImageCommand(request.Review.OriginalImage.Id, "originals");
+
+      ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+
+      if (deleteImageResult.IsError)
+      {
+        return Errors.ImageStorage.DeleteFailed;
+      }
+    }
+
+    if (request.Review.WebpImage is not null)
+    {
+      var deleteImageCommand = new DeleteImageCommand(request.Review.WebpImage.Id, "webp");
+
+      ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+
+      if (deleteImageResult.IsError)
+      {
+        return Errors.ImageStorage.DeleteFailed;
+      }
+    }
+
+    dataContext.Reviews.Remove(request.Review);
+    await UpdateLocationRating(request.Review.LocationId);
+
     await dataContext.SaveChangesAsync(cancellationToken);
-    await UpdateLocationRating(review.LocationId);
 
     return Result.Deleted;
   }
@@ -46,7 +72,5 @@ public class DeleteReviewCommandHandler : IRequestHandler<DeleteReviewCommand, E
     {
       location.Rating = (float)Math.Round((decimal)allReviewsForLocation.Average(), 1);
     }
-
-    await dataContext.SaveChangesAsync();
   }
 }

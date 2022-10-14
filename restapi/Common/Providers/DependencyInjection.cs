@@ -2,6 +2,7 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using restapi.Common.Providers.Authorization;
 using restapi.Data;
 
 namespace restapi.Common.Providers;
@@ -15,6 +16,7 @@ public static class DependencyInjection
     services.AddSingleton<IImageProvider, ImageProvider>();
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
     services.AddSingleton<IPasswordProvider, PasswordProvider>();
+    services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
 
     return services;
   }

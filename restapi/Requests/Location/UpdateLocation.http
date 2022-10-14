@@ -1,15 +1,11 @@
-@id=573cc891-1f3c-468d-ad12-330a65b92730
+@id=ac27b501-bd7f-419e-9d2f-68dca1cea2d0
 
 ### Update Location Without Image
 
-PUT {{host}}/api/locations
+PUT {{host}}/api/locations/{{id}}
 Authorization: Bearer {{usertoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="id"
-
-{{id}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
@@ -35,37 +31,27 @@ Content-Disposition: form-data; name="category"
 ### Update Location With Image
 
 
-PUT {{host}}/api/locations
+PUT {{host}}/api/locations/{{id}}
 Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}
+# Authorization: Bearer {{registrationtoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="id"
-
-{{id}}
-------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
-A title!
+
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="description"
 
-A description which is over 20 chars!
+
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="status"
 
-Rejected
+Declined
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="category"
-
-60c951f3-d233-442b-7883-08da9ad92895
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="category"
-
-5464a9f8-70be-4ce4-0a01-08da9f9ee008
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="fotball.png"
+Content-Disposition: form-data; name="image"; filename="notpng.jpeg"
 Content-Type: image/png
 
-< ../Assets/fotball.png
+< ../Assets/notpng.jpeg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--

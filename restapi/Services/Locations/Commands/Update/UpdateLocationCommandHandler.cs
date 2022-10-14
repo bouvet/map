@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using restapi.Data;
 using restapi.Entities;
+using restapi.Services.ImageStorages.Commands.Delete;
 using restapi.Services.ImageStorages.Commands.Upload;
 using restapi.Services.ImageStorages.Common;
 
@@ -20,25 +21,21 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
 
   public async Task<ErrorOr<Updated>> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
   {
-    var location = await dataContext.Locations.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
-
-    if (location is null)
+    if (request.Location is null)
     {
       return Errors.Location.NotFound;
     }
 
-    ErrorOr<Location> mapUpdatedLocationResult = MapUpdatedLocation(location, request);
+    ErrorOr<Location> mapUpdatedLocationResult = MapUpdatedLocation(request.Location, request);
 
     if (mapUpdatedLocationResult.IsError)
     {
       return mapUpdatedLocationResult.Errors;
     }
 
-    location = mapUpdatedLocationResult.Value;
-
     if (request.Category?.Count > 0)
     {
-      location.Categories = new List<Category>();
+      request.Location.Categories = new List<Category>();
 
       foreach (Guid categoryId in request.Category)
       {
@@ -49,7 +46,7 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
           return Errors.Category.NotFound;
         }
 
-        location.Categories.Add(category);
+        request.Location.Categories.Add(category);
       }
     }
 
@@ -59,16 +56,40 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
 
       if (user is not null)
       {
-        location.Editor = user;
+        request.Location.Editor = user;
       }
     }
 
     if (request.Image is not null)
     {
+      if (request.Location.OriginalImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(request.Location.OriginalImage.Id, "originals");
+
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
+      }
+
+      if (request.Location.WebpImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(request.Location.WebpImage.Id, "webp");
+
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
+      }
+
       var uploadImageCommand = new UploadImageCommand(
         request.Image,
-        location.Creator,
-        location.Id,
+        request.Location.Editor,
+        request.Location.Id,
         null
       );
 
@@ -79,8 +100,8 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
         return Errors.ImageStorage.UploadFailed;
       }
 
-      location.OriginalImage = uploadResult.Value.OriginalImage;
-      location.WebpImage = uploadResult.Value.WebpImage;
+      request.Location.OriginalImage = uploadResult.Value.OriginalImage;
+      request.Location.WebpImage = uploadResult.Value.WebpImage;
     }
 
     await dataContext.SaveChangesAsync(cancellationToken);
@@ -92,12 +113,12 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
   {
     List<Error> errors = new();
 
-    if (request.Title.Length is < Location.MinTitleLength or > Location.MaxTitleLength)
+    if (request.Title?.Length is < Location.MinTitleLength or > Location.MaxTitleLength)
     {
       errors.Add(Errors.Location.InvalidTitle);
     }
 
-    if (request.Description.Length is < Location.MinDescriptionLength or > Location.MaxDescriptionLength)
+    if (request.Description?.Length is < Location.MinDescriptionLength or > Location.MaxDescriptionLength)
     {
       errors.Add(Errors.Location.InvalidDescription);
     }

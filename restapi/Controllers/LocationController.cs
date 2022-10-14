@@ -2,8 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Providers.Authorization;
 using restapi.Common.Services.Mappers.Locations;
 using restapi.Contracts.Locations;
+using restapi.Data;
+using restapi.Services.Locations.Commands.Delete;
 using restapi.Services.Locations.Common;
 
 namespace restapi.Controllers;
@@ -12,11 +15,15 @@ public class LocationsController : ApiController
 {
   private readonly ISender mediator;
   private readonly ILocationMapper locationMapper;
+  private readonly IAuthorizationProvider authorizationProvider;
+  private readonly DataContext dataContext;
 
-  public LocationsController(ISender mediator, ILocationMapper locationMapper)
+  public LocationsController(ISender mediator, ILocationMapper locationMapper, IAuthorizationProvider authorizationProvider, DataContext dataContext)
   {
     this.mediator = mediator;
     this.locationMapper = locationMapper;
+    this.authorizationProvider = authorizationProvider;
+    this.dataContext = dataContext;
   }
 
   [HttpPost]
@@ -74,12 +81,24 @@ public class LocationsController : ApiController
 
   //TODO: Lock this so only creator and administrator can update?
   [Authorize(Roles = "User, Administrator")]
-  [HttpPut]
-  public async Task<IActionResult> UpdateLocation([FromForm] UpdateLocationRequest request)
+  [HttpPut("{id:guid}")]
+  public async Task<IActionResult> UpdateLocation(Guid id, [FromForm] UpdateLocationRequest request)
   {
-    var userId = HttpContext.User.FindFirst("userId")?.Value;
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
 
-    var updateLocationCommand = locationMapper.MapUpdateToCommand(request, userId ?? "");
+    if (!string.IsNullOrEmpty(request.Status) && !authResult.IsAdmin)
+    {
+      return Forbid();
+    }
+
+    var location = await dataContext.Locations.FindAsync(id);
+
+    if (!authResult.IsAdmin && location?.Creator?.Id != authResult.UserId)
+    {
+      return Forbid();
+    }
+
+    var updateLocationCommand = locationMapper.MapUpdateToCommand(request, location, authResult.UserId);
 
     ErrorOr<Updated> updateLocationResult = await mediator.Send(updateLocationCommand);
 
@@ -89,11 +108,20 @@ public class LocationsController : ApiController
     );
   }
 
-  [Authorize(Roles = "Administrator")]
+  [Authorize(Roles = "User, Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {
-    var deleteLocationCommand = locationMapper.MapDeleteToCommand(id);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+
+    var location = await dataContext.Locations.FindAsync(id);
+
+    if (!authResult.IsAdmin && location?.Creator?.Id != authResult.UserId)
+    {
+      return Forbid();
+    }
+
+    var deleteLocationCommand = new DeleteLocationCommand(location);
 
     ErrorOr<Deleted> deleteLocationResult = await mediator.Send(deleteLocationCommand);
 

@@ -2,10 +2,10 @@ namespace restapi.Contracts.Locations;
 
 public record UpdateLocationRequest(
   Guid Id,
-  string Title,
-  string Description,
+  string? Title,
+  string? Description,
   IFormFile? Image,
-  string Status,
+  string? Status,
   double Longitude,
   double Latitude,
   List<Guid>? Category

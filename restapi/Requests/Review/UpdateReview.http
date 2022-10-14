@@ -1,17 +1,14 @@
-@id=ac5c2811-cb94-4113-a4eb-d431642c8331
-@locationId=9fbf46b3-c5a5-450a-9b28-1a3167e2625a
+@id=f64dc21c-a812-4186-a596-0f0e19b6a52c
+@locationId=8e322b1a-5193-47e6-8527-7dd01d61d777
 
 ### Update Review Without Image
 
-PUT {{host}}/api/reviews
+PUT {{host}}/api/reviews/{{id}}
 # Authorization: Bearer {{admintoken}}
 Authorization: Bearer {{usertoken}}
+# Authorization: Bearer {{registrationtoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="id"
-
-{{id}}
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="status"
 
@@ -19,7 +16,7 @@ Content-Disposition: form-data; name="status"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
-
+oppdatering fra usertoken
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="rating"
 
@@ -32,22 +29,20 @@ Content-Disposition: form-data; name="locationId"
 
 ### Update Review With Image
 
-PUT {{host}}/api/reviews
+PUT {{host}}/api/reviews/{{id}}
+# Authorization: Bearer {{admintoken}}
 Authorization: Bearer {{usertoken}}
+# Authorization: Bearer {{registrationtoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="id"
-
-{{id}}
-------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="status"
 
-Declined
+
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="text"
 
-some review text
+oppdatering fra userToken
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="rating"
 
