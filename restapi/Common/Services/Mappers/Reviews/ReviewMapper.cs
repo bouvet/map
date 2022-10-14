@@ -85,8 +85,8 @@ public class ReviewMapper : IReviewMapper
     );
   }
 
-  public DeleteReviewCommand MapDeleteToCommand(Guid id)
+  public DeleteReviewCommand MapDeleteToCommand(Review review)
   {
-    return new DeleteReviewCommand(id);
+    return new DeleteReviewCommand(review);
   }
 }

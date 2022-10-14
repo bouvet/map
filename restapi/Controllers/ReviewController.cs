@@ -89,15 +89,20 @@ public class ReviewsController : ApiController
     );
   }
 
-  //TODO: Lock so only creator and admin can delete
   [Authorize(Roles = "User, Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {
-    var userId = HttpContext.User.FindFirst("userId")?.Value;
-    var isAdmin = HttpContext.User.IsInRole("Administrator");
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
 
-    var deleteReviewCommand = reviewMapper.MapDeleteToCommand(id);
+    var review = await dataContext.Reviews.FindAsync(id);
+
+    if (!authResult.IsAdmin && review?.Creator?.Id != authResult.UserId)
+    {
+      return Forbid();
+    }
+
+    var deleteReviewCommand = reviewMapper.MapDeleteToCommand(review!);
 
     ErrorOr<Deleted> deleteReviewResult = await mediator.Send(deleteReviewCommand);
 

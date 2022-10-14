@@ -14,7 +14,7 @@ public interface IReviewMapper
   CreateReviewCommand MapCreateToCommand(CreateReviewRequest request, string userId);
   UpdateReviewCommand MapUpdateToCommand(UpdateReviewRequest request, Review? review, Guid? UserId);
   GetReviewByIdQuery MapGetByIdToCommand(Guid id);
-  DeleteReviewCommand MapDeleteToCommand(Guid id);
+  DeleteReviewCommand MapDeleteToCommand(Review review);
   GetReviewsQuery MapGetReviewsToCommand(Guid locationId);
   ReviewResponse MapResultToResponse(ReviewResult result);
   List<ReviewResponse> MapResultListToResponseList(List<ReviewResult> resultList);
