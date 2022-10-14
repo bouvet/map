@@ -29,13 +29,13 @@ Content-Disposition: form-data; name="category"
 ### Create Location With Image
 
 POST {{host}}/api/locations
-Authorization: Bearer {{usertoken}}
+# Authorization: Bearer {{usertoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
-testing Jpeg
+Lura Skatepark
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="description"
 

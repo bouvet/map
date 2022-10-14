@@ -44,12 +44,7 @@ public class UsersController : ApiController
 
     if (tokenUserId != id.ToString() && !isAdmin)
     {
-      return Problem(
-        detail: $"User must have the Admin role or have the id '{id}'.",
-        instance: HttpContext.Request.Path,
-        statusCode: StatusCodes.Status403Forbidden,
-        title: "Authenticated user is not authorized.",
-        type: "User.IsNotCorrectUserOrAdmin");
+      return Forbid();
     }
 
     var getUserByIdQuery = userMapper.MapGetByIdToCommand(id);
@@ -71,12 +66,7 @@ public class UsersController : ApiController
 
     if (tokenUserId != id.ToString() && !isAdmin)
     {
-      return Problem(
-        detail: $"User must have the Admin role or have the id '{id}'.",
-        instance: HttpContext.Request.Path,
-        statusCode: StatusCodes.Status403Forbidden,
-        title: "Authenticated user is not authorized.",
-        type: "User.IsNotCorrectUserOrAdmin");
+      return Forbid();
     }
 
     var updateUserCommand = userMapper.MapUpdateToCommand(id, request);

@@ -6,7 +6,7 @@ public static partial class Errors
 {
   public static class EmailService
   {
-    public static Error SendingEmailFailed => Error.Failure(
+    public static Error SendingEmailFailed => Error.Unexpected(
       code: "EmailService.SendingEmailFailed",
       description: "Sending email failed, please try again"
     );

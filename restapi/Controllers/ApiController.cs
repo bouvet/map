@@ -22,10 +22,10 @@ public class ApiController : ControllerBase
       return ValidationProblem(modelStateDictionary);
     }
 
-    if (errors.Any(e => e.Type == ErrorType.Unexpected))
-    {
-      return Problem();
-    }
+    // if (errors.Any(e => e.Type == ErrorType.Unexpected))
+    // {
+    //   return Problem();
+    // }
 
     var firstError = errors[0];
 
