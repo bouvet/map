@@ -50,7 +50,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       $@"
       <h1>Takk for at du ønsker å registrere deg hos oss!</h1>
       <p>Her er din bekreftelse-kode: <strong>{randomNumber}</strong></p>
-      <p>Koden er gyldig i 46 timer. Etter det må du be om ny kode.</p>
+      <p>Koden er gyldig i 48 timer. Etter det må du be om ny kode.</p>
       "
     );
 
@@ -68,7 +68,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       ConfirmationCode = randomNumber,
       Confirmed = false,
       Created = dateTimeProvider.CEST,
-      CodeValidTo = dateTimeProvider.UtcNow.AddMinutes(1)
+      CodeValidTo = dateTimeProvider.UtcNow.AddMinutes(2880) // 2880 minutes = 48 hours
     };
 
     var token = jwtGenerator.GenerateRegistrationToken(email);
