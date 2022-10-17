@@ -39,16 +39,6 @@ export const loginService = {
     },
     getToken(payload: IEmailType) {
         return async (dispatch: AppDispatch) => {
-            // try {
-            //     const getToken = await API.post('/auth/reset-password', payload);
-            //     console.log(getToken);
-            //     return true;
-            // } catch (error) {
-            //     console.error('error', error);
-            //     return false;
-            // }
-
-            //  NOTE: takes longer time before response
             try {
                 await API.post('/auth/reset-password', payload);
 

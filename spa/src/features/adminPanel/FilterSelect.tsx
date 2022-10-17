@@ -44,10 +44,10 @@ export const FilterSelect: FC<FilterProps> = (props) => {
     return (
         <>
             <Select onChange={(e) => setter(e.target.value)}>
-                <FilterButton value="Under Review">Under Review</FilterButton>
-                <FilterButton value="Approved">Approved</FilterButton>
-                <FilterButton value="Rejected">Rejected</FilterButton>
-                <FilterButton value="Reported">Reported</FilterButton>
+                <FilterButton value="Under behandling">Under behandling</FilterButton>
+                <FilterButton value="Godkjent">Godkjent</FilterButton>
+                <FilterButton value="Avvist">Avvist</FilterButton>
+                <FilterButton value="Rapportert">Rapportert</FilterButton>
             </Select>
         </>
     );

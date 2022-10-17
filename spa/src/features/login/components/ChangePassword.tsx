@@ -8,7 +8,6 @@ import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
 import { loginService } from '../services/login.services';
 
@@ -29,29 +28,6 @@ export const ChangePassword: FC = () => {
             navigate(-1);
         }
     };
-
-    // const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     console.log('Email: ', email);
-    //     sendToken();
-    // };
-
-    // const sendToken = async () => {
-    //     const inputEmail = {
-    //         email,
-    //     };
-
-    //     const successStatus: boolean = await dispatch(loginService.getToken(inputEmail));
-
-    //     if (successStatus) {
-    //         dispatch(
-    //             snackbarActions.setNotify({ message: `En link for å tilbakestille passordet er sendt til ${email}`, severity: 'success' }),
-    //         );
-    //         navigate(-1);
-    //     } else {
-    //         dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-    //     }
-    // };
 
     return (
         <FormWrapper>

@@ -16,15 +16,6 @@ const InputField = styled.input`
     width: calc(100% - 22px);
 `;
 
-const InputFieldPassword = styled.input`
-    border: 1px solid rgb(193, 193, 193);
-    font-size: ${MyTheme.fontSize.header};
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-    width: calc(100% - 22px);
-`;
-
 const VisibilityButton = styled.div`
     position: absolute;
     border-radius: 50%;
@@ -33,7 +24,7 @@ const VisibilityButton = styled.div`
     align-items: center;
     justify-content: center;
     transform: translateX(-30px);
-    top: 11px;
+    top: 10px;
 `;
 
 const PasswordWrapper = styled.div`
@@ -96,7 +87,7 @@ export const InputPassword: FC<InputProps> = (props) => {
         <>
             <Label>{label}</Label>
             <PasswordWrapper>
-                <InputFieldPassword
+                <InputField
                     type={show ? 'text' : 'password'}
                     minLength={8}
                     placeholder="Min. 8 tegn"
@@ -123,7 +114,7 @@ export const InputName: FC<InputProps> = (props) => {
     return (
         <>
             <Label>{label}</Label>
-            <InputField type="text" value={value} required onChange={(e) => handleChange(e)} />
+            <InputField type="text" value={value} required onChange={(e) => handleChange(e, setState)} />
         </>
     );
 };
