@@ -22,38 +22,36 @@ export const ChangePassword: FC = () => {
         setState(e.target.value);
     };
 
-    // const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     dispatch(
-    //         loginService.getToken({
-    //             email,
-    //         }),
-    //     );
-    //     // navigate(-1);
-    // };
-
-    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Email: ', email);
-        sendToken();
-    };
-
-    const sendToken = async () => {
-        const inputEmail = {
-            email,
-        };
-
-        const successStatus: boolean = await dispatch(loginService.getToken(inputEmail));
-
+        const successStatus: boolean = await dispatch(loginService.getToken({ email }));
         if (successStatus) {
-            dispatch(
-                snackbarActions.setNotify({ message: `En link for å tilbakestille passordet er sendt til ${email}`, severity: 'success' }),
-            );
             navigate(-1);
-        } else {
-            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
         }
     };
+
+    // const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     console.log('Email: ', email);
+    //     sendToken();
+    // };
+
+    // const sendToken = async () => {
+    //     const inputEmail = {
+    //         email,
+    //     };
+
+    //     const successStatus: boolean = await dispatch(loginService.getToken(inputEmail));
+
+    //     if (successStatus) {
+    //         dispatch(
+    //             snackbarActions.setNotify({ message: `En link for å tilbakestille passordet er sendt til ${email}`, severity: 'success' }),
+    //         );
+    //         navigate(-1);
+    //     } else {
+    //         dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+    //     }
+    // };
 
     return (
         <FormWrapper>

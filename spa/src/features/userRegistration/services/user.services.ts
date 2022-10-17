@@ -10,12 +10,8 @@ export const userService = {
             try {
                 const postUser = await API.post('/auth/register', payload);
                 console.log(postUser);
-                if (postUser.status === 200) {
-                    return true;
-                }
-                return false;
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
                 console.error('error', error);
                 return false;
             }
@@ -26,7 +22,6 @@ export const userService = {
             try {
                 const { data } = await API.get(`/users/${payload}`);
 
-                // localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data));
 
                 dispatch(authActions.userLogin(data));
@@ -44,12 +39,8 @@ export const userService = {
             try {
                 const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log(editUser);
-                if (editUser.status === 200) {
-                    return true;
-                }
-                return false;
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
                 console.error('error', error);
                 return false;
             }
@@ -60,13 +51,9 @@ export const userService = {
             try {
                 const getCode = await API.post('/email', payload);
                 console.log(getCode);
-                if (getCode.status === 200) {
-                    localStorage.setItem('token', getCode.data.token);
-                    return true;
-                }
-                return false;
+                localStorage.setItem('token', getCode.data.token);
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
                 console.error('error', error);
                 return false;
             }
@@ -77,12 +64,8 @@ export const userService = {
             try {
                 const confirmCode = await API.post('/email/confirm', payload);
                 console.log(confirmCode);
-                if (confirmCode.status === 200) {
-                    return true;
-                }
-                return false;
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
                 console.error('error', error);
                 return false;
             }

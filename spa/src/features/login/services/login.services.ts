@@ -39,34 +39,34 @@ export const loginService = {
     },
     getToken(payload: IEmailType) {
         return async (dispatch: AppDispatch) => {
-            try {
-                const getToken = await API.post('/auth/reset-password', payload);
-                console.log(getToken);
-                if (getToken.status === 204) {
-                    return true;
-                }
-                return false;
-            } catch (error) {
-                // TODO: Push error to error state
-                console.error('error', error);
-                return false;
-            }
             // try {
-            //     await API.post('/auth/reset-password', payload);
-
-            //     dispatch(
-            //         snackbarActions.setNotify({
-            //             message: `En link for å tilbakestille passordet er sendt til ${payload.email}`,
-            //             severity: 'success',
-            //         }),
-            //     );
-
+            //     const getToken = await API.post('/auth/reset-password', payload);
+            //     console.log(getToken);
             //     return true;
             // } catch (error) {
             //     console.error('error', error);
-            //     dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             //     return false;
             // }
+
+            //  NOTE: takes longer time before response
+            try {
+                await API.post('/auth/reset-password', payload);
+
+                setTimeout(() => {
+                    dispatch(
+                        snackbarActions.setNotify({
+                            message: `En link for å tilbakestille passordet er sendt til ${payload.email}`,
+                            severity: 'success',
+                        }),
+                    );
+                }, 500);
+
+                return true;
+            } catch (error) {
+                console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                return false;
+            }
         };
     },
     changePassword(payload: IPasswordType) {
@@ -74,12 +74,8 @@ export const loginService = {
             try {
                 const changePassword = await API.put('/users/password', payload);
                 console.log(changePassword);
-                if (changePassword.status === 204) {
-                    return true;
-                }
-                return false;
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
                 console.error('error', error);
                 return false;
             }
@@ -90,12 +86,8 @@ export const loginService = {
             try {
                 const changeEmail = await API.put('/');
                 console.log(changeEmail);
-                if (changeEmail.status === 200) {
-                    return true;
-                }
-                return false;
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
                 console.error('error', error);
                 return false;
             }

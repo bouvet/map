@@ -11,13 +11,9 @@ export const locationServices = {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
                 console.log(postResponse);
-                if (postResponse.status === 201) {
-                    return true;
-                }
-                return false;
+                return true;
             } catch (error) {
-                // TODO: Push error to error state
-                console.error('error:', error);
+                console.error('error', error);
                 return false;
             }
         };
@@ -25,7 +21,6 @@ export const locationServices = {
     getClosestLocation(userLocation: ILatLong, selectedFilterCategory: string) {
         return async (dispatch: AppDispatch) => {
             try {
-                console.log('yes');
                 console.log(userLocation);
                 console.log(selectedFilterCategory);
                 if (selectedFilterCategory) {
@@ -37,7 +32,6 @@ export const locationServices = {
                 const response = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}/category`);
                 return response;
             } catch (error) {
-                // TODO: Push error to error state
                 return error;
             }
         };
