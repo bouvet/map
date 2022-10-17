@@ -10,7 +10,7 @@ import { BackButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
-import { loginService } from '../services/login.services';
+import { loginServices } from '../services/login.services';
 
 export const ResetPassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -42,29 +42,21 @@ export const ResetPassword: FC = () => {
         setState(e.target.value);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newPassword !== confirmNewPassword) {
             dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
         } else {
             e.preventDefault();
-            changePassword();
-        }
-    };
-
-    const changePassword = async () => {
-        const inputPassword = {
-            password: newPassword,
-            confirmPassword: confirmNewPassword,
-        };
-
-        const successStatus: boolean = await dispatch(loginService.changePassword(inputPassword));
-
-        if (successStatus) {
-            dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
-            navigate('/login');
-        } else {
-            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+            const successStatus: boolean = await dispatch(
+                loginServices.changePassword({
+                    password: newPassword,
+                    confirmPassword: confirmNewPassword,
+                }),
+            );
+            if (successStatus) {
+                navigate('/login');
+            }
         }
     };
 
@@ -76,7 +68,7 @@ export const ResetPassword: FC = () => {
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Tilbakestill passord</TitleForm>
-                    <Form onSubmit={(e) => handleSubmit(e)}>
+                    <Form onSubmit={(e) => onSubmitHandler(e)}>
                         <InputPassword
                             label="Nytt passord*"
                             value={newPassword}

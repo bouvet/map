@@ -95,7 +95,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
             e.preventDefault();
         } else {
@@ -118,7 +118,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         <Modal open={open}>
             <>
                 <Backdrop onClick={handleCloseAddReview} />
-                <form onSubmit={(e) => handleSubmit(e)}>
+                <form onSubmit={(e) => onSubmitHandler(e)}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{

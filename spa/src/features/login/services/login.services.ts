@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { IEmailType, ILoginType, IPasswordType } from '../../../utils/types.d';
 
-export const loginService = {
-    loginUser(payload: ILoginType) {
+export const loginServices = {
+    login(payload: ILoginType) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data } = await API.post('/auth/login', payload);
@@ -64,15 +63,21 @@ export const loginService = {
             try {
                 const changePassword = await API.put('/users/password', payload);
                 console.log(changePassword);
+
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
+                }, 500);
+
                 return true;
             } catch (error) {
                 console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
                 return false;
             }
         };
     },
     changeEmail() {
-        return async (dispatch: AppDispatch) => {
+        return async () => {
             try {
                 const changeEmail = await API.put('/');
                 console.log(changeEmail);

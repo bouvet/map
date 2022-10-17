@@ -9,7 +9,7 @@ import { Text, TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { MyTheme } from '../../../styles/global';
-import { loginService } from '../services/login.services';
+import { loginServices } from '../services/login.services';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -23,7 +23,7 @@ export const ChangePassword: FC = () => {
 
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const successStatus: boolean = await dispatch(loginService.getToken({ email }));
+        const successStatus: boolean = await dispatch(loginServices.getToken({ email }));
         if (successStatus) {
             navigate(-1);
         }

@@ -10,7 +10,7 @@ import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
-import { userService } from '../services/user.services';
+import { userServices } from '../services/user.services';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 
 interface LocationType {
@@ -24,7 +24,7 @@ export const EmailConfirmation: FC = () => {
 
     const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
-    const handleSubmit = useCallback(
+    const onSubmitHandler = useCallback(
         (code: string) => {
             dispatch(userActions.setEmail(location.email));
             confirmCode(code);
@@ -42,7 +42,7 @@ export const EmailConfirmation: FC = () => {
         console.log(inputCode);
 
         // @ts-ignore
-        const successStatus: boolean = await dispatch(userService.confirmCode(inputCode));
+        const successStatus: boolean = await dispatch(userServices.confirmCode(inputCode));
 
         if (successStatus) {
             dispatch(snackbarActions.setNotify({ message: 'Kode er bekreftet', severity: 'success' }));
@@ -64,13 +64,13 @@ export const EmailConfirmation: FC = () => {
 
     useEffect(() => {
         if (!confirmationCode.includes('')) {
-            handleSubmit(confirmationCode.join(''));
+            onSubmitHandler(confirmationCode.join(''));
         }
-    }, [confirmationCode, handleSubmit]);
+    }, [confirmationCode, onSubmitHandler]);
 
     const resendCode = () => {
         // @ts-ignore
-        dispatch(userService.resendCode());
+        dispatch(userServices.resendCode());
     };
 
     const pageIndex = 1;

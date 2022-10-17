@@ -4,21 +4,17 @@ import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ICategoryTypePost } from '../../../utils/types.d';
 
 export const categoryServices = {
-    postCategory(payload: ICategoryTypePost) {
+    create(payload: ICategoryTypePost) {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.post('/categories', payload);
 
-                dispatch(
-                    snackbarActions.setNotify({
-                        message: 'Kategori er lagt til',
-                        severity: 'success',
-                    }),
-                );
+                dispatch(snackbarActions.setNotify({ message: 'Kategori er lagt til', severity: 'success' }));
 
                 return true;
             } catch (error) {
                 console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
                 return false;
             }
         };

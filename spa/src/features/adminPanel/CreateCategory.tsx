@@ -24,7 +24,7 @@ export const CreateCategory: FC = () => {
         //     //
         //     return;
         // }
-        dispatch(categoryServices.postCategory({ name, emoji }));
+        dispatch(categoryServices.create({ name, emoji }));
     };
 
     return (

@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit } from '../../../utils/types.d';
 
-export const userService = {
-    postUser(payload: IUserType) {
-        return async (dispatch: AppDispatch) => {
+export const userServices = {
+    register(payload: IUserType) {
+        return async () => {
             try {
                 const postUser = await API.post('/auth/register', payload);
                 console.log(postUser);
@@ -18,7 +17,7 @@ export const userService = {
             }
         };
     },
-    getUser(payload: string) {
+    getInfo(payload: string) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data } = await API.get(`/users/${payload}`);
@@ -35,8 +34,8 @@ export const userService = {
             }
         };
     },
-    editUser(payload: IUserTypeEdit) {
-        return async (dispatch: AppDispatch) => {
+    editInfo(payload: IUserTypeEdit) {
+        return async () => {
             try {
                 const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log(editUser);
@@ -90,7 +89,7 @@ export const userService = {
         };
     },
     confirmCode(payload: IConfirmCode) {
-        return async (dispatch: AppDispatch) => {
+        return async () => {
             try {
                 const confirmCode = await API.post('/email/confirm', payload);
                 console.log(confirmCode);

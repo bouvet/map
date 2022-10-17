@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { API } from '../../../lib/api';
-import { AppDispatch } from '../../../store';
 import { ILatLong } from '../../../utils/types.d';
 
 export const locationServices = {
     postLocation(payload: FormData) {
-        return async (dispatch: AppDispatch) => {
+        return async () => {
             try {
                 const postResponse = await API.post('/Locations', payload, {
                     headers: { 'Content-Type': 'multipart/form-data' },
@@ -19,7 +17,7 @@ export const locationServices = {
         };
     },
     getClosestLocation(userLocation: ILatLong, selectedFilterCategory: string) {
-        return async (dispatch: AppDispatch) => {
+        return async () => {
             try {
                 console.log(userLocation);
                 console.log(selectedFilterCategory);

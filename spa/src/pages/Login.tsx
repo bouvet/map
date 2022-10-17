@@ -10,7 +10,7 @@ import { LinkText, Text, Title } from '../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
-import { loginService } from '../features/login/services/login.services';
+import { loginServices } from '../features/login/services/login.services';
 import { authActions } from '../store/state/auth.state';
 
 export const Login: FC = () => {
@@ -37,7 +37,7 @@ export const Login: FC = () => {
         dispatch(authActions.setLoading(true));
 
         dispatch(
-            loginService.loginUser({
+            loginServices.login({
                 email,
                 password,
             }),

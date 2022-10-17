@@ -42,7 +42,7 @@ export const PersonalInfo: FC = () => {
 
     moment.locale('en-ca');
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         if (dob === null) {
             e.preventDefault();
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
@@ -76,7 +76,7 @@ export const PersonalInfo: FC = () => {
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>Personlig informasjon</TitleForm>
-                        <Form onSubmit={(e) => handleSubmit(e)}>
+                        <Form onSubmit={onSubmitHandler}>
                             <InputName label="Fornavn*" value={firstName} handleChange={handleChangeFirstName} />
                             <InputName label="Etternavn*" value={lastName} handleChange={handleChangeLastName} />
                             <Label>Fødselsdato*</Label>

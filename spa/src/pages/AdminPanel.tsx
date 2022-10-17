@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useState } from 'react';
 import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { BackButtonAdmin, FilterSelect } from '../features/adminPanel/FilterSelect';
 import { LocationBlock, LocationWrapper } from '../features/adminPanel/LocationBlock';
-import { mapService } from '../features/map';
+import { mapServices } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ILocation } from '../utils/types.d';
 
@@ -25,7 +25,7 @@ export const AdminPanel: FC = () => {
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        dispatch(mapService.getLocations());
+        dispatch(mapServices.getLocations());
     }, [dispatch]);
 
     useEffect(() => {

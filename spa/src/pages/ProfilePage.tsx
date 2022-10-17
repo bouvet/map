@@ -7,7 +7,7 @@ import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps, ProfileLink } from '../features/profile/Input';
 import { ProfileHeader } from '../features/profile/ProfileHeader';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { userService } from '../features/userRegistration/services/user.services';
+import { userServices } from '../features/userRegistration/services/user.services';
 import { snackbarActions } from '../store/state/snackbar.state';
 
 export const ProfilePage: FC = () => {
@@ -49,7 +49,7 @@ export const ProfilePage: FC = () => {
     //     setState(e.target.value);
     // };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // editUserDetails();
     };
@@ -83,7 +83,7 @@ export const ProfilePage: FC = () => {
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
 
             <ProfileHeader handleClick={ToggleImageModal} />
-            <Form onSubmit={(e) => handleSubmit(e)}>
+            <Form onSubmit={(e) => onSubmitHandler(e)}>
                 {inputs}
                 <span>
                     <ProfileLink to="/change-email">Endre e-post</ProfileLink>
