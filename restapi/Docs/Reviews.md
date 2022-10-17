@@ -188,8 +188,9 @@ GET {{host}}/api/reviews?locationId=e4ea896b-f1e2-4d8f-5a00-08da8fe37d95
 200 Ok
 ```
 
-```json
+[Get Images By Location Id Response](./Responses/Reviews/GetReviewsByLocationId.json)
 
+```json
 // If no results an empty array will be provided
 [
   {

@@ -23,11 +23,6 @@ public class DeleteEmailCommandHandler : IRequestHandler<DeleteEmailCommand, Err
 
     var email = new Email();
 
-    if (emailById is null && !request.IsAdmin)
-    {
-      return Errors.Authentication.Forbidden;
-    }
-
     if (emailById is null && request.IsAdmin)
     {
       email = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);

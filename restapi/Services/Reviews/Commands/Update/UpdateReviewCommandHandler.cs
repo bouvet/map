@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using restapi.Common.Providers;
 using restapi.Data;
 using restapi.Entities;
+using restapi.Services.ImageStorages.Commands.Delete;
 using restapi.Services.ImageStorages.Commands.Upload;
 using restapi.Services.ImageStorages.Common;
 
@@ -11,11 +12,11 @@ namespace restapi.Services.Reviews.Commands.Update;
 
 public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, ErrorOr<Updated>>
 {
-  private readonly Data.DataContext dataContext;
+  private readonly DataContext dataContext;
   private readonly IDateTimeProvider dateTimeProvider;
   private readonly ISender mediator;
 
-  public UpdateReviewCommandHandler(Data.DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
+  public UpdateReviewCommandHandler(DataContext dataContext, IDateTimeProvider dateTimeProvider, ISender mediator)
   {
     this.dataContext = dataContext;
     this.dateTimeProvider = dateTimeProvider;
@@ -26,36 +27,24 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
   {
     List<Error> errors = new();
 
-    if (request.Id == Guid.Empty)
-    {
-      return Errors.Review.InvalidId;
-    }
-
-    var review = await dataContext.Reviews.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
-
-    if (review is null)
+    if (request.Review is null)
     {
       return Errors.Review.NotFound;
     }
 
-    if (review.Creator?.Id != request.UserId)
-    {
-      return Errors.Authentication.Forbidden;
-    }
-
     if (!string.IsNullOrEmpty(request.Text))
     {
-      review.Text = request.Text;
+      request.Review.Text = request.Text;
     }
 
     if (!string.IsNullOrEmpty(request.Status))
     {
-      review.Status = request.Status;
+      request.Review.Status = request.Status;
     }
 
     if (request.LocationId is not null)
     {
-      review.LocationId = (Guid)request.LocationId;
+      request.Review.LocationId = (Guid)request.LocationId;
     }
 
     if (request.Rating > 0)
@@ -66,19 +55,43 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
       }
       else
       {
-        review.Rating = request.Rating;
+        request.Review.Rating = request.Rating;
       }
     }
 
+    request.Review.Editor = await dataContext.Users.FindAsync(new object?[] { request.UserId }, cancellationToken: cancellationToken);
+
     if (request.Image is not null)
     {
-      //TODO: Delete old images before updating!
+      if (request.Review.OriginalImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(request.Review.OriginalImage.Id, "originals");
+
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
+      }
+
+      if (request.Review.WebpImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(request.Review.WebpImage.Id, "webp");
+
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
+      }
 
       var uploadImageCommand = new UploadImageCommand(
         request.Image,
-        review.Creator,
-        review.LocationId,
-        review.Id
+        request.Review.Editor,
+        request.Review.LocationId,
+        request.Review.Id
       );
 
       ErrorOr<ImageStorageResult> uploadResult = await mediator.Send(uploadImageCommand, cancellationToken);
@@ -88,18 +101,19 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
         return Errors.ImageStorage.UploadFailed;
       }
 
-      review.OriginalImage = uploadResult.Value.OriginalImage;
-      review.WebpImage = uploadResult.Value.WebpImage;
+      request.Review.OriginalImage = uploadResult.Value.OriginalImage;
+      request.Review.WebpImage = uploadResult.Value.WebpImage;
     }
 
-    review.Updated = dateTimeProvider.CEST;
+    request.Review.Updated = dateTimeProvider.CEST;
 
+    await UpdateLocationRating(request.Review.LocationId);
     await dataContext.SaveChangesAsync(cancellationToken);
-    await UpdateLocationRating(review.LocationId);
 
     return Result.Updated;
   }
 
+  // TODO: Extract to Service utils!!
   private async Task UpdateLocationRating(Guid LocationId)
   {
     Location? location = await dataContext.Locations.FindAsync(LocationId);
@@ -107,7 +121,5 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
 
     List<float> allReviewsForLocation = await dataContext.Reviews.Where(l => LocationId == l.LocationId).Select(l => l.Rating).ToListAsync();
     location.Rating = (float)Math.Round((decimal)allReviewsForLocation.Average(), 1);
-
-    await dataContext.SaveChangesAsync();
   }
 }

@@ -1,0 +1,64 @@
+{
+  "id": "3cf1360d-9c4c-4c8d-b1b3-e3bf8c0280b0",
+  "type": "Feature",
+  "creator": {
+    "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+    "email": "user@email.com",
+    "firstName": "User",
+    "lastName": "Userdottir",
+    "dob": "2000-02-27T00:00:00"
+  },
+  "editor": null,
+  "properties": {
+    "title": "Lura Skatepark",
+    "description": "Helt OK skatepark med betong elementer.",
+    "originalImage": {
+      "id": "65040241-433a-4b93-9659-923c035eeaa0",
+      "blobUri": "https://optimusblobs.blob.core.windows.net:443/images/originals/65040241-433a-4b93-9659-923c035eeaa0",
+      "cdnUri": "https://optimusblobs.azureedge.net/images/originals/65040241-433a-4b93-9659-923c035eeaa0",
+      "contentType": "image/jpeg",
+      "uploaded": "2022-10-14T15:17:09.533016",
+      "uploader": {
+        "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+        "email": "user@email.com",
+        "firstName": "User",
+        "lastName": "Userdottir",
+        "dob": "2000-02-27T00:00:00"
+      },
+      "originalImageId": null,
+      "locationId": "3cf1360d-9c4c-4c8d-b1b3-e3bf8c0280b0",
+      "reviewId": null
+    },
+    "webpImage": {
+      "id": "3ed7cfac-626e-44b9-9f80-26e0a50bfc99",
+      "blobUri": "https://optimusblobs.blob.core.windows.net:443/images/webp/3ed7cfac-626e-44b9-9f80-26e0a50bfc99",
+      "cdnUri": "https://optimusblobs.azureedge.net/images/webp/3ed7cfac-626e-44b9-9f80-26e0a50bfc99",
+      "contentType": "image/webp",
+      "uploaded": "2022-10-14T15:17:09.534492",
+      "uploader": {
+        "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
+        "email": "user@email.com",
+        "firstName": "User",
+        "lastName": "Userdottir",
+        "dob": "2000-02-27T00:00:00"
+      },
+      "originalImageId": "65040241-433a-4b93-9659-923c035eeaa0",
+      "locationId": "3cf1360d-9c4c-4c8d-b1b3-e3bf8c0280b0",
+      "reviewId": null
+    },
+    "status": "Under Review",
+    "rating": 0,
+    "category": [
+      {
+        "id": "9a6415fa-57dd-4698-dabf-08daaabaac26",
+        "name": "Skatepark",
+        "emoji": "\uD83D\uDEF9",
+        "created": "2022-10-10T14:26:35.3659488",
+        "updated": null,
+        "creator": null,
+        "editor": null
+      }
+    ]
+  },
+  "geometry": { "coordinates": [5.12345, 58.12345] }
+}
