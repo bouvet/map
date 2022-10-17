@@ -19,8 +19,7 @@ export const mapService = {
 
                 dispatch(mapActions.setLoading(false));
             } catch (error) {
-                // TODO: Push error to error state
-                console.error(error);
+                console.error('error', error);
             }
         };
     },

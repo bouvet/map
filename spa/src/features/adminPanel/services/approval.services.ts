@@ -10,7 +10,6 @@ export const approvalServices = {
                 });
                 console.log(putResponse);
             } catch (error) {
-                // TODO: Push error to error state
                 console.error(error);
             }
         };

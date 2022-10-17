@@ -26,17 +26,18 @@ const InputFieldPassword = styled.input`
 `;
 
 const VisibilityButton = styled.div`
-    position: relative;
+    position: absolute;
     border-radius: 50%;
     border: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     transform: translateX(-30px);
+    top: 11px;
 `;
 
 const PasswordWrapper = styled.div`
-    display: flex;
+    position: relative;
 `;
 
 export const Checkbox = styled.input`

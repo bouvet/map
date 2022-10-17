@@ -25,7 +25,7 @@ export const EmailConfirmation: FC = () => {
     const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
     const handleSubmit = useCallback(
-        (code: any) => {
+        (code: string) => {
             dispatch(userActions.setEmail(location.email));
             confirmCode(code);
         },
@@ -33,7 +33,7 @@ export const EmailConfirmation: FC = () => {
         [dispatch],
     );
 
-    const confirmCode = async (code: any) => {
+    const confirmCode = async (code: string) => {
         const inputCode = {
             email: location.email,
             confirmationCode: code,
@@ -68,6 +68,7 @@ export const EmailConfirmation: FC = () => {
         }
     }, [confirmationCode, handleSubmit]);
 
+    // add snackbar messages
     const resendCode = () => {
         dispatch(
             // @ts-ignore

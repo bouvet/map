@@ -58,8 +58,6 @@ export const ResetPassword: FC = () => {
             confirmPassword: confirmNewPassword,
         };
 
-        console.log(inputPassword);
-
         const successStatus: boolean = await dispatch(loginService.changePassword(inputPassword));
 
         if (successStatus) {

@@ -15,7 +15,6 @@ export const ProfilePage: FC = () => {
 
     const { user } = useStateSelector((state) => state.auth);
 
-    const id = user?.id!;
     const firstName = user?.firstName;
     const lastName = user?.lastName;
     const dob = user?.dob;
@@ -53,7 +52,6 @@ export const ProfilePage: FC = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // editUserDetails();
-        console.log('submitted');
     };
 
     // check: values cannot be empty

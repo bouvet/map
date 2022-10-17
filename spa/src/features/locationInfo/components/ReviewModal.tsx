@@ -46,7 +46,7 @@ const Backdrop = styled.div`
     z-index: 0;
 `;
 
-const IconWrapper = styled.div`
+const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
 `;
@@ -151,7 +151,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                             {image ? (
                                 <>
                                     <Img src={imageUrl} alt="blobb" />
-                                    <IconWrapper>
+                                    <ButtonWrapper>
                                         <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
                                         <Button size="large" component="label" startIcon={<Autorenew />}>
                                             <input
@@ -161,7 +161,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                                 onChange={(e) => handleImageChange(e)}
                                             />
                                         </Button>
-                                    </IconWrapper>
+                                    </ButtonWrapper>
                                 </>
                             ) : (
                                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>

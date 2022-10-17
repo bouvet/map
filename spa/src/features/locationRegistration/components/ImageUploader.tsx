@@ -21,7 +21,7 @@ export const Img = styled.img`
     max-height: 40vh;
 `;
 
-const Wrapper = styled.div`
+const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
 `;
@@ -56,7 +56,7 @@ export const ImageUploader: FC = () => {
             {image ? (
                 <>
                     <Img src={imageUrl} alt="blobb" />
-                    <Wrapper>
+                    <ButtonWrapper>
                         <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
                         <Button size="large" component="label" startIcon={<Autorenew />}>
                             <input
@@ -66,7 +66,7 @@ export const ImageUploader: FC = () => {
                                 onChange={(e) => handleImageChange(e)}
                             />
                         </Button>
-                    </Wrapper>
+                    </ButtonWrapper>
                 </>
             ) : (
                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>

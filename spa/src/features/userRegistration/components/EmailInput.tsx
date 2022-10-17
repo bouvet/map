@@ -25,7 +25,6 @@ export const EmailInput: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Email: ', email);
         sendCode();
         navigate('/email-confirmation', { state: { email } });
     };
