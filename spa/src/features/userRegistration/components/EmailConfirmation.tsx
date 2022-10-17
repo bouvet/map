@@ -68,14 +68,9 @@ export const EmailConfirmation: FC = () => {
         }
     }, [confirmationCode, handleSubmit]);
 
-    // add snackbar messages
     const resendCode = () => {
-        dispatch(
-            // @ts-ignore
-            userService.getCode({
-                email: location.email,
-            }),
-        );
+        // @ts-ignore
+        dispatch(userService.resendCode());
     };
 
     const pageIndex = 1;

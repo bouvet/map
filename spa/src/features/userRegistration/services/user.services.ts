@@ -2,6 +2,7 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit } from '../../../utils/types.d';
 
 export const userService = {
@@ -49,13 +50,42 @@ export const userService = {
     getCode(payload: IEmailType) {
         return async (dispatch: AppDispatch) => {
             try {
-                const getCode = await API.post('/email', payload);
-                console.log(getCode);
-                localStorage.setItem('token', getCode.data.token);
+                const { data } = await API.post('/email', payload);
+
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('id', data.id);
+
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Kode er sendt', severity: 'success' }));
+                }, 500);
+
                 return true;
             } catch (error) {
                 console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+
                 return false;
+            }
+        };
+    },
+    resendCode() {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const id = localStorage.getItem('id');
+                if (!id) {
+                    throw new Error('Noe gikk galt');
+                }
+
+                const { data } = await API.post(`/resend-code/${id}`);
+
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('id', data.id);
+
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Ny kode er sendt', severity: 'success' }));
+                }, 500);
+            } catch (error) {
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             }
         };
     },
