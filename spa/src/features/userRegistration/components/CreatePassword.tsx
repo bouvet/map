@@ -33,7 +33,7 @@ export const CreatePassword: FC = () => {
         setState(e.target.value);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (createPassword !== confirmPassword) {
             dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
@@ -57,7 +57,7 @@ export const CreatePassword: FC = () => {
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>Passord</TitleForm>
-                        <Form onSubmit={(e) => handleSubmit(e)}>
+                        <Form onSubmit={(e) => onSubmitHandler(e)}>
                             <InputPassword
                                 label="Passord*"
                                 value={createPassword}

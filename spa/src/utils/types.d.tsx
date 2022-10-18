@@ -197,3 +197,8 @@ export interface IPasswordType {
     password: string;
     confirmPassword: string;
 }
+
+export interface ICategoryTypePost {
+    name: string;
+    emoji: string;
+}

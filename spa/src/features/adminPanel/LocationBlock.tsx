@@ -5,7 +5,7 @@ import { Text } from '../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { MyTheme } from '../../styles/global';
 import { ILocation, IPutLocation } from '../../utils/types.d';
-import { mapService } from '../map';
+import { mapServices } from '../map';
 import { ApproveButton, RejectButton } from './ApprovalButton';
 import { approvalServices } from './services/approval.services';
 
@@ -84,8 +84,8 @@ export const LocationBlock: FC<LocationProps> = (props) => {
             description: location.properties.description,
             status: 'Approved',
         };
-        await dispatch(approvalServices.putLocation(payload));
-        dispatch(mapService.getLocations());
+        await dispatch(approvalServices.updateLocation(payload));
+        dispatch(mapServices.getLocations());
     };
 
     const handleReject = async () => {
@@ -96,8 +96,8 @@ export const LocationBlock: FC<LocationProps> = (props) => {
             description: location.properties.description,
             status: 'Rejected',
         };
-        await dispatch(approvalServices.putLocation(payload));
-        dispatch(mapService.getLocations());
+        await dispatch(approvalServices.updateLocation(payload));
+        dispatch(mapServices.getLocations());
     };
 
     return (
