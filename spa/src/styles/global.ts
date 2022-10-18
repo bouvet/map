@@ -3,9 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 export const MyTheme = {
     colors: {
         accent: '#007BC0',
-        darkbase: '#282828',
+        darkBase: '#282828',
         lightBase: '#FFFFFF',
-        darkcolor: '#000000',
+        darkColor: '#000000',
         opaque: 'rgba(0, 0, 0, 0.5)',
         grey: '#A7A7A7',
         alert: '#D32F2F',

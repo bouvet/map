@@ -119,13 +119,13 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
             <PopupContent>
                 <ExpandBtn
                     backgroundColor={MyTheme.colors.lightBase}
-                    textColor={MyTheme.colors.darkbase}
+                    textColor={MyTheme.colors.darkBase}
                     onClick={handleClickShowLocationPage}
                 >
                     <ExpandLink />
                 </ExpandBtn>
                 <Parkname>{name}</Parkname>
-                <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx={MyTheme.fontSize.icon} />
+                <StarRating rating={rating} color={MyTheme.colors.darkBase} sizePx={MyTheme.fontSize.icon} />
                 <Bodytext>
                     {displayedDescription}
                     <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 50 && 'les mer'}</ReadMoreLink>

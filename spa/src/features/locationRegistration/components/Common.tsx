@@ -71,7 +71,7 @@ const ProgressStatusLine = styled.div<ProgessCompletionProp>`
 `;
 
 const ProgressIcon = styled.span<ProgessCompletionProp>`
-    color: ${(props) => (props.completed ? MyTheme.colors.darkbase : MyTheme.colors.grey)};
+    color: ${(props) => (props.completed ? MyTheme.colors.darkBase : MyTheme.colors.grey)};
     font-weight: 400;
 `;
 

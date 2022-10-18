@@ -8,7 +8,7 @@ const LoadingScreenWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${MyTheme.colors.darkbase};
+    background-color: ${MyTheme.colors.darkBase};
     color: ${MyTheme.colors.lightBase};
 `;
 

@@ -16,13 +16,13 @@ type Props = {
 };
 
 export const CustomMarker: FC<Props> = ({ coordinates, onClickHandler, selectedMarker, markerLocation }) => {
-    const [color, setColor] = useState(MyTheme.colors.darkbase);
+    const [color, setColor] = useState(MyTheme.colors.darkBase);
 
     useEffect(() => {
         if (selectedMarker === markerLocation.id) {
             setColor(MyTheme.colors.accent);
         } else {
-            setColor(MyTheme.colors.darkbase);
+            setColor(MyTheme.colors.darkBase);
         }
     }, [selectedMarker, markerLocation.id]);
 
