@@ -83,7 +83,7 @@ export const ProfilePage: FC = () => {
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
 
             <ProfileHeader handleClick={ToggleImageModal} />
-            <Form onSubmit={(e) => onSubmitHandler(e)}>
+            <Form onSubmit={onSubmitHandler}>
                 {inputs}
                 <span>
                     <ProfileLink to="/change-email">Endre e-post</ProfileLink>

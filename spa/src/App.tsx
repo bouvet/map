@@ -9,7 +9,6 @@ import { AdminPanel } from './pages/AdminPanel';
 import { ProfilePage } from './pages/ProfilePage';
 import { EmailConfirmation } from './features/userRegistration/components/EmailConfirmation';
 import { EmailInput } from './features/userRegistration/components/EmailInput';
-import { UserRegistration } from './pages/UserRegistration';
 import { PersonalInfo } from './features/userRegistration/components/PersonalInfo';
 import { CreatePassword } from './features/userRegistration/components/CreatePassword';
 import { Personalization } from './features/userRegistration/components/Personalization';
@@ -47,7 +46,6 @@ const App = () => {
                 <Route path="/change-password" element={<ChangePassword />} />
                 <Route path="/change-email" element={<ChangeEmail />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/user-registration" element={<UserRegistration />} />
                 <Route path="/email-input" element={<EmailInput />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
                 <Route path="/personal-info" element={<PersonalInfo />} />

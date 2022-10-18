@@ -17,13 +17,12 @@ import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
 
-export const PersonalInfo: FC = () => {
+export const PersonalInfoGoogle: FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -71,8 +70,6 @@ export const PersonalInfo: FC = () => {
         }
     };
 
-    const pageIndex = 2;
-
     const theme = createTheme(
         {
             palette: {
@@ -94,9 +91,6 @@ export const PersonalInfo: FC = () => {
 
     return (
         <>
-            <ProgressWrapper>
-                <ProgressBarForm pageIndex={pageIndex} />
-            </ProgressWrapper>
             <FormWrapperRegistration>
                 <DialogButton />
                 <FormContent>

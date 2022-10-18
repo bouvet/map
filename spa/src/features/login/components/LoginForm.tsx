@@ -3,7 +3,7 @@ import { CircularProgress } from '@mui/material';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { authActions } from '../../../store/state/auth.state';
-import { loginService } from '../services/login.services';
+import { loginServices } from '../services/login.services';
 
 import { useInput } from '../../../hooks/useInput';
 
@@ -62,7 +62,7 @@ export const LoginForm: FC = () => {
         dispatch(authActions.setLoading(true));
 
         dispatch(
-            loginService.loginUser({
+            loginServices.login({
                 email: 'email',
                 password: 'password',
             }),

@@ -1,33 +1,43 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
+import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitButtonRegistration } from '../../components/Form/Buttons';
 import { Form } from '../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
-import { CenterFlex, InputEmail } from '../../components/Form/Input';
+import { CenterFlex } from '../../components/Form/Input';
+import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { TitleForm } from '../../components/Form/Text';
 import { BackButton } from '../../components/Navigation/Buttons';
+import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
 import { MyTheme } from '../../styles/global';
+import { validateEmail } from '../../utils/emailValidator';
 import { SectionWrapper } from '../login/components/SectionWrapper';
 
 export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [newEmail, setNewEmail] = useState('');
-
-    const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-        setState(e.target.value);
-    };
-
     // email validation?
+
+    const {
+        value: email,
+        isValid: enteredEmailIsValid,
+        hasError: emailInputHasError,
+        valueChangeHandler: emailChangeHandler,
+        inputBlurHandler: emailBlurHandler,
+    } = useInput((value) => validateEmail(value));
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        emailBlurHandler();
+
+        if (!enteredEmailIsValid) return;
+
         dispatch(snackbarActions.setNotify({ message: 'E-posten er endret', severity: 'success' }));
         navigate('/profile');
-        console.log('Email: ', newEmail);
+        console.log('Email: ', email);
     };
 
     return (
@@ -38,8 +48,16 @@ export const ChangeEmail: FC = () => {
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Endre e-post</TitleForm>
-                    <Form onSubmit={(e) => onSubmitHandler(e)}>
-                        <InputEmail label="E-post*" value={newEmail} setState={setNewEmail} handleChange={handleFormInputChange} />
+                    <Form onSubmit={onSubmitHandler}>
+                        <StyledInput
+                            label="E-post"
+                            type="email"
+                            errorMessage="Vennligst oppgi en gyldig e-post"
+                            value={email}
+                            onChange={emailChangeHandler}
+                            onBlur={emailBlurHandler}
+                            inputHasError={emailInputHasError}
+                        />
                         <CenterFlex>
                             <SubmitButtonRegistration text="white">Endre e-post</SubmitButtonRegistration>
                         </CenterFlex>

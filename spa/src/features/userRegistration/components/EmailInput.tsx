@@ -38,18 +38,21 @@ export const EmailInput: FC = () => {
                 <ProgressBarForm pageIndex={pageIndex} />
             </ProgressWrapper>
             <FormWrapperRegistration>
-                <BackButton
-                    backgroundColor={MyTheme.colors.opaque}
-                    textColor={MyTheme.colors.lightBase}
-                    onClick={() => navigate('/user-registration')}
-                >
+                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/login')}>
                     <span className="material-symbols-outlined">close</span>
                 </BackButton>
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>E-post</TitleForm>
+                        <Text>Ved å opprette bruker kan du:</Text>
+                        <ul>
+                            <li>Legge til lokasjoner</li>
+                            <li>Få personlig tilpasning og anbefalinger</li>
+                        </ul>
+
                         <Text>Fyll inn din e-postadresse for å motta en bekreftelseskode.</Text>
-                        <Form onSubmit={(e) => onSubmitHandler(e)}>
+
+                        <Form onSubmit={onSubmitHandler}>
                             <InputEmail label="E-post*" value={email} setState={setEmail} handleChange={handleFormInputChange} />
                             <CenterFlex>
                                 <SubmitButtonRegistration text="white">Send kode</SubmitButtonRegistration>
