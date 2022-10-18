@@ -40,7 +40,7 @@ export const EmailInput: FC = () => {
             <FormWrapperRegistration>
                 <BackButton
                     backgroundColor={MyTheme.colors.opaque}
-                    textColor={MyTheme.colors.lightbase}
+                    textColor={MyTheme.colors.lightBase}
                     onClick={() => navigate('/user-registration')}
                 >
                     <span className="material-symbols-outlined">close</span>

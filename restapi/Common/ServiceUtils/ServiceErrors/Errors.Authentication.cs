@@ -12,7 +12,7 @@ public static partial class Errors
     );
 
     public static Error Forbidden => Error.Custom(
-      type: 403,
+      type: StatusCodes.Status403Forbidden,
       code: "Authentication.Forbidden",
       description: "You don't have access to this resource!"
     );

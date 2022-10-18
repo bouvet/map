@@ -53,7 +53,7 @@ export const FabMenu: FC = () => {
                         return (
                             <>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     style={{
                                         transform: isActive
                                             ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)`
@@ -68,7 +68,7 @@ export const FabMenu: FC = () => {
                                     </Link>
                                 </Fab>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     style={{
                                         transform: isActive
                                             ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)`
@@ -83,7 +83,7 @@ export const FabMenu: FC = () => {
                                     </Link>
                                 </Fab>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     style={{
                                         transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
                                         boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
@@ -96,7 +96,7 @@ export const FabMenu: FC = () => {
                                     </Link>
                                 </Fab>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     onClick={handleLogOut}
                                     style={{
                                         transform: isActive ? `translateY(-${largeFabSize + fabMargin}px)` : 'translateY(0)',
@@ -108,7 +108,7 @@ export const FabMenu: FC = () => {
                                     </GoogleIcon>
                                 </Fab>
                                 <LargeFab backgroundColor={MyTheme.colors.accent} type="button" onClick={handleClick}>
-                                    <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+                                    <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
                                         {isActive ? 'close' : 'menu'}
                                     </GoogleIcon>
                                 </LargeFab>
@@ -118,7 +118,7 @@ export const FabMenu: FC = () => {
                         return (
                             <>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     style={{
                                         transform: isActive
                                             ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)`
@@ -133,7 +133,7 @@ export const FabMenu: FC = () => {
                                     </Link>
                                 </Fab>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     style={{
                                         transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
                                         boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
@@ -146,7 +146,7 @@ export const FabMenu: FC = () => {
                                     </Link>
                                 </Fab>
                                 <Fab
-                                    backgroundColor={MyTheme.colors.lightbase}
+                                    backgroundColor={MyTheme.colors.lightBase}
                                     onClick={handleLogOut}
                                     style={{
                                         transform: isActive ? `translateY(-${largeFabSize + fabMargin}px)` : 'translateY(0)',
@@ -158,7 +158,7 @@ export const FabMenu: FC = () => {
                                     </GoogleIcon>
                                 </Fab>
                                 <LargeFab backgroundColor={MyTheme.colors.accent} type="button" onClick={handleClick}>
-                                    <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+                                    <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
                                         {isActive ? 'close' : 'menu'}
                                     </GoogleIcon>
                                 </LargeFab>
@@ -169,7 +169,7 @@ export const FabMenu: FC = () => {
                     return (
                         <>
                             <Fab
-                                backgroundColor={MyTheme.colors.lightbase}
+                                backgroundColor={MyTheme.colors.lightBase}
                                 style={{
                                     transform: isActive ? `translateY(-${largeFabSize + fabMargin}px)` : 'translateY(0)',
                                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
@@ -182,7 +182,7 @@ export const FabMenu: FC = () => {
                                 </Link>
                             </Fab>
                             <LargeFab backgroundColor={MyTheme.colors.accent} type="button" onClick={handleClick}>
-                                <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+                                <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
                                     {isActive ? 'close' : 'menu'}
                                 </GoogleIcon>
                             </LargeFab>

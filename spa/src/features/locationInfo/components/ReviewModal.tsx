@@ -186,7 +186,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                         </Stack>
                         <CloseButton
                             backgroundColor={MyTheme.colors.opaque}
-                            textColor={MyTheme.colors.lightbase}
+                            textColor={MyTheme.colors.lightBase}
                             onClick={handleCloseAddReview}
                         >
                             <span className="material-symbols-outlined">close</span>

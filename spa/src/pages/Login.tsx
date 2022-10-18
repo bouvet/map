@@ -1,48 +1,20 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
+import { FC } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Google, GoogleLogoWhite, SubmitButton, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
+import { Google, GoogleLogoWhite, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
 import { DivideLine } from '../features/login/components/DivideLine';
-import { Form } from '../components/Form/Form';
-import { Checkbox, InputEmail, InputPassword, LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
+import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
 import { SectionWrapper } from '../components/Form/SectionWrapper';
 import { LinkText, Text, Title } from '../components/Form/Text';
-import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+import { useStateSelector } from '../hooks/useRedux';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
-import { loginServices } from '../features/login/services/login.services';
-import { authActions } from '../store/state/auth.state';
+import { LoginForm } from '../features/login/components/LoginForm';
 
 export const Login: FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [rememberStatus, setRememberStatus] = useState(false);
+    const { isAuthenticated } = useStateSelector((state) => state.auth);
 
-    const { isAuthenticated, loading } = useStateSelector((state) => state.auth);
-
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-        setState(e.target.value);
-    };
-
-    const dispatch = useStateDispatch();
     const navigate = useNavigate();
-
-    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        dispatch(authActions.setLoading(true));
-
-        dispatch(
-            loginServices.login({
-                email,
-                password,
-            }),
-        );
-    };
 
     if (isAuthenticated) {
         return <Navigate replace to="/" />;
@@ -52,7 +24,7 @@ export const Login: FC = () => {
         <FormWrapper>
             <FormContent>
                 <SectionWrapper>
-                    <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate('/')}>
+                    <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/')}>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </BackButton>
                     <span>
@@ -68,30 +40,7 @@ export const Login: FC = () => {
                         <VippsLogoWhite src="https://vipps.no/documents/58/vipps-rgb-white.svg" alt="vipps" />
                     </Vipps>
                     <DivideLine />
-                    <Form onSubmit={onSubmitHandler}>
-                        <InputEmail label="E-post" value={email} setState={setEmail} handleChange={handleFormInputChange} />
-                        <InputPassword
-                            label="Passord"
-                            value={password}
-                            setState={setPassword}
-                            handleChange={handleFormInputChange}
-                            show={showPassword}
-                            toggleShow={toggleShowPassword}
-                        />
-                        <SplitWrapper>
-                            <LeftFlex>
-                                <Checkbox type="checkbox" checked={rememberStatus} onChange={(e) => setRememberStatus(e.target.checked)} />
-                                Husk meg
-                                {rememberStatus}
-                            </LeftFlex>
-                            <RightFlex>
-                                <LinkText to="/change-password">Glemt passord</LinkText>
-                            </RightFlex>
-                        </SplitWrapper>
-                        <SubmitButton text="white" type="submit">
-                            {!loading ? 'Logg inn' : 'laster...'}
-                        </SubmitButton>
-                    </Form>
+                    <LoginForm />
                     <SplitWrapper>
                         <LeftFlex>
                             <Text>Ikke registrert?</Text>

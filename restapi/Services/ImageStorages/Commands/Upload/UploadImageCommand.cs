@@ -7,7 +7,7 @@ namespace restapi.Services.ImageStorages.Commands.Upload;
 
 public record UploadImageCommand(
     IFormFile Image,
-    User? Creator,
+    User? Uploader,
     Guid? LocationId,
     Guid? ReviewId
   ) : IRequest<ErrorOr<ImageStorageResult>>;

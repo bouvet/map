@@ -32,7 +32,7 @@ export const BackButtonAdminWrapper = styled(BackButton)`
 export const BackButtonAdmin: FC = () => (
     <BackButtonAdminWrapper backgroundColor={MyTheme.colors.opaque}>
         <Link to="/">
-            <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+            <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
                 arrow_back
             </GoogleIcon>
         </Link>

@@ -24,7 +24,7 @@ const Modal = styled.div`
     height: 90vh;
     max-height: 500px;
     max-width: 400px;
-    background-color: ${MyTheme.colors.lightbase};
+    background-color: ${MyTheme.colors.lightBase};
     z-index: 6;
     position: relative;
     border-radius: 10px;

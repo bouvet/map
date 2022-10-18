@@ -145,14 +145,14 @@ export const LocationRegistration: FC = () => {
                                 <CenterPin>📍</CenterPin>
                                 {currentMapCenter.lat ? (
                                     <RegistrationButton
-                                        text={MyTheme.colors.lightbase}
+                                        text={MyTheme.colors.lightBase}
                                         background={MyTheme.colors.accent}
                                         onClick={handleForwardClick}
                                     >
                                         Velg punkt
                                     </RegistrationButton>
                                 ) : (
-                                    <RegistrationButton disabled text={MyTheme.colors.lightbase} background={MyTheme.colors.accent}>
+                                    <RegistrationButton disabled text={MyTheme.colors.lightBase} background={MyTheme.colors.accent}>
                                         Velg punkt
                                     </RegistrationButton>
                                 )}
@@ -160,7 +160,7 @@ export const LocationRegistration: FC = () => {
                         ) : (
                             <RegistrationButtonWrapper>
                                 <RegistrationButtonLeft
-                                    text={MyTheme.colors.lightbase}
+                                    text={MyTheme.colors.lightBase}
                                     background={MyTheme.colors.darkbase}
                                     onClick={handleBackClick}
                                 >
@@ -169,7 +169,7 @@ export const LocationRegistration: FC = () => {
 
                                 {pageIndex === 1 && (
                                     <RegistrationButtonRight
-                                        text={MyTheme.colors.lightbase}
+                                        text={MyTheme.colors.lightBase}
                                         background={MyTheme.colors.accent}
                                         disabled={
                                             !(currentTitle && currentCategories[0] && currentDescription) ||
@@ -184,7 +184,7 @@ export const LocationRegistration: FC = () => {
 
                                 {pageIndex === 2 && (
                                     <RegistrationButtonRight
-                                        text={MyTheme.colors.lightbase}
+                                        text={MyTheme.colors.lightBase}
                                         background={MyTheme.colors.accent}
                                         onClick={handleForwardClick}
                                     >

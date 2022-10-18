@@ -2,8 +2,10 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Providers.Authorization;
 using restapi.Common.Services.Mappers.Reviews;
 using restapi.Contracts.Reviews;
+using restapi.Data;
 using restapi.Services.Reviews.Common;
 
 namespace restapi.Controllers;
@@ -12,11 +14,15 @@ public class ReviewsController : ApiController
 {
   private readonly ISender mediator;
   private readonly IReviewMapper reviewMapper;
+  private readonly DataContext dataContext;
+  private readonly IAuthorizationProvider authorizationProvider;
 
-  public ReviewsController(ISender mediator, IReviewMapper reviewMapper)
+  public ReviewsController(ISender mediator, IReviewMapper reviewMapper, DataContext dataContext, IAuthorizationProvider authorizationProvider)
   {
     this.mediator = mediator;
     this.reviewMapper = reviewMapper;
+    this.dataContext = dataContext;
+    this.authorizationProvider = authorizationProvider;
   }
 
   [HttpPost]
@@ -61,12 +67,19 @@ public class ReviewsController : ApiController
   }
 
   [Authorize(Roles = "User, Administrator")]
-  [HttpPut]
-  public async Task<IActionResult> UpdateReview([FromForm] UpdateReviewRequest request)
+  [HttpPut("{id:guid}")]
+  public async Task<IActionResult> UpdateReview(Guid id, [FromForm] UpdateReviewRequest request)
   {
-    var userId = HttpContext.User.FindFirst("userId")?.Value;
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
 
-    var updateReviewCommand = reviewMapper.MapUpdateToCommand(request, userId ?? "");
+    var review = await dataContext.Reviews.FindAsync(id);
+
+    if (!authResult.IsAdmin && review?.Creator?.Id != authResult.UserId)
+    {
+      return Forbid();
+    }
+
+    var updateReviewCommand = reviewMapper.MapUpdateToCommand(request, review, authResult.UserId);
 
     ErrorOr<Updated> updateReviewResult = await mediator.Send(updateReviewCommand);
 
@@ -76,11 +89,20 @@ public class ReviewsController : ApiController
     );
   }
 
-  //TODO: Lock so only creator and admin can delete
+  [Authorize(Roles = "User, Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {
-    var deleteReviewCommand = reviewMapper.MapDeleteToCommand(id);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+
+    var review = await dataContext.Reviews.FindAsync(id);
+
+    if (!authResult.IsAdmin && review?.Creator?.Id != authResult.UserId)
+    {
+      return Forbid();
+    }
+
+    var deleteReviewCommand = reviewMapper.MapDeleteToCommand(review!);
 
     ErrorOr<Deleted> deleteReviewResult = await mediator.Send(deleteReviewCommand);
 

@@ -1,28 +1,75 @@
 using ErrorOr;
 using MediatR;
 using restapi.Data;
+using restapi.Services.ImageStorages.Commands.Delete;
 
 namespace restapi.Services.Locations.Commands.Delete;
 
 public class DeleteLocationCommandHandler : IRequestHandler<DeleteLocationCommand, ErrorOr<Deleted>>
 {
   private readonly DataContext dataContext;
+  private readonly ISender mediator;
 
-  public DeleteLocationCommandHandler(DataContext dataContext)
+  public DeleteLocationCommandHandler(DataContext dataContext, ISender mediator)
   {
     this.dataContext = dataContext;
+    this.mediator = mediator;
   }
 
   public async Task<ErrorOr<Deleted>> Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
   {
-    var location = await dataContext.Locations.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
-
-    if (location is null)
+    if (request.Location is null)
     {
       return Errors.Location.NotFound;
     }
 
-    dataContext.Locations.Remove(location);
+    if (request.Location.Reviews.Count > 0)
+    {
+      foreach (var review in request.Location.Reviews)
+      {
+        if (review.OriginalImage is not null)
+        {
+          var deleteImageCommand = new DeleteImageCommand(review.OriginalImage.Id, "originals");
+          ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+          if (deleteImageResult.IsError)
+          {
+            return Errors.ImageStorage.DeleteFailed;
+          }
+        }
+
+        if (review.WebpImage is not null)
+        {
+          var deleteImageCommand = new DeleteImageCommand(review.WebpImage.Id, "webp");
+          ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+          if (deleteImageResult.IsError)
+          {
+            return Errors.ImageStorage.DeleteFailed;
+          }
+        }
+      }
+    }
+
+    if (request.Location.OriginalImage is not null)
+    {
+      var deleteImageCommand = new DeleteImageCommand(request.Location.OriginalImage.Id, "originals");
+      ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+      if (deleteImageResult.IsError)
+      {
+        return Errors.ImageStorage.DeleteFailed;
+      }
+    }
+
+    if (request.Location.WebpImage is not null)
+    {
+      var deleteImageCommand = new DeleteImageCommand(request.Location.WebpImage.Id, "webp");
+      ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+      if (deleteImageResult.IsError)
+      {
+        return Errors.ImageStorage.DeleteFailed;
+      }
+    }
+
+    dataContext.Locations.Remove(request.Location);
     await dataContext.SaveChangesAsync(cancellationToken);
 
     return Result.Deleted;
