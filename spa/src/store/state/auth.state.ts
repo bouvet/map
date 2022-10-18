@@ -4,6 +4,7 @@ import { IUser } from '../../utils/types.d';
 const initialState = {
     loading: false,
     isAuthenticated: false,
+    isRegistrering: false,
     users: [],
     user: {} as IUser | null,
 };
@@ -14,6 +15,9 @@ const authState = createSlice({
     reducers: {
         setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
+        },
+        setIsRegistrering(state, action) {
+            state.isRegistrering = action.payload;
         },
         userLogin(state, action) {
             state.isAuthenticated = true;
