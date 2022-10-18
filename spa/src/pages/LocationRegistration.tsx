@@ -110,7 +110,7 @@ export const LocationRegistration: FC = () => {
         if ('geolocation' in navigator) {
             setLocationFromUserLocation();
         } else {
-            console.log('Not availale');
+            console.log('Not available');
         }
     };
 
