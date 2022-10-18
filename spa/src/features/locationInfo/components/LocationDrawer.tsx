@@ -136,8 +136,6 @@ export const SwipeableEdgeDrawer: FC = () => {
         updateCurrentImageCallback();
     }, [updateCurrentReviewsCallback, updateCurrentImageCallback]);
 
-    // Sets images for review images
-
     const [openAddReview, setOpenAddReview] = useState(false);
     const handleOpenAddReview = () => setOpenAddReview(true);
     const handleCloseAddReview = () => setOpenAddReview(false);

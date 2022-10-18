@@ -17,17 +17,18 @@ const InputField = styled.input`
 `;
 
 const VisibilityButton = styled.div`
-    position: relative;
+    position: absolute;
     border-radius: 50%;
     border: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: ${MyTheme.colors.lightBase};
+    transform: translateX(-30px);
+    top: 10px;
 `;
 
 const PasswordWrapper = styled.div`
-    display: flex;
+    position: relative;
 `;
 
 export const Checkbox = styled.input`
@@ -113,7 +114,7 @@ export const InputName: FC<InputProps> = (props) => {
     return (
         <>
             <Label>{label}</Label>
-            <InputField type="text" value={value} required onChange={(e) => handleChange(e)} />
+            <InputField type="text" value={value} required onChange={(e) => handleChange(e, setState)} />
         </>
     );
 };
