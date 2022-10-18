@@ -20,7 +20,7 @@ interface PopUpImageProp {
 export const PopupCard = styled.div`
     width: 92%;
     height: 150px;
-    background-color: ${MyTheme.colors.lightbase};
+    background-color: ${MyTheme.colors.lightBase};
     position: absolute;
     bottom: 10px;
     right: 4%;
@@ -112,13 +112,13 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     return (
         <PopupWrapper>
             <PopupImage imageURL={image}>
-                <CloseButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickClose}>
+                <CloseButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleClickClose}>
                     <span className="material-symbols-outlined">close</span>
                 </CloseButton>
             </PopupImage>
             <PopupContent>
                 <ExpandBtn
-                    backgroundColor={MyTheme.colors.lightbase}
+                    backgroundColor={MyTheme.colors.lightBase}
                     textColor={MyTheme.colors.darkbase}
                     onClick={handleClickShowLocationPage}
                 >

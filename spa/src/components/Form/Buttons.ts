@@ -59,7 +59,7 @@ export const Vipps = styled(Button)`
 `;
 
 export const Google = styled(Button)`
-    background-color: ${MyTheme.colors.lightbase};
+    background-color: ${MyTheme.colors.lightBase};
 `;
 
 export const Email = styled(Button)`

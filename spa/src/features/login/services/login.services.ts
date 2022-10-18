@@ -26,6 +26,7 @@ export const loginService = {
                 if (invalidCreds) {
                     dispatch(snackbarActions.setNotify({ message: 'Feil epost eller passord', severity: 'error', autohideDuration: null }));
                     dispatch(authActions.setLoading(false));
+
                     return false;
                 }
 
