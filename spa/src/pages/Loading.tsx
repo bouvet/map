@@ -9,7 +9,7 @@ const LoadingScreenWrapper = styled.div`
     align-items: center;
     justify-content: center;
     background-color: ${MyTheme.colors.darkbase};
-    color: ${MyTheme.colors.lightbase};
+    color: ${MyTheme.colors.lightBase};
 `;
 
 export const Loading: FC = () => {

@@ -23,7 +23,7 @@ const VisibilityButton = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: ${MyTheme.colors.lightbase};
+    background-color: ${MyTheme.colors.lightBase};
 `;
 
 const PasswordWrapper = styled.div`

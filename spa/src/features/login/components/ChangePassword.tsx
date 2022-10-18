@@ -47,7 +47,7 @@ export const ChangePassword: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate(-1)}>
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate(-1)}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
             <FormContent>

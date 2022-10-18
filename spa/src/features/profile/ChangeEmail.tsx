@@ -32,7 +32,7 @@ export const ChangeEmail: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate('/profile')}>
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/profile')}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
             <FormContent>

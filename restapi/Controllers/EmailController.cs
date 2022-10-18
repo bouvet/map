@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Providers.Authorization;
 using restapi.Common.Services.Mappers.Emails;
 using restapi.Contracts.Emails;
 using restapi.Services.Emails.Commands.Confirm;
@@ -16,16 +17,36 @@ public class EmailController : ApiController
 {
   private readonly ISender mediator;
   private readonly IEmailMapper emailMapper;
+  private readonly IAuthorizationProvider authorizationProvider;
 
-  public EmailController(ISender mediator, IEmailMapper emailMapper)
+  public EmailController(ISender mediator, IEmailMapper emailMapper, IAuthorizationProvider authorizationProvider)
   {
     this.mediator = mediator;
     this.emailMapper = emailMapper;
+    this.authorizationProvider = authorizationProvider;
   }
 
   [HttpPost]
   public async Task<IActionResult> CreateEmail(CreateEmailRequest request)
   {
+    var createEmailCommand = new CreateEmailCommand(request.Email.ToLower());
+
+    ErrorOr<CreateEmailResult> createEmailResult = await mediator.Send(createEmailCommand);
+
+    return createEmailResult.Match(
+      result => Ok(result),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPost("resend-code/{id:guid}")]
+  public async Task<IActionResult> ResendCode(Guid id)
+  {
+    // User clicks before 48h = has token
+    // User clicks after 48h = no token
+
+    // Frontend has access to the email ID
+
     var createEmailCommand = new CreateEmailCommand(request.Email.ToLower());
 
     ErrorOr<CreateEmailResult> createEmailResult = await mediator.Send(createEmailCommand);
@@ -68,20 +89,20 @@ public class EmailController : ApiController
   }
 
   [Authorize(Roles = "Administrator, Registering")]
-  [HttpDelete("{email}")]
+  [HttpDelete("{email:string}")]
   public async Task<IActionResult> DeleteEmail(string email)
   {
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
     var emailId = HttpContext.User.FindFirst("emailId")?.Value;
-    var isAdmin = HttpContext.User.IsInRole("Administrator");
 
-    if (string.IsNullOrEmpty(emailId) && !isAdmin)
+    if (authResult.UserId is null && !authResult.IsAdmin)
     {
       return Forbid();
     }
 
     var deleteEmailCommand = new DeleteEmailCommand(
         email.ToLower(),
-        isAdmin,
+        authResult.IsAdmin,
         emailId ?? ""
       );
 
