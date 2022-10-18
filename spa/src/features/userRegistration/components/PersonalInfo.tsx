@@ -43,7 +43,7 @@ export const PersonalInfo: FC = () => {
     moment.locale('en-ca');
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-        if (dob === null) {
+        if (!dob) {
             e.preventDefault();
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {

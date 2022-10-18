@@ -68,7 +68,7 @@ export const ResetPassword: FC = () => {
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Tilbakestill passord</TitleForm>
-                    <Form onSubmit={(e) => onSubmitHandler(e)}>
+                    <Form onSubmit={onSubmitHandler}>
                         <InputPassword
                             label="Nytt passord*"
                             value={newPassword}
