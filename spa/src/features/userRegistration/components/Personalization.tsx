@@ -9,7 +9,7 @@ import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkTextPersonalization, Text, TitleForm } from '../../../components/Form/Text';
 import { SubmitButtonPersonalization } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { mapService } from '../../map';
+import { mapServices } from '../../map';
 import { CenterFlex } from '../../../components/Form/Input';
 
 export const Personalization: FC = () => {
@@ -22,13 +22,12 @@ export const Personalization: FC = () => {
     ));
 
     useEffect(() => {
-        dispatch(mapService.getLocations());
+        dispatch(mapServices.getLocations());
     }, [dispatch]);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         navigate('/onboarding');
-        console.log('Favoritter valgt');
     };
 
     return (
@@ -38,7 +37,7 @@ export const Personalization: FC = () => {
                     <TitleForm>Personalisering</TitleForm>
                     <Text>Velg dine favoritter:</Text>
                     <FilterMenuContent>{mappedFilter}</FilterMenuContent>
-                    <Form onSubmit={(e) => handleSubmit(e)}>
+                    <Form onSubmit={onSubmitHandler}>
                         <CenterFlex>
                             <SubmitButtonPersonalization text="white">Velg</SubmitButtonPersonalization>
                         </CenterFlex>

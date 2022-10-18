@@ -2,7 +2,7 @@ import { mapActions } from '../../../store/state/map.state';
 import { AppDispatch } from '../../../store/index';
 import { API } from '../../../lib/api';
 
-export const mapService = {
+export const mapServices = {
     getLocations() {
         return async (dispatch: AppDispatch) => {
             try {
@@ -19,8 +19,7 @@ export const mapService = {
 
                 dispatch(mapActions.setLoading(false));
             } catch (error) {
-                // TODO: Push error to error state
-                console.error(error);
+                console.error('error', error);
             }
         };
     },

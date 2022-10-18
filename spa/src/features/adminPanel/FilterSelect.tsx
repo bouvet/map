@@ -32,7 +32,7 @@ export const BackButtonAdminWrapper = styled(BackButton)`
 export const BackButtonAdmin: FC = () => (
     <BackButtonAdminWrapper backgroundColor={MyTheme.colors.opaque}>
         <Link to="/">
-            <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+            <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
                 arrow_back
             </GoogleIcon>
         </Link>
@@ -44,10 +44,10 @@ export const FilterSelect: FC<FilterProps> = (props) => {
     return (
         <>
             <Select onChange={(e) => setter(e.target.value)}>
-                <FilterButton value="Under Review">Under Review</FilterButton>
-                <FilterButton value="Approved">Approved</FilterButton>
-                <FilterButton value="Rejected">Rejected</FilterButton>
-                <FilterButton value="Reported">Reported</FilterButton>
+                <FilterButton value="Under behandling">Under behandling</FilterButton>
+                <FilterButton value="Godkjent">Godkjent</FilterButton>
+                <FilterButton value="Avvist">Avvist</FilterButton>
+                <FilterButton value="Rapportert">Rapportert</FilterButton>
             </Select>
         </>
     );

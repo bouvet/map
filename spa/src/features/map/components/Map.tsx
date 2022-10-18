@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, FC, MutableRefObject } from '
 import { Map as ReactMap } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { mapService } from '../services/map.services';
+import { mapServices } from '../services/map.services';
 import { ILatLong, ILocation } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
@@ -33,7 +33,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
     }, [currentMapCenter.lat, currentMapCenter.long]);
 
     useEffect(() => {
-        dispatch(mapService.getLocations());
+        dispatch(mapServices.getLocations());
         setViewStateCurrentMapCenter();
     }, [dispatch, setViewStateCurrentMapCenter]);
 

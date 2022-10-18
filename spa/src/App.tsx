@@ -18,7 +18,8 @@ import { ChangePassword } from './features/login/components/ChangePassword';
 import { ResetPassword } from './features/login/components/ResetPassword';
 import { ChangeEmail } from './features/profile/ChangeEmail';
 import { useStateDispatch } from './hooks/useRedux';
-import { userService } from './features/userRegistration/services/user.services';
+import { userServices } from './features/userRegistration/services/user.services';
+import { CreateCategory } from './features/adminPanel/CreateCategory';
 
 const App = () => {
     const dispatch = useStateDispatch();
@@ -31,7 +32,7 @@ const App = () => {
             user = JSON.parse(parsedUser);
         }
         if (user && token) {
-            dispatch(userService.getUser(user.id));
+            dispatch(userServices.getInfo(user.id));
         }
     }, [dispatch]);
 
@@ -54,6 +55,8 @@ const App = () => {
                 <Route path="/personalization" element={<Personalization />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+
+                <Route path="/create-category" element={<CreateCategory />} />
             </Routes>
             <CustomizedSnackbars />
         </Router>

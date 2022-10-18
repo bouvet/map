@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Box, Button, Modal, Rating, Stack, IconButton } from '@mui/material';
+import { Box, Button, Modal, Rating, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
 import { CloseButton } from '../../../components/Navigation/Buttons';
@@ -43,6 +44,11 @@ const Backdrop = styled.div`
     height: 100vh;
     width: 100%;
     z-index: 0;
+`;
+
+const ButtonWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 
 export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
@@ -89,7 +95,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         if (value === 0 || value === null) {
             e.preventDefault();
         } else {
@@ -112,7 +118,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         <Modal open={open}>
             <>
                 <Backdrop onClick={handleCloseAddReview} />
-                <form onSubmit={(e) => handleSubmit(e)}>
+                <form onSubmit={(e) => onSubmitHandler(e)}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{
@@ -145,9 +151,17 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                             {image ? (
                                 <>
                                     <Img src={imageUrl} alt="blobb" />
-                                    <IconButton aria-label="delete" onClick={removeImage}>
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    <ButtonWrapper>
+                                        <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
+                                        <Button size="large" component="label" startIcon={<Autorenew />}>
+                                            <input
+                                                hidden
+                                                accept="image/png, image/webp, image/jpg, image/jpeg"
+                                                type="file"
+                                                onChange={(e) => handleImageChange(e)}
+                                            />
+                                        </Button>
+                                    </ButtonWrapper>
                                 </>
                             ) : (
                                 <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
@@ -172,7 +186,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                         </Stack>
                         <CloseButton
                             backgroundColor={MyTheme.colors.opaque}
-                            textColor={MyTheme.colors.lightbase}
+                            textColor={MyTheme.colors.lightBase}
                             onClick={handleCloseAddReview}
                         >
                             <span className="material-symbols-outlined">close</span>

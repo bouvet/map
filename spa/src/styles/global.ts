@@ -4,7 +4,7 @@ export const MyTheme = {
     colors: {
         accent: '#007BC0',
         darkbase: '#282828',
-        lightbase: '#FFFFFF',
+        lightBase: '#FFFFFF',
         darkcolor: '#000000',
         opaque: 'rgba(0, 0, 0, 0.5)',
         grey: '#A7A7A7',

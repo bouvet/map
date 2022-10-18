@@ -12,8 +12,7 @@ export const reviewServices = {
                 const reviews: IReviewTypeGet[] = await (await API.get(requestUrl)).data;
                 dispatch(reviewActions.setCurrentReviews(reviews));
             } catch (error) {
-                // TODO: Push error to error state
-                console.error(error);
+                console.error('error', error);
             }
         };
     },
@@ -24,8 +23,7 @@ export const reviewServices = {
                 const reviews: IReviewTypeGet[] = await (await API.get(requestUrl)).data;
                 dispatch(reviewActions.setCurrentReviews(reviews));
             } catch (error) {
-                // TODO: Push error to error state
-                console.error(error);
+                console.error('error', error);
             }
         };
     },

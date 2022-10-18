@@ -9,6 +9,13 @@ export const Text = styled.p`
     margin: 0px;
 `;
 
+export const TextAccent = styled.p`
+    color: ${MyTheme.colors.accent};
+    font-size: ${MyTheme.fontSize.header};
+    padding: 0px;
+    margin: 0px;
+`;
+
 export const LinkText = styled(Link)`
     color: ${MyTheme.colors.accent};
     font-size: ${MyTheme.fontSize.header};

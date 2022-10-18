@@ -18,7 +18,7 @@ export const BackButtonRegistrationWrapper = styled(BackButton)`
 export const BackButtonRegistration: FC = () => (
     <BackButtonRegistrationWrapper backgroundColor={MyTheme.colors.opaque}>
         <Link to="/">
-            <GoogleIcon color={MyTheme.colors.lightbase} className="material-symbols-outlined">
+            <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
                 arrow_back
             </GoogleIcon>
         </Link>

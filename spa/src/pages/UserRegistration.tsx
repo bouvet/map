@@ -17,7 +17,7 @@ export const UserRegistration: FC = () => {
                 <SectionWrapper>
                     <BackButton
                         backgroundColor={MyTheme.colors.opaque}
-                        textColor={MyTheme.colors.lightbase}
+                        textColor={MyTheme.colors.lightBase}
                         onClick={() => navigate('/login')}
                     >
                         <span className="material-symbols-outlined">arrow_back</span>

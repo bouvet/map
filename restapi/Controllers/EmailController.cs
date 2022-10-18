@@ -39,6 +39,24 @@ public class EmailController : ApiController
     );
   }
 
+  [HttpPost("resend-code/{id:guid}")]
+  public async Task<IActionResult> ResendCode(Guid id)
+  {
+    // User clicks before 48h = has token
+    // User clicks after 48h = no token
+
+    // Frontend has access to the email ID
+
+    var createEmailCommand = new CreateEmailCommand(request.Email.ToLower());
+
+    ErrorOr<CreateEmailResult> createEmailResult = await mediator.Send(createEmailCommand);
+
+    return createEmailResult.Match(
+      result => Ok(result),
+      errors => Problem(errors)
+    );
+  }
+
   [Authorize(Roles = "Registering")]
   [HttpPost("confirm")]
   public async Task<IActionResult> ConfirmEmail(ConfirmEmailRequest request)

@@ -23,7 +23,7 @@ export const ChangeEmail: FC = () => {
 
     // email validation?
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(snackbarActions.setNotify({ message: 'E-posten er endret', severity: 'success' }));
         navigate('/profile');
@@ -32,13 +32,13 @@ export const ChangeEmail: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={() => navigate('/profile')}>
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/profile')}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Endre e-post</TitleForm>
-                    <Form onSubmit={(e) => handleSubmit(e)}>
+                    <Form onSubmit={(e) => onSubmitHandler(e)}>
                         <InputEmail label="E-post*" value={newEmail} setState={setNewEmail} handleChange={handleFormInputChange} />
                         <CenterFlex>
                             <SubmitButtonRegistration text="white">Endre e-post</SubmitButtonRegistration>

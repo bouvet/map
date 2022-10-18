@@ -53,7 +53,7 @@ export const Home: FC = () => {
                     <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="16px" />
                 </>
             ) : (
-                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleBackClick}>
+                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleBackClick}>
                     <span className="material-symbols-outlined">arrow_back</span>
                 </BackButton>
             )}

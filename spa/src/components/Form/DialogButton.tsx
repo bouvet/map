@@ -19,7 +19,7 @@ export const DialogButton: FC = () => {
 
     return (
         <>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightbase} onClick={handleClickOpen}>
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleClickOpen}>
                 <span className="material-symbols-outlined">close</span>
             </BackButton>
             <Dialog open={open}>
