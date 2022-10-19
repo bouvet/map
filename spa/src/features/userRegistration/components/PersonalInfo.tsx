@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import TextField from '@mui/material/TextField';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { nbNO } from '@mui/x-date-pickers';
+import { LocalizationProvider, nbNO } from '@mui/x-date-pickers';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import moment from 'moment';
@@ -14,7 +13,7 @@ import { Form } from '../../../components/Form/Form';
 import { CenterFlex, Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { TitleForm } from '../../../components/Form/Text';
+import { Text, TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
@@ -79,7 +78,6 @@ export const PersonalInfo: FC = () => {
                 primary: { main: '#1976d2' },
             },
         },
-        {},
         nbNO,
     );
 
@@ -102,6 +100,10 @@ export const PersonalInfo: FC = () => {
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>Personlig informasjon</TitleForm>
+                        <Text>
+                            Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
+                            omtaler.
+                        </Text>
                         <Form onSubmit={onSubmitHandler}>
                             <StyledInput
                                 label="Fornavn*"
@@ -124,7 +126,7 @@ export const PersonalInfo: FC = () => {
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
                                         label="åååå.mm.dd"
-                                        value={dob}
+                                        value={dob || null}
                                         onChange={(newValue) => handleChangeDob(newValue)}
                                         renderInput={(params) => <TextField {...params} />}
                                         maxDate={new Date()}
