@@ -29,9 +29,6 @@ export const ProfilePage: FC = () => {
         }
     });
 
-    // const [firstName, setFirstName] = useState(user?.firstName);
-    // const [dob, setDob] = useState(user?.dob);
-
     moment.locale('nb');
 
     // add possibility to edit name, dob and categories + see changes on submit
@@ -45,13 +42,8 @@ export const ProfilePage: FC = () => {
         [dob, email, categories, firstName, lastName],
     );
 
-    // const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-    //     setState(e.target.value);
-    // };
-
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // editUserDetails();
     };
 
     // check: values cannot be empty
@@ -90,6 +82,10 @@ export const ProfilePage: FC = () => {
                 </span>
                 <span>
                     <ProfileLink to="/change-password">Endre passord</ProfileLink>
+                </span>
+                <span>
+                    {/* add functionality + check if login from email, Google or Vipps */}
+                    <ProfileLink to="/">Slett bruker</ProfileLink>
                 </span>
                 <Button type="submit">Oppdater profil</Button>
             </Form>

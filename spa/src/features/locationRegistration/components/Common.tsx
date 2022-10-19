@@ -113,7 +113,7 @@ export const RegistrationButtonLeft = styled(RegistrationButton)`
 `;
 
 export const RegistrationButtonWrapper = styled.div`
-    position: absolute;
+    position: fixed;
     bottom: 0px;
 `;
 

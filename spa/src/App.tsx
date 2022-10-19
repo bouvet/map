@@ -19,6 +19,7 @@ import { ChangeEmail } from './features/profile/ChangeEmail';
 import { useStateDispatch } from './hooks/useRedux';
 import { userServices } from './features/userRegistration/services/user.services';
 import { CreateCategory } from './features/adminPanel/CreateCategory';
+import { PersonalInfoGoogle } from './features/userRegistration/components/PersonalInfoGoogle';
 
 const App = () => {
     const dispatch = useStateDispatch();
@@ -55,6 +56,7 @@ const App = () => {
                 <Route path="/reset-password" element={<ResetPassword />} />
 
                 <Route path="/create-category" element={<CreateCategory />} />
+                <Route path="/personal-info-google" element={<PersonalInfoGoogle />} />
             </Routes>
             <CustomizedSnackbars />
         </Router>
