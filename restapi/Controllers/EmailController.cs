@@ -85,7 +85,7 @@ public class EmailController : ApiController
   }
 
   [Authorize(Roles = "Administrator, Registering")]
-  [HttpDelete("{email:string}")]
+  [HttpDelete("{email}")]
   public async Task<IActionResult> DeleteEmail(string email)
   {
     var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);

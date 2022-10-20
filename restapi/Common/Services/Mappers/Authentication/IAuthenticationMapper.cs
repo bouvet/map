@@ -1,4 +1,5 @@
 using restapi.Contracts.Authentication;
+using restapi.Services.Authentication.Commands.AuthWithCode;
 using restapi.Services.Authentication.Commands.Register;
 using restapi.Services.Authentication.Common;
 using restapi.Services.Authentication.Queries.Login;
@@ -10,4 +11,5 @@ public interface IAuthenticationMapper
   RegisterCommand MapRegisterRequestToCommand(RegisterRequest request);
   LoginQuery MapLoginQueryToCommand(LoginRequest request);
   AuthenticationResponse MapResultToResponse(AuthenticationResult result);
+  AuthenticateWithCodeResponse MapResultToCodeResponse(AuthWithCodeResult result);
 }

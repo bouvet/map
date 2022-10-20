@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import styled from 'styled-components';
@@ -15,40 +15,41 @@ const Wrapper = styled.div`
     justify-content: center;
 `;
 
-const state = process.env.REACT_APP_GOOGLE_STATE;
+const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
 export const AuthenticateSpinner: FC = () => {
-    const [canceled, setCanceled] = useState(false);
     const location = useLocation();
 
-    const { isAuthenticated, isRegistrering } = useStateSelector((state) => state.auth);
+    const { isAuthenticated, isRegistering, emailIsValid } = useStateSelector((state) => state.auth);
     const dispatch = useStateDispatch();
 
     useEffect(() => {
-        const params = new URLSearchParams(location.hash);
+        const params = new URLSearchParams(location.search);
 
-        const stateFromQuery = location.hash.split('&')[0].split('=')[1];
-        const accessToken = params.get('access_token');
+        const stateFromQuery = params.get('state');
+        const code = params.get('code');
 
-        if (stateFromQuery === 'access_denied') {
-            setCanceled(true);
-        }
-
-        if (state === stateFromQuery && accessToken) {
-            dispatch(googleAuthServices.getUserInfo(accessToken));
+        if (googleState === stateFromQuery && code) {
+            dispatch(googleAuthServices.authenticate(code));
         }
     }, [location, dispatch]);
 
-    if (canceled) {
-        return <Navigate replace to="/login" />;
-    }
-
-    if (isRegistrering) {
-        return <Navigate replace to="/personal-info" />;
-    }
+    useEffect(() => {
+        location.state = 'Have loaded';
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (isAuthenticated) {
         return <Navigate replace to="/" />;
+    }
+
+    if (isRegistering) {
+        return <Navigate replace to="/personal-info-google" />;
+    }
+
+    if (!emailIsValid && location.state === 'Have Loaded') {
+        location.state = null;
+        return <Navigate replace to="/email-confirmation" />;
     }
 
     return (

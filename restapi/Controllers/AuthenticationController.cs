@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Services.Mappers.Authentication;
 using restapi.Contracts.Authentication;
+using restapi.Services.Authentication.Commands.AuthWithCode;
 using restapi.Services.Authentication.Commands.ResetPassword;
 using restapi.Services.Authentication.Common;
 
@@ -55,6 +56,19 @@ public class AuthenticationController : ApiController
 
     return resetPasswordResult.Match(
       _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPost("code")]
+  public async Task<IActionResult> AuthenticateWithCode(AuthenticateWithCodeRequest request)
+  {
+    var authWithCodeCommand = new AuthWithCodeCommand(request.Code);
+
+    ErrorOr<AuthWithCodeResult> authWithCodeResult = await mediator.Send(authWithCodeCommand);
+
+    return authWithCodeResult.Match(
+      result => Ok(authenticationMapper.MapResultToCodeResponse(result)),
       errors => Problem(errors)
     );
   }

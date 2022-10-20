@@ -14,6 +14,7 @@ public record AuthenticationResponse(
   int PhoneNumber,
   DateTime? DOB,
   DateTime Registered,
+  DateTime? Updated,
   List<RoleResponse> Roles,
   List<CategoryResponse> FavoriteCategories,
   string Token

@@ -18,5 +18,5 @@ public interface ICategoryMapper
   DeleteCategoryCommand MapDeleteCategoryRequestToCommand(Guid id);
   CategoryResponse MapResultToResponse(CategoryResult result);
   List<CategoryResponse> MapResultListToResponseList(List<CategoryResult> resultList);
-  List<CategoryResponse> MapDbListToResponseList(List<Category> categories);
+  List<CategoryResponse> MapDbListToResponseList(List<Category>? categories);
 }

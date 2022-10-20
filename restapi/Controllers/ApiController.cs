@@ -22,12 +22,17 @@ public class ApiController : ControllerBase
       return ValidationProblem(modelStateDictionary);
     }
 
-    // if (errors.Any(e => e.Type == ErrorType.Unexpected))
-    // {
-    //   return Problem();
-    // }
-
     var firstError = errors[0];
+
+    if (firstError.Code == "Authentication.Unauthorized")
+    {
+      return Unauthorized();
+    }
+
+    if (firstError.Code == "Authentication.Forbidden")
+    {
+      return Forbid();
+    }
 
     var statusCode = firstError.Type switch
     {
