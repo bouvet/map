@@ -15,7 +15,7 @@ public interface IRoleMapper
   GetRolesQuery MapGetRolesToCommand();
   DeleteRoleCommand MapDeleteRole(Guid id);
   List<RoleResult> MapDbListToResultList(List<Role> roles);
-  List<RoleResponse> MapDbListToResponseList(List<Role> roles);
+  List<RoleResponse> MapDbListToResponseList(List<Role>? roles);
   List<RoleResponse> MapResultListToResponseList(List<RoleResult> resultList);
   RoleResponse MapResultToResponse(RoleResult result);
 }

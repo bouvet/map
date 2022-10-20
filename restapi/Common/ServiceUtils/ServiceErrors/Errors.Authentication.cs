@@ -11,6 +11,12 @@ public static partial class Errors
       description: "Invalid Credentials"
     );
 
+    public static Error Unauthorized => Error.Custom(
+      type: StatusCodes.Status401Unauthorized,
+      code: "Authentication.Unauthorized",
+      description: "You are not authorized!"
+    );
+
     public static Error Forbidden => Error.Custom(
       type: StatusCodes.Status403Forbidden,
       code: "Authentication.Forbidden",

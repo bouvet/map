@@ -1,57 +1,52 @@
-import { googleUserInfo, fullGoogleAuthUrl } from '../lib/googleAPI';
 import { snackbarActions } from '../store/state/snackbar.state';
 import { AppDispatch } from '../store';
 import { authActions } from '../store/state/auth.state';
+import { API } from '../lib/api';
 
-export interface IGoogleResponse {
-    id: string;
-    email: string;
-    verified_email: boolean;
-    name: string;
-    given_name: string;
-    family_name: string;
-    picture: string;
-    locale: string;
+interface IAuthenticateWithCodeResponse {
+    id?: string;
+    emailId?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    address?: string;
+    postalArea?: string;
+    postalCode?: number;
+    phoneNumber?: number;
+    dob?: Date;
+    registered?: Date;
+    updated?: Date;
+    roles?: [];
+    favoriteCategories?: [];
+    isLoggingIn: boolean;
+    isRegistering: boolean;
+    emailIsVerified: boolean;
+    token: string;
 }
 
 export const googleAuthServices = {
-    getUserInfo(accessToken: string) {
+    authenticate(code: string) {
         return async (dispatch: AppDispatch) => {
             try {
-                const { data }: { data: IGoogleResponse } = await googleUserInfo.get(`?alt=json&access_token=${accessToken}`);
+                const { data: user }: { data: IAuthenticateWithCodeResponse } = await API.post('/auth/code', { code });
 
-                console.log(data);
+                if (user.isRegistering && user.emailIsVerified) {
+                    dispatch(authActions.setIsRegistering(true));
+                    return;
+                }
 
-                // Send user details to backend and get response...
+                if (!user.emailIsVerified) {
+                    dispatch(authActions.setEmailIsValid(false));
+                    return;
+                }
 
-                const isRegistrering = true;
-
-                // IF user is registrering redirect to personalization
-
-                // ELSE see below...
-
-                // Set token in localStorage
-                // Set user in localStorage
-
+                dispatch(authActions.userLogin(user));
                 setTimeout(() => {
-                    if (isRegistrering) {
-                        dispatch(authActions.setIsRegistrering(true));
-                    }
-                    if (!isRegistrering) {
-                        dispatch(authActions.userLogin(data));
-                    }
-                }, 5000);
+                    dispatch(snackbarActions.setNotify({ message: 'Du er logget in', severity: 'success', autohideDuration: 5 }));
+                }, 2000);
             } catch (error: any) {
-                console.log(error.response.status);
-                if (error.response.status === 401) {
-                    window.location.replace(fullGoogleAuthUrl);
-                }
-                if (error.response.status !== 401) {
-                    dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-                    setTimeout(() => {
-                        window.location.replace(fullGoogleAuthUrl);
-                    }, 3000);
-                }
+                console.log(error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt..', severity: 'error', autohideDuration: null }));
             }
         };
     },

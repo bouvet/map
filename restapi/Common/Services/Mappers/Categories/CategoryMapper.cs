@@ -28,8 +28,13 @@ public class CategoryMapper : ICategoryMapper
     );
   }
 
-  public List<CategoryResponse> MapDbListToResponseList(List<Category> categories)
+  public List<CategoryResponse> MapDbListToResponseList(List<Category>? categories)
   {
+    if (categories is null)
+    {
+      return new List<CategoryResponse>();
+    }
+
     var resultList = new List<CategoryResult>();
 
     foreach (Category category in categories)

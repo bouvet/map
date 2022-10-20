@@ -4,7 +4,8 @@ import { IUser } from '../../utils/types.d';
 const initialState = {
     loading: false,
     isAuthenticated: false,
-    isRegistrering: false,
+    isRegistering: false,
+    emailIsValid: false,
     users: [],
     user: {} as IUser | null,
 };
@@ -16,12 +17,18 @@ const authState = createSlice({
         setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
         },
-        setIsRegistrering(state, action) {
-            state.isRegistrering = action.payload;
+        setIsRegistering(state, action: { payload: boolean; type: string }) {
+            state.isRegistering = action.payload;
+        },
+        setEmailIsValid(state, action: { payload: boolean; type: string }) {
+            state.emailIsValid = action.payload;
         },
         userLogin(state, action) {
             state.isAuthenticated = true;
+            state.emailIsValid = true;
             state.user = action.payload;
+            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('user', JSON.stringify(action.payload));
             state.loading = false;
         },
         logOut(state) {

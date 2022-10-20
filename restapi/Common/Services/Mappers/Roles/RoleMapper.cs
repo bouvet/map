@@ -43,8 +43,13 @@ public class RoleMapper : IRoleMapper
     return new GetRolesQuery();
   }
 
-  public List<RoleResponse> MapDbListToResponseList(List<Role> roles)
+  public List<RoleResponse> MapDbListToResponseList(List<Role>? roles)
   {
+    if (roles is null)
+    {
+      return new List<RoleResponse>();
+    }
+
     var resultList = MapDbListToResultList(roles);
 
     return MapResultListToResponseList(resultList);

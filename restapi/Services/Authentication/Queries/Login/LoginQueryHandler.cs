@@ -36,6 +36,11 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
       return Errors.Authentication.InvalidCredentials;
     }
 
+    if (string.IsNullOrEmpty(user.Password))
+    {
+      return Errors.Authentication.InvalidCredentials;
+    }
+
     bool passwordIsValid = passwordProvider.VerifyPassword(request.Password, user.Password);
 
     if (!passwordIsValid)

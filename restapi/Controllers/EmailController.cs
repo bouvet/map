@@ -8,6 +8,7 @@ using restapi.Contracts.Emails;
 using restapi.Services.Emails.Commands.Confirm;
 using restapi.Services.Emails.Commands.Create;
 using restapi.Services.Emails.Commands.Delete;
+using restapi.Services.Emails.Commands.ResendCode;
 using restapi.Services.Emails.Common;
 using restapi.Services.Emails.Queries.GetEmailsQuery;
 
@@ -42,16 +43,11 @@ public class EmailController : ApiController
   [HttpPost("resend-code/{id:guid}")]
   public async Task<IActionResult> ResendCode(Guid id)
   {
-    // User clicks before 48h = has token
-    // User clicks after 48h = no token
+    var resendCodeCommand = new ResendCodeCommand(id);
 
-    // Frontend has access to the email ID
+    ErrorOr<CreateEmailResult> resendCodeResult = await mediator.Send(resendCodeCommand);
 
-    var createEmailCommand = new CreateEmailCommand(request.Email.ToLower());
-
-    ErrorOr<CreateEmailResult> createEmailResult = await mediator.Send(createEmailCommand);
-
-    return createEmailResult.Match(
+    return resendCodeResult.Match(
       result => Ok(result),
       errors => Problem(errors)
     );
@@ -89,7 +85,7 @@ public class EmailController : ApiController
   }
 
   [Authorize(Roles = "Administrator, Registering")]
-  [HttpDelete("{email:string}")]
+  [HttpDelete("{email}")]
   public async Task<IActionResult> DeleteEmail(string email)
   {
     var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);

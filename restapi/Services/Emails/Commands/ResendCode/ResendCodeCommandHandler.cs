@@ -1,42 +1,41 @@
+using System.Net.Mail;
 using ErrorOr;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using restapi.Common.Providers;
 using restapi.Common.Services.Auth;
 using restapi.Common.Services.Emails;
 using restapi.Data;
-using restapi.Entities;
+using restapi.Services.Emails.Commands.Create;
 
-namespace restapi.Services.Emails.Commands.Create;
+namespace restapi.Services.Emails.Commands.ResendCode;
 
-public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, ErrorOr<CreateEmailResult>>
+public class ResendCodeCommandHandler : IRequestHandler<ResendCodeCommand, ErrorOr<CreateEmailResult>>
 {
-  private readonly IEmailService emailService;
   private readonly DataContext dataContext;
+  private readonly IEmailService emailService;
   private readonly IDateTimeProvider dateTimeProvider;
   private readonly IJwtGenerator jwtGenerator;
 
-  public CreateEmailCommandHandler(IEmailService emailService, DataContext dataContext, IDateTimeProvider dateTimeProvider, IJwtGenerator jwtGenerator)
+  public ResendCodeCommandHandler(DataContext dataContext, IEmailService emailService, IDateTimeProvider dateTimeProvider, IJwtGenerator jwtGenerator)
   {
-    this.emailService = emailService;
     this.dataContext = dataContext;
+    this.emailService = emailService;
     this.dateTimeProvider = dateTimeProvider;
     this.jwtGenerator = jwtGenerator;
   }
 
-  public async Task<ErrorOr<CreateEmailResult>> Handle(CreateEmailCommand request, CancellationToken cancellationToken)
+  public async Task<ErrorOr<CreateEmailResult>> Handle(ResendCodeCommand request, CancellationToken cancellationToken)
   {
-    var alreadyExists = await dataContext.Emails.AnyAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
-    var userExists = await dataContext.Users.AnyAsync(user => user.Email.ToLower() == request.Email, cancellationToken);
+    var email = await dataContext.Emails.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
 
-    if (alreadyExists)
+    if (email is null)
     {
-      return Errors.EmailService.AlreadyRegistered;
+      return Errors.EmailService.NotFound;
     }
 
-    if (userExists)
+    if (email.Confirmed)
     {
-      return Errors.Authentication.InvalidCredentials;
+      return Errors.EmailService.CodeConfirmed;
     }
 
     var randomNumberGenerator = new Random();
@@ -44,7 +43,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
 
     var emailRequest = new SendEmailRequest(
       "Email confirmation code",
-      request.Email,
+      email.Address,
       "Verden Venter",
       $"Confirmation code: {randomNumber}",
       $@"
@@ -61,19 +60,12 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       return Errors.EmailService.SendingEmailFailed;
     }
 
-    var email = new Email
-    {
-      Id = Guid.NewGuid(),
-      Address = request.Email.ToLower(),
-      ConfirmationCode = randomNumber,
-      Confirmed = false,
-      Created = dateTimeProvider.CEST,
-      CodeValidTo = dateTimeProvider.UtcNow.AddHours(48)
-    };
+    email.ConfirmationCode = randomNumber;
+    email.CodeValidTo = dateTimeProvider.UtcNow.AddHours(48);
+    email.Updated = dateTimeProvider.CEST;
 
     var token = jwtGenerator.GenerateRegistrationToken(email);
 
-    dataContext.Emails.Add(email);
     await dataContext.SaveChangesAsync(cancellationToken);
 
     return new CreateEmailResult(

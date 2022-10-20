@@ -1,0 +1,6 @@
+POST {{host}}/api/auth/code
+Content-Type: application/json
+
+{
+  "code": "4/0ARtbsJrvo3aKKXTin56-zgHWa0mhK1Fh5FM5Sv5TbHqLE6pZkB9krXnn05Lvxy56xFtoVQ"
+}

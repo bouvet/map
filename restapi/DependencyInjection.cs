@@ -4,6 +4,7 @@ using restapi.Common.Providers;
 using restapi.Common.Services.Auth;
 using restapi.Common.Services.Emails;
 using restapi.Common.Services.Mappings;
+using restapi.Common.Settings;
 
 namespace restapi;
 
@@ -13,6 +14,8 @@ public static class DependencyInjection
     this IServiceCollection services,
     ConfigurationManager configuration)
   {
+    services.AddSettings(configuration);
+
     await services.AddProvidersAsync(configuration);
 
     services.AddMappers();
@@ -27,6 +30,8 @@ public static class DependencyInjection
     services.AddAuth(configuration);
 
     services.AddEmail(configuration);
+
+    services.AddHttpClient("ValidateGoogleCode", client => client.BaseAddress = new Uri(GoogleAuthSettings.AuthUri));
 
     return services;
   }
