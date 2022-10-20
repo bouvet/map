@@ -8,6 +8,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import moment from 'moment';
 import 'moment/locale/en-ca';
+import 'moment/locale/nb';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { CenterFlex, Label } from '../../../components/Form/Input';
@@ -89,6 +90,8 @@ export const PersonalInfo: FC = () => {
             setInitialLastName(lastName);
         }
     }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
+
+    // const norsk = moment.locale('nb');
 
     return (
         <>

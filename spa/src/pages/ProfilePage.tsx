@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useMemo, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/nb';
-import { Button } from '../features/profile/Buttons';
+// import { Button } from '../features/profile/Buttons';
 import { Form } from '../features/profile/Form';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps, ProfileLink } from '../features/profile/Input';
@@ -9,6 +9,8 @@ import { ProfileHeader } from '../features/profile/ProfileHeader';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { userServices } from '../features/userRegistration/services/user.services';
 import { snackbarActions } from '../store/state/snackbar.state';
+import { SubmitButtonRegistration } from '../components/Form/Buttons';
+import { CenterFlex } from '../components/Form/Input';
 
 export const ProfilePage: FC = () => {
     const dispatch = useStateDispatch();
@@ -85,9 +87,12 @@ export const ProfilePage: FC = () => {
                 </span>
                 <span>
                     {/* add functionality + check if login from email, Google or Vipps */}
-                    <ProfileLink to="/">Slett bruker</ProfileLink>
+                    <ProfileLink to="/delete-account">Slett konto</ProfileLink>
                 </span>
-                <Button type="submit">Oppdater profil</Button>
+                {/* <Button type="submit">Oppdater profil</Button> */}
+                <CenterFlex>
+                    <SubmitButtonRegistration text="white">Oppdater profil</SubmitButtonRegistration>
+                </CenterFlex>
             </Form>
         </>
     );

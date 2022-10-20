@@ -20,6 +20,7 @@ import { useStateDispatch } from './hooks/useRedux';
 import { userServices } from './features/userRegistration/services/user.services';
 import { CreateCategory } from './features/adminPanel/CreateCategory';
 import { PersonalInfoGoogle } from './features/userRegistration/components/PersonalInfoGoogle';
+import { DeleteAccount } from './features/profile/DeleteAccount';
 
 const App = () => {
     const dispatch = useStateDispatch();
@@ -57,6 +58,7 @@ const App = () => {
 
                 <Route path="/create-category" element={<CreateCategory />} />
                 <Route path="/personal-info-google" element={<PersonalInfoGoogle />} />
+                <Route path="/delete-account" element={<DeleteAccount />} />
             </Routes>
             <CustomizedSnackbars />
         </Router>

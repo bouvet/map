@@ -95,7 +95,7 @@ export const CreatePassword: FC = () => {
                             <StyledInput
                                 label="Passord*"
                                 type={inputTypeCreate}
-                                errorMessage="Passord må være minst 8 tegn"
+                                errorMessage="Passord må bestå av minst 8 tegn"
                                 value={createPassword}
                                 onChange={createPasswordChangeHandler}
                                 onBlur={createPasswordBlurHandler}
@@ -106,7 +106,7 @@ export const CreatePassword: FC = () => {
                             <StyledInput
                                 label="Gjenta passord*"
                                 type={inputTypeConfirm}
-                                errorMessage="Passord må være minst 8 tegn"
+                                errorMessage="Passord må bestå av minst 8 tegn"
                                 value={confirmPassword}
                                 onChange={confirmPasswordChangeHandler}
                                 onBlur={confirmPasswordBlurHandler}

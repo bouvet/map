@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { BackButton, GoogleIcon } from '../../components/Navigation/Buttons';
+import { BackButton } from '../../components/Navigation/Buttons';
 import { MyTheme } from '../../styles/global';
 import { ProfilePicture, ProfilePictureProps } from './ProfileImage';
 
@@ -19,12 +19,6 @@ const ColouredSection = styled.div`
     background-color: ${MyTheme.colors.accent};
 `;
 
-const BackButtonHeader = styled(BackButton)`
-    position: absolute;
-    top: 20px;
-    left: 20px;
-`;
-
 export const ProfileHeader: FC<ProfilePictureProps> = (props) => {
     const { handleClick } = props;
     const navigate = useNavigate();
@@ -34,11 +28,9 @@ export const ProfileHeader: FC<ProfilePictureProps> = (props) => {
 
     return (
         <HeaderWrapper>
-            <BackButtonHeader backgroundColor={MyTheme.colors.opaque} onClick={handleBackClick}>
-                <GoogleIcon color="white" className="material-symbols-outlined">
-                    arrow_back
-                </GoogleIcon>
-            </BackButtonHeader>
+            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleBackClick}>
+                <span className="material-symbols-outlined">arrow_back</span>
+            </BackButton>
             <ColouredSection />
             <ProfilePicture handleClick={handleClick} />
         </HeaderWrapper>

@@ -2,7 +2,7 @@ import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit } from '../../../utils/types.d';
+import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit, IUser } from '../../../utils/types.d';
 
 export const userServices = {
     register(payload: IUserType) {
@@ -97,6 +97,19 @@ export const userServices = {
             } catch (error) {
                 console.error('error', error);
                 return false;
+            }
+        };
+    },
+    deleteAccount(payload: IUser) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                await API.delete(`/users/${payload.id}`);
+
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Konto er slettet', severity: 'success' }));
+                }, 500);
+            } catch (error) {
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             }
         };
     },
