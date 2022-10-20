@@ -50,6 +50,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
 
     var user = await dataContext.Users.SingleOrDefaultAsync(user => user.Email.ToLower() == userInfoResponse.Value.Email, cancellationToken: cancellationToken);
 
+    // User has an account and is logging in:
+
     if (user is not null)
     {
       var userToken = jwtGenerator.GenerateUserToken(user);
@@ -63,6 +65,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
 
       return new AuthWithCodeResult(user, null, userToken, true, false, true);
     }
+
+    // User does not have an account and not verified email with google:
 
     if (!userInfoResponse.Value.Verified_email)
     {
@@ -95,6 +99,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
 
       return new AuthWithCodeResult(null, resendCodeResult.Value.Id, resendCodeResult.Value.Token, false, true, false);
     }
+
+    // User does not have an account but has a verified email with google:
 
     var randomNumberGenerator = new Random();
     var randomNumber = randomNumberGenerator.Next(100000, 999999);
