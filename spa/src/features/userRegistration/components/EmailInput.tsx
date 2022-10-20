@@ -15,6 +15,7 @@ import { userServices } from '../services/user.services';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/emailValidator';
+import { userActions } from '../../../store/state/user.state';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -38,6 +39,8 @@ export const EmailInput: FC = () => {
         emailBlurHandler();
 
         if (!enteredEmailIsValid) return;
+
+        dispatch(userActions.setEmail(email));
 
         const successStatus: boolean = await dispatch(userServices.getCode({ email }));
         if (successStatus) {
