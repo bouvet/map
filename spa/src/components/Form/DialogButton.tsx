@@ -14,7 +14,7 @@ export const DialogButton: FC = () => {
 
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => setOpen(true);
-    const handleClose = () => navigate('/user-registration');
+    const handleClose = () => navigate('/login');
     const handleCloseDialog = () => setOpen(false);
 
     return (

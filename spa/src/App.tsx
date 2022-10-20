@@ -9,7 +9,6 @@ import { AdminPanel } from './pages/AdminPanel';
 import { ProfilePage } from './pages/ProfilePage';
 import { EmailConfirmation } from './features/userRegistration/components/EmailConfirmation';
 import { EmailInput } from './features/userRegistration/components/EmailInput';
-import { UserRegistration } from './pages/UserRegistration';
 import { PersonalInfo } from './features/userRegistration/components/PersonalInfo';
 import { CreatePassword } from './features/userRegistration/components/CreatePassword';
 import { Personalization } from './features/userRegistration/components/Personalization';
@@ -20,6 +19,10 @@ import { ChangeEmail } from './features/profile/ChangeEmail';
 import { useStateDispatch } from './hooks/useRedux';
 import { userServices } from './features/userRegistration/services/user.services';
 import { CreateCategory } from './features/adminPanel/CreateCategory';
+
+import { PersonalInfoGoogle } from './features/userRegistration/components/PersonalInfoGoogle';
+import { DeleteAccount } from './features/profile/DeleteAccount';
+
 import { AuthenticateSpinner } from './pages/AuthenticateSpinner';
 
 const App = () => {
@@ -49,7 +52,6 @@ const App = () => {
                 <Route path="/change-password" element={<ChangePassword />} />
                 <Route path="/change-email" element={<ChangeEmail />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/user-registration" element={<UserRegistration />} />
                 <Route path="/email-input" element={<EmailInput />} />
                 <Route path="/email-confirmation" element={<EmailConfirmation />} />
                 <Route path="/personal-info" element={<PersonalInfo />} />
@@ -59,6 +61,8 @@ const App = () => {
                 <Route path="/reset-password" element={<ResetPassword />} />
 
                 <Route path="/create-category" element={<CreateCategory />} />
+                <Route path="/personal-info-google" element={<PersonalInfoGoogle />} />
+                <Route path="/delete-account" element={<DeleteAccount />} />
             </Routes>
             <CustomizedSnackbars />
         </Router>

@@ -62,7 +62,7 @@ export const FabMenu: FC = () => {
                                     }}
                                 >
                                     <Link to="/profile">
-                                        <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                        <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                             person
                                         </GoogleIcon>
                                     </Link>
@@ -77,7 +77,7 @@ export const FabMenu: FC = () => {
                                     }}
                                 >
                                     <Link to="/location-approval-panel">
-                                        <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                        <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                             admin_panel_settings
                                         </GoogleIcon>
                                     </Link>
@@ -90,7 +90,7 @@ export const FabMenu: FC = () => {
                                     }}
                                 >
                                     <Link to="/location-registration">
-                                        <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                        <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                             add
                                         </GoogleIcon>
                                     </Link>
@@ -103,7 +103,7 @@ export const FabMenu: FC = () => {
                                         boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                                     }}
                                 >
-                                    <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                         logout
                                     </GoogleIcon>
                                 </Fab>
@@ -127,7 +127,7 @@ export const FabMenu: FC = () => {
                                     }}
                                 >
                                     <Link to="/profile">
-                                        <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                        <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                             person
                                         </GoogleIcon>
                                     </Link>
@@ -140,7 +140,7 @@ export const FabMenu: FC = () => {
                                     }}
                                 >
                                     <Link to="/location-registration">
-                                        <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                        <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                             add
                                         </GoogleIcon>
                                     </Link>
@@ -153,7 +153,7 @@ export const FabMenu: FC = () => {
                                         boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                                     }}
                                 >
-                                    <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                         logout
                                     </GoogleIcon>
                                 </Fab>
@@ -176,7 +176,7 @@ export const FabMenu: FC = () => {
                                 }}
                             >
                                 <Link to="/login">
-                                    <GoogleIcon color={MyTheme.colors.darkbase} className="material-symbols-outlined">
+                                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                         login
                                     </GoogleIcon>
                                 </Link>

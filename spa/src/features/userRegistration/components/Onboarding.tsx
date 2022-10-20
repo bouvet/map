@@ -37,7 +37,7 @@ export const Onboarding: FC = () => {
     };
 
     // upload unless redirected from Vipps or Google signup
-    const uploadContent = async () => {
+    const onSubmitHandler = async () => {
         const userDetails = {
             email,
             password,
@@ -63,13 +63,9 @@ export const Onboarding: FC = () => {
         handleRedirect();
     };
 
-    const handleClickSkip = () => {
-        uploadContent();
-    };
-
     const handleForwardClick = () => {
         if (pageIndex === 2) {
-            uploadContent();
+            onSubmitHandler();
         } else {
             setPageIndex(pageIndex + 1);
         }
@@ -97,7 +93,7 @@ export const Onboarding: FC = () => {
                                         <SubmitButtonRight text="white" onClick={handleForwardClick}>
                                             Neste
                                         </SubmitButtonRight>
-                                        <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+                                        <LinkTextOnboarding onClick={onSubmitHandler}>Hopp over</LinkTextOnboarding>
                                     </WrapperOnboarding>
                                 </CenterFlex>
                             </>
@@ -111,7 +107,7 @@ export const Onboarding: FC = () => {
                                                 <SubmitButtonRight text="white" onClick={handleForwardClick}>
                                                     Neste
                                                 </SubmitButtonRight>
-                                                <LinkTextOnboarding onClick={handleClickSkip}>Hopp over</LinkTextOnboarding>
+                                                <LinkTextOnboarding onClick={onSubmitHandler}>Hopp over</LinkTextOnboarding>
                                             </WrapperOnboarding>
                                         </CenterFlex>
                                     </>

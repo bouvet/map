@@ -25,7 +25,7 @@ const FilterButtonStyle = styled.div<FilterButtonToggledProps>`
     border-radius: 27px;
     background-color: ${(props) => (props.clicked ? MyTheme.colors.accent : MyTheme.colors.lightBase)};
     transition: 0.1s;
-    color: ${(props) => (props.clicked ? MyTheme.colors.lightBase : MyTheme.colors.darkbase)};
+    color: ${(props) => (props.clicked ? MyTheme.colors.lightBase : MyTheme.colors.darkBase)};
     display: inline-flex;
     align-items: center;
     justify-content: center;

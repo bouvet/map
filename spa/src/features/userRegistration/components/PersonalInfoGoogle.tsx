@@ -8,22 +8,20 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import moment from 'moment';
 import 'moment/locale/en-ca';
-import 'moment/locale/nb';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { CenterFlex, Label } from '../../../components/Form/Input';
-import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
+import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
 
-export const PersonalInfo: FC = () => {
+export const PersonalInfoGoogle: FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -65,13 +63,11 @@ export const PersonalInfo: FC = () => {
             dispatch(userActions.setFirstName(enteredFirstName));
             dispatch(userActions.setLastName(enteredLastName));
 
-            navigate('/create-password');
+            navigate('/personalization');
             console.log('Name: ', firstName, lastName);
             console.log('Date of birth: ', moment(dob).format('L'));
         }
     };
-
-    const pageIndex = 2;
 
     const theme = createTheme(
         {
@@ -91,14 +87,9 @@ export const PersonalInfo: FC = () => {
         }
     }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
 
-    // const norsk = moment.locale('nb');
-
     return (
         <>
-            <ProgressWrapper>
-                <ProgressBarForm pageIndex={pageIndex} />
-            </ProgressWrapper>
-            <FormWrapperRegistration>
+            <FormWrapper>
                 <DialogButton />
                 <FormContent>
                     <SectionWrapper>
@@ -108,6 +99,8 @@ export const PersonalInfo: FC = () => {
                             omtaler.
                         </Text>
                         <Form onSubmit={onSubmitHandler}>
+                            {/* display email read-only */}
+                            <input disabled />
                             <StyledInput
                                 label="Fornavn*"
                                 errorMessage="Vennligst fyll inn fornavn"
@@ -129,7 +122,7 @@ export const PersonalInfo: FC = () => {
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
                                         label="åååå.mm.dd"
-                                        value={dob || null}
+                                        value={dob}
                                         onChange={(newValue) => handleChangeDob(newValue)}
                                         renderInput={(params) => <TextField {...params} />}
                                         maxDate={new Date()}
@@ -142,7 +135,7 @@ export const PersonalInfo: FC = () => {
                         </Form>
                     </SectionWrapper>
                 </FormContent>
-            </FormWrapperRegistration>
+            </FormWrapper>
         </>
     );
 };

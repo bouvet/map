@@ -71,7 +71,7 @@ const ProgressStatusLine = styled.div<ProgessCompletionProp>`
 `;
 
 const ProgressIcon = styled.span<ProgessCompletionProp>`
-    color: ${(props) => (props.completed ? MyTheme.colors.darkbase : MyTheme.colors.grey)};
+    color: ${(props) => (props.completed ? MyTheme.colors.darkBase : MyTheme.colors.grey)};
     font-weight: 400;
 `;
 
@@ -113,7 +113,7 @@ export const RegistrationButtonLeft = styled(RegistrationButton)`
 `;
 
 export const RegistrationButtonWrapper = styled.div`
-    position: absolute;
+    position: fixed;
     bottom: 0px;
 `;
 

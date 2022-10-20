@@ -1,12 +1,14 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { CenterFlex, InputPassword } from '../../../components/Form/Input';
+import { CenterFlex } from '../../../components/Form/Input';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
+import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { TitleForm } from '../../../components/Form/Text';
 import { BackButton } from '../../../components/Navigation/Buttons';
+import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
@@ -17,17 +19,49 @@ export const ResetPassword: FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [showNewPassword, setShowNewPassword] = useState(false);
-    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [inputTypeNew, setInputTypeNew] = useState('password');
+    const [inputTypeConfirm, setInputTypeConfirm] = useState('password');
 
-    const toggleShowNewPassword = () => {
-        setShowNewPassword(!showNewPassword);
+    const {
+        value: newPassword,
+        isValid: newPasswordIsValid,
+        hasError: newPasswordInputHasError,
+        valueChangeHandler: newPasswordChangeHandler,
+        inputBlurHandler: newPasswordBlurHandler,
+    } = useInput((value) => value.trim().length >= 8);
+
+    const {
+        value: confirmPassword,
+        isValid: confirmPasswordIsValid,
+        hasError: confirmPasswordInputHasError,
+        valueChangeHandler: confirmPasswordChangeHandler,
+        inputBlurHandler: confirmPasswordBlurHandler,
+    } = useInput((value) => value.trim().length >= 8);
+
+    const toggleNewPasswordHandler = () => {
+        if (inputTypeNew === 'password') {
+            setInputTypeNew('text');
+            setShowNewPassword(true);
+        }
+
+        if (inputTypeNew === 'text') {
+            setInputTypeNew('password');
+            setShowNewPassword(false);
+        }
     };
 
-    const toggleShowConfirmNewPassword = () => {
-        setShowConfirmNewPassword(!showConfirmNewPassword);
+    const toggleConfirmPasswordHandler = () => {
+        if (inputTypeConfirm === 'password') {
+            setInputTypeConfirm('text');
+            setShowConfirmPassword(true);
+        }
+
+        if (inputTypeConfirm === 'text') {
+            setInputTypeConfirm('password');
+            setShowConfirmPassword(false);
+        }
     };
 
     useEffect(() => {
@@ -38,20 +72,20 @@ export const ResetPassword: FC = () => {
         }
     }, [location.search]);
 
-    const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-        setState(e.target.value);
-    };
-
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (newPassword !== confirmNewPassword) {
+        if (newPassword !== confirmPassword) {
             dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
         } else {
-            e.preventDefault();
+            newPasswordBlurHandler();
+            confirmPasswordBlurHandler();
+
+            if (!newPasswordIsValid || !confirmPasswordIsValid) return;
+
             const successStatus: boolean = await dispatch(
                 loginServices.changePassword({
                     password: newPassword,
-                    confirmPassword: confirmNewPassword,
+                    confirmPassword,
                 }),
             );
             if (successStatus) {
@@ -69,21 +103,27 @@ export const ResetPassword: FC = () => {
                 <SectionWrapper>
                     <TitleForm>Tilbakestill passord</TitleForm>
                     <Form onSubmit={onSubmitHandler}>
-                        <InputPassword
-                            label="Nytt passord*"
+                        <StyledInput
+                            label="Passord*"
+                            type={inputTypeNew}
+                            errorMessage="Passord må bestå av minst 8 tegn"
                             value={newPassword}
-                            setState={setNewPassword}
-                            handleChange={handleFormInputChange}
-                            show={showNewPassword}
-                            toggleShow={toggleShowNewPassword}
+                            onChange={newPasswordChangeHandler}
+                            onBlur={newPasswordBlurHandler}
+                            inputHasError={newPasswordInputHasError}
+                            toggleShowPassword={toggleNewPasswordHandler}
+                            showPassword={showNewPassword}
                         />
-                        <InputPassword
-                            label="Gjenta nytt passord*"
-                            value={confirmNewPassword}
-                            setState={setConfirmNewPassword}
-                            handleChange={handleFormInputChange}
-                            show={showConfirmNewPassword}
-                            toggleShow={toggleShowConfirmNewPassword}
+                        <StyledInput
+                            label="Gjenta passord*"
+                            type={inputTypeConfirm}
+                            errorMessage="Passord må bestå av minst 8 tegn"
+                            value={confirmPassword}
+                            onChange={confirmPasswordChangeHandler}
+                            onBlur={confirmPasswordBlurHandler}
+                            inputHasError={confirmPasswordInputHasError}
+                            toggleShowPassword={toggleConfirmPasswordHandler}
+                            showPassword={showConfirmPassword}
                         />
                         <CenterFlex>
                             <SubmitButtonRegistration text="white">Endre passord</SubmitButtonRegistration>

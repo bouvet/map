@@ -12,21 +12,19 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-
-interface LocationType {
-    email: string;
-}
+import { useStateSelector } from '../../../hooks/useRedux';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation().state as LocationType;
+    // const location = useLocation().state as LocationType;
+
+    const { email } = useStateSelector((state) => state.user);
 
     const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
     const onSubmitHandler = useCallback(
         (code: string) => {
-            dispatch(userActions.setEmail(location.email));
             confirmCode(code);
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +33,7 @@ export const EmailConfirmation: FC = () => {
 
     const confirmCode = async (code: string) => {
         const inputCode = {
-            email: location.email,
+            email,
             confirmationCode: code,
         };
 
@@ -86,7 +84,7 @@ export const EmailConfirmation: FC = () => {
                     <SectionWrapper>
                         <TitleForm>Bekreft e-post</TitleForm>
                         <Form>
-                            <Text>Skriv inn koden for å bekrefte e-postadressen {location.email}</Text>
+                            <Text>Skriv inn koden for å bekrefte e-postadressen {email}</Text>
                             <Box
                                 sx={{
                                     '& .MuiTextField-root': { m: '1%', width: '14%' },
