@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useMemo, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/nb';
-import { Button } from '../features/profile/Buttons';
+// import { Button } from '../features/profile/Buttons';
 import { Form } from '../features/profile/Form';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps, ProfileLink } from '../features/profile/Input';
@@ -9,6 +9,8 @@ import { ProfileHeader } from '../features/profile/ProfileHeader';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { userServices } from '../features/userRegistration/services/user.services';
 import { snackbarActions } from '../store/state/snackbar.state';
+import { SubmitButtonRegistration } from '../components/Form/Buttons';
+import { CenterFlex } from '../components/Form/Input';
 
 export const ProfilePage: FC = () => {
     const dispatch = useStateDispatch();
@@ -29,9 +31,6 @@ export const ProfilePage: FC = () => {
         }
     });
 
-    // const [firstName, setFirstName] = useState(user?.firstName);
-    // const [dob, setDob] = useState(user?.dob);
-
     moment.locale('nb');
 
     // add possibility to edit name, dob and categories + see changes on submit
@@ -45,13 +44,8 @@ export const ProfilePage: FC = () => {
         [dob, email, categories, firstName, lastName],
     );
 
-    // const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-    //     setState(e.target.value);
-    // };
-
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // editUserDetails();
     };
 
     // check: values cannot be empty
@@ -83,7 +77,7 @@ export const ProfilePage: FC = () => {
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
 
             <ProfileHeader handleClick={ToggleImageModal} />
-            <Form onSubmit={(e) => onSubmitHandler(e)}>
+            <Form onSubmit={onSubmitHandler}>
                 {inputs}
                 <span>
                     <ProfileLink to="/change-email">Endre e-post</ProfileLink>
@@ -91,7 +85,14 @@ export const ProfilePage: FC = () => {
                 <span>
                     <ProfileLink to="/change-password">Endre passord</ProfileLink>
                 </span>
-                <Button type="submit">Oppdater profil</Button>
+                <span>
+                    {/* add functionality + check if login from email, Google or Vipps */}
+                    <ProfileLink to="/delete-account">Slett konto</ProfileLink>
+                </span>
+                {/* <Button type="submit">Oppdater profil</Button> */}
+                <CenterFlex>
+                    <SubmitButtonRegistration text="white">Oppdater profil</SubmitButtonRegistration>
+                </CenterFlex>
             </Form>
         </>
     );

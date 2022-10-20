@@ -161,7 +161,7 @@ export const LocationRegistration: FC = () => {
                             <RegistrationButtonWrapper>
                                 <RegistrationButtonLeft
                                     text={MyTheme.colors.lightBase}
-                                    background={MyTheme.colors.darkbase}
+                                    background={MyTheme.colors.darkBase}
                                     onClick={handleBackClick}
                                 >
                                     Tilbake

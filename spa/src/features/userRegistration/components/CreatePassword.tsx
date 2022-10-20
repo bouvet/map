@@ -1,36 +1,66 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { CenterFlex, InputPassword } from '../../../components/Form/Input';
+import { CenterFlex } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
+import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { useInput } from '../../../hooks/useInput';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const [createPassword, setCreatePassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [showCreatePassword, setShowCreatePassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [inputTypeCreate, setInputTypeCreate] = useState('password');
+    const [inputTypeConfirm, setInputTypeConfirm] = useState('password');
 
-    const toggleShowCreatePassword = () => {
-        setShowCreatePassword(!showCreatePassword);
+    const {
+        value: createPassword,
+        isValid: createPasswordIsValid,
+        hasError: createPasswordInputHasError,
+        valueChangeHandler: createPasswordChangeHandler,
+        inputBlurHandler: createPasswordBlurHandler,
+    } = useInput((value) => value.trim().length >= 8);
+
+    const {
+        value: confirmPassword,
+        isValid: confirmPasswordIsValid,
+        hasError: confirmPasswordInputHasError,
+        valueChangeHandler: confirmPasswordChangeHandler,
+        inputBlurHandler: confirmPasswordBlurHandler,
+    } = useInput((value) => value.trim().length >= 8);
+
+    const toggleCreatePasswordHandler = () => {
+        if (inputTypeCreate === 'password') {
+            setInputTypeCreate('text');
+            setShowCreatePassword(true);
+        }
+
+        if (inputTypeCreate === 'text') {
+            setInputTypeCreate('password');
+            setShowCreatePassword(false);
+        }
     };
 
-    const toggleShowConfirmPassword = () => {
-        setShowConfirmPassword(!showConfirmPassword);
-    };
+    const toggleConfirmPasswordHandler = () => {
+        if (inputTypeConfirm === 'password') {
+            setInputTypeConfirm('text');
+            setShowConfirmPassword(true);
+        }
 
-    const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>, setState: Dispatch<string>) => {
-        setState(e.target.value);
+        if (inputTypeConfirm === 'text') {
+            setInputTypeConfirm('password');
+            setShowConfirmPassword(false);
+        }
     };
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -38,7 +68,11 @@ export const CreatePassword: FC = () => {
         if (createPassword !== confirmPassword) {
             dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
         } else {
-            e.preventDefault();
+            createPasswordBlurHandler();
+            confirmPasswordBlurHandler();
+
+            if (!createPasswordIsValid || !confirmPasswordIsValid) return;
+
             dispatch(userActions.setPassword(createPassword));
             navigate('/personalization');
             console.log('Passord er satt');
@@ -57,22 +91,28 @@ export const CreatePassword: FC = () => {
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>Passord</TitleForm>
-                        <Form onSubmit={(e) => onSubmitHandler(e)}>
-                            <InputPassword
+                        <Form onSubmit={onSubmitHandler}>
+                            <StyledInput
                                 label="Passord*"
+                                type={inputTypeCreate}
+                                errorMessage="Passord må bestå av minst 8 tegn"
                                 value={createPassword}
-                                setState={setCreatePassword}
-                                handleChange={handleFormInputChange}
-                                show={showCreatePassword}
-                                toggleShow={toggleShowCreatePassword}
+                                onChange={createPasswordChangeHandler}
+                                onBlur={createPasswordBlurHandler}
+                                inputHasError={createPasswordInputHasError}
+                                toggleShowPassword={toggleCreatePasswordHandler}
+                                showPassword={showCreatePassword}
                             />
-                            <InputPassword
+                            <StyledInput
                                 label="Gjenta passord*"
+                                type={inputTypeConfirm}
+                                errorMessage="Passord må bestå av minst 8 tegn"
                                 value={confirmPassword}
-                                setState={setConfirmPassword}
-                                handleChange={handleFormInputChange}
-                                show={showConfirmPassword}
-                                toggleShow={toggleShowConfirmPassword}
+                                onChange={confirmPasswordChangeHandler}
+                                onBlur={confirmPasswordBlurHandler}
+                                inputHasError={confirmPasswordInputHasError}
+                                toggleShowPassword={toggleConfirmPasswordHandler}
+                                showPassword={showConfirmPassword}
                             />
                             <CenterFlex>
                                 <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>

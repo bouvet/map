@@ -7,6 +7,7 @@ import { fullGoogleAuthUrl } from '../lib/googleAPI';
 import { Google, GoogleLogoWhite, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
 import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
+import { SectionWrapperLogin } from '../components/Form/SectionWrapper';
 import { DivideLine } from '../features/login/components/DivideLine';
 import { SectionWrapper } from '../components/Form/SectionWrapper';
 import { LoginForm } from '../features/login/components/LoginForm';
@@ -26,7 +27,7 @@ export const Login: FC = () => {
     return (
         <FormWrapper>
             <FormContent>
-                <SectionWrapper>
+                <SectionWrapperLogin>
                     <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/')}>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </BackButton>
@@ -54,10 +55,10 @@ export const Login: FC = () => {
                             <Text>Ikke registrert?</Text>
                         </LeftFlex>
                         <RightFlex>
-                            <LinkText to="/user-registration">Registrer deg</LinkText>
+                            <LinkText to="/email-input">Registrer deg</LinkText>
                         </RightFlex>
                     </SplitWrapper>
-                </SectionWrapper>
+                </SectionWrapperLogin>
             </FormContent>
         </FormWrapper>
     );

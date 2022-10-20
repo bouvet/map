@@ -21,7 +21,7 @@ const Title = styled(Text)`
 `;
 
 const Icon = styled.span`
-    color: ${MyTheme.colors.darkbase};
+    color: ${MyTheme.colors.darkBase};
     font-size: ${MyTheme.fontSize.largeIcon};
     padding: 10px;
 `;

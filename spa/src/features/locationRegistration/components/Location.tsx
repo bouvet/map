@@ -94,7 +94,7 @@ export const EmojiButton: FC<ButtonContentProps> = ({
     left = 'default',
 }) => (
     <ButtonStyle
-        text={MyTheme.colors.darkbase}
+        text={MyTheme.colors.darkBase}
         background={MyTheme.colors.lightBase}
         type="button"
         onClick={onClick}

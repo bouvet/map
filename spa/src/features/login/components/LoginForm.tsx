@@ -63,8 +63,8 @@ export const LoginForm: FC = () => {
 
         dispatch(
             loginServices.login({
-                email: 'email',
-                password: 'password',
+                email: enteredEmail,
+                password: enteredPassword,
             }),
         );
     };
@@ -83,7 +83,7 @@ export const LoginForm: FC = () => {
             <StyledInput
                 label="Passord"
                 type={inputType}
-                errorMessage="Passord må være minst 8 tegn"
+                errorMessage="Passord består av minst 8 tegn"
                 value={enteredPassword}
                 onChange={passwordChangeHandler}
                 onBlur={passwordBlurHandler}

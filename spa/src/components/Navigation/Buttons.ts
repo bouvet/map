@@ -42,7 +42,7 @@ export const CloseButton = styled(RoundButton)`
     top: 10px;
     left: 10px;
     &:active {
-        background-color: ${MyTheme.colors.darkbase};
+        background-color: ${MyTheme.colors.darkBase};
     }
 `;
 

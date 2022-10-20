@@ -47,7 +47,7 @@ export const Review: FC<ReviewProps> = ({ name, age, date, rating, review }) => 
                 <ReviewerInfo>
                     {name}, {age}
                 </ReviewerInfo>
-                <StarRating rating={rating} color={MyTheme.colors.darkbase} sizePx="14px" />
+                <StarRating rating={rating} color={MyTheme.colors.darkBase} sizePx="14px" />
             </ReviewerWrapper>
             <Date>{moment(date).format('L')}</Date>
         </ReviewHeader>

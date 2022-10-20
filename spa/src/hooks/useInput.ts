@@ -20,6 +20,10 @@ export const useInput = (validateValue: (value: string) => boolean) => {
         setIsTouched(false);
     };
 
+    const setInitialValue = (initialValue: string) => {
+        setEnteredValue(initialValue);
+    };
+
     return {
         value: enteredValue,
         isValid: valueIsValid,
@@ -27,5 +31,6 @@ export const useInput = (validateValue: (value: string) => boolean) => {
         valueChangeHandler,
         inputBlurHandler,
         reset,
+        setInitialValue,
     };
 };

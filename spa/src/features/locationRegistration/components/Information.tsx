@@ -32,6 +32,10 @@ const Input = styled.input`
     padding: 5px;
 `;
 
+const ListWrapper = styled.div`
+    padding: 10px;
+`;
+
 const TextArea = styled.textarea`
     border-radius: 5px;
     border: 1px solid ${MyTheme.colors.grey};
@@ -86,14 +90,16 @@ export const Information: FC = () => {
                     Beskriv stedet:
                     <RequiredStar />
                 </Label>
-                <Text>Tips til info:</Text>
-                <ul>
-                    <li>Hva slags utstyr finner man der?</li>
-                    <li>Er utstyret i god stand?</li>
-                    <li>Hvordan kommer man seg dit?</li>
-                    <li>Er stedet ofte opptatt?</li>
-                    <li>Har stedet belysning som slås av på kvelden?</li>
-                </ul>
+                <ListWrapper>
+                    <Text>Tips til info:</Text>
+                    <ul>
+                        <li>Hva slags utstyr finner man der?</li>
+                        <li>Er utstyret i god stand?</li>
+                        <li>Hvordan kommer man seg dit?</li>
+                        <li>Er stedet ofte opptatt?</li>
+                        <li>Har stedet belysning som slås av på kvelden?</li>
+                    </ul>
+                </ListWrapper>
                 <TextArea onChange={handleChangeDescription} value={currentDescription} maxLength={200} minLength={20} />
                 {currentDescription.length}/200
             </InputWrapper>
