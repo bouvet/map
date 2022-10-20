@@ -68,7 +68,13 @@ const CategoryHeader = styled.p`
 
 export const LocationBlock: FC<LocationProps> = (props) => {
     const { item } = props;
-    const { title, status, description, image, category } = item.properties;
+    const {
+        title,
+        status,
+        description,
+        webpImage: { cdnUri },
+        category,
+    } = item.properties;
 
     const [isActive, setIsActive] = useState(false);
 
@@ -122,7 +128,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
                             <Li key={item.name}>{item.name}</Li>
                         ))}
                     </ul>
-                    {image !== undefined && <Image src={image} alt="location" />}
+                    {cdnUri !== undefined && <Image src={cdnUri} alt="location" />}
                     {(() => {
                         if (status === 'Approved') {
                             return (

@@ -5,7 +5,7 @@ import { BackButton, GoogleIcon } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { ButtonStyleDiv } from './Location';
 
-interface ProgessCompletionProp {
+interface ProgressCompletionProp {
     completed: boolean;
 }
 
@@ -35,6 +35,7 @@ export const RegistrationContentWrapper = styled.div`
     height: calc(100% - 200px);
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
@@ -62,7 +63,7 @@ const ProgressElementWrapper = styled.div`
     justify-content: center;
 `;
 
-const ProgressStatusLine = styled.div<ProgessCompletionProp>`
+const ProgressStatusLine = styled.div<ProgressCompletionProp>`
     width: 100%;
     height: 10px;
     background-color: ${(props) => (props.completed ? MyTheme.colors.accent : MyTheme.colors.grey)};
@@ -70,17 +71,17 @@ const ProgressStatusLine = styled.div<ProgessCompletionProp>`
     bottom: 0px;
 `;
 
-const ProgressIcon = styled.span<ProgessCompletionProp>`
+const ProgressIcon = styled.span<ProgressCompletionProp>`
     color: ${(props) => (props.completed ? MyTheme.colors.darkBase : MyTheme.colors.grey)};
     font-weight: 400;
 `;
 
-interface ProgessProps {
+interface ProgressProps {
     completed: boolean;
     icon: string;
 }
 
-export const ProgressElement: FC<ProgessProps> = ({ completed, icon }) => (
+export const ProgressElement: FC<ProgressProps> = ({ completed, icon }) => (
     <ProgressElementWrapper>
         <ProgressIcon className="material-symbols-rounded" completed={completed}>
             {icon}
@@ -113,8 +114,7 @@ export const RegistrationButtonLeft = styled(RegistrationButton)`
 `;
 
 export const RegistrationButtonWrapper = styled.div`
-    position: fixed;
-    bottom: 0px;
+    margin-top: 1.5rem;
 `;
 
 interface ProgressBarProps {

@@ -139,6 +139,8 @@ export const LocationRegistration: FC = () => {
                         <ProgressBar pageIndex={pageIndex} />
                     </RegistrationHeader>
                     <RegistrationContentWrapper>
+                        {pageIndex === 1 && <Information />}
+                        {pageIndex === 2 && <ImageUploader />}
                         {pageIndex === 0 ? (
                             <>
                                 <MapView handleClick={handleGetLocation} />
@@ -167,34 +169,21 @@ export const LocationRegistration: FC = () => {
                                     Tilbake
                                 </RegistrationButtonLeft>
 
-                                {pageIndex === 1 && (
-                                    <RegistrationButtonRight
-                                        text={MyTheme.colors.lightBase}
-                                        background={MyTheme.colors.accent}
-                                        disabled={
-                                            !(currentTitle && currentCategories[0] && currentDescription) ||
-                                            currentTitle.length < 5 ||
-                                            currentDescription.length < 20
-                                        }
-                                        onClick={handleForwardClick}
-                                    >
-                                        Videre
-                                    </RegistrationButtonRight>
-                                )}
-
-                                {pageIndex === 2 && (
-                                    <RegistrationButtonRight
-                                        text={MyTheme.colors.lightBase}
-                                        background={MyTheme.colors.accent}
-                                        onClick={handleForwardClick}
-                                    >
-                                        Fullfør
-                                    </RegistrationButtonRight>
-                                )}
+                                <RegistrationButtonRight
+                                    text={MyTheme.colors.lightBase}
+                                    background={MyTheme.colors.accent}
+                                    disabled={
+                                        !(currentTitle && currentCategories[0] && currentDescription) ||
+                                        currentTitle.length < 5 ||
+                                        currentDescription.length < 20
+                                    }
+                                    onClick={handleForwardClick}
+                                >
+                                    {pageIndex === 1 && 'Videre'}
+                                    {pageIndex === 2 && 'Fullfør'}
+                                </RegistrationButtonRight>
                             </RegistrationButtonWrapper>
                         )}
-                        {pageIndex === 1 && <Information />}
-                        {pageIndex === 2 && <ImageUploader />}
                     </RegistrationContentWrapper>
                 </>
             )}

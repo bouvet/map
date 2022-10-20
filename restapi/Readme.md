@@ -25,6 +25,9 @@ There is a few Azure resources you need to get started.
       - "DbConnectionString"
       - "azureBlobStorageConnectionString"
       - "SendGridApiKey"
+      - "GoogleClientId"
+      - "GoogleClientSecret"
+      - "GoogleRedirectUri"
   - Azure SQL Server
     - Azure SQL database
   - Azure Storage Account
@@ -47,6 +50,10 @@ $dotnet user-secrets set "JwtSettings:Audience" "<JWT Audience>"
 $dotnet user-secrets set "SendGridSettings:ApiKey" "<SendGrid ApiKey>"
 $dotnet user-secrets set "SendGridSettings:FromEmail" "<From which emails will be sent from>"
 $dotnet user-secrets set "SendGridSettings:FromName" "<Sender name which receiver sees>"
+
+$dotnet user-secrets set "GoogleAuthSettings:ClientId" "<Google Client Id>"
+$dotnet user-secrets set "GoogleAuthSettings:ClientSecret" "<Google Client Secret>"
+$dotnet user-secrets set "GoogleAuthSettings:RedirectUri" "<Google Client RedirectUri>"
 ```
 
 List all user secrets:

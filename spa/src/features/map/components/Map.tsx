@@ -105,12 +105,12 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
                 selectedFilterCategory &&
                 filteredLocations
                     .filter((location) => location.properties.status === 'Approved')
-                    .map((locaction) => (
+                    .map((location) => (
                         <CustomMarker
-                            key={locaction.id}
-                            coordinates={locaction.geometry.coordinates}
+                            key={location.id}
+                            coordinates={location.geometry.coordinates}
                             onClickHandler={onClickHandler}
-                            markerLocation={locaction}
+                            markerLocation={location}
                             selectedMarker={selectedMarker}
                         />
                     ))}

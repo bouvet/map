@@ -9,7 +9,6 @@ import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
 import { SectionWrapperLogin } from '../components/Form/SectionWrapper';
 import { DivideLine } from '../features/login/components/DivideLine';
-import { SectionWrapper } from '../components/Form/SectionWrapper';
 import { LoginForm } from '../features/login/components/LoginForm';
 import { LinkText, Text, Title } from '../components/Form/Text';
 import { BackButton } from '../components/Navigation/Buttons';

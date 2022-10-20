@@ -4,6 +4,7 @@ import { IUser } from '../../utils/types.d';
 const initialState = {
     loading: false,
     isAuthenticated: false,
+    isAdmin: false,
     isRegistering: false,
     emailIsValid: false,
     users: [],
@@ -27,8 +28,11 @@ const authState = createSlice({
             state.isAuthenticated = true;
             state.emailIsValid = true;
             state.user = action.payload;
-            localStorage.setItem('token', action.payload.token);
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            if (action.payload.roles.some((role: any) => role.name === 'Administrator')) {
+                state.isAdmin = true;
+            }
+            // localStorage.setItem('token', action.payload.token);
+            // localStorage.setItem('user', JSON.stringify(action.payload));
             state.loading = false;
         },
         logOut(state) {
