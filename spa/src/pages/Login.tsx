@@ -1,15 +1,19 @@
 import { FC } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
+import { useStateSelector } from '../hooks/useRedux';
+
+import { fullGoogleAuthUrl } from '../lib/googleAPI';
+
 import { Google, GoogleLogoWhite, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
-import { DivideLine } from '../features/login/components/DivideLine';
 import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
 import { SectionWrapperLogin } from '../components/Form/SectionWrapper';
+import { DivideLine } from '../features/login/components/DivideLine';
+import { SectionWrapper } from '../components/Form/SectionWrapper';
+import { LoginForm } from '../features/login/components/LoginForm';
 import { LinkText, Text, Title } from '../components/Form/Text';
-import { useStateSelector } from '../hooks/useRedux';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
-import { LoginForm } from '../features/login/components/LoginForm';
 
 export const Login: FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
@@ -31,10 +35,15 @@ export const Login: FC = () => {
                         <Title>Login</Title>
                         <Text>Verden venter... på deg!</Text>
                     </span>
-                    <Google text="google">
-                        <GoogleLogoWhite src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google" />
-                        Logg inn med Google
-                    </Google>
+                    <a href={`${fullGoogleAuthUrl}`} rel="noopener noreferrer">
+                        <Google text="google">
+                            <GoogleLogoWhite
+                                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                                alt="google"
+                            />
+                            Logg inn med Google
+                        </Google>
+                    </a>
                     <Vipps text="white">
                         Logg inn med
                         <VippsLogoWhite src="https://vipps.no/documents/58/vipps-rgb-white.svg" alt="vipps" />

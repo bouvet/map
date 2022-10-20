@@ -19,8 +19,11 @@ import { ChangeEmail } from './features/profile/ChangeEmail';
 import { useStateDispatch } from './hooks/useRedux';
 import { userServices } from './features/userRegistration/services/user.services';
 import { CreateCategory } from './features/adminPanel/CreateCategory';
+
 import { PersonalInfoGoogle } from './features/userRegistration/components/PersonalInfoGoogle';
 import { DeleteAccount } from './features/profile/DeleteAccount';
+
+import { AuthenticateSpinner } from './pages/AuthenticateSpinner';
 
 const App = () => {
     const dispatch = useStateDispatch();
@@ -41,6 +44,7 @@ const App = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<AuthenticateSpinner />} />
                 <Route path="/location-info" element={<LocationInfo />} />
                 <Route path="/location-registration" element={<LocationRegistration />} />
                 <Route path="/location-approval-panel" element={<AdminPanel />} />
