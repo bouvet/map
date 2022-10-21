@@ -9,10 +9,10 @@ import { useInput } from '../../../hooks/useInput';
 
 import { Checkbox, LeftFlex, RightFlex, SplitWrapper } from '../../../components/Form/Input';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { SubmitButton } from '../../../components/Form/Buttons';
 import { LinkText } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
 import { validateEmail } from '../../../utils/emailValidator';
+import { Button } from './GoogleLoginLink';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -29,7 +29,7 @@ export const LoginForm: FC = () => {
         hasError: emailInputHasError,
         valueChangeHandler: emailChangeHandler,
         inputBlurHandler: emailBlurHandler,
-    } = useInput((value) => validateEmail(value));
+    } = useInput((value: string) => validateEmail(value));
 
     const {
         value: enteredPassword,
@@ -37,7 +37,7 @@ export const LoginForm: FC = () => {
         hasError: passwordInputHasError,
         valueChangeHandler: passwordChangeHandler,
         inputBlurHandler: passwordBlurHandler,
-    } = useInput((value) => value.trim().length >= 8);
+    } = useInput((value: string) => value.trim().length >= 8);
 
     const togglePasswordHandler = () => {
         if (inputType === 'password') {
@@ -101,9 +101,9 @@ export const LoginForm: FC = () => {
                     <LinkText to="/change-password">Glemt passord</LinkText>
                 </RightFlex>
             </SplitWrapper>
-            <SubmitButton text="white" type="submit">
+            <Button type="submit" color="primary" variant="contained">
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
-            </SubmitButton>
+            </Button>
         </Form>
     );
 };

@@ -34,7 +34,7 @@ const EyeIconDiv = styled.div`
 `;
 
 const ErrorMessage = styled.p`
-    color: red;
+    color: #f52121;
     font-size: small;
     margin-top: 10px;
 `;
@@ -72,7 +72,10 @@ export const StyledInput: React.FC<IProps> = ({
 }) => {
     let style = {};
     if (inputHasError) {
-        style = { border: '1px solid red' };
+        style = { border: '1px solid #f52121' };
+    }
+    if (!inputHasError && value) {
+        style = { border: '1px solid #00c600' };
     }
     return (
         <div>

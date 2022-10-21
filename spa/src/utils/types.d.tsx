@@ -12,10 +12,41 @@ export interface IGeometry {
 export interface IProperties {
     title: string;
     description: string;
-    category: Array<ICategory>;
-    image: string;
+    originalImage: {
+        id: string;
+        blobUri: string;
+        cdnUri: string;
+        contentType: string;
+        uploaded: Date;
+        uploader?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+        };
+        originalImageId: null;
+        locationId: string;
+        reviewId: string | null;
+    };
+    webpImage: {
+        id: string;
+        blobUri: string;
+        cdnUri: string;
+        contentType: string;
+        uploaded: Date;
+        uploader?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+        };
+        originalImageId: string;
+        locationId: string;
+        reviewId: string | null;
+    };
     status: string;
     rating: number;
+    category: Array<ICategory>;
 }
 
 export interface ILocation {

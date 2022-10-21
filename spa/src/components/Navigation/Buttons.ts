@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MyTheme } from '../../styles/global';
+import { MyTheme, device } from '../../styles/global';
 
 interface ButtonStylingProps {
     backgroundColor?: string;
@@ -33,6 +33,13 @@ export const BackButton = styled(RoundButton)`
     z-index: 1300;
     top: 10px;
     left: 10px;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    @media ${device.mobileM} {
+        height: 50px;
+        width: 50px;
+    }
 `;
 
 export const CloseButton = styled(RoundButton)`
