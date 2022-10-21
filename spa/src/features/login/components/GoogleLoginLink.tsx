@@ -1,25 +1,12 @@
-import styledC from 'styled-components';
+import styled from 'styled-components';
+import { Button } from '../../../components/UI/Buttons';
 
-import { styled } from '@mui/material/styles';
-
-import MuiButton from '@mui/material/Button';
 import { fullGoogleAuthUrl } from '../../../lib/googleAPI';
-import { MyTheme } from '../../../styles/global';
 
-const ButtonImage = styledC.img`
+const ButtonImage = styled.img`
     height: 80%;
     margin-left: 0.3rem;
 `;
-
-export const Button = styled(MuiButton)(() => ({
-    borderRadius: 50,
-    width: '100%',
-    textTransform: 'none',
-    fontSize: 16,
-    fontFamily: `${MyTheme.fontFamily.body}`,
-    height: 40,
-    marginBottom: 15,
-}));
 
 export const GoogleLoginLink = () => (
     <Button variant="contained" className="white-button" onClick={() => window.location.replace(`${fullGoogleAuthUrl}`)}>

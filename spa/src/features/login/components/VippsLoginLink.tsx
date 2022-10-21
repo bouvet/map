@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-import { Button } from './GoogleLoginLink';
+import { Button } from '../../../components/UI/Buttons';
 
 const ButtonImage = styled.img`
     height: 100%;

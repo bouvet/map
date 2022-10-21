@@ -7,12 +7,13 @@ import { loginServices } from '../services/login.services';
 
 import { useInput } from '../../../hooks/useInput';
 
-import { Checkbox, LeftFlex, RightFlex, SplitWrapper } from '../../../components/Form/Input';
+import { Checkbox } from '../../../components/Form/Input';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { LinkText } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
 import { validateEmail } from '../../../utils/emailValidator';
-import { Button } from './GoogleLoginLink';
+import { Button } from '../../../components/UI/Buttons';
+import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -91,16 +92,15 @@ export const LoginForm: FC = () => {
                 toggleShowPassword={togglePasswordHandler}
                 showPassword={showPassword}
             />
-            <SplitWrapper>
-                <LeftFlex>
+            <FlexRowContainer spacing="space-between">
+                <div>
                     <Checkbox type="checkbox" checked={rememberStatus} onChange={(e) => setRememberStatus(e.target.checked)} />
                     Husk meg
-                    {rememberStatus}
-                </LeftFlex>
-                <RightFlex>
-                    <LinkText to="/change-password">Glemt passord</LinkText>
-                </RightFlex>
-            </SplitWrapper>
+                    {/* {rememberStatus} */}
+                </div>
+                <LinkText to="/change-password">Glemt passord</LinkText>
+            </FlexRowContainer>
+
             <Button type="submit" color="primary" variant="contained">
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
             </Button>
