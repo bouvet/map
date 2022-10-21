@@ -190,7 +190,7 @@ export interface IEmailType {
 
 export interface IConfirmCode {
     email: string;
-    confirmationCode: number;
+    confirmationCode: string;
 }
 
 export interface IPasswordType {

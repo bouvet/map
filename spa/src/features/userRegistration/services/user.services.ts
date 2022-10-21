@@ -1,7 +1,9 @@
+/* eslint-disable consistent-return */
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
+import { uiActions } from '../../../store/state/ui.state';
 import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit, IUser } from '../../../utils/types.d';
 
 export const userServices = {
@@ -25,12 +27,8 @@ export const userServices = {
                 localStorage.setItem('user', JSON.stringify(data));
 
                 dispatch(authActions.userLogin(data));
-
-                return true;
             } catch (error) {
                 dispatch(authActions.logOut());
-
-                return false;
             }
         };
     },
@@ -39,10 +37,8 @@ export const userServices = {
             try {
                 const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log(editUser);
-                return true;
             } catch (error) {
                 console.error('error', error);
-                return false;
             }
         };
     },
@@ -62,7 +58,6 @@ export const userServices = {
             } catch (error) {
                 console.error('error', error);
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-
                 return false;
             }
         };
@@ -89,13 +84,18 @@ export const userServices = {
         };
     },
     confirmCode(payload: IConfirmCode) {
-        return async () => {
+        return async (dispatch: AppDispatch) => {
             try {
                 const confirmCode = await API.post('/email/confirm', payload);
-                console.log(confirmCode);
+
+                setTimeout(() => {
+                    dispatch(uiActions.setShouldNavigate(true));
+                }, 500);
+
+                dispatch(snackbarActions.setNotify({ message: 'Kode er bekreftet', severity: 'success' }));
                 return true;
             } catch (error) {
-                console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
                 return false;
             }
         };

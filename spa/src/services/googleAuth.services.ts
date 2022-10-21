@@ -42,7 +42,7 @@ export const googleAuthServices = {
 
                 dispatch(authActions.userLogin(user));
                 setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Du er logget in', severity: 'success', autohideDuration: 5 }));
+                    dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
                 }, 2000);
             } catch (error: any) {
                 console.log(error);

@@ -83,7 +83,7 @@ export const LoginForm: FC = () => {
             <StyledInput
                 label="Passord"
                 type={inputType}
-                errorMessage="Passord består av minst 8 tegn"
+                errorMessage="Passord må bestå av minst 8 tegn"
                 value={enteredPassword}
                 onChange={passwordChangeHandler}
                 onBlur={passwordBlurHandler}

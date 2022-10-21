@@ -36,7 +36,7 @@ export const DivideLine: FC = () => (
     <Wrapper>
         <Line />
         <TextWrapper>
-            <Text>Eller logg inn med E-post</Text>
+            <Text>Eller logg inn med e-post</Text>
         </TextWrapper>
     </Wrapper>
 );

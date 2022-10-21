@@ -1,7 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton, GoogleIcon } from '../../components/Navigation/Buttons';
 import { MyTheme } from '../../styles/global';
 
 const FilterButton = styled.option``;
@@ -22,22 +20,6 @@ const Select = styled.select`
 interface FilterProps {
     setter: Function;
 }
-
-export const BackButtonAdminWrapper = styled(BackButton)`
-    position: relative;
-    top: 0;
-    left: 0;
-`;
-
-export const BackButtonAdmin: FC = () => (
-    <BackButtonAdminWrapper backgroundColor={MyTheme.colors.opaque}>
-        <Link to="/">
-            <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
-                arrow_back
-            </GoogleIcon>
-        </Link>
-    </BackButtonAdminWrapper>
-);
 
 export const FilterSelect: FC<FilterProps> = (props) => {
     const { setter } = props;

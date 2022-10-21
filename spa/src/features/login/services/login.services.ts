@@ -17,23 +17,18 @@ export const loginServices = {
                     dispatch(authActions.userLogin(data));
                     dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
                 }, 2000);
-
-                return true;
             } catch (error: any) {
                 const invalidCreds = error.response.data.errors['Authentication.InvalidCredentials'][0];
 
                 if (invalidCreds) {
                     dispatch(snackbarActions.setNotify({ message: 'Feil epost eller passord', severity: 'error', autohideDuration: null }));
                     dispatch(authActions.setLoading(false));
-
-                    return false;
                 }
 
                 console.error('error', error.response.data.errors['Authentication.InvalidCredentials'][0]);
 
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
                 dispatch(authActions.setLoading(false));
-                return false;
             }
         };
     },
@@ -68,7 +63,6 @@ export const loginServices = {
                 setTimeout(() => {
                     dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
                 }, 500);
-
                 return true;
             } catch (error) {
                 console.error('error', error);
@@ -82,10 +76,8 @@ export const loginServices = {
             try {
                 const changeEmail = await API.put('/');
                 console.log(changeEmail);
-                return true;
             } catch (error) {
                 console.error('error', error);
-                return false;
             }
         };
     },

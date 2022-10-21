@@ -13,7 +13,7 @@ import { mapActions } from '../store/state/map.state';
 import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
-import { FabMenu } from '../components/FabMenu/FabMenu';
+import { FabMenu } from '../features/home/components/FabMenu';
 
 export const Home: FC = () => {
     useFilterEvent();
