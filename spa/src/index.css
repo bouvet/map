@@ -1,37 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap');
 
 * {
-  margin: 0px;
-  padding: 0px;
-  font-family: 'Open Sans', sans-serif;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently */
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Open Sans', sans-serif;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
 }
 
-input, textarea {
-  -webkit-touch-callout: text; /* iOS Safari */
-  -webkit-user-select: text; /* Safari */
-   -khtml-user-select: text; /* Konqueror HTML */
-     -moz-user-select: text; /* Old versions of Firefox */
-      -ms-user-select: text; /* Internet Explorer/Edge */
-          user-select: text; /* Non-prefixed version, currently */
+input,
+textarea {
+    -webkit-touch-callout: text; /* iOS Safari */
+    -webkit-user-select: text; /* Safari */
+    -khtml-user-select: text; /* Konqueror HTML */
+    -moz-user-select: text; /* Old versions of Firefox */
+    -ms-user-select: text; /* Internet Explorer/Edge */
+    user-select: text; /* Non-prefixed version, currently */
 }
 
-
-*::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
+*::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
 }
 
 .home-container {
-  height: 100vh;
+    height: 100vh;
 }
 
 .registration-container {
     height: calc(100vh - 200px);
+}
+
+.white-button {
+    background-color: white;
+    color: #282828;
+}
+
+.vipps-button {
+    background-color: #ff5b24;
+    color: white;
 }

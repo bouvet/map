@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../../styles/global';
 
 export const Form = styled.form`
     width: 100%;
@@ -6,13 +7,17 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-content: center;
-    row-gap: 20px;
+    row-gap: 0.8rem;
 
-    input:not(:focus):not(:placeholder-shown):invalid {
+    @media ${device.mobileM} {
+        row-gap: 1rem;
+    }
+
+    /* input:not(:focus):not(:placeholder-shown):invalid {
         border-color: #bd0000;
     }
 
     input:not(:focus):not(:placeholder-shown):valid {
         border-color: #00c600;
-    }
+    } */
 `;

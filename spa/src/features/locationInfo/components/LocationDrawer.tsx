@@ -124,12 +124,14 @@ export const SwipeableEdgeDrawer: FC = () => {
                 .filter((item) => item.webpImage)
                 .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
-            if (currentlySelectedLocation.properties.image) {
-                const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.image} />;
+            if (currentlySelectedLocation.properties.webpImage.cdnUri) {
+                const mainImg = (
+                    <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.webpImage.cdnUri} />
+                );
                 setImageList((imageList) => [mainImg, ...imageList]);
             }
         }
-    }, [currentReviews, currentlySelectedLocation.properties.image]);
+    }, [currentReviews, currentlySelectedLocation.properties.webpImage.cdnUri]);
 
     useEffect(() => {
         updateCurrentReviewsCallback();
