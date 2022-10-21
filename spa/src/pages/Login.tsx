@@ -9,8 +9,7 @@ import { SectionWrapperLogin } from '../components/Form/SectionWrapper';
 import { DivideLine } from '../features/login/components/DivideLine';
 import { LoginForm } from '../features/login/components/LoginForm';
 import { LinkText, Text, Title } from '../components/Form/Text';
-import { BackButton } from '../components/Navigation/Buttons';
-import { MyTheme } from '../styles/global';
+import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 
 export const Login: FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
@@ -22,41 +21,44 @@ export const Login: FC = () => {
     }
 
     return (
-        <FormWrapper>
-            <FormContent>
-                <SectionWrapperLogin>
-                    <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/')}>
+        <>
+            <BackButton onClick={() => navigate('/')} />
+            <FormWrapper>
+                <FormContent>
+                    <SectionWrapperLogin>
+                        {/* <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/')}>
                         <span className="material-symbols-outlined">arrow_back</span>
-                    </BackButton>
-                    <span>
-                        <Title>Login</Title>
-                        <Text>Verden venter... på deg!</Text>
-                    </span>
-                    <a href={`${fullGoogleAuthUrl}`} rel="noopener noreferrer">
-                        <Google text="google">
-                            <GoogleLogoWhite
-                                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                                alt="google"
-                            />
-                            Bruk Google
-                        </Google>
-                    </a>
-                    <Vipps text="white">
-                        Bruk
-                        <VippsLogoWhite src="https://vipps.no/documents/58/vipps-rgb-white.svg" alt="vipps" />
-                    </Vipps>
-                    <DivideLine />
-                    <LoginForm />
-                    <SplitWrapper>
-                        <LeftFlex>
-                            <Text>Ikke registrert?</Text>
-                        </LeftFlex>
-                        <RightFlex>
-                            <LinkText to="/email-input">Registrer deg</LinkText>
-                        </RightFlex>
-                    </SplitWrapper>
-                </SectionWrapperLogin>
-            </FormContent>
-        </FormWrapper>
+                    </BackButton> */}
+                        <span>
+                            <Title>Login</Title>
+                            <Text>Verden venter... på deg!</Text>
+                        </span>
+                        <a href={`${fullGoogleAuthUrl}`} rel="noopener noreferrer">
+                            <Google text="google">
+                                <GoogleLogoWhite
+                                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                                    alt="google"
+                                />
+                                Bruk Google
+                            </Google>
+                        </a>
+                        <Vipps text="white">
+                            Bruk
+                            <VippsLogoWhite src="https://vipps.no/documents/58/vipps-rgb-white.svg" alt="vipps" />
+                        </Vipps>
+                        <DivideLine />
+                        <LoginForm />
+                        <SplitWrapper>
+                            <LeftFlex>
+                                <Text>Ikke registrert?</Text>
+                            </LeftFlex>
+                            <RightFlex>
+                                <LinkText to="/email-input">Registrer deg</LinkText>
+                            </RightFlex>
+                        </SplitWrapper>
+                    </SectionWrapperLogin>
+                </FormContent>
+            </FormWrapper>
+        </>
     );
 };

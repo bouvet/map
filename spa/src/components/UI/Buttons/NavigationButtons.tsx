@@ -1,21 +1,32 @@
-import Fab from '@mui/material/Fab';
+import MuiFab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import styled from 'styled-components';
-import { RoundedButtonBase } from './RoundedButtonBase';
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
+import { FC, MouseEvent } from 'react';
+import { MyTheme } from '../../../styles/global';
 
-export const BackButton = styled(RoundedButtonBase)`
-    z-index: 1300;
-    top: 10px;
-    left: 10px;
-`;
+interface Props {
+    onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+}
 
-export const CloseButton = styled(RoundedButtonBase)``;
+export const Fab = styled(MuiFab)(() => ({
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    height: 50,
+    width: 50,
+    backgroundColor: `${MyTheme.colors.opaque}`,
+    color: `${MyTheme.colors.lightBase}`,
+}));
 
-// eslint-disable-next-line react/destructuring-assignment
-const FabButton = (props: any) => <i className={`material-icons ${props.className}`}>arrow_back</i>;
-
-export const FabTest = () => (
-    <Fab size="small" color="secondary">
+export const BackButton: FC<Props> = ({ onClick }) => (
+    <Fab onClick={onClick}>
         <ArrowBackIcon />
+    </Fab>
+);
+
+export const CloseButton: FC<Props> = ({ onClick }) => (
+    <Fab onClick={onClick}>
+        <CloseIcon />
     </Fab>
 );

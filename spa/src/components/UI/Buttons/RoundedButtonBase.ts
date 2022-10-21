@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MyTheme } from '../../../styles/global';
 
 interface ButtonStylingProps {
     backgroundColor?: string;
@@ -17,4 +18,6 @@ export const RoundedButtonBase = styled.button<ButtonStylingProps>`
     justify-content: center;
     font-size: 32px;
     border: none;
+    position: relative;
+    padding: 5px 10px;
 `;
