@@ -1,5 +1,5 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,46 +8,27 @@ import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, Text, TextAccent, TitleForm } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
-import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { useStateSelector } from '../../../hooks/useRedux';
+import { AppDispatch } from '../../../store';
 
 export const EmailConfirmation: FC = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     // const location = useLocation().state as LocationType;
 
     const { email } = useStateSelector((state) => state.user);
+    const { shouldNavigate } = useStateSelector((state) => state.ui);
 
     const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
-    const onSubmitHandler = useCallback(
-        (code: string) => {
-            confirmCode(code);
-        },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [dispatch],
-    );
-
-    const confirmCode = async (code: string) => {
-        const inputCode = {
-            email,
-            confirmationCode: code,
-        };
-
-        console.log(inputCode);
-
-        // @ts-ignore
-        const successStatus: boolean = await dispatch(userServices.confirmCode(inputCode));
-
-        if (successStatus) {
-            dispatch(snackbarActions.setNotify({ message: 'Kode er bekreftet', severity: 'success' }));
-            navigate('/personal-info');
-        } else {
-            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-        }
+    const onSubmitHandler = (code: string) => {
+        dispatch(
+            userServices.confirmCode({
+                email,
+                confirmationCode: code,
+            }),
+        );
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
@@ -64,12 +45,17 @@ export const EmailConfirmation: FC = () => {
         if (!confirmationCode.includes('')) {
             onSubmitHandler(confirmationCode.join(''));
         }
-    }, [confirmationCode, onSubmitHandler]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [confirmationCode]);
 
     const resendCode = () => {
-        // @ts-ignore
         dispatch(userServices.resendCode());
     };
+
+    // if from google redirect to personal-info-google
+    if (shouldNavigate) {
+        return <Navigate replace to="/personal-info" />;
+    }
 
     const pageIndex = 1;
 

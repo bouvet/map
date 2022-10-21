@@ -2,10 +2,10 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
-import { authActions } from '../../store/state/auth.state';
-import { MyTheme } from '../../styles/global';
-import { GoogleIcon, RoundButton } from '../Navigation/Buttons';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { authActions } from '../../../store/state/auth.state';
+import { MyTheme } from '../../../styles/global';
+import { GoogleIcon, RoundButton } from '../../../components/Navigation/Buttons';
 
 // Setting the fab menu spacing the worst possible way
 const fabSize = 42;
@@ -45,6 +45,10 @@ export const FabMenu: FC = () => {
     });
 
     // there's probably a better way to do it
+    // ul, li,
+    /*
+    {isAdmin && }
+    */
     return (
         <>
             {(() => {

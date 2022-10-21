@@ -1,9 +1,13 @@
 import { FC } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useStateSelector } from '../hooks/useRedux';
+import { fullGoogleAuthUrl } from '../lib/googleAPI';
+import { Google, GoogleLogoWhite, Vipps, VippsLogoWhite } from '../components/Form/Buttons';
 import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
 import { DivideLine } from '../features/login/components/DivideLine';
 import { LoginForm } from '../features/login/components/LoginForm';
+import { LinkText, Text, Title } from '../components/Form/Text';
+import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { LinkText, Text } from '../components/Form/Text';
 import { BackButton } from '../components/Navigation/Buttons';
 import { MyTheme } from '../styles/global';
@@ -23,9 +27,7 @@ export const Login: FC = () => {
 
     return (
         <PageContainer>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/')}>
-                <span className="material-symbols-outlined">arrow_back</span>
-            </BackButton>
+        <BackButton onClick={() => navigate('/')} />
             <SectionContainer>
                 <PageTitle>Login</PageTitle>
                 <PageSubtitle>Verden venter... på deg!</PageSubtitle>
