@@ -1,12 +1,11 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
-import { BackButton } from '../components/Navigation/Buttons';
+import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { FilterSelect } from '../features/adminPanel/FilterSelect';
 import { LocationBlock, LocationWrapper } from '../features/adminPanel/LocationBlock';
 import { mapServices } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { MyTheme } from '../styles/global';
 import { ILocation } from '../utils/types.d';
 
 type ApprovalFilterCategories = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
@@ -44,13 +43,7 @@ export const AdminPanel: FC = () => {
             <LocationWrapper>
                 <SplitWrapper>
                     <LeftFlex>
-                        <BackButton
-                            backgroundColor={MyTheme.colors.opaque}
-                            textColor={MyTheme.colors.lightBase}
-                            onClick={() => navigate('/')}
-                        >
-                            <span className="material-symbols-outlined">arrow_back</span>
-                        </BackButton>
+                        <BackButton onClick={() => navigate('/')} />
                     </LeftFlex>
                     <RightFlex>
                         <FilterSelect setter={setSelectedFilter} />

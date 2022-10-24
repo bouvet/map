@@ -1,29 +1,11 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton, GoogleIcon } from '../../../components/Navigation/Buttons';
 import { MyTheme } from '../../../styles/global';
 import { ButtonStyleDiv } from './Location';
 
 interface ProgressCompletionProp {
     completed: boolean;
 }
-
-export const BackButtonRegistrationWrapper = styled(BackButton)`
-    position: fixed;
-    top: 10px;
-    left: 10px;
-`;
-
-export const BackButtonRegistration: FC = () => (
-    <BackButtonRegistrationWrapper backgroundColor={MyTheme.colors.opaque}>
-        <Link to="/">
-            <GoogleIcon color={MyTheme.colors.lightBase} className="material-symbols-outlined">
-                arrow_back
-            </GoogleIcon>
-        </Link>
-    </BackButtonRegistrationWrapper>
-);
 
 export const RegistrationHeader = styled.div`
     width: 100%;

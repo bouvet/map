@@ -7,13 +7,12 @@ import { ReactMapGL } from '../features/map';
 import { useStateSelector, useStateDispatch } from '../hooks/useRedux';
 import { useFilterEvent } from '../utils/filterLogic';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { BackButton } from '../components/Navigation/Buttons';
-import { MyTheme } from '../styles/global';
 import { mapActions } from '../store/state/map.state';
 import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../features/home/components/FabMenu';
+import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 
 export const Home: FC = () => {
     useFilterEvent();
@@ -53,9 +52,7 @@ export const Home: FC = () => {
                     <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="16px" />
                 </>
             ) : (
-                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleBackClick}>
-                    <span className="material-symbols-outlined">arrow_back</span>
-                </BackButton>
+                <BackButton onClick={handleBackClick} />
             )}
             <div className="home-container">
                 <ReactMapGL />

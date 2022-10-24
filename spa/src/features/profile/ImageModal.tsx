@@ -3,10 +3,10 @@ import { Button, IconButton } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
-import { BackButton, GoogleIcon } from '../../components/Navigation/Buttons';
 import { MyTheme } from '../../styles/global';
 import { ProfilePictureProps } from './ProfileImage';
 import { Button as UploadButton } from './Buttons';
+import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
 
 const BackDrop = styled.div`
     width: 100%;
@@ -40,12 +40,6 @@ const ModalContent = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`;
-
-const CloseButton = styled(BackButton)`
-    position: absolute;
-    top: 10px;
-    left: 10px;
 `;
 
 interface ProfilePictureImageProps {
@@ -90,11 +84,7 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
     return (
         <BackDrop>
             <Modal>
-                <CloseButton type="button" onClick={handleClick} backgroundColor={MyTheme.colors.opaque}>
-                    <GoogleIcon color="white" className="material-symbols-outlined">
-                        close
-                    </GoogleIcon>
-                </CloseButton>
+                <CloseButton onClick={handleClick} />
                 <ModalContent>
                     {image ? (
                         <>

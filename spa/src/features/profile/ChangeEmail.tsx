@@ -6,11 +6,10 @@ import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
 import { CenterFlex } from '../../components/Form/Input';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { TitleForm } from '../../components/Form/Text';
-import { BackButton } from '../../components/Navigation/Buttons';
+import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
-import { MyTheme } from '../../styles/global';
 import { validateEmail } from '../../utils/emailValidator';
 import { SectionWrapper } from '../login/components/SectionWrapper';
 
@@ -42,9 +41,7 @@ export const ChangeEmail: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/profile')}>
-                <span className="material-symbols-outlined">arrow_back</span>
-            </BackButton>
+            <BackButton onClick={() => navigate('/profile')} />
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Endre e-post</TitleForm>

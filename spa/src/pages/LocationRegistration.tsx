@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BackButton } from '../components/UI';
 import {
-    BackButtonRegistration,
     PageHeader,
     ProgressBar,
     RegistrationButton,
@@ -134,7 +134,7 @@ export const LocationRegistration: FC = () => {
             ) : (
                 <>
                     <RegistrationHeader>
-                        <BackButtonRegistration />
+                        <BackButton onClick={() => navigate('/')} />
                         <PageHeader>Legg til treningssted</PageHeader>
                         <ProgressBar pageIndex={pageIndex} />
                     </RegistrationHeader>

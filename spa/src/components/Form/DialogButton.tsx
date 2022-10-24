@@ -6,8 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { MyTheme } from '../../styles/global';
-import { BackButton } from '../Navigation/Buttons';
+import { CloseButton } from '../UI';
 
 export const DialogButton: FC = () => {
     const navigate = useNavigate();
@@ -19,9 +18,7 @@ export const DialogButton: FC = () => {
 
     return (
         <>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleClickOpen}>
-                <span className="material-symbols-outlined">close</span>
-            </BackButton>
+            <CloseButton onClick={handleClickOpen} />
             <Dialog open={open}>
                 <DialogTitle id="alert-dialog-title">Avbryt registrering</DialogTitle>
                 <DialogContent>

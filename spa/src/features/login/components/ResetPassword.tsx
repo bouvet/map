@@ -7,11 +7,10 @@ import { CenterFlex } from '../../../components/Form/Input';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { TitleForm } from '../../../components/Form/Text';
-import { BackButton } from '../../../components/Navigation/Buttons';
+import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { MyTheme } from '../../../styles/global';
 import { loginServices } from '../services/login.services';
 
 export const ResetPassword: FC = () => {
@@ -96,9 +95,7 @@ export const ResetPassword: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/login')}>
-                <span className="material-symbols-outlined">close</span>
-            </BackButton>
+            <CloseButton onClick={() => navigate('/login')} />
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Tilbakestill passord</TitleForm>

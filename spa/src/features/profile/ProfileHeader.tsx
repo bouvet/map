@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { BackButton } from '../../components/Navigation/Buttons';
 import { MyTheme } from '../../styles/global';
 import { ProfilePicture, ProfilePictureProps } from './ProfileImage';
+import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 
 const HeaderWrapper = styled.div`
     width: 100%;
@@ -28,9 +28,7 @@ export const ProfileHeader: FC<ProfilePictureProps> = (props) => {
 
     return (
         <HeaderWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleBackClick}>
-                <span className="material-symbols-outlined">arrow_back</span>
-            </BackButton>
+            <BackButton onClick={handleBackClick} />
             <ColouredSection />
             <ProfilePicture handleClick={handleClick} />
         </HeaderWrapper>

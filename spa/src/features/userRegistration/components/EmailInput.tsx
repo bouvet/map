@@ -1,8 +1,6 @@
 import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton } from '../../../components/Navigation/Buttons';
-import { MyTheme } from '../../../styles/global';
 import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { CenterFlex } from '../../../components/Form/Input';
@@ -16,6 +14,7 @@ import { StyledInput } from '../../../components/Form/StyledElements/StyledInput
 import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/emailValidator';
 import { userActions } from '../../../store/state/user.state';
+import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -56,9 +55,7 @@ export const EmailInput: FC = () => {
                 <ProgressBarForm pageIndex={pageIndex} />
             </ProgressWrapper>
             <FormWrapperRegistration>
-                <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/login')}>
-                    <span className="material-symbols-outlined">close</span>
-                </BackButton>
+                <CloseButton onClick={() => navigate('/login')} />
                 <FormContent>
                     <SectionWrapper>
                         <TitleForm>E-post</TitleForm>

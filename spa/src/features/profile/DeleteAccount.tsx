@@ -13,11 +13,10 @@ import { CenterFlex } from '../../components/Form/Input';
 import { SectionWrapper } from '../../components/Form/SectionWrapper';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { Text, TitleForm } from '../../components/Form/Text';
-import { BackButton } from '../../components/Navigation/Buttons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
-import { MyTheme } from '../../styles/global';
 import { userServices } from '../userRegistration/services/user.services';
+import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 
 export const DeleteAccount: FC = () => {
     const dispatch = useStateDispatch();
@@ -72,9 +71,7 @@ export const DeleteAccount: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate('/profile')}>
-                <span className="material-symbols-outlined">arrow_back</span>
-            </BackButton>
+            <BackButton onClick={() => navigate('/profile')} />
             <Dialog open={open}>
                 <DialogTitle id="alert-dialog-title">Bekreft sletting</DialogTitle>
                 <DialogContent>

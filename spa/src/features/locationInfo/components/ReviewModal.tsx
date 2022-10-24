@@ -4,12 +4,11 @@ import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
-import { MyTheme } from '../../../styles/global';
-import { CloseButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewType } from '../../../utils/types.d';
 import { Img } from '../../locationRegistration/components/ImageUploader';
+import { CloseButton } from '../../../components/UI';
 
 interface ReviewProps {
     open: boolean;
@@ -184,13 +183,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 </Button>
                             )}
                         </Stack>
-                        <CloseButton
-                            backgroundColor={MyTheme.colors.opaque}
-                            textColor={MyTheme.colors.lightBase}
-                            onClick={handleCloseAddReview}
-                        >
-                            <span className="material-symbols-outlined">close</span>
-                        </CloseButton>
+                        <CloseButton onClick={handleCloseAddReview} />
                     </Box>
                 </form>
             </>

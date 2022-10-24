@@ -7,12 +7,11 @@ import { CenterFlex } from '../../../components/Form/Input';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { Text, TitleForm } from '../../../components/Form/Text';
-import { BackButton } from '../../../components/Navigation/Buttons';
 import { useStateDispatch } from '../../../hooks/useRedux';
-import { MyTheme } from '../../../styles/global';
 import { validateEmail } from '../../../utils/emailValidator';
 import { loginServices } from '../services/login.services';
 import { useInput } from '../../../hooks/useInput';
+import { BackButton } from '../../../components/UI/Buttons/NavigationButtons';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -42,9 +41,7 @@ export const ChangePassword: FC = () => {
 
     return (
         <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate(-1)}>
-                <span className="material-symbols-outlined">arrow_back</span>
-            </BackButton>
+            <BackButton onClick={() => navigate(-1)} />
             <FormContent>
                 <SectionWrapper>
                     <TitleForm>Endre passord</TitleForm>
