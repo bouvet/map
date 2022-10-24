@@ -25,7 +25,7 @@ export const Login: FC = () => {
                 <LoginForm />
                 <FlexRowContainer spacing="space-between">
                     <Text>Ikke registrert?</Text>
-                    <LinkButton sx={{ width: 130, margin: 0, float: 'left' }} onClick={() => navigate('/email-input')}>
+                    <LinkButton sx={{ width: 130, margin: 0, float: 'left' }} onClick={() => navigate('/register/email')}>
                         Registrer deg
                     </LinkButton>
                 </FlexRowContainer>

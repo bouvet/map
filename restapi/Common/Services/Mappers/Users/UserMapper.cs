@@ -36,7 +36,8 @@ public class UserMapper : IUserMapper
         user.DOB,
         roleMapper.MapDbListToResponseList(user.Roles),
         user.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.OriginalProfileImage) : null,
-        user.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.WebpProfileImage) : null
+        user.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.WebpProfileImage) : null,
+        null
       );
   }
 
@@ -54,7 +55,8 @@ public class UserMapper : IUserMapper
       result.User.DOB,
       roleMapper.MapDbListToResponseList(result.User.Roles),
       result.User.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.OriginalProfileImage) : null,
-      result.User.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.WebpProfileImage) : null
+      result.User.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.WebpProfileImage) : null,
+      result.Token
     );
   }
 
@@ -75,9 +77,9 @@ public class UserMapper : IUserMapper
     return new GetUsersQuery();
   }
 
-  public GetUserByIdQuery MapGetByIdToCommand(Guid id)
+  public GetUserByIdQuery MapGetByIdToCommand(Guid id, Guid? UserId)
   {
-    return new GetUserByIdQuery(id);
+    return new GetUserByIdQuery(id, UserId);
   }
 
   public UpdateUserCommand MapUpdateToCommand(Guid id, UpdateUserRequest request)

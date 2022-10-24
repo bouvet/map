@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form } from '../../../components/Form/Form';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { useStateDispatch } from '../../../hooks/useRedux';
@@ -42,7 +41,7 @@ export const EmailInput: FC = () => {
 
         const successStatus: boolean = await dispatch(userServices.getCode({ email }));
         if (successStatus) {
-            navigate('/email-confirmation', { state: { email } });
+            navigate('/register/confirm-code', { state: { email } });
         }
     };
 

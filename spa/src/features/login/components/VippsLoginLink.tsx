@@ -6,7 +6,12 @@ const ButtonImage = styled.img`
 `;
 
 export const VippsLoginLink = () => (
-    <Button variant="contained" className="vipps-button" onClick={() => window.location.replace(`!`)}>
+    <Button
+        variant="contained"
+        className="vipps-button"
+        sx={{ margin: '1rem 0', marginBottom: '0.5rem' }}
+        onClick={() => window.location.replace(`!`)}
+    >
         Logg inn med
         <ButtonImage src="https://vipps.no/documents/58/vipps-rgb-white.svg" alt="vipps" />
     </Button>

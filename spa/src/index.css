@@ -28,8 +28,10 @@ textarea {
     display: none; /* Safari and Chrome */
 }
 
-.home-container {
-    height: 100vh;
+.map-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
 }
 
 .registration-container {

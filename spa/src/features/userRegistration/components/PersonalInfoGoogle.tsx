@@ -11,7 +11,6 @@ import 'moment/locale/en-ca';
 import { Form } from '../../../components/Form/Form';
 import { Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
@@ -92,7 +91,7 @@ export const PersonalInfoGoogle: FC = () => {
             <FormWrapper>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Personlig informasjon</TitleForm>
                         <Text>
                             Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
@@ -138,7 +137,7 @@ export const PersonalInfoGoogle: FC = () => {
                                 Gå videre
                             </Button>
                         </Form>
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapper>
         </>

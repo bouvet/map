@@ -70,7 +70,7 @@ public class ReviewsController : ApiController
   [HttpPut("{id:guid}")]
   public async Task<IActionResult> UpdateReview(Guid id, [FromForm] UpdateReviewRequest request)
   {
-    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
 
     var review = await dataContext.Reviews.FindAsync(id);
 
@@ -93,7 +93,7 @@ public class ReviewsController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteReview(Guid id)
   {
-    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, id);
 
     var review = await dataContext.Reviews.FindAsync(id);
 

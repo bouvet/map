@@ -1,7 +1,9 @@
+using System.Net;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using restapi.Common.Providers.Authorization;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Users;
 using restapi.Services.Users.Commands.UpdatePassword;
@@ -14,11 +16,13 @@ public class UsersController : ApiController
 {
   private readonly ISender mediator;
   private readonly IUserMapper userMapper;
+  private readonly IAuthorizationProvider authorizationProvider;
 
-  public UsersController(ISender mediator, IUserMapper userMapper)
+  public UsersController(ISender mediator, IUserMapper userMapper, IAuthorizationProvider authorizationProvider)
   {
     this.mediator = mediator;
     this.userMapper = userMapper;
+    this.authorizationProvider = authorizationProvider;
   }
 
   [Authorize(Roles = "Administrator")]
@@ -38,16 +42,14 @@ public class UsersController : ApiController
   [HttpGet("{id:guid}")]
   public async Task<IActionResult> GetUserById(Guid id)
   {
-    var tokenUserId = HttpContext.User.FindFirst("userId")?.Value;
+    var authorizationResult = authorizationProvider.CheckAuthorization(HttpContext.User, id);
 
-    var isAdmin = HttpContext.User.IsInRole("Administrator");
-
-    if (tokenUserId != id.ToString() && !isAdmin)
+    if (!authorizationResult.IsAuthorized)
     {
       return Forbid();
     }
 
-    var getUserByIdQuery = userMapper.MapGetByIdToCommand(id);
+    var getUserByIdQuery = userMapper.MapGetByIdToCommand(id, authorizationResult.UserId);
 
     ErrorOr<UserResult> getUserByIdQueryResult = await mediator.Send(getUserByIdQuery);
 

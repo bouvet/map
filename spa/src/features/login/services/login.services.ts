@@ -57,17 +57,22 @@ export const loginServices = {
     changePassword(payload: IPasswordType) {
         return async (dispatch: AppDispatch) => {
             try {
-                const changePassword = await API.put('/users/password', payload);
-                console.log(changePassword);
+                dispatch(authActions.setLoading(true));
 
+                const { data } = await API.put('/users/password', payload);
+                console.log(data);
+
+                dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
                 setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
+                    dispatch(authActions.setLoading(false));
+                    dispatch(authActions.setChangePasswordSuccess(true));
                 }, 500);
-                return true;
             } catch (error) {
                 console.error('error', error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-                return false;
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                    dispatch(authActions.setLoading(false));
+                }, 500);
             }
         };
     },

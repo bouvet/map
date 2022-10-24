@@ -73,7 +73,7 @@ export const CreatePassword: FC = () => {
             if (!createPasswordIsValid || !confirmPasswordIsValid) return;
 
             dispatch(userActions.setPassword(createPassword));
-            navigate('/personalization');
+            navigate('/register/personalization');
             console.log('Passord er satt');
         }
     };
@@ -88,7 +88,7 @@ export const CreatePassword: FC = () => {
             <FormWrapperRegistration>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Passord</TitleForm>
                         <Form onSubmit={onSubmitHandler}>
                             <StyledInput
@@ -118,7 +118,7 @@ export const CreatePassword: FC = () => {
                                 Gå videre
                             </Button>
                         </Form>
-                        <LinkButton sx={{ width: 100, float: 'left' }} onClick={() => navigate('/personal-info')}>
+                        <LinkButton sx={{ width: 100, float: 'left' }} onClick={() => navigate('/register/personal-info')}>
                             Gå tilbake
                         </LinkButton>
                     </SectionWrapper>

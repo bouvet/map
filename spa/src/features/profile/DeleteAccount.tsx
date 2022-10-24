@@ -15,7 +15,7 @@ import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { Button as SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
 
 export const DeleteAccount: FC = () => {
-    const dispatch = useStateDispatch();
+    // const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);

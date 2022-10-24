@@ -23,7 +23,7 @@ export const Personalization: FC = () => {
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('/onboarding');
+        navigate('/profile/onboarding');
     };
 
     return (
@@ -37,7 +37,7 @@ export const Personalization: FC = () => {
                         Velg
                     </Button>
                 </Form>
-                <LinkButton onClick={() => navigate('/onboarding')}>Hopp over</LinkButton>
+                <LinkButton onClick={() => navigate('/profile/onboarding')}>Hopp over</LinkButton>
             </SectionContainer>
         </PageContainer>
     );

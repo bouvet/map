@@ -12,7 +12,7 @@ namespace restapi.Common.Services.Mappers.Users;
 public interface IUserMapper
 {
   GetUsersQuery MapGetUsersToCommand();
-  GetUserByIdQuery MapGetByIdToCommand(Guid id);
+  GetUserByIdQuery MapGetByIdToCommand(Guid id, Guid? UserId);
   UpdateUserCommand MapUpdateToCommand(Guid id, UpdateUserRequest request);
   AddUserRoleCommand MapAddRoleToCommand(AddUserRoleRequest request);
   DeleteUserCommand MapDeleteToCommand(Guid id);

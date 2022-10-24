@@ -107,6 +107,10 @@ export const LoginForm: FC = () => {
             <Button type="submit" variant="contained">
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
             </Button>
+            <FlexRowContainer spacing="space-between">
+                <Text>Ikke registrert?</Text>
+                <LinkText to="/register/email">Registrer deg</LinkText>
+            </FlexRowContainer>
         </Form>
     );
 };

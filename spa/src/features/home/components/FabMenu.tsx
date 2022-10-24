@@ -80,7 +80,7 @@ export const FabMenu: FC = () => {
                                         boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                                     }}
                                 >
-                                    <Link to="/location-approval-panel">
+                                    <Link to="/admin">
                                         <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                                             admin_panel_settings
                                         </GoogleIcon>

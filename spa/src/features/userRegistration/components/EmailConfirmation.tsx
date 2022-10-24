@@ -56,7 +56,7 @@ export const EmailConfirmation: FC = () => {
 
     // if from google redirect to personal-info-google
     if (shouldNavigate) {
-        return <Navigate replace to="/personal-info" />;
+        return <Navigate replace to="/register/personal-info" />;
     }
 
     const pageIndex = 1;
@@ -69,7 +69,7 @@ export const EmailConfirmation: FC = () => {
             <FormWrapperRegistration>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Bekreft e-post</TitleForm>
                         <Form>
                             <Text>Skriv inn koden for å bekrefte e-postadressen {email}</Text>

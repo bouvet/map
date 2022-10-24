@@ -12,7 +12,6 @@ import 'moment/locale/nb';
 import { Form } from '../../../components/Form/Form';
 import { Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
@@ -66,7 +65,7 @@ export const PersonalInfo: FC = () => {
             dispatch(userActions.setFirstName(enteredFirstName));
             dispatch(userActions.setLastName(enteredLastName));
 
-            navigate('/create-password');
+            navigate('/register/create-password');
             console.log('Name: ', firstName, lastName);
             console.log('Date of birth: ', moment(dob).format('L'));
         }
@@ -100,7 +99,7 @@ export const PersonalInfo: FC = () => {
             <FormWrapperRegistration>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Personlig informasjon</TitleForm>
                         <Text>
                             Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
@@ -144,7 +143,7 @@ export const PersonalInfo: FC = () => {
                                 Gå videre
                             </Button>
                         </Form>
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapperRegistration>
         </>

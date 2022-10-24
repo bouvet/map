@@ -10,7 +10,6 @@ export const Button = styled(MuiButton)(() => ({
     fontSize: 16,
     fontFamily: `${MyTheme.fontFamily.body}`,
     height: 40,
-    marginBottom: 15,
 }));
 
 export const SubmitButton = styled(Button)({

@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, FC, FormEvent, useMemo, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/nb';
 import { Form } from '../features/profile/Form';
@@ -79,19 +80,20 @@ export const ProfilePage: FC = () => {
             <Form onSubmit={onSubmitHandler}>
                 {inputs}
                 <span>
-                    <ProfileLink to="/change-email">Endre e-post</ProfileLink>
+                    <ProfileLink to="/profile/change-email">Endre e-post</ProfileLink>
                 </span>
                 <span>
                     <ProfileLink to="/change-password">Endre passord</ProfileLink>
                 </span>
                 <span>
                     {/* add functionality + check if login from email, Google or Vipps */}
-                    <ProfileLink to="/delete-account">Slett konto</ProfileLink>
+                    <ProfileLink to="/profile/delete-account">Slett konto</ProfileLink>
                 </span>
                 <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
                     Oppdater profil
                 </Button>
             </Form>
+            <Outlet />
         </>
     );
 };

@@ -45,7 +45,7 @@ export const Home: FC = () => {
     };
 
     return (
-        <div className="App">
+        <SectionContainer style={{ height: '100%', width: '100%' }}>
             {!homeMarkerFocus ? (
                 <>
                     <FilterMenu>{mappedFilter}</FilterMenu>
@@ -54,9 +54,7 @@ export const Home: FC = () => {
             ) : (
                 <BackButton onClick={handleBackClick} />
             )}
-            <div className="home-container">
-                <ReactMapGL />
-            </div>
+            <ReactMapGL />
             {!homeMarkerFocus && <FabMenu />}
             {!homeMarkerFocus && (
                 <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
@@ -75,6 +73,6 @@ export const Home: FC = () => {
                 </Slide>
             )}
             {homeMarkerFocus && <SwipeableEdgeDrawer />}
-        </div>
+        </SectionContainer>
     );
 };

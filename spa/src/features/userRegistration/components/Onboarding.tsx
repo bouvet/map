@@ -82,7 +82,7 @@ export const Onboarding: FC = () => {
         <>
             <FormWrapper>
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Slik bruker du VerdenVenter</TitleForm>
                         {pageIndex === 0 ? (
                             <>
@@ -147,7 +147,7 @@ export const Onboarding: FC = () => {
                         )}
                         {pageIndex === 1 && <HowAddLocation />}
                         {pageIndex === 2 && <HowAddReview />}
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapper>
         </>
