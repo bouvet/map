@@ -2,17 +2,16 @@ import { FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { CenterFlex } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkText, TitleForm } from '../../../components/Form/Text';
+import { TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
+import { Button, LinkButton } from '../../../components/UI';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -27,16 +26,16 @@ export const CreatePassword: FC = () => {
         value: createPassword,
         isValid: createPasswordIsValid,
         hasError: createPasswordInputHasError,
-        valueChangeHandler: createPasswordChangeHandler,
         inputBlurHandler: createPasswordBlurHandler,
+        valueChangeHandler: createPasswordChangeHandler,
     } = useInput((value) => value.trim().length >= 8);
 
     const {
         value: confirmPassword,
         isValid: confirmPasswordIsValid,
         hasError: confirmPasswordInputHasError,
-        valueChangeHandler: confirmPasswordChangeHandler,
         inputBlurHandler: confirmPasswordBlurHandler,
+        valueChangeHandler: confirmPasswordChangeHandler,
     } = useInput((value) => value.trim().length >= 8);
 
     const toggleCreatePasswordHandler = () => {
@@ -114,13 +113,14 @@ export const CreatePassword: FC = () => {
                                 toggleShowPassword={toggleConfirmPasswordHandler}
                                 showPassword={showConfirmPassword}
                             />
-                            <CenterFlex>
-                                <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
-                            </CenterFlex>
+                            {/* add button disabled */}
+                            <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                                Gå videre
+                            </Button>
                         </Form>
-                        <span>
-                            <LinkText to="/personal-info">Gå tilbake</LinkText>
-                        </span>
+                        <LinkButton sx={{ width: 100, float: 'left' }} onClick={() => navigate('/personal-info')}>
+                            Gå tilbake
+                        </LinkButton>
                     </SectionWrapper>
                 </FormContent>
             </FormWrapperRegistration>

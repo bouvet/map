@@ -1,12 +1,8 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { CenterFlex } from '../../../components/Form/Input';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { TitleForm } from '../../../components/Form/Text';
+import { Button, PageContainer, PageTitle, SectionContainer } from '../../../components/UI';
 import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch } from '../../../hooks/useRedux';
@@ -94,40 +90,39 @@ export const ResetPassword: FC = () => {
     };
 
     return (
-        <FormWrapper>
+        <PageContainer>
             <CloseButton onClick={() => navigate('/login')} />
-            <FormContent>
-                <SectionWrapper>
-                    <TitleForm>Tilbakestill passord</TitleForm>
-                    <Form onSubmit={onSubmitHandler}>
-                        <StyledInput
-                            label="Passord*"
-                            type={inputTypeNew}
-                            errorMessage="Passord må bestå av minst 8 tegn"
-                            value={newPassword}
-                            onChange={newPasswordChangeHandler}
-                            onBlur={newPasswordBlurHandler}
-                            inputHasError={newPasswordInputHasError}
-                            toggleShowPassword={toggleNewPasswordHandler}
-                            showPassword={showNewPassword}
-                        />
-                        <StyledInput
-                            label="Gjenta passord*"
-                            type={inputTypeConfirm}
-                            errorMessage="Passord må bestå av minst 8 tegn"
-                            value={confirmPassword}
-                            onChange={confirmPasswordChangeHandler}
-                            onBlur={confirmPasswordBlurHandler}
-                            inputHasError={confirmPasswordInputHasError}
-                            toggleShowPassword={toggleConfirmPasswordHandler}
-                            showPassword={showConfirmPassword}
-                        />
-                        <CenterFlex>
-                            <SubmitButtonRegistration text="white">Endre passord</SubmitButtonRegistration>
-                        </CenterFlex>
-                    </Form>
-                </SectionWrapper>
-            </FormContent>
-        </FormWrapper>
+            <SectionContainer>
+                <PageTitle>Tilbakestill passord</PageTitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                    <StyledInput
+                        label="Passord*"
+                        type={inputTypeNew}
+                        errorMessage="Passord må bestå av minst 8 tegn"
+                        value={newPassword}
+                        onChange={newPasswordChangeHandler}
+                        onBlur={newPasswordBlurHandler}
+                        inputHasError={newPasswordInputHasError}
+                        toggleShowPassword={toggleNewPasswordHandler}
+                        showPassword={showNewPassword}
+                    />
+                    <StyledInput
+                        label="Gjenta passord*"
+                        type={inputTypeConfirm}
+                        errorMessage="Passord må bestå av minst 8 tegn"
+                        value={confirmPassword}
+                        onChange={confirmPasswordChangeHandler}
+                        onBlur={confirmPasswordBlurHandler}
+                        inputHasError={confirmPasswordInputHasError}
+                        toggleShowPassword={toggleConfirmPasswordHandler}
+                        showPassword={showConfirmPassword}
+                    />
+                    {/* add button disabled */}
+                    <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                        Endre passord
+                    </Button>
+                </Form>
+            </SectionContainer>
+        </PageContainer>
     );
 };

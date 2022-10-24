@@ -4,13 +4,9 @@ import { RegisterButtonFavorites } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../utils/types.d';
-import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkTextPersonalization, Text, TitleForm } from '../../../components/Form/Text';
-import { SubmitButtonPersonalization } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { mapServices } from '../../map';
-import { CenterFlex } from '../../../components/Form/Input';
+import { Button, LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../../components/UI';
 
 export const Personalization: FC = () => {
     const navigate = useNavigate();
@@ -31,22 +27,18 @@ export const Personalization: FC = () => {
     };
 
     return (
-        <FormWrapper>
-            <FormContent>
-                <SectionWrapper>
-                    <TitleForm>Personalisering</TitleForm>
-                    <Text>Velg dine favoritter:</Text>
-                    <FilterMenuContent>{mappedFilter}</FilterMenuContent>
-                    <Form onSubmit={onSubmitHandler}>
-                        <CenterFlex>
-                            <SubmitButtonPersonalization text="white">Velg</SubmitButtonPersonalization>
-                        </CenterFlex>
-                    </Form>
-                    <CenterFlex>
-                        <LinkTextPersonalization to="/onboarding">Hopp over</LinkTextPersonalization>
-                    </CenterFlex>
-                </SectionWrapper>
-            </FormContent>
-        </FormWrapper>
+        <PageContainer>
+            <SectionContainer>
+                <PageTitle>Personalisering</PageTitle>
+                <PageSubtitle>Velg dine favoritter:</PageSubtitle>
+                <FilterMenuContent>{mappedFilter}</FilterMenuContent>
+                <Form onSubmit={onSubmitHandler}>
+                    <Button type="submit" variant="contained" sx={{ marginTop: 40 }}>
+                        Velg
+                    </Button>
+                </Form>
+                <LinkButton onClick={() => navigate('/onboarding')}>Hopp over</LinkButton>
+            </SectionContainer>
+        </PageContainer>
     );
 };

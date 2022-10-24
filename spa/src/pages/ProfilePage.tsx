@@ -8,8 +8,8 @@ import { ProfileHeader } from '../features/profile/ProfileHeader';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { userServices } from '../features/userRegistration/services/user.services';
 import { snackbarActions } from '../store/state/snackbar.state';
-import { SubmitButtonRegistration } from '../components/Form/Buttons';
 import { CenterFlex } from '../components/Form/Input';
+import { Button, PageContainer, SectionContainer } from '../components/UI';
 
 export const ProfilePage: FC = () => {
     const dispatch = useStateDispatch();
@@ -88,9 +88,9 @@ export const ProfilePage: FC = () => {
                     {/* add functionality + check if login from email, Google or Vipps */}
                     <ProfileLink to="/delete-account">Slett konto</ProfileLink>
                 </span>
-                <CenterFlex>
-                    <SubmitButtonRegistration text="white">Oppdater profil</SubmitButtonRegistration>
-                </CenterFlex>
+                <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                    Oppdater profil
+                </Button>
             </Form>
         </>
     );

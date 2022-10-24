@@ -9,9 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import moment from 'moment';
 import 'moment/locale/en-ca';
 import 'moment/locale/nb';
-import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { CenterFlex, Label } from '../../../components/Form/Input';
+import { Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
@@ -22,6 +21,7 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
+import { Button } from '../../../components/UI';
 
 export const PersonalInfo: FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -53,6 +53,7 @@ export const PersonalInfo: FC = () => {
     } = useInput((value) => value.trim().length >= 1);
 
     moment.locale('en-ca');
+    // moment.locale('nb');
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -90,8 +91,6 @@ export const PersonalInfo: FC = () => {
             setInitialLastName(lastName);
         }
     }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
-
-    // const norsk = moment.locale('nb');
 
     return (
         <>
@@ -136,9 +135,14 @@ export const PersonalInfo: FC = () => {
                                     />
                                 </LocalizationProvider>
                             </ThemeProvider>
-                            <CenterFlex>
-                                <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
-                            </CenterFlex>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ marginTop: 'auto' }}
+                                disabled={firstNameInputHasError || lastNameInputHasError}
+                            >
+                                Gå videre
+                            </Button>
                         </Form>
                     </SectionWrapper>
                 </FormContent>

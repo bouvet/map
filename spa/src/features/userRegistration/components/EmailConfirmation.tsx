@@ -1,20 +1,22 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
 import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { LinkText, Text, TextAccent, TitleForm } from '../../../components/Form/Text';
+import { Text, TitleForm } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { AppDispatch } from '../../../store';
+import { LinkButton } from '../../../components/UI';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     // const location = useLocation().state as LocationType;
 
     const { email } = useStateSelector((state) => state.user);
@@ -91,12 +93,12 @@ export const EmailConfirmation: FC = () => {
                                 ))}
                             </Box>
                         </Form>
-                        <span>
-                            <LinkText to="/email-input">Endre e-post</LinkText>
-                        </span>
-                        <span>
-                            <TextAccent onClick={resendCode}>Send ny kode</TextAccent>
-                        </span>
+                        <LinkButton sx={{ width: 125, margin: 0 }} onClick={resendCode}>
+                            Send ny kode
+                        </LinkButton>
+                        <LinkButton sx={{ width: 125, margin: 0 }} onClick={() => navigate('/email-input')}>
+                            Endre e-post
+                        </LinkButton>
                     </SectionWrapper>
                 </FormContent>
             </FormWrapperRegistration>

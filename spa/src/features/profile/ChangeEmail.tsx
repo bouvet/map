@@ -1,17 +1,13 @@
 import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SubmitButtonRegistration } from '../../components/Form/Buttons';
 import { Form } from '../../components/Form/Form';
-import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
-import { CenterFlex } from '../../components/Form/Input';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { TitleForm } from '../../components/Form/Text';
+import { Button, PageContainer, PageTitle, SectionContainer } from '../../components/UI';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
 import { validateEmail } from '../../utils/emailValidator';
-import { SectionWrapper } from '../login/components/SectionWrapper';
 
 export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();
@@ -40,27 +36,25 @@ export const ChangeEmail: FC = () => {
     };
 
     return (
-        <FormWrapper>
+        <PageContainer>
             <BackButton onClick={() => navigate('/profile')} />
-            <FormContent>
-                <SectionWrapper>
-                    <TitleForm>Endre e-post</TitleForm>
-                    <Form onSubmit={onSubmitHandler}>
-                        <StyledInput
-                            label="E-post"
-                            type="email"
-                            errorMessage="Vennligst oppgi en gyldig e-post"
-                            value={email}
-                            onChange={emailChangeHandler}
-                            onBlur={emailBlurHandler}
-                            inputHasError={emailInputHasError}
-                        />
-                        <CenterFlex>
-                            <SubmitButtonRegistration text="white">Endre e-post</SubmitButtonRegistration>
-                        </CenterFlex>
-                    </Form>
-                </SectionWrapper>
-            </FormContent>
-        </FormWrapper>
+            <SectionContainer>
+                <PageTitle>Endre e-post</PageTitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                    <StyledInput
+                        label="E-post"
+                        type="email"
+                        errorMessage="Vennligst oppgi en gyldig e-post"
+                        value={email}
+                        onChange={emailChangeHandler}
+                        onBlur={emailBlurHandler}
+                        inputHasError={emailInputHasError}
+                    />
+                    <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                        Endre e-post
+                    </Button>
+                </Form>
+            </SectionContainer>
+        </PageContainer>
     );
 };

@@ -6,17 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { SubmitButtonRegistration } from '../../components/Form/Buttons';
 import { Form } from '../../components/Form/Form';
-import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
-import { CenterFlex } from '../../components/Form/Input';
-import { SectionWrapper } from '../../components/Form/SectionWrapper';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { Text, TitleForm } from '../../components/Form/Text';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
+import { Button as SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
 
 export const DeleteAccount: FC = () => {
     const dispatch = useStateDispatch();
@@ -70,7 +66,7 @@ export const DeleteAccount: FC = () => {
     };
 
     return (
-        <FormWrapper>
+        <PageContainer>
             <BackButton onClick={() => navigate('/profile')} />
             <Dialog open={open}>
                 <DialogTitle id="alert-dialog-title">Bekreft sletting</DialogTitle>
@@ -84,28 +80,26 @@ export const DeleteAccount: FC = () => {
                     <Button onClick={handleCloseDialog}>Nei</Button>
                 </DialogActions>
             </Dialog>
-            <FormContent>
-                <SectionWrapper>
-                    <TitleForm>Slett konto</TitleForm>
-                    <Text>For å slette kontoen må du skrive inn passordet ditt.</Text>
-                    <Form onSubmit={onSubmitHandler}>
-                        <StyledInput
-                            label="Passord"
-                            type={inputType}
-                            errorMessage="Passord må bestå av minst 8 tegn"
-                            value={enteredPassword}
-                            onChange={passwordChangeHandler}
-                            onBlur={passwordBlurHandler}
-                            inputHasError={passwordInputHasError}
-                            toggleShowPassword={togglePasswordHandler}
-                            showPassword={showPassword}
-                        />
-                        <CenterFlex>
-                            <SubmitButtonRegistration text="white">Bekreft</SubmitButtonRegistration>
-                        </CenterFlex>
-                    </Form>
-                </SectionWrapper>
-            </FormContent>
-        </FormWrapper>
+            <SectionContainer>
+                <PageTitle>Slett konto</PageTitle>
+                <PageSubtitle>For å slette kontoen må du skrive inn passordet ditt.</PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                    <StyledInput
+                        label="Passord"
+                        type={inputType}
+                        errorMessage="Passord må bestå av minst 8 tegn"
+                        value={enteredPassword}
+                        onChange={passwordChangeHandler}
+                        onBlur={passwordBlurHandler}
+                        inputHasError={passwordInputHasError}
+                        toggleShowPassword={togglePasswordHandler}
+                        showPassword={showPassword}
+                    />
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={passwordInputHasError}>
+                        Bekreft
+                    </SubmitButton>
+                </Form>
+            </SectionContainer>
+        </PageContainer>
     );
 };
