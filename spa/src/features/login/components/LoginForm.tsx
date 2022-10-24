@@ -1,4 +1,5 @@
 import { FC, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -6,11 +7,13 @@ import { authActions } from '../../../store/state/auth.state';
 import { loginServices } from '../services/login.services';
 
 import { useInput } from '../../../hooks/useInput';
-import { validateEmail } from '../../../utils/emailValidator';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { Button, FlexRowContainer, LinkText, Text } from '../../../components/UI';
+
 import { Checkbox } from '../../../components/Form/Input';
+import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { Form } from '../../../components/Form/Form';
+import { validateEmail } from '../../../utils/emailValidator';
+import { Button, LinkButton } from '../../../components/UI/Buttons';
+import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -20,6 +23,7 @@ export const LoginForm: FC = () => {
 
     const { loading } = useStateSelector((state) => state.auth);
     const dispatch = useStateDispatch();
+    const navigate = useNavigate();
 
     const {
         value: enteredEmail,
@@ -95,10 +99,12 @@ export const LoginForm: FC = () => {
                     Husk meg
                     {/* {rememberStatus} */}
                 </div>
-                <LinkText to="/change-password">Glemt passord</LinkText>
+                <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/change-password')}>
+                    Glemt passord
+                </LinkButton>
             </FlexRowContainer>
 
-            <Button type="submit" color="primary" variant="contained">
+            <Button type="submit" variant="contained">
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
             </Button>
             <FlexRowContainer spacing="space-between">

@@ -1,11 +1,7 @@
 import { FC, FormEvent } from 'react';
-import { SubmitButtonRegistration } from '../../components/Form/Buttons';
 import { Form } from '../../components/Form/Form';
-import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
-import { CenterFlex } from '../../components/Form/Input';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { TitleForm } from '../../components/Form/Text';
-import { SectionContainer } from '../../components/UI';
+import { SubmitButton, PageContainer, PageTitle, SectionContainer } from '../../components/UI';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { categoryServices } from './services/category.services';
@@ -41,33 +37,36 @@ export const CreateCategory: FC = () => {
     };
 
     return (
-        <FormWrapper>
-            <FormContent>
-                <SectionContainer>
-                    <TitleForm>Legg til kategori</TitleForm>
-                    <Form onSubmit={onSubmitHandler}>
-                        <StyledInput
-                            label="Navn*"
-                            errorMessage="Vennligst fyll inn navn"
-                            value={name}
-                            onChange={nameChangeHandler}
-                            onBlur={nameBlurHandler}
-                            inputHasError={nameInputHasError}
-                        />
-                        <StyledInput
-                            label="Emoji*"
-                            errorMessage="Vennligst fyll inn emoji"
-                            value={emoji}
-                            onChange={emojiChangeHandler}
-                            onBlur={emojiBlurHandler}
-                            inputHasError={emojiInputHasError}
-                        />
-                        <CenterFlex>
-                            <SubmitButtonRegistration text="white">Legg til</SubmitButtonRegistration>
-                        </CenterFlex>
-                    </Form>
-                </SectionContainer>
-            </FormContent>
-        </FormWrapper>
+        <PageContainer>
+            <SectionContainer>
+                <PageTitle>Legg til kategori</PageTitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                    <StyledInput
+                        label="Navn*"
+                        errorMessage="Vennligst fyll inn navn"
+                        value={name}
+                        onChange={nameChangeHandler}
+                        onBlur={nameBlurHandler}
+                        inputHasError={nameInputHasError}
+                    />
+                    <StyledInput
+                        label="Emoji*"
+                        errorMessage="Vennligst fyll inn emoji"
+                        value={emoji}
+                        onChange={emojiChangeHandler}
+                        onBlur={emojiBlurHandler}
+                        inputHasError={emojiInputHasError}
+                    />
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto' }}
+                        disabled={nameInputHasError || emojiInputHasError}
+                    >
+                        Legg til
+                    </SubmitButton>
+                </Form>
+            </SectionContainer>
+        </PageContainer>
     );
 };

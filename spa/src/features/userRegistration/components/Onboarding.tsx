@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SubmitButtonRight } from '../../../components/Form/Buttons';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { CenterFlex } from '../../../components/Form/Input';
 import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
-import { Text, LinkTextOnboarding, TitleForm, WrapperOnboarding } from '../../../components/Form/Text';
-import { SectionContainer } from '../../../components/UI';
+import { SectionWrapper } from '../../../components/Form/SectionWrapper';
+import { Text, TitleForm, WrapperOnboarding } from '../../../components/Form/Text';
+import { Button, LinkButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
@@ -90,10 +90,17 @@ export const Onboarding: FC = () => {
                                 <CenterFlex>
                                     <WrapperOnboarding>
                                         <ProgressBarOnboarding pageIndex={pageIndex} />
-                                        <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            sx={{ width: 150, float: 'right' }}
+                                            onClick={handleForwardClick}
+                                        >
                                             Neste
-                                        </SubmitButtonRight>
-                                        <LinkTextOnboarding onClick={onSubmitHandler}>Hopp over</LinkTextOnboarding>
+                                        </Button>
+                                        <LinkButton sx={{ width: 150, float: 'left' }} onClick={onSubmitHandler}>
+                                            Hopp over
+                                        </LinkButton>
                                     </WrapperOnboarding>
                                 </CenterFlex>
                             </>
@@ -104,10 +111,17 @@ export const Onboarding: FC = () => {
                                         <CenterFlex>
                                             <WrapperOnboarding>
                                                 <ProgressBarOnboarding pageIndex={pageIndex} />
-                                                <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    sx={{ width: 150, float: 'right' }}
+                                                    onClick={handleForwardClick}
+                                                >
                                                     Neste
-                                                </SubmitButtonRight>
-                                                <LinkTextOnboarding onClick={onSubmitHandler}>Hopp over</LinkTextOnboarding>
+                                                </Button>
+                                                <LinkButton sx={{ width: 150, float: 'left' }} onClick={onSubmitHandler}>
+                                                    Hopp over
+                                                </LinkButton>
                                             </WrapperOnboarding>
                                         </CenterFlex>
                                     </>
@@ -117,9 +131,14 @@ export const Onboarding: FC = () => {
                                         <CenterFlex>
                                             <WrapperOnboarding>
                                                 <ProgressBarOnboarding pageIndex={pageIndex} />
-                                                <SubmitButtonRight text="white" onClick={handleForwardClick}>
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    sx={{ width: 150, float: 'right' }}
+                                                    onClick={handleForwardClick}
+                                                >
                                                     Fullfør
-                                                </SubmitButtonRight>
+                                                </Button>
                                             </WrapperOnboarding>
                                         </CenterFlex>
                                     </>

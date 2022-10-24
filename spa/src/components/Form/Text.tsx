@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { MyTheme, device } from '../../styles/global';
 
@@ -7,38 +6,6 @@ export const Text = styled.p`
     font-size: ${MyTheme.fontSize.header};
     padding: 0px;
     margin: 0px;
-`;
-
-export const TextAccent = styled.p`
-    color: ${MyTheme.colors.accent};
-    font-size: ${MyTheme.fontSize.header};
-    padding: 0px;
-    margin: 0px;
-`;
-
-export const LinkText = styled(Link)`
-    color: ${MyTheme.colors.accent};
-    font-size: ${MyTheme.fontSize.header};
-    text-decoration: none;
-    padding: 0px;
-    margin: 0px;
-`;
-
-export const LinkTextPersonalization = styled(LinkText)`
-    position: absolute;
-    bottom: 20px;
-    width: 80%;
-    text-align: center;
-`;
-
-export const LinkTextOnboarding = styled.p`
-    color: ${MyTheme.colors.accent};
-    font-size: ${MyTheme.fontSize.header};
-    text-decoration: none;
-    margin: 0px;
-    text-align: center;
-    padding: 5px;
-    float: left;
 `;
 
 export const WrapperOnboarding = styled.div`

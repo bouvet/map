@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { MyTheme, device } from '../../styles/global';
 
 interface ButtonStylingProps {
     backgroundColor?: string;
@@ -27,30 +26,6 @@ export const RoundButton = styled.button<ButtonStylingProps>`
     bottom: 30px;
     right: 30px;
     border: none;
-`;
-
-export const BackButton = styled(RoundButton)`
-    z-index: 1300;
-    top: 10px;
-    left: 10px;
-    height: 2.5rem;
-    width: 2.5rem;
-
-    @media ${device.mobileM} {
-        height: 50px;
-        width: 50px;
-    }
-`;
-
-export const CloseButton = styled(RoundButton)`
-    position: absolute;
-    height: 40px;
-    width: 40px;
-    top: 10px;
-    left: 10px;
-    &:active {
-        background-color: ${MyTheme.colors.darkBase};
-    }
 `;
 
 interface IconColorProp {

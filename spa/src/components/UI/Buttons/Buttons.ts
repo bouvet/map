@@ -1,3 +1,4 @@
+// import { FC, MouseEvent } from 'react';
 import { styled } from '@mui/material/styles';
 import MuiButton from '@mui/material/Button';
 import { MyTheme } from '../../../styles/global';
@@ -10,3 +11,11 @@ export const Button = styled(MuiButton)(() => ({
     fontFamily: `${MyTheme.fontFamily.body}`,
     height: 40,
 }));
+
+export const SubmitButton = styled(Button)({
+    backgroundColor: `${MyTheme.colors.accent}`,
+});
+
+export const LinkButton = styled(Button)({
+    color: `${MyTheme.colors.accent}`,
+});

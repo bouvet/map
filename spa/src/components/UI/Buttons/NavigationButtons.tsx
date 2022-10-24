@@ -1,8 +1,8 @@
+import { FC, MouseEvent } from 'react';
 import MuiFab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
-import { FC, MouseEvent } from 'react';
 import { MyTheme } from '../../../styles/global';
 
 interface Props {

@@ -1,18 +1,12 @@
 import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SubmitButtonRegistration } from '../components/Form/Buttons';
-import { Form } from '../components/Form/Form';
-import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
-import { CenterFlex } from '../components/Form/Input';
-import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { Text, TitleForm } from '../components/Form/Text';
-import { BackButton } from '../components/Navigation/Buttons';
-import { useStateDispatch } from '../hooks/useRedux';
-import { MyTheme } from '../styles/global';
-import { validateEmail } from '../utils/emailValidator';
-import { useInput } from '../hooks/useInput';
-import { SectionContainer } from '../components/UI';
-import { loginServices } from '../features/login/services/login.services';
+import { useStateDispatch } from '../../../hooks/useRedux';
+import { useInput } from '../../../hooks/useInput';
+import { validateEmail } from '../../../utils/emailValidator';
+import { loginServices } from '../services/login.services';
+import { Form } from '../../../components/Form/Form';
+import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { BackButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -41,30 +35,26 @@ export const ChangePassword: FC = () => {
     };
 
     return (
-        <FormWrapper>
-            <BackButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={() => navigate(-1)}>
-                <span className="material-symbols-outlined">arrow_back</span>
-            </BackButton>
-            <FormContent>
-                <SectionContainer>
-                    <TitleForm>Endre passord</TitleForm>
-                    <Text>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</Text>
-                    <Form onSubmit={onSubmitHandler}>
-                        <StyledInput
-                            label="E-post"
-                            type="email"
-                            errorMessage="Vennligst oppgi en gyldig e-post"
-                            value={email}
-                            onChange={emailChangeHandler}
-                            onBlur={emailBlurHandler}
-                            inputHasError={emailInputHasError}
-                        />
-                        <CenterFlex>
-                            <SubmitButtonRegistration text="white">Send link</SubmitButtonRegistration>
-                        </CenterFlex>
-                    </Form>
-                </SectionContainer>
-            </FormContent>
-        </FormWrapper>
+        <PageContainer>
+            <BackButton onClick={() => navigate(-1)} />
+            <SectionContainer>
+                <PageTitle>Endre passord</PageTitle>
+                <PageSubtitle>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                    <StyledInput
+                        label="E-post"
+                        type="email"
+                        errorMessage="Vennligst oppgi en gyldig e-post"
+                        value={email}
+                        onChange={emailChangeHandler}
+                        onBlur={emailBlurHandler}
+                        inputHasError={emailInputHasError}
+                    />
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                        Send link
+                    </SubmitButton>
+                </Form>
+            </SectionContainer>
+        </PageContainer>
     );
 };

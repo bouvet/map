@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
 import { MyTheme } from '../../styles/global';
-import { CloseButton, RoundButton } from '../Navigation/Buttons';
+import { RoundButton } from '../Navigation/Buttons';
 import { StarRating } from '../StarRating/StarRating';
 
 interface PopupContentProps {
@@ -56,6 +56,10 @@ const ExpandBtn = styled(RoundButton)`
     right: 10px;
 `;
 
+const CloseBtn = styled(ExpandBtn)`
+    left: 10px;
+`;
+
 const PopupContent = styled.div`
     width: calc(60% - 20px);
     padding: 10px;
@@ -84,12 +88,7 @@ const ReadMoreLink = styled.a`
     text-decoration: underline;
     white-space: nowrap;
 `;
-/**
- * Popup component which displays brief information about the park
- * @param name {string} name of park
- * @param description {string} description of park
- * @param rating {number} rating of park 1-5
- */
+
 export const Popup: FC<PopupContentProps> = ({ name, description, rating, image }) => {
     const dispatch = useStateDispatch();
 
@@ -112,9 +111,9 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     return (
         <PopupWrapper>
             <PopupImage imageURL={image}>
-                <CloseButton backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleClickClose}>
+                <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleClickClose}>
                     <span className="material-symbols-outlined">close</span>
-                </CloseButton>
+                </CloseBtn>
             </PopupImage>
             <PopupContent>
                 <ExpandBtn

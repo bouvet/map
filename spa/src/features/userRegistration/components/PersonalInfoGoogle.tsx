@@ -8,9 +8,8 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import moment from 'moment';
 import 'moment/locale/en-ca';
-import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
-import { CenterFlex, Label } from '../../../components/Form/Input';
+import { Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -19,7 +18,7 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { SectionContainer } from '../../../components/UI';
+import { Button } from '../../../components/UI';
 
 export const PersonalInfoGoogle: FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -122,16 +121,21 @@ export const PersonalInfoGoogle: FC = () => {
                                 <LocalizationProvider dateAdapter={AdapterMoment}>
                                     <MobileDatePicker
                                         label="åååå.mm.dd"
-                                        value={dob}
+                                        value={dob || null}
                                         onChange={(newValue) => handleChangeDob(newValue)}
                                         renderInput={(params) => <TextField {...params} />}
                                         maxDate={new Date()}
                                     />
                                 </LocalizationProvider>
                             </ThemeProvider>
-                            <CenterFlex>
-                                <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
-                            </CenterFlex>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ marginTop: 'auto' }}
+                                disabled={firstNameInputHasError || lastNameInputHasError}
+                            >
+                                Gå videre
+                            </Button>
                         </Form>
                     </SectionContainer>
                 </FormContent>
