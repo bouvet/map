@@ -41,6 +41,6 @@ public class AddUserRoleCommandHandler : IRequestHandler<AddUserRoleCommand, Err
     user.Roles.Add(role);
     await dataContext.SaveChangesAsync(cancellationToken);
 
-    return new UserResult(user);
+    return new UserResult(user, null);
   }
 }

@@ -5,9 +5,9 @@ import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
 import { CenterFlex } from '../../components/Form/Input';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { TitleForm } from '../../components/Form/Text';
+import { SectionContainer } from '../../components/UI';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
-import { SectionWrapper } from '../login/components/SectionWrapper';
 import { categoryServices } from './services/category.services';
 
 export const CreateCategory: FC = () => {
@@ -43,7 +43,7 @@ export const CreateCategory: FC = () => {
     return (
         <FormWrapper>
             <FormContent>
-                <SectionWrapper>
+                <SectionContainer>
                     <TitleForm>Legg til kategori</TitleForm>
                     <Form onSubmit={onSubmitHandler}>
                         <StyledInput
@@ -66,7 +66,7 @@ export const CreateCategory: FC = () => {
                             <SubmitButtonRegistration text="white">Legg til</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
-                </SectionWrapper>
+                </SectionContainer>
             </FormContent>
         </FormWrapper>
     );

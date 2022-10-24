@@ -7,12 +7,12 @@ import { CenterFlex } from '../../components/Form/Input';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { TitleForm } from '../../components/Form/Text';
 import { BackButton } from '../../components/Navigation/Buttons';
+import { SectionContainer } from '../../components/UI';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
 import { MyTheme } from '../../styles/global';
 import { validateEmail } from '../../utils/emailValidator';
-import { SectionWrapper } from '../login/components/SectionWrapper';
 
 export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();
@@ -46,7 +46,7 @@ export const ChangeEmail: FC = () => {
                 <span className="material-symbols-outlined">arrow_back</span>
             </BackButton>
             <FormContent>
-                <SectionWrapper>
+                <SectionContainer>
                     <TitleForm>Endre e-post</TitleForm>
                     <Form onSubmit={onSubmitHandler}>
                         <StyledInput
@@ -62,7 +62,7 @@ export const ChangeEmail: FC = () => {
                             <SubmitButtonRegistration text="white">Endre e-post</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
-                </SectionWrapper>
+                </SectionContainer>
             </FormContent>
         </FormWrapper>
     );

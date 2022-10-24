@@ -6,13 +6,13 @@ import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { CenterFlex } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
+import { Button, SectionContainer } from '../../../components/UI';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -74,7 +74,7 @@ export const CreatePassword: FC = () => {
             if (!createPasswordIsValid || !confirmPasswordIsValid) return;
 
             dispatch(userActions.setPassword(createPassword));
-            navigate('/personalization');
+            navigate('/register/personalization');
             console.log('Passord er satt');
         }
     };
@@ -89,7 +89,7 @@ export const CreatePassword: FC = () => {
             <FormWrapperRegistration>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Passord</TitleForm>
                         <Form onSubmit={onSubmitHandler}>
                             <StyledInput
@@ -119,9 +119,10 @@ export const CreatePassword: FC = () => {
                             </CenterFlex>
                         </Form>
                         <span>
-                            <LinkText to="/personal-info">Gå tilbake</LinkText>
+                            <Button onClick={() => navigate(-1)}>Gå tilbake</Button>
+                            <LinkText to="/register/personal-info">Gå tilbake</LinkText>
                         </span>
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapperRegistration>
         </>

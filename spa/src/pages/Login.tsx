@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useStateSelector } from '../hooks/useRedux';
 import { DivideLine, GoogleLoginLink, LoginForm, VippsLoginLink } from '../features/login';
-import { PageContainer, SectionContainer, PageTitle, PageSubtitle, BackButton, FlexRowContainer, LinkText, Text } from '../components/UI';
+import { PageContainer, SectionContainer, PageTitle, PageSubtitle, BackButton } from '../components/UI';
 
 export const Login: FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
@@ -23,10 +23,6 @@ export const Login: FC = () => {
                 <VippsLoginLink />
                 <DivideLine />
                 <LoginForm />
-                <FlexRowContainer spacing="space-between">
-                    <Text>Ikke registrert?</Text>
-                    <LinkText to="/email-input">Registrer deg</LinkText>
-                </FlexRowContainer>
             </SectionContainer>
         </PageContainer>
     );

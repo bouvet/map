@@ -4,14 +4,19 @@ namespace restapi.Common.Providers.Authorization;
 
 public class AuthorizationProvider : IAuthorizationProvider
 {
-  public AuthorizationProviderResult CheckAuthorization(ClaimsPrincipal userContext)
+  public AuthorizationProviderResult CheckAuthorization(ClaimsPrincipal userContext, Guid? requestId)
   {
     var isAuthorized = false;
 
     var userId = userContext.FindFirst("userId")?.Value;
     var isAdmin = userContext.IsInRole("Administrator");
 
-    if (!string.IsNullOrEmpty(userId) || isAdmin)
+    if (isAdmin)
+    {
+      isAuthorized = true;
+    }
+
+    if (requestId is not null && !string.IsNullOrEmpty(userId) && Guid.Parse(userId) == requestId)
     {
       isAuthorized = true;
     }

@@ -15,5 +15,6 @@ public record UserResponse(
   DateTime? DOB,
   List<RoleResponse> Roles,
   ImageStorageResponse? OriginalProfileImage,
-  ImageStorageResponse? WebpProfileImage
+  ImageStorageResponse? WebpProfileImage,
+  string? Token
 );

@@ -10,17 +10,17 @@ import { SubmitButtonRegistration } from '../../components/Form/Buttons';
 import { Form } from '../../components/Form/Form';
 import { FormContent, FormWrapper } from '../../components/Form/FormWrapper';
 import { CenterFlex } from '../../components/Form/Input';
-import { SectionWrapper } from '../../components/Form/SectionWrapper';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { Text, TitleForm } from '../../components/Form/Text';
 import { BackButton } from '../../components/Navigation/Buttons';
 import { useInput } from '../../hooks/useInput';
-import { useStateDispatch } from '../../hooks/useRedux';
+// import { useStateDispatch } from '../../hooks/useRedux';
 import { MyTheme } from '../../styles/global';
-import { userServices } from '../userRegistration/services/user.services';
+// import { userServices } from '../userRegistration/services/user.services';
+import { SectionContainer } from '../../components/UI';
 
 export const DeleteAccount: FC = () => {
-    const dispatch = useStateDispatch();
+    // const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
@@ -88,7 +88,7 @@ export const DeleteAccount: FC = () => {
                 </DialogActions>
             </Dialog>
             <FormContent>
-                <SectionWrapper>
+                <SectionContainer>
                     <TitleForm>Slett konto</TitleForm>
                     <Text>For å slette kontoen må du skrive inn passordet ditt.</Text>
                     <Form onSubmit={onSubmitHandler}>
@@ -107,7 +107,7 @@ export const DeleteAccount: FC = () => {
                             <SubmitButtonRegistration text="white">Bekreft</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
-                </SectionWrapper>
+                </SectionContainer>
             </FormContent>
         </FormWrapper>
     );

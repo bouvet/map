@@ -1,27 +1,24 @@
 import { FC, useEffect } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-import styled from 'styled-components';
 
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 
 import { googleAuthServices } from '../services/googleAuth.services';
-
-const Wrapper = styled.div`
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
+import { userServices } from '../features/userRegistration/services/user.services';
+import { authActions } from '../store/state/auth.state';
+import { mapServices } from '../features/map';
+import { PageContainer } from '../components/UI';
 
 const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
-export const AuthenticateSpinner: FC = () => {
+export const AuthenticationSpinner: FC = () => {
     const location = useLocation();
 
     const { isAuthenticated, isRegistering, emailIsValid } = useStateSelector((state) => state.auth);
     const dispatch = useStateDispatch();
+
+    dispatch(mapServices.getLocations());
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -35,6 +32,25 @@ export const AuthenticateSpinner: FC = () => {
     }, [location, dispatch]);
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            const token = localStorage.getItem('token');
+            const parsedUser = localStorage.getItem('user');
+            let user: any | null = null;
+            if (parsedUser) {
+                user = JSON.parse(parsedUser);
+            }
+            if (user && token) {
+                dispatch(userServices.getInfo(user.id));
+            } else {
+                dispatch(authActions.setLoading(false));
+            }
+        }, 1000);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [dispatch]);
+
+    useEffect(() => {
         location.state = 'Have loaded';
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -43,18 +59,18 @@ export const AuthenticateSpinner: FC = () => {
         return <Navigate replace to="/" />;
     }
 
-    if (isRegistering) {
-        return <Navigate replace to="/personal-info-google" />;
-    }
-
     if (!emailIsValid && location.state === 'Have Loaded') {
         location.state = null;
-        return <Navigate replace to="/email-confirmation" />;
+        return <Navigate replace to="/register/confirm-code" />;
+    }
+
+    if (isRegistering) {
+        return <Navigate replace to="/register/personal-info-google" />;
     }
 
     return (
-        <Wrapper>
+        <PageContainer>
             <CircularProgress color="primary" size={80} />
-        </Wrapper>
+        </PageContainer>
     );
 };
