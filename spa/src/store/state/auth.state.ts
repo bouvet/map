@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../utils/types.d';
 
 const initialState = {
-    loading: false,
+    loading: true,
     isAuthenticated: false,
     isAdmin: false,
     isRegistering: false,
+    changePasswordSuccess: false,
     emailIsValid: false,
     users: [],
     user: {} as IUser | null,
@@ -24,6 +25,9 @@ const authState = createSlice({
         setEmailIsValid(state, action: { payload: boolean; type: string }) {
             state.emailIsValid = action.payload;
         },
+        setChangePasswordSuccess(state, action: { payload: boolean; type: string }) {
+            state.changePasswordSuccess = action.payload;
+        },
         userLogin(state, action) {
             state.isAuthenticated = true;
             state.emailIsValid = true;
@@ -31,8 +35,8 @@ const authState = createSlice({
             if (action.payload.roles.some((role: any) => role.name === 'Administrator')) {
                 state.isAdmin = true;
             }
-            // localStorage.setItem('token', action.payload.token);
-            // localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('user', JSON.stringify(action.payload));
             state.loading = false;
         },
         logOut(state) {

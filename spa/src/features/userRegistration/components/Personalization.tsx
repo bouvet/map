@@ -5,12 +5,12 @@ import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../utils/types.d';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkTextPersonalization, Text, TitleForm } from '../../../components/Form/Text';
 import { SubmitButtonPersonalization } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { mapServices } from '../../map';
 import { CenterFlex } from '../../../components/Form/Input';
+import { SectionContainer } from '../../../components/UI';
 
 export const Personalization: FC = () => {
     const navigate = useNavigate();
@@ -27,13 +27,13 @@ export const Personalization: FC = () => {
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('/onboarding');
+        navigate('/profile/onboarding');
     };
 
     return (
         <FormWrapper>
             <FormContent>
-                <SectionWrapper>
+                <SectionContainer>
                     <TitleForm>Personalisering</TitleForm>
                     <Text>Velg dine favoritter:</Text>
                     <FilterMenuContent>{mappedFilter}</FilterMenuContent>
@@ -43,9 +43,9 @@ export const Personalization: FC = () => {
                         </CenterFlex>
                     </Form>
                     <CenterFlex>
-                        <LinkTextPersonalization to="/onboarding">Hopp over</LinkTextPersonalization>
+                        <LinkTextPersonalization to="/profile/onboarding">Hopp over</LinkTextPersonalization>
                     </CenterFlex>
-                </SectionWrapper>
+                </SectionContainer>
             </FormContent>
         </FormWrapper>
     );

@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using restapi.Common.Services.Auth;
 using restapi.Data;
 using restapi.Services.Users.Common;
 
@@ -9,10 +10,12 @@ namespace restapi.Services.Users.Queries.GetUserById;
 public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr<UserResult>>
 {
   private readonly DataContext dataContext;
+  private readonly IJwtGenerator jwtGenerator;
 
-  public GetUserByIdQueryHandler(DataContext dataContext)
+  public GetUserByIdQueryHandler(DataContext dataContext, IJwtGenerator jwtGenerator)
   {
     this.dataContext = dataContext;
+    this.jwtGenerator = jwtGenerator;
   }
 
   public async Task<ErrorOr<UserResult>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
@@ -30,6 +33,13 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr
       return Errors.User.NotFound;
     }
 
-    return new UserResult(user);
+    var token = "";
+
+    if (user.Id == request.UserId)
+    {
+      token = jwtGenerator.GenerateUserToken(user);
+    }
+
+    return new UserResult(user, token);
   }
 }

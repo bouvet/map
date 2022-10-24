@@ -7,7 +7,6 @@ import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { CenterFlex } from '../../../components/Form/Input';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
 import { useStateDispatch } from '../../../hooks/useRedux';
@@ -16,6 +15,7 @@ import { StyledInput } from '../../../components/Form/StyledElements/StyledInput
 import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/emailValidator';
 import { userActions } from '../../../store/state/user.state';
+import { SectionContainer } from '../../../components/UI';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -44,7 +44,7 @@ export const EmailInput: FC = () => {
 
         const successStatus: boolean = await dispatch(userServices.getCode({ email }));
         if (successStatus) {
-            navigate('/email-confirmation', { state: { email } });
+            navigate('/register/confirm-code', { state: { email } });
         }
     };
 
@@ -60,7 +60,7 @@ export const EmailInput: FC = () => {
                     <span className="material-symbols-outlined">close</span>
                 </BackButton>
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>E-post</TitleForm>
                         <ListWrapper>
                             <Text>Ved å opprette bruker kan du:</Text>
@@ -84,7 +84,7 @@ export const EmailInput: FC = () => {
                                 <SubmitButtonRegistration text="white">Send kode</SubmitButtonRegistration>
                             </CenterFlex>
                         </Form>
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapperRegistration>
         </>

@@ -6,14 +6,11 @@ import { authActions } from '../../../store/state/auth.state';
 import { loginServices } from '../services/login.services';
 
 import { useInput } from '../../../hooks/useInput';
-
-import { Checkbox } from '../../../components/Form/Input';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { LinkText } from '../../../components/Form/Text';
-import { Form } from '../../../components/Form/Form';
 import { validateEmail } from '../../../utils/emailValidator';
-import { Button } from '../../../components/UI/Buttons';
-import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
+import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { Button, FlexRowContainer, LinkText, Text } from '../../../components/UI';
+import { Checkbox } from '../../../components/Form/Input';
+import { Form } from '../../../components/Form/Form';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -104,6 +101,10 @@ export const LoginForm: FC = () => {
             <Button type="submit" color="primary" variant="contained">
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
             </Button>
+            <FlexRowContainer spacing="space-between">
+                <Text>Ikke registrert?</Text>
+                <LinkText to="/register/email">Registrer deg</LinkText>
+            </FlexRowContainer>
         </Form>
     );
 };

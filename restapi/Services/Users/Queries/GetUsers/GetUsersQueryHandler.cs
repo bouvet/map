@@ -28,7 +28,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, ErrorOr<List<
 
     foreach (User user in users)
     {
-      userResultList.Add(new UserResult(user));
+      userResultList.Add(new UserResult(user, null));
     }
 
     return userResultList;

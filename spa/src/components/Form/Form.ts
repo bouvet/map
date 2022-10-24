@@ -3,7 +3,7 @@ import { device } from '../../styles/global';
 
 export const Form = styled.form`
     width: 100%;
-    margin: 0 auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-content: center;

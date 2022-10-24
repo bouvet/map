@@ -4,8 +4,8 @@ import { SubmitButtonRight } from '../../../components/Form/Buttons';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
 import { CenterFlex } from '../../../components/Form/Input';
 import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, LinkTextOnboarding, TitleForm, WrapperOnboarding } from '../../../components/Form/Text';
+import { SectionContainer } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
@@ -82,7 +82,7 @@ export const Onboarding: FC = () => {
         <>
             <FormWrapper>
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Slik bruker du VerdenVenter</TitleForm>
                         {pageIndex === 0 ? (
                             <>
@@ -128,7 +128,7 @@ export const Onboarding: FC = () => {
                         )}
                         {pageIndex === 1 && <HowAddLocation />}
                         {pageIndex === 2 && <HowAddReview />}
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapper>
         </>

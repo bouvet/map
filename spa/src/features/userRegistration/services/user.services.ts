@@ -24,8 +24,6 @@ export const userServices = {
             try {
                 const { data } = await API.get(`/users/${payload}`);
 
-                localStorage.setItem('user', JSON.stringify(data));
-
                 dispatch(authActions.userLogin(data));
             } catch (error) {
                 dispatch(authActions.logOut());

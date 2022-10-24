@@ -14,6 +14,7 @@ import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../features/home/components/FabMenu';
+import { SectionContainer } from '../components/UI';
 
 export const Home: FC = () => {
     useFilterEvent();
@@ -46,7 +47,7 @@ export const Home: FC = () => {
     };
 
     return (
-        <div className="App">
+        <SectionContainer style={{ height: '100%', width: '100%' }}>
             {!homeMarkerFocus ? (
                 <>
                     <FilterMenu>{mappedFilter}</FilterMenu>
@@ -57,9 +58,7 @@ export const Home: FC = () => {
                     <span className="material-symbols-outlined">arrow_back</span>
                 </BackButton>
             )}
-            <div className="home-container">
-                <ReactMapGL />
-            </div>
+            <ReactMapGL />
             {!homeMarkerFocus && <FabMenu />}
             {!homeMarkerFocus && (
                 <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
@@ -78,6 +77,6 @@ export const Home: FC = () => {
                 </Slide>
             )}
             {homeMarkerFocus && <SwipeableEdgeDrawer />}
-        </div>
+        </SectionContainer>
     );
 };

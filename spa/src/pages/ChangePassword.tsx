@@ -1,18 +1,18 @@
 import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
-import { Form } from '../../../components/Form/Form';
-import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { CenterFlex } from '../../../components/Form/Input';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { Text, TitleForm } from '../../../components/Form/Text';
-import { BackButton } from '../../../components/Navigation/Buttons';
-import { useStateDispatch } from '../../../hooks/useRedux';
-import { MyTheme } from '../../../styles/global';
-import { validateEmail } from '../../../utils/emailValidator';
-import { loginServices } from '../services/login.services';
-import { useInput } from '../../../hooks/useInput';
+import { SubmitButtonRegistration } from '../components/Form/Buttons';
+import { Form } from '../components/Form/Form';
+import { FormContent, FormWrapper } from '../components/Form/FormWrapper';
+import { CenterFlex } from '../components/Form/Input';
+import { StyledInput } from '../components/Form/StyledElements/StyledInput';
+import { Text, TitleForm } from '../components/Form/Text';
+import { BackButton } from '../components/Navigation/Buttons';
+import { useStateDispatch } from '../hooks/useRedux';
+import { MyTheme } from '../styles/global';
+import { validateEmail } from '../utils/emailValidator';
+import { useInput } from '../hooks/useInput';
+import { SectionContainer } from '../components/UI';
+import { loginServices } from '../features/login/services/login.services';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -46,7 +46,7 @@ export const ChangePassword: FC = () => {
                 <span className="material-symbols-outlined">arrow_back</span>
             </BackButton>
             <FormContent>
-                <SectionWrapper>
+                <SectionContainer>
                     <TitleForm>Endre passord</TitleForm>
                     <Text>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</Text>
                     <Form onSubmit={onSubmitHandler}>
@@ -63,7 +63,7 @@ export const ChangePassword: FC = () => {
                             <SubmitButtonRegistration text="white">Send link</SubmitButtonRegistration>
                         </CenterFlex>
                     </Form>
-                </SectionWrapper>
+                </SectionContainer>
             </FormContent>
         </FormWrapper>
     );

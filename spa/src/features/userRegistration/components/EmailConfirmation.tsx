@@ -1,10 +1,9 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { LinkText, Text, TextAccent, TitleForm } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
@@ -12,6 +11,7 @@ import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { AppDispatch } from '../../../store';
+import { SectionContainer } from '../../../components/UI';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +54,7 @@ export const EmailConfirmation: FC = () => {
 
     // if from google redirect to personal-info-google
     if (shouldNavigate) {
-        return <Navigate replace to="/personal-info" />;
+        return <Navigate replace to="/register/personal-info" />;
     }
 
     const pageIndex = 1;
@@ -67,7 +67,7 @@ export const EmailConfirmation: FC = () => {
             <FormWrapperRegistration>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Bekreft e-post</TitleForm>
                         <Form>
                             <Text>Skriv inn koden for å bekrefte e-postadressen {email}</Text>
@@ -97,7 +97,7 @@ export const EmailConfirmation: FC = () => {
                         <span>
                             <TextAccent onClick={resendCode}>Send ny kode</TextAccent>
                         </span>
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapperRegistration>
         </>

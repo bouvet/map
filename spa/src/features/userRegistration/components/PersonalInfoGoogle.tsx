@@ -12,7 +12,6 @@ import { SubmitButtonRegistration } from '../../../components/Form/Buttons';
 import { Form } from '../../../components/Form/Form';
 import { CenterFlex, Label } from '../../../components/Form/Input';
 import { FormContent, FormWrapper } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
 import { Text, TitleForm } from '../../../components/Form/Text';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
@@ -20,6 +19,7 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
+import { SectionContainer } from '../../../components/UI';
 
 export const PersonalInfoGoogle: FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -92,7 +92,7 @@ export const PersonalInfoGoogle: FC = () => {
             <FormWrapper>
                 <DialogButton />
                 <FormContent>
-                    <SectionWrapper>
+                    <SectionContainer>
                         <TitleForm>Personlig informasjon</TitleForm>
                         <Text>
                             Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
@@ -133,7 +133,7 @@ export const PersonalInfoGoogle: FC = () => {
                                 <SubmitButtonRegistration text="white">Gå videre</SubmitButtonRegistration>
                             </CenterFlex>
                         </Form>
-                    </SectionWrapper>
+                    </SectionContainer>
                 </FormContent>
             </FormWrapper>
         </>

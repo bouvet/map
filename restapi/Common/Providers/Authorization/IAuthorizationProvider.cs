@@ -3,5 +3,5 @@ namespace restapi.Common.Providers.Authorization;
 
 public interface IAuthorizationProvider
 {
-  AuthorizationProviderResult CheckAuthorization(ClaimsPrincipal userContext);
+  AuthorizationProviderResult CheckAuthorization(ClaimsPrincipal userContext, Guid? requestId);
 }

@@ -84,7 +84,7 @@ public class LocationsController : ApiController
   [HttpPut("{id:guid}")]
   public async Task<IActionResult> UpdateLocation(Guid id, [FromForm] UpdateLocationRequest request)
   {
-    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, id);
 
     if (!string.IsNullOrEmpty(request.Status) && !authResult.IsAdmin)
     {
@@ -112,7 +112,7 @@ public class LocationsController : ApiController
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteLocation(Guid id)
   {
-    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, id);
 
     var location = await dataContext.Locations.FindAsync(id);
 
