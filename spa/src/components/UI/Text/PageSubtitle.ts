@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { device } from '../../../styles/global';
 
 export const PageSubtitle = styled.h2`
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 400;
     margin-bottom: 1rem;
 

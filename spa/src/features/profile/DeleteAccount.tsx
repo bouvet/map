@@ -12,7 +12,7 @@ import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
-import { Button as SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
+import { SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
 
 export const DeleteAccount: FC = () => {
     // const dispatch = useStateDispatch();

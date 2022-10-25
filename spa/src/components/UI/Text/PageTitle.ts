@@ -11,5 +11,8 @@ export const PageTitle = styled.h1`
         margin-top: 3rem;
         width: 100%;
         padding-left: 0;
+        &.registration {
+            margin-top: 0rem;
+        }
     }
 `;

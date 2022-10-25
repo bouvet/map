@@ -2,9 +2,7 @@ import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form } from '../../../components/Form/Form';
-import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { Text, TitleForm } from '../../../components/Form/Text';
-import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
+import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { userServices } from '../services/user.services';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
@@ -12,7 +10,7 @@ import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/emailValidator';
 import { userActions } from '../../../store/state/user.state';
 import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
-import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton, Text } from '../../../components/UI';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -49,13 +47,11 @@ export const EmailInput: FC = () => {
 
     return (
         <>
-            <ProgressWrapper>
-                <ProgressBarForm pageIndex={pageIndex} />
-            </ProgressWrapper>
             <PageContainer>
                 <CloseButton onClick={() => navigate('/login')} />
                 <SectionContainer>
-                    <TitleForm>E-post</TitleForm>
+                    <PageTitle className="registration">E-post</PageTitle>
+                    <ProgressBarForm pageIndex={pageIndex} />
                     <ListWrapper>
                         <Text>Ved å opprette bruker kan du:</Text>
                         <ul>
@@ -63,7 +59,7 @@ export const EmailInput: FC = () => {
                             <li>Få personlig tilpasning og anbefalinger</li>
                         </ul>
                     </ListWrapper>
-                    <Text>Fyll inn din e-postadresse for å motta en bekreftelseskode.</Text>
+                    <PageSubtitle>Fyll inn din e-postadresse for å motta en bekreftelseskode.</PageSubtitle>
                     <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
                         <StyledInput
                             label="E-post*"

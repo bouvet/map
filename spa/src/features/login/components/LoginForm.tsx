@@ -1,19 +1,17 @@
 import { FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { authActions } from '../../../store/state/auth.state';
 import { loginServices } from '../services/login.services';
-
 import { useInput } from '../../../hooks/useInput';
-
 import { Checkbox } from '../../../components/Form/Input';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { Form } from '../../../components/Form/Form';
 import { validateEmail } from '../../../utils/emailValidator';
-import { Button, LinkButton } from '../../../components/UI/Buttons';
+import { LinkButton, SubmitButton } from '../../../components/UI/Buttons';
 import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
+import { Text } from '../../../components/UI';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -103,13 +101,15 @@ export const LoginForm: FC = () => {
                     Glemt passord
                 </LinkButton>
             </FlexRowContainer>
-
-            <Button type="submit" variant="contained">
+            {/* add disabled button */}
+            <SubmitButton type="submit" variant="contained">
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
-            </Button>
+            </SubmitButton>
             <FlexRowContainer spacing="space-between">
                 <Text>Ikke registrert?</Text>
-                <LinkText to="/register/email">Registrer deg</LinkText>
+                <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/register/email')}>
+                    Registrer deg
+                </LinkButton>
             </FlexRowContainer>
         </Form>
     );

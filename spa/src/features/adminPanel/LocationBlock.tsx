@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { LeftFlex, RightFlex, SplitWrapper } from '../../components/Form/Input';
-import { Text } from '../../components/Form/Text';
+import { Text } from '../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { MyTheme } from '../../styles/global';
 import { ILocation, IPutLocation } from '../../utils/types.d';

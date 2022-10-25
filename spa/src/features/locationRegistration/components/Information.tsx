@@ -1,10 +1,9 @@
 import { ChangeEvent, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { RequiredStar } from '../../../components/Common/RequiredStar';
-import { RegisterButton } from '../../../components/Filter/Buttons';
+import { RegisterButton } from '../../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
-import { Text } from '../../../components/Form/Text';
+import { Text } from '../../../components/UI';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
 import { MyTheme } from '../../../styles/global';
@@ -72,24 +71,15 @@ export const Information: FC = () => {
     return (
         <InformationWrapper>
             <InputWrapper>
-                <Label>
-                    Navn på lokasjon:
-                    <RequiredStar />
-                </Label>
+                <Label>Navn på lokasjon*</Label>
                 <Input onChange={handleChangeName} value={currentTitle} maxLength={30} minLength={5} placeholder="Min. 5 tegn" />
             </InputWrapper>
             <CategorySelectWrapper>
-                <Label>
-                    Velg kategorier:
-                    <RequiredStar />
-                </Label>
+                <Label>Velg kategorier*</Label>
             </CategorySelectWrapper>
             <FilterMenuContent>{mappedFilter}</FilterMenuContent>
             <InputWrapper>
-                <Label>
-                    Beskriv stedet:
-                    <RequiredStar />
-                </Label>
+                <Label>Beskriv stedet*</Label>
                 <ListWrapper>
                     <Text>Tips til info:</Text>
                     <ul>

@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
-import { mapActions } from '../../store/state/map.state';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
+import { mapActions } from '../../store/state/map.state';
 import { registrationActions } from '../../store/state/registration.state';
 import { userActions } from '../../store/state/user.state';
 

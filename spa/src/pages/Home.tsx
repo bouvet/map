@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Slide from '@mui/material/Slide';
-import { FilterButton } from '../components/Filter/Buttons';
+import { FilterButton } from '../components/Filter/FilterButtons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
 import { Popup, PopupCard } from '../components/Popup/Popup';
 import { ReactMapGL } from '../features/map';
@@ -13,6 +13,7 @@ import { EmojiButton } from '../features/locationRegistration/components/Locatio
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../features/home/components/FabMenu';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
+import { SectionContainer } from '../components/UI';
 
 export const Home: FC = () => {
     useFilterEvent();
