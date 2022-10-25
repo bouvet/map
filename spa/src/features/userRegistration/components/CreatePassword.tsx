@@ -82,7 +82,7 @@ export const CreatePassword: FC = () => {
             <PageContainer>
                 <DialogButton />
                 <SectionContainer>
-                    <PageTitle>Passord</PageTitle>
+                    <PageTitle className="registration">Passord</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <Form onSubmit={onSubmitHandler}>
                         <StyledInput

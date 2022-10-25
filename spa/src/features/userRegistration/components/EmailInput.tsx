@@ -10,7 +10,7 @@ import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/emailValidator';
 import { userActions } from '../../../store/state/user.state';
 import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
-import { PageContainer, PageTitle, SectionContainer, SubmitButton, Text } from '../../../components/UI';
+import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton, Text } from '../../../components/UI';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -50,7 +50,7 @@ export const EmailInput: FC = () => {
             <PageContainer>
                 <CloseButton onClick={() => navigate('/login')} />
                 <SectionContainer>
-                    <PageTitle>E-post</PageTitle>
+                    <PageTitle className="registration">E-post</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <ListWrapper>
                         <Text>Ved å opprette bruker kan du:</Text>
@@ -59,7 +59,7 @@ export const EmailInput: FC = () => {
                             <li>Få personlig tilpasning og anbefalinger</li>
                         </ul>
                     </ListWrapper>
-                    <Text>Fyll inn din e-postadresse for å motta en bekreftelseskode.</Text>
+                    <PageSubtitle>Fyll inn din e-postadresse for å motta en bekreftelseskode.</PageSubtitle>
                     <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
                         <StyledInput
                             label="E-post*"

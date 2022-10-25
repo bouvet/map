@@ -63,7 +63,7 @@ export const EmailConfirmation: FC = () => {
             <PageContainer>
                 <DialogButton />
                 <SectionContainer>
-                    <PageTitle>Bekreft e-post</PageTitle>
+                    <PageTitle className="registration">Bekreft e-post</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <Form>
                         <PageSubtitle>Skriv inn koden for å bekrefte e-postadressen {email}</PageSubtitle>

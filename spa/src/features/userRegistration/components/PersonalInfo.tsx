@@ -94,7 +94,7 @@ export const PersonalInfo: FC = () => {
             <PageContainer>
                 <DialogButton />
                 <SectionContainer>
-                    <PageTitle>Personlig informasjon</PageTitle>
+                    <PageTitle className="registration">Personlig informasjon</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <PageSubtitle>
                         Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
