@@ -8,7 +8,7 @@ export const PageTitle = styled.h1`
     padding-left: 7rem;
 
     @media ${device.mobileM} {
-        margin-top: 3rem;
+        // margin-top: 3rem;
         width: 100%;
         padding-left: 0;
     }

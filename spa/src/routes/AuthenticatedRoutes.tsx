@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { LocationRegistration, ProfilePage } from '../pages';
-
 import { ChangeEmail, DeleteAccount } from '../features/profile';
 
 export const AuthenticatedRoutes: FC = () => (

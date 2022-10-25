@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { MyTheme } from '../../../styles/global';
 
 export const Text = styled.p`

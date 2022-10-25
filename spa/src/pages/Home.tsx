@@ -13,6 +13,7 @@ import { EmojiButton } from '../features/locationRegistration/components/Locatio
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { FabMenu } from '../features/home/components/FabMenu';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
+import { SectionContainer } from '../components/UI';
 
 export const Home: FC = () => {
     useFilterEvent();

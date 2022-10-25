@@ -1,13 +1,13 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Form } from '../../../components/Form/Form';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { Button, PageContainer, PageTitle, SectionContainer } from '../../../components/UI';
-import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
-import { useInput } from '../../../hooks/useInput';
-import { useStateDispatch } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
-import { loginServices } from '../services/login.services';
+import { Form } from '../components/Form/Form';
+import { StyledInput } from '../components/Form/StyledElements/StyledInput';
+import { PageContainer, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
+import { CloseButton } from '../components/UI/Buttons/NavigationButtons';
+import { loginServices } from '../features/login/services/login.services';
+import { useInput } from '../hooks/useInput';
+import { useStateDispatch } from '../hooks/useRedux';
+import { snackbarActions } from '../store/state/snackbar.state';
 
 export const ResetPassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -118,9 +118,9 @@ export const ResetPassword: FC = () => {
                         showPassword={showConfirmPassword}
                     />
                     {/* add button disabled */}
-                    <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
                         Endre passord
-                    </Button>
+                    </SubmitButton>
                 </Form>
             </SectionContainer>
         </PageContainer>

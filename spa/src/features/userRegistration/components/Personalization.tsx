@@ -6,7 +6,7 @@ import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../utils/types.d';
 import { Form } from '../../../components/Form/Form';
 import { mapServices } from '../../map';
-import { Button, LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../../components/UI';
+import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 
 export const Personalization: FC = () => {
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const Personalization: FC = () => {
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('/profile/onboarding');
+        navigate('register/onboarding');
     };
 
     return (
@@ -33,11 +33,11 @@ export const Personalization: FC = () => {
                 <PageSubtitle>Velg dine favoritter:</PageSubtitle>
                 <FilterMenuContent>{mappedFilter}</FilterMenuContent>
                 <Form onSubmit={onSubmitHandler}>
-                    <Button type="submit" variant="contained" sx={{ marginTop: 40 }}>
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
                         Velg
-                    </Button>
+                    </SubmitButton>
                 </Form>
-                <LinkButton onClick={() => navigate('/profile/onboarding')}>Hopp over</LinkButton>
+                <LinkButton onClick={() => navigate('register/onboarding')}>Hopp over</LinkButton>
             </SectionContainer>
         </PageContainer>
     );

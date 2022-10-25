@@ -2,7 +2,7 @@ import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { Button, PageContainer, PageTitle, SectionContainer } from '../../components/UI';
+import { PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../components/UI';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
@@ -50,9 +50,9 @@ export const ChangeEmail: FC = () => {
                         onBlur={emailBlurHandler}
                         inputHasError={emailInputHasError}
                     />
-                    <Button type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
                         Endre e-post
-                    </Button>
+                    </SubmitButton>
                 </Form>
             </SectionContainer>
         </PageContainer>

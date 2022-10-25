@@ -67,12 +67,16 @@ export const loginServices = {
                     dispatch(authActions.setLoading(false));
                     dispatch(authActions.setChangePasswordSuccess(true));
                 }, 500);
+
+                return true;
             } catch (error) {
                 console.error('error', error);
                 setTimeout(() => {
                     dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
                     dispatch(authActions.setLoading(false));
                 }, 500);
+
+                return false;
             }
         };
     },

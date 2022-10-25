@@ -3,16 +3,13 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { FormContent, FormWrapperRegistration } from '../../../components/Form/FormWrapper';
-import { SectionWrapper } from '../../../components/Form/SectionWrapper';
-import { Text, TitleForm } from '../../../components/Form/Text';
 import { Form } from '../../../components/Form/Form';
-import { ProgressBarForm, ProgressWrapper } from '../../../components/Form/ProgressBar';
+import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { AppDispatch } from '../../../store';
-import { LinkButton } from '../../../components/UI';
+import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../../components/UI';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -63,45 +60,41 @@ export const EmailConfirmation: FC = () => {
 
     return (
         <>
-            <ProgressWrapper>
-                <ProgressBarForm pageIndex={pageIndex} />
-            </ProgressWrapper>
-            <FormWrapperRegistration>
+            <PageContainer>
                 <DialogButton />
-                <FormContent>
-                    <SectionContainer>
-                        <TitleForm>Bekreft e-post</TitleForm>
-                        <Form>
-                            <Text>Skriv inn koden for å bekrefte e-postadressen {email}</Text>
-                            <Box
-                                sx={{
-                                    '& .MuiTextField-root': { m: '1%', width: '14%' },
-                                }}
-                            >
-                                {confirmationCode.map((data, index) => (
-                                    <TextField
-                                        type="text"
-                                        // eslint-disable-next-line react/no-array-index-key
-                                        key={index}
-                                        name={`input-field-${index}`}
-                                        onChange={(e) => handleInputChange(e, index)}
-                                        inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
-                                        required
-                                        onFocus={(e) => e.target.select}
-                                        autoFocus={index === 0}
-                                    />
-                                ))}
-                            </Box>
-                        </Form>
-                        <LinkButton sx={{ width: 125, margin: 0 }} onClick={resendCode}>
-                            Send ny kode
-                        </LinkButton>
-                        <LinkButton sx={{ width: 125, margin: 0 }} onClick={() => navigate('/email-input')}>
-                            Endre e-post
-                        </LinkButton>
-                    </SectionWrapper>
-                </FormContent>
-            </FormWrapperRegistration>
+                <SectionContainer>
+                    <PageTitle>Bekreft e-post</PageTitle>
+                    <ProgressBarForm pageIndex={pageIndex} />
+                    <Form>
+                        <PageSubtitle>Skriv inn koden for å bekrefte e-postadressen {email}</PageSubtitle>
+                        <Box
+                            sx={{
+                                '& .MuiTextField-root': { m: '1%', width: '14%' },
+                            }}
+                        >
+                            {confirmationCode.map((data, index) => (
+                                <TextField
+                                    type="text"
+                                    // eslint-disable-next-line react/no-array-index-key
+                                    key={index}
+                                    name={`input-field-${index}`}
+                                    onChange={(e) => handleInputChange(e, index)}
+                                    inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
+                                    required
+                                    onFocus={(e) => e.target.select}
+                                    autoFocus={index === 0}
+                                />
+                            ))}
+                        </Box>
+                    </Form>
+                    <LinkButton sx={{ width: 125, margin: 0 }} onClick={resendCode}>
+                        Send ny kode
+                    </LinkButton>
+                    <LinkButton sx={{ width: 125, margin: 0 }} onClick={() => navigate('/register/email')}>
+                        Endre e-post
+                    </LinkButton>
+                </SectionContainer>
+            </PageContainer>
         </>
     );
 };

@@ -1,9 +1,7 @@
 import { FC, useEffect } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-
 import { googleAuthServices } from '../services/googleAuth.services';
 import { userServices } from '../features/userRegistration/services/user.services';
 import { authActions } from '../store/state/auth.state';
