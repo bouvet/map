@@ -5,12 +5,6 @@ interface ButtonStylingProps {
     textColor?: string;
 }
 
-/** Round button with required arguments for color of background and text
- * structure is div, so to insert an icon into the button is done with
- * opening and closing tags
- * @param backgroundColor
- * @param textColor
- */
 export const RoundButton = styled.button<ButtonStylingProps>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     height: 50px;

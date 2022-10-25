@@ -1,6 +1,6 @@
 import { FC, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RegisterButtonFavorites } from '../../../components/Filter/Buttons';
+import { RegisterButtonFavorites } from '../../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../utils/types.d';
@@ -23,7 +23,7 @@ export const Personalization: FC = () => {
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('register/onboarding');
+        navigate('/register/onboarding');
     };
 
     return (
@@ -37,7 +37,7 @@ export const Personalization: FC = () => {
                         Velg
                     </SubmitButton>
                 </Form>
-                <LinkButton onClick={() => navigate('register/onboarding')}>Hopp over</LinkButton>
+                <LinkButton onClick={() => navigate('/register/onboarding')}>Hopp over</LinkButton>
             </SectionContainer>
         </PageContainer>
     );

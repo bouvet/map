@@ -12,12 +12,4 @@ export const Form = styled.form`
     @media ${device.mobileM} {
         row-gap: 1rem;
     }
-
-    /* input:not(:focus):not(:placeholder-shown):invalid {
-        border-color: #bd0000;
-    }
-
-    input:not(:focus):not(:placeholder-shown):valid {
-        border-color: #00c600;
-    } */
 `;

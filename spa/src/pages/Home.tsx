@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Slide from '@mui/material/Slide';
-import { FilterButton } from '../components/Filter/Buttons';
+import { FilterButton } from '../components/Filter/FilterButtons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
 import { Popup, PopupCard } from '../components/Popup/Popup';
 import { ReactMapGL } from '../features/map';
