@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { RequiredStar } from '../../../components/Common/RequiredStar';
 import { RegisterButton } from '../../../components/Filter/Buttons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
-import { Text } from '../../../components/Form/Text';
+import { Text } from '../../../components/UI';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
 import { MyTheme } from '../../../styles/global';

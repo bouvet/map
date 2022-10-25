@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CenterFlex } from '../../../components/Form/Input';
 import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
-import { WrapperOnboarding } from '../../../components/Form/Text';
+import { WrapperOnboarding } from '../../../components/Form/WrapperOnboarding';
 import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { snackbarActions } from '../../../store/state/snackbar.state';
