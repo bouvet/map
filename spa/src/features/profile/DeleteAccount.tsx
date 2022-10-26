@@ -19,9 +19,6 @@ export const DeleteAccount: FC = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
-    // const handleClickOpen = () => setOpen(true);
-    // const handleConfirm = () => navigate('/login'); // change, call dialog before onsubmit
-    // @ts-ignore
     const handleConfirm = () => deleteAccount();
     const handleCloseDialog = () => setOpen(false);
 
@@ -62,7 +59,8 @@ export const DeleteAccount: FC = () => {
         // check if password is correct
         // dispatch(userServices.deleteAccount());
         console.log('Konto er slettet');
-        navigate('/');
+        setOpen(false);
+        // navigate('/');
     };
 
     return (
@@ -98,7 +96,7 @@ export const DeleteAccount: FC = () => {
                     <SubmitButton
                         type="submit"
                         variant="contained"
-                        sx={{ marginTop: 'auto', marginBottom: '-4vh' }}
+                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
                         disabled={passwordInputHasError}
                     >
                         Bekreft

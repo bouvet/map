@@ -37,7 +37,7 @@ export const Personalization: FC = () => {
                         Velg
                     </SubmitButton>
                 </Form>
-                <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/onboarding')}>
+                <LinkButton sx={{ marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/onboarding')}>
                     Hopp over
                 </LinkButton>
             </SectionContainer>
