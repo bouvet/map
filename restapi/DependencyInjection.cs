@@ -14,8 +14,6 @@ public static class DependencyInjection
     this IServiceCollection services,
     ConfigurationManager configuration)
   {
-    services.AddSettings(configuration);
-
     await services.AddProvidersAsync(configuration);
 
     services.AddMappers();

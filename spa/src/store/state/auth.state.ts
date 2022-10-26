@@ -21,9 +21,11 @@ const authState = createSlice({
         },
         setIsRegistering(state, action: { payload: boolean; type: string }) {
             state.isRegistering = action.payload;
+            state.loading = false;
         },
         setEmailIsValid(state, action: { payload: boolean; type: string }) {
             state.emailIsValid = action.payload;
+            state.loading = false;
         },
         setChangePasswordSuccess(state, action: { payload: boolean; type: string }) {
             state.changePasswordSuccess = action.payload;
@@ -44,6 +46,7 @@ const authState = createSlice({
             state.user = null;
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            state.loading = false;
         },
     },
 });

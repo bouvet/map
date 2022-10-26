@@ -14,16 +14,14 @@ export const Login: FC = () => {
     }
 
     return (
-        <PageContainer>
+        <SectionContainer>
             <BackButton onClick={() => navigate('/')} />
-            <SectionContainer>
-                <PageTitle>Login</PageTitle>
-                <PageSubtitle>Verden venter... på deg!</PageSubtitle>
-                <GoogleLoginLink />
-                <VippsLoginLink />
-                <DivideLine />
-                <LoginForm />
-            </SectionContainer>
-        </PageContainer>
+            <PageTitle>Login</PageTitle>
+            <PageSubtitle>Verden venter... på deg!</PageSubtitle>
+            <GoogleLoginLink />
+            <VippsLoginLink />
+            <DivideLine />
+            <LoginForm />
+        </SectionContainer>
     );
 };

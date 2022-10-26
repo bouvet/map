@@ -41,14 +41,15 @@ interface IProps {
     label: string;
     placeholder?: string;
     type?: string;
-    value: string;
-    errorMessage: string;
+    value?: string;
+    errorMessage?: string;
     showPassword?: boolean;
     autoFocus?: boolean;
     required?: boolean;
-    inputHasError: boolean;
+    inputHasError?: boolean;
+    disabled?: boolean;
     toggleShowPassword?: () => void;
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onBlur?: React.ChangeEventHandler<HTMLInputElement>;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
@@ -63,6 +64,7 @@ export const StyledInput: React.FC<IProps> = ({
     inputHasError,
     errorMessage,
     showPassword,
+    disabled,
     toggleShowPassword,
     onChange,
     onBlur,
@@ -89,6 +91,7 @@ export const StyledInput: React.FC<IProps> = ({
                     onBlur={onBlur}
                     onKeyDown={onKeyDown}
                     style={style}
+                    disabled={disabled}
                 />
                 {type === 'password' && !showPassword && (
                     <EyeIconDiv onClick={toggleShowPassword}>
