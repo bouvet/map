@@ -39,8 +39,10 @@ export const ChangePassword: FC = () => {
             <BackButton onClick={() => navigate(-1)} />
             <SectionContainer>
                 <PageTitle>Endre passord</PageTitle>
-                <PageSubtitle>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</PageSubtitle>
-                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                <PageSubtitle style={{ marginTop: '1rem' }}>
+                    Fyll inn din e-postadresse så sender vi deg en link for å endre passord.
+                </PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                     <StyledInput
                         label="E-post"
                         type="email"
@@ -50,7 +52,12 @@ export const ChangePassword: FC = () => {
                         onBlur={emailBlurHandler}
                         inputHasError={emailInputHasError}
                     />
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto', marginBottom: '-4vh' }}
+                        disabled={emailInputHasError}
+                    >
                         Send link
                     </SubmitButton>
                 </Form>

@@ -94,7 +94,7 @@ export const PersonalInfoGoogle: FC = () => {
                         Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
                         omtaler.
                     </PageSubtitle>
-                    <Form onSubmit={onSubmitHandler}>
+                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                         {/* display email read-only */}
                         <input disabled />
                         <StyledInput
@@ -128,7 +128,7 @@ export const PersonalInfoGoogle: FC = () => {
                         <SubmitButton
                             type="submit"
                             variant="contained"
-                            sx={{ marginTop: 'auto' }}
+                            sx={{ marginTop: 'auto', marginBottom: '-10vh' }}
                             disabled={firstNameInputHasError || lastNameInputHasError}
                         >
                             Gå videre

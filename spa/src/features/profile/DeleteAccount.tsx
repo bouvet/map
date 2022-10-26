@@ -82,8 +82,8 @@ export const DeleteAccount: FC = () => {
             </Dialog>
             <SectionContainer>
                 <PageTitle>Slett konto</PageTitle>
-                <PageSubtitle>For å slette kontoen må du skrive inn passordet ditt.</PageSubtitle>
-                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                <PageSubtitle style={{ marginTop: '1rem' }}>For å slette kontoen må du skrive inn passordet ditt.</PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                     <StyledInput
                         label="Passord"
                         type={inputType}
@@ -95,7 +95,12 @@ export const DeleteAccount: FC = () => {
                         toggleShowPassword={togglePasswordHandler}
                         showPassword={showPassword}
                     />
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={passwordInputHasError}>
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto', marginBottom: '-4vh' }}
+                        disabled={passwordInputHasError}
+                    >
                         Bekreft
                     </SubmitButton>
                 </Form>

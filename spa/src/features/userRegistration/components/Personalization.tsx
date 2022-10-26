@@ -32,12 +32,14 @@ export const Personalization: FC = () => {
                 <PageTitle>Personalisering</PageTitle>
                 <PageSubtitle>Velg dine favoritter:</PageSubtitle>
                 <FilterMenuContent>{mappedFilter}</FilterMenuContent>
-                <Form onSubmit={onSubmitHandler}>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: 'auto' }}>
                     <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
                         Velg
                     </SubmitButton>
                 </Form>
-                <LinkButton onClick={() => navigate('/register/onboarding')}>Hopp over</LinkButton>
+                <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/onboarding')}>
+                    Hopp over
+                </LinkButton>
             </SectionContainer>
         </PageContainer>
     );

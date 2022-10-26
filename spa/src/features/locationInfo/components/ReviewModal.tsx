@@ -182,13 +182,13 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                     component="label"
                                     startIcon={<AddAPhoto />}
                                 >
-                                    Last opp
                                     <input
                                         hidden
                                         accept="image/png, image/webp, image/jpg, image/jpeg"
                                         type="file"
                                         onChange={(e) => handleImageChange(e)}
                                     />
+                                    Last opp
                                 </Button>
                             )}
                             {!value ? (
