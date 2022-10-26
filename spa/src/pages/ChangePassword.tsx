@@ -1,6 +1,6 @@
-import { FC, FormEvent } from 'react';
+import { FC, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStateDispatch } from '../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { useInput } from '../hooks/useInput';
 import { validateEmail } from '../utils/emailValidator';
 import { loginServices } from '../features/login/services/login.services';
@@ -12,12 +12,16 @@ export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
+    const { user } = useStateSelector((state) => state.auth);
+    const { email } = useStateSelector((state) => state.user);
+
     const {
-        value: email,
+        value: enteredEmail,
         isValid: enteredEmailIsValid,
         hasError: emailInputHasError,
         valueChangeHandler: emailChangeHandler,
         inputBlurHandler: emailBlurHandler,
+        setInitialValue: setInitialEmail,
     } = useInput((value) => validateEmail(value));
 
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -27,12 +31,21 @@ export const ChangePassword: FC = () => {
 
         if (!enteredEmailIsValid) return;
 
-        const successStatus: boolean = await dispatch(loginServices.getToken({ email }));
+        const successStatus: boolean = await dispatch(loginServices.getToken({ email: enteredEmail }));
         if (successStatus) {
             navigate(-1);
-            console.log('sjekk', email);
+            console.log('sjekk', enteredEmail);
         }
     };
+
+    useEffect(() => {
+        if (user?.email) {
+            setInitialEmail(user.email);
+        }
+        if (email) {
+            setInitialEmail(email);
+        }
+    }, [setInitialEmail, user?.email, email]);
 
     return (
         <PageContainer>
@@ -47,7 +60,7 @@ export const ChangePassword: FC = () => {
                         label="E-post"
                         type="email"
                         errorMessage="Vennligst oppgi en gyldig e-post"
-                        value={email}
+                        value={enteredEmail}
                         onChange={emailChangeHandler}
                         onBlur={emailBlurHandler}
                         inputHasError={emailInputHasError}
@@ -55,7 +68,7 @@ export const ChangePassword: FC = () => {
                     <SubmitButton
                         type="submit"
                         variant="contained"
-                        sx={{ marginTop: 'auto', marginBottom: '-4vh' }}
+                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
                         disabled={emailInputHasError}
                     >
                         Send link
