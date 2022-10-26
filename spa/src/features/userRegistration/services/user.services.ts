@@ -7,15 +7,20 @@ import { uiActions } from '../../../store/state/ui.state';
 import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit, IUser } from '../../../utils/types.d';
 
 export const userServices = {
-    register(payload: IUserType) {
-        return async () => {
+    register(user: IUserType, authMethod: string = 'Email') {
+        return async (dispatch: AppDispatch) => {
             try {
-                const postUser = await API.post('/auth/register', payload);
-                console.log(postUser);
-                return true;
+                let url = '/auth/register';
+
+                if (authMethod === 'Google') url = '/auth/register-with-google';
+
+                const { data } = await API.post(url, user);
+
+                dispatch(authActions.userLogin(data));
+                dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
-                return false;
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             }
         };
     },
@@ -84,8 +89,8 @@ export const userServices = {
     confirmCode(payload: IConfirmCode) {
         return async (dispatch: AppDispatch) => {
             try {
-                const confirmCode = await API.post('/email/confirm', payload);
-
+                const { data } = await API.post('/email/confirm', payload);
+                console.log(data);
                 setTimeout(() => {
                     dispatch(uiActions.setShouldNavigate(true));
                 }, 500);

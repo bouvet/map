@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Services.Mappers.Authentication;
 using restapi.Contracts.Authentication;
 using restapi.Services.Authentication.Commands.AuthWithCode;
+using restapi.Services.Authentication.Commands.RegisterWithGoogle;
 using restapi.Services.Authentication.Commands.ResetPassword;
 using restapi.Services.Authentication.Common;
 
@@ -29,6 +30,25 @@ public class AuthenticationController : ApiController
     ErrorOr<AuthenticationResult> registerCommandResult = await mediator.Send(registerCommand);
 
     return registerCommandResult.Match(
+      result => Ok(authenticationMapper.MapResultToResponse(result)),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPost("register-with-google")]
+  public async Task<IActionResult> RegisterWithGoogle(RegisterWithGoogleRequest request)
+  {
+    var registerWithGoogleCommand = new RegisterWithGoogleCommand(
+      request.Email,
+      request.FirstName,
+      request.LastName,
+      request.DOB,
+      request.FavoriteCategoryIds
+    );
+
+    ErrorOr<AuthenticationResult> registerWithGoogleCommandResult = await mediator.Send(registerWithGoogleCommand);
+
+    return registerWithGoogleCommandResult.Match(
       result => Ok(authenticationMapper.MapResultToResponse(result)),
       errors => Problem(errors)
     );

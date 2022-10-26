@@ -48,6 +48,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       return userInfoResponse.Errors;
     }
 
+    var emailFromGoogle = userInfoResponse.Value.Email.ToLower();
+
     var user = await dataContext.Users.SingleOrDefaultAsync(user => user.Email.ToLower() == userInfoResponse.Value.Email, cancellationToken: cancellationToken);
 
     // User has an account and is logging in:
@@ -66,14 +68,12 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       return new AuthWithCodeResult(user, null, userToken, true, false, true);
     }
 
+    var email = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address.ToLower() == emailFromGoogle, cancellationToken: cancellationToken);
+
     // User does not have an account and not verified email with google:
 
     if (!userInfoResponse.Value.Verified_email)
     {
-      var emailFromGoogle = userInfoResponse.Value.Email.ToLower();
-
-      var email = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address.ToLower() == emailFromGoogle, cancellationToken: cancellationToken);
-
       if (email is null)
       {
         var createEmailCommand = new CreateEmailCommand(emailFromGoogle);
@@ -102,6 +102,21 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
 
     // User does not have an account but has a verified email with google:
 
+    var newUser = new User
+    {
+      Id = Guid.NewGuid(),
+      Email = emailFromGoogle,
+      FirstName = userInfoResponse.Value.Given_name,
+      LastName = userInfoResponse.Value.Family_name,
+      AuthenticationMethod = "Google"
+    };
+
+    if (email is not null)
+    {
+      var newToken = jwtGenerator.GenerateRegistrationToken(email);
+      return new AuthWithCodeResult(newUser, email.Id, newToken, false, true, true);
+    }
+
     var randomNumberGenerator = new Random();
     var randomNumber = randomNumberGenerator.Next(100000, 999999);
 
@@ -120,7 +135,7 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
     dataContext.Emails.Add(newEmail);
     await dataContext.SaveChangesAsync(cancellationToken);
 
-    return new AuthWithCodeResult(null, newEmail.Id, token, false, true, true);
+    return new AuthWithCodeResult(newUser, newEmail.Id, token, false, true, true);
   }
 
   private async Task<ErrorOr<GoogleAuthResponse>> ValidateGoogleCode(string Code, CancellationToken cancellationToken)

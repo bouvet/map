@@ -5,60 +5,34 @@ import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
 import { WrapperOnboarding } from '../../../components/Form/WrapperOnboarding';
 import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
-import { userActions } from '../../../store/state/user.state';
-import { loginServices } from '../../login/services/login.services';
 import { userServices } from '../services/user.services';
 import { HowAddLocation } from './HowAddLocation';
 import { HowAddReview } from './HowAddReview';
 
 export const Onboarding: FC = () => {
-    const { email, password, firstName, lastName, dob, favoriteCategoryIds } = useStateSelector((state) => state.user);
+    const { email, password, firstName, lastName, dob, favoriteCategoryIds, authMethod } = useStateSelector((state) => state.user);
 
     const [pageIndex, setPageIndex] = useState(0);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const handleClearData = () => {
-        dispatch(userActions.setEmail(''));
-        dispatch(userActions.setPassword(''));
-        dispatch(userActions.setFirstName(''));
-        dispatch(userActions.setLastName(''));
-        dispatch(userActions.setDob(''));
-        dispatch(userActions.setFavoriteCategoryIds([]));
-    };
-
-    const handleRedirect = () => {
-        navigate('/', { replace: true });
-        handleClearData();
-    };
-
-    // upload unless redirected from Vipps or Google signup
     const onSubmitHandler = async () => {
-        const userDetails = {
-            email,
-            password,
-            firstName,
-            lastName,
-            dob,
-            favoriteCategoryIds,
-        };
+        dispatch(
+            userServices.register(
+                {
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    dob,
+                    favoriteCategoryIds,
+                },
+                authMethod,
+            ),
+        );
 
-        const loginDetails = {
-            email,
-            password,
-        };
-
-        const successStatus: boolean = await dispatch(userServices.register(userDetails));
-
-        if (successStatus) {
-            await dispatch(loginServices.login(loginDetails));
-            dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
-        } else {
-            dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-        }
-        handleRedirect();
+        navigate('/', { replace: true });
     };
 
     const handleForwardClick = () => {
@@ -69,12 +43,15 @@ export const Onboarding: FC = () => {
         }
     };
 
-    // test
-    console.log('sjekk1', email);
-    console.log('sjekk2', password);
-    console.log('sjekk2', firstName, lastName);
-    console.log('sjekk4', dob);
-    console.log('sjekk5', favoriteCategoryIds);
+    // TODO: Make each pageIndex a standalone component. This way we could do something like this:
+
+    /*
+   
+    {tabIndex === 0 && <TipsAndTricks />}
+    {tabIndex === 1 && <Something />}
+    {tabIndex === 2 && <Something />}
+
+    */
 
     return (
         <>

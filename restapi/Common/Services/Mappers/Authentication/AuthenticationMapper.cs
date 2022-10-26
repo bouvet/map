@@ -68,6 +68,7 @@ public class AuthenticationMapper : IAuthenticationMapper
       result.User?.FirstName,
       result.User?.LastName,
       result.User?.Address,
+      result.User?.AuthenticationMethod,
       result.User?.PostalArea,
       result.User?.PostalCode,
       result.User?.PhoneNumber,

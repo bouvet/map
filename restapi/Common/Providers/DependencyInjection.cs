@@ -3,6 +3,7 @@ using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using restapi.Common.Providers.Authorization;
+using restapi.Common.Settings;
 using restapi.Data;
 
 namespace restapi.Common.Providers;
@@ -31,6 +32,12 @@ public static class DependencyInjection
 
     services.AddSingleton(Options.Create(azureProvider));
 
+    var googleAuthSettings = new GoogleAuthSettings();
+
+    configuration.Bind(GoogleAuthSettings.SectionName, googleAuthSettings);
+
+    services.AddSingleton(Options.Create(googleAuthSettings));
+
     var azureKeyVaultUri = azureProvider.KeyVaultUri;
 
     if (string.IsNullOrEmpty(azureKeyVaultUri))
@@ -40,14 +47,23 @@ public static class DependencyInjection
 
     var keyVaultEndpoint = new Uri(azureProvider.KeyVaultUri);
 
-    // configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
     azureProvider.KeyVaultSecretClient = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
 
     if (string.IsNullOrEmpty(azureProvider.DbConnectionString))
     {
       var keyVaultDbConnection = await azureProvider.KeyVaultSecretClient.GetSecretAsync(AzureProvider.KeyVaultNameForDbConnectionString);
       azureProvider.DbConnectionString = keyVaultDbConnection.Value.Value;
+    }
+
+    if (string.IsNullOrEmpty(googleAuthSettings.ClientId))
+    {
+      var clientId = await azureProvider.KeyVaultSecretClient.GetSecretAsync(GoogleAuthSettings.ClientIdKeyVaultName);
+      var clientSecret = await azureProvider.KeyVaultSecretClient.GetSecretAsync(GoogleAuthSettings.ClientSecretKeyVaultName);
+      var redirectUri = await azureProvider.KeyVaultSecretClient.GetSecretAsync(GoogleAuthSettings.RedirectUriKeyVaultName);
+
+      googleAuthSettings.ClientId = clientId.Value.Value;
+      googleAuthSettings.ClientSecret = clientSecret.Value.Value;
+      googleAuthSettings.RedirectUri = redirectUri.Value.Value;
     }
 
     services.AddDbContext<DataContext>(opt => opt.UseSqlServer(azureProvider.DbConnectionString));
