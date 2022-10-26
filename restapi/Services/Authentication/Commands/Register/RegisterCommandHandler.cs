@@ -64,28 +64,15 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       Registered = dateTimeProvider.CEST
     };
 
-    var users = await dataContext.Users.ToListAsync(cancellationToken: cancellationToken);
+    var userRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
 
-    if (users.Count == 0)
+    if (userRole is null)
     {
-      var adminRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "Administrator", cancellationToken: cancellationToken) ??
-                  new Role { Id = Guid.NewGuid(), Name = "Administrator", Created = dateTimeProvider.CEST, Creator = user };
-
-      dataContext.Roles.Add(adminRole);
-      user.Roles.Add(adminRole);
+      userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.CEST };
+      dataContext.Roles.Add(userRole);
     }
-    else
-    {
-      var userRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
 
-      if (userRole is null)
-      {
-        userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.CEST };
-        dataContext.Roles.Add(userRole);
-      }
-
-      user.Roles.Add(userRole);
-    }
+    user.Roles.Add(userRole);
 
     if (request.FavoriteCategoryIds?.Count > 0)
     {

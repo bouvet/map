@@ -17,5 +17,9 @@ export const CheckAuthState = ({ children }: { children: JSX.Element }) => {
         return <Navigate to="/register/personal-info-google" replace />;
     }
 
+    if (isAuthenticated && location.pathname === '/auth') {
+        return <Navigate to="/" replace />;
+    }
+
     return children;
 };

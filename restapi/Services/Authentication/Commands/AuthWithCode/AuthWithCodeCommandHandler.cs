@@ -58,6 +58,22 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
     {
       var userToken = jwtGenerator.GenerateUserToken(user);
 
+      if (user.AccessToken == "Admin")
+      {
+        var adminRole = await dataContext.Roles.SingleOrDefaultAsync(role => role.Name == "Administrator", cancellationToken: cancellationToken);
+        if (adminRole is null)
+        {
+          adminRole = new Role
+          {
+            Name = "Administrator",
+            Created = dateTimeProvider.CEST,
+            Creator = user
+          };
+        }
+
+        user.Roles.Add(adminRole);
+      }
+
       user.AccessToken = authResponse.Value.Access_token;
       user.RefreshToken = authResponse.Value.Refresh_token;
       user.AuthenticationMethod = "Google";
