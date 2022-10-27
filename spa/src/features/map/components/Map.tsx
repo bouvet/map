@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState, FC, MutableRefObject } from 'react';
-import { Map as ReactMap } from 'react-map-gl';
+import { useCallback, useEffect, useRef, useState, FC, MutableRefObject, Ref } from 'react';
+import { Map as ReactMap, MapRef } from 'react-map-gl';
 import { CircularProgress } from '@mui/material';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -51,7 +51,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         };
     }, [currentUserLocation, dispatch, hasUserLocation]);
 
-    const mapRef: MutableRefObject<null> = useRef(null);
+    const mapRef: Ref<MapRef> = useRef(null);
 
     const calculateCameraView = () => {
         // @ts-ignore
@@ -60,21 +60,21 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const onMapLoad = useCallback(
         (e: any) => {
-            if (mapRef.current) {
-                // @ts-ignore
+            if (mapRef.current !== null) {
                 mapRef.current.on('move', () => {
                     setViewState(e.viewState);
                     calculateCameraView();
                 });
-                // @ts-ignore
+
                 mapRef.current.on('moveend', () => {
-                    // @ts-ignore
-                    const currentCenter = mapRef.current.getCenter();
-                    const currentCenterObj: ILatLong = {
-                        long: currentCenter.lng,
-                        lat: currentCenter.lat,
-                    };
-                    dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
+                    if (mapRef.current) {
+                        const currentCenter = mapRef.current.getCenter();
+                        const currentCenterObj: ILatLong = {
+                            long: currentCenter.lng,
+                            lat: currentCenter.lat,
+                        };
+                        dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
+                    }
                 });
             }
         },
@@ -94,48 +94,49 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     return (
         <>
-            {!mapRef && (
+            {/* dont use ref */}
+            {/* {!mapRef && (
                 <PageContainer>
                     <CircularProgress color="primary" size={80} />
                 </PageContainer>
             )}
-            {mapRef && (
-                <ReactMap
-                    {...viewState}
-                    ref={mapRef}
-                    reuseMaps
-                    onLoad={onMapLoad}
-                    mapStyle="mapbox://styles/mapbox/streets-v11"
-                    mapboxAccessToken={MAPBOX_TOKEN}
-                >
-                    {!addingLocation &&
-                        selectedFilterCategory &&
-                        filteredLocations
-                            .filter((location) => location.properties.status === 'Approved')
-                            .map((location) => (
-                                <CustomMarker
-                                    key={location.id}
-                                    coordinates={location.geometry.coordinates}
-                                    onClickHandler={onClickHandler}
-                                    markerLocation={location}
-                                    selectedMarker={selectedMarker}
-                                />
-                            ))}
-                    {!addingLocation &&
-                        !selectedFilterCategory &&
-                        locations
-                            .filter((location) => location.properties.status === 'Approved')
-                            .map((location) => (
-                                <CustomMarker
-                                    key={location.id}
-                                    coordinates={location.geometry.coordinates}
-                                    onClickHandler={onClickHandler}
-                                    markerLocation={location}
-                                    selectedMarker={selectedMarker}
-                                />
-                            ))}
-                </ReactMap>
-            )}
+            {mapRef && ( */}
+            <ReactMap
+                {...viewState}
+                ref={mapRef}
+                reuseMaps
+                onLoad={onMapLoad}
+                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapboxAccessToken={MAPBOX_TOKEN}
+            >
+                {!addingLocation &&
+                    selectedFilterCategory &&
+                    filteredLocations
+                        .filter((location) => location.properties.status === 'Approved')
+                        .map((location) => (
+                            <CustomMarker
+                                key={location.id}
+                                coordinates={location.geometry.coordinates}
+                                onClickHandler={onClickHandler}
+                                markerLocation={location}
+                                selectedMarker={selectedMarker}
+                            />
+                        ))}
+                {!addingLocation &&
+                    !selectedFilterCategory &&
+                    locations
+                        .filter((location) => location.properties.status === 'Approved')
+                        .map((location) => (
+                            <CustomMarker
+                                key={location.id}
+                                coordinates={location.geometry.coordinates}
+                                onClickHandler={onClickHandler}
+                                markerLocation={location}
+                                selectedMarker={selectedMarker}
+                            />
+                        ))}
+            </ReactMap>
+            {/* )} */}
         </>
     );
 };

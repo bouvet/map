@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useStateSelector } from '../hooks/useRedux';
 import { DivideLine, GoogleLoginLink, LoginForm, VippsLoginLink } from '../features/login';
-import { PageContainer, SectionContainer, PageTitle, PageSubtitle, BackButton } from '../components/UI';
+import { SectionContainer, PageTitle, PageSubtitle, BackButton } from '../components/UI';
 
 export const Login: FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
@@ -10,7 +10,9 @@ export const Login: FC = () => {
     const navigate = useNavigate();
 
     if (isAuthenticated) {
-        return <Navigate replace to="/" />;
+        return <Navigate to="/" replace />;
+        // navigate('/', { replace: true });
+        // window.location.reload();
     }
 
     return (

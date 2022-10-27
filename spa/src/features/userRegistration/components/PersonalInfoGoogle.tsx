@@ -77,6 +77,8 @@ export const PersonalInfoGoogle: FC = () => {
         nbNO,
     );
 
+    // TO-DO: pre-fill name inputs from Google account?
+
     useEffect(() => {
         if (firstName) {
             setInitialFirstName(firstName);
@@ -91,15 +93,14 @@ export const PersonalInfoGoogle: FC = () => {
         <>
             <PageContainer>
                 <DialogButton />
-                <SectionContainer>
+                <SectionContainer style={{ height: '100%' }}>
                     <PageTitle>Personlig informasjon</PageTitle>
-                    <PageSubtitle>
+                    <PageSubtitle style={{ marginTop: '1rem' }}>
                         Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
                         omtaler.
                     </PageSubtitle>
                     <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
-                        {/* display email read-only */}
-                        <StyledInput label="Email" placeholder={email} disabled />
+                        <StyledInput label="E-post*" placeholder={email} disabled />
                         <StyledInput
                             label="Fornavn*"
                             errorMessage="Vennligst fyll inn fornavn"
@@ -131,7 +132,7 @@ export const PersonalInfoGoogle: FC = () => {
                         <SubmitButton
                             type="submit"
                             variant="contained"
-                            sx={{ marginTop: 'auto', marginBottom: '-10vh' }}
+                            sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
                             disabled={firstNameInputHasError || lastNameInputHasError}
                         >
                             Gå videre

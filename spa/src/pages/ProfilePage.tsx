@@ -75,7 +75,6 @@ export const ProfilePage: FC = () => {
     return (
         <>
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
-
             <ProfileHeader handleClick={ToggleImageModal} />
             <Form onSubmit={onSubmitHandler}>
                 {inputs}

@@ -108,11 +108,11 @@ export const CreatePassword: FC = () => {
                             showPassword={showConfirmPassword}
                         />
                         {/* add button disabled */}
-                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-10vh' }}>
+                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
                             Gå videre
                         </SubmitButton>
                     </Form>
-                    <LinkButton sx={{ width: 150 }} onClick={() => navigate('/register/personal-info')}>
+                    <LinkButton sx={{ marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/personal-info')}>
                         Gå tilbake
                     </LinkButton>
                 </SectionContainer>

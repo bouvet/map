@@ -8,6 +8,8 @@ import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
 import { validateEmail } from '../../utils/emailValidator';
+import { loginServices } from '../login/services/login.services';
+import { userServices } from '../userRegistration/services/user.services';
 
 export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();
@@ -29,6 +31,8 @@ export const ChangeEmail: FC = () => {
         emailBlurHandler();
 
         if (!enteredEmailIsValid) return;
+
+        // dispatch(userServices.editInfo({ email }));
 
         dispatch(snackbarActions.setNotify({ message: 'E-posten er endret', severity: 'success' }));
         navigate('/profile');
