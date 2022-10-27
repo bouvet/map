@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useMemo, useState } from 'react';
+import { FC, FormEvent, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/nb';
@@ -6,14 +6,14 @@ import { Form } from '../features/profile/Form';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps, ProfileLink } from '../features/profile/Input';
 import { ProfileHeader } from '../features/profile/ProfileHeader';
-import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { userServices } from '../features/userRegistration/services/user.services';
-import { snackbarActions } from '../store/state/snackbar.state';
-import { CenterFlex } from '../components/Form/Input';
-import { PageContainer, SectionContainer, SubmitButton } from '../components/UI';
+import { useStateSelector } from '../hooks/useRedux';
+// import { userServices } from '../features/userRegistration/services/user.services';
+// import { snackbarActions } from '../store/state/snackbar.state';
+// import { CenterFlex } from '../components/Form/Input';
+import { SubmitButton } from '../components/UI';
 
 export const ProfilePage: FC = () => {
-    const dispatch = useStateDispatch();
+    // const dispatch = useStateDispatch();
 
     const { user } = useStateSelector((state) => state.auth);
 

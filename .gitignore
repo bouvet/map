@@ -7,3 +7,6 @@ restapi/Properties/ServiceDependencies/optimus-verden-venter - Zip Deploy/*
 restapi/Properties/ServiceDependencies/local/secrets2.arm.json
 restapi/Properties/serviceDependencies.local.json
 restapi/Properties/ServiceDependencies/local/secrets1.arm.json
+
+spa/.git
+spa/.github

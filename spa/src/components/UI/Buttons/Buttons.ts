@@ -2,9 +2,9 @@ import { styled } from '@mui/material/styles';
 import MuiButton from '@mui/material/Button';
 import { MyTheme } from '../../../styles/global';
 
-interface ButtonStylingProps {
-    backgroundColor?: string;
-}
+// interface ButtonStylingProps {
+//     backgroundColor?: string;
+// }
 
 // @ts-ignore
 export const Button = styled(MuiButton, { shouldForwardProp: (props) => props !== 'bgColor' })(({ bgColor }) => ({
