@@ -2,7 +2,17 @@ import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { App } from '../App';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
-import { AdminPanel, ChangePassword, Home, LocationRegistration, Login, ProfilePage, Register, ResetPassword } from '../pages';
+import {
+    AdminPanel,
+    AuthenticationSpinner,
+    ChangePassword,
+    Home,
+    LocationRegistration,
+    Login,
+    ProfilePage,
+    Register,
+    ResetPassword,
+} from '../pages';
 import {
     CreatePassword,
     EmailConfirmation,
@@ -30,6 +40,8 @@ export const AppRoutes: FC = () => (
 
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="change-password" element={<ChangePassword />} />
+
+            <Route path="auth" element={<AuthenticationSpinner />} />
 
             <Route path="register" element={<Register />}>
                 <Route path="email" element={<EmailInput />} />

@@ -6,6 +6,7 @@ const initialState = {
     firstName: '',
     lastName: '',
     dob: '',
+    authMethod: '',
     favoriteCategoryIds: [] as string[],
 };
 
@@ -27,6 +28,9 @@ const userState = createSlice({
         },
         setDob(state, action: PayloadAction<string>) {
             state.dob = action.payload;
+        },
+        setAuthMethod(state, action: PayloadAction<string>) {
+            state.authMethod = action.payload;
         },
         setFavoriteCategoryIds(state, action: PayloadAction<string[]>) {
             state.favoriteCategoryIds = action.payload;

@@ -19,7 +19,7 @@ import { useInput } from '../../../hooks/useInput';
 import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 
 export const PersonalInfoGoogle: FC = () => {
-    const { firstName, lastName, dob } = useStateSelector((state) => state.user);
+    const { email, firstName, lastName, dob } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
@@ -51,19 +51,21 @@ export const PersonalInfoGoogle: FC = () => {
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(dob);
         if (!dob) {
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
-        } else {
-            firstNameBlurHandler();
-
-            if (!enteredFirstNameIsValid || !enteredLastNameIsValid) return;
-            dispatch(userActions.setFirstName(enteredFirstName));
-            dispatch(userActions.setLastName(enteredLastName));
-
-            navigate('/register/personalization');
-            console.log('Name: ', firstName, lastName);
-            console.log('Date of birth: ', moment(dob).format('L'));
+            return;
         }
+        firstNameBlurHandler();
+        lastNameBlurHandler();
+
+        if (!enteredFirstNameIsValid || !enteredLastNameIsValid) return;
+        dispatch(userActions.setFirstName(enteredFirstName));
+        dispatch(userActions.setLastName(enteredLastName));
+
+        navigate('/register/personalization');
+        console.log('Name: ', firstName, lastName);
+        console.log('Date of birth: ', moment(dob).format('L'));
     };
 
     const theme = createTheme(
@@ -82,7 +84,8 @@ export const PersonalInfoGoogle: FC = () => {
         if (lastName) {
             setInitialLastName(lastName);
         }
-    }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
@@ -96,7 +99,7 @@ export const PersonalInfoGoogle: FC = () => {
                     </PageSubtitle>
                     <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                         {/* display email read-only */}
-                        <input disabled />
+                        <StyledInput label="Email" placeholder={email} disabled />
                         <StyledInput
                             label="Fornavn*"
                             errorMessage="Vennligst fyll inn fornavn"

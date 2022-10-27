@@ -10,6 +10,7 @@ public record AuthenticateWithCodeResponse(
   string? FirstName,
   string? LastName,
   string? Address,
+  string? AuthenticationMethod,
   string? PostalArea,
   int? PostalCode,
   int? PhoneNumber,
