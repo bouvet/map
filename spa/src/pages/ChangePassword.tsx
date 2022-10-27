@@ -6,7 +6,7 @@ import { validateEmail } from '../utils/emailValidator';
 import { loginServices } from '../features/login/services/login.services';
 import { Form } from '../components/Form/Form';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { BackButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
+import { BackButton, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -48,7 +48,7 @@ export const ChangePassword: FC = () => {
     }, [setInitialEmail, user?.email, email]);
 
     return (
-        <PageContainer>
+        <SectionContainer>
             <BackButton onClick={() => navigate(-1)} />
             <SectionContainer>
                 <PageTitle>Endre passord</PageTitle>
@@ -75,6 +75,6 @@ export const ChangePassword: FC = () => {
                     </SubmitButton>
                 </Form>
             </SectionContainer>
-        </PageContainer>
+        </SectionContainer>
     );
 };

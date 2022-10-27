@@ -5,7 +5,7 @@ export const PageTitle = styled.h1`
     width: 100%;
     color: ${MyTheme.colors.darkBase};
     font-size: 2rem;
-    padding-left: 7rem;
+    padding-left: 3.5rem;
 
     @media ${device.mobileM} {
         margin-top: 3rem;

@@ -9,8 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../hooks/useInput';
-import { useStateDispatch } from '../../hooks/useRedux';
-import { userServices } from '../userRegistration/services/user.services';
+// import { useStateDispatch } from '../../hooks/useRedux';
+// import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
 

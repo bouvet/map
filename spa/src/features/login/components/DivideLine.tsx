@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 
 const Line = styled.hr`
     background-color: #b8b8b8;
-    width: 80%;
+    width: 90%;
     height: 2px;
     border: none;
     position: absolute;
