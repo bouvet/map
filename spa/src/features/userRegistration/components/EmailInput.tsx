@@ -14,6 +14,7 @@ import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton,
 
 const ListWrapper = styled.div`
     padding: 10px;
+    margin-bottom: 20px;
 `;
 
 export const EmailInput: FC = () => {
@@ -60,7 +61,7 @@ export const EmailInput: FC = () => {
                         </ul>
                     </ListWrapper>
                     <PageSubtitle>Fyll inn din e-postadresse for å motta en bekreftelseskode.</PageSubtitle>
-                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                         <StyledInput
                             label="E-post*"
                             type="email"
@@ -70,7 +71,12 @@ export const EmailInput: FC = () => {
                             onBlur={emailBlurHandler}
                             inputHasError={emailInputHasError}
                         />
-                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                        <SubmitButton
+                            type="submit"
+                            variant="contained"
+                            sx={{ marginTop: 'auto', marginBottom: '-10vh' }}
+                            disabled={emailInputHasError}
+                        >
                             Send kode
                         </SubmitButton>
                     </Form>

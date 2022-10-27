@@ -89,7 +89,7 @@ export const ProfilePage: FC = () => {
                     {/* add functionality + check if login from email, Google or Vipps */}
                     <ProfileLink to="/profile/delete-account">Slett konto</ProfileLink>
                 </span>
-                <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
                     Oppdater profil
                 </SubmitButton>
             </Form>

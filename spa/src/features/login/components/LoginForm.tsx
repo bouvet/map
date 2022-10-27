@@ -12,6 +12,7 @@ import { validateEmail } from '../../../utils/emailValidator';
 import { LinkButton, SubmitButton } from '../../../components/UI/Buttons';
 import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
 import { Text } from '../../../components/UI';
+import { userActions } from '../../../store/state/user.state';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -67,6 +68,7 @@ export const LoginForm: FC = () => {
                 password: enteredPassword,
             }),
         );
+        dispatch(userActions.setEmail(enteredEmail));
     };
 
     return (
@@ -97,7 +99,10 @@ export const LoginForm: FC = () => {
                     Husk meg
                     {/* {rememberStatus} */}
                 </div>
-                <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/change-password')}>
+                <LinkButton
+                    sx={{ width: 140, margin: 0, float: 'left' }}
+                    onClick={() => navigate('/change-password', { state: { enteredEmail } })}
+                >
                     Glemt passord
                 </LinkButton>
             </FlexRowContainer>

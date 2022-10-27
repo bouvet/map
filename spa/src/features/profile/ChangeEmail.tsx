@@ -42,7 +42,7 @@ export const ChangeEmail: FC = () => {
                 <PageTitle>Endre e-post</PageTitle>
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
                     <StyledInput
-                        label="E-post"
+                        label="Ny e-post"
                         type="email"
                         errorMessage="Vennligst oppgi en gyldig e-post"
                         value={email}
@@ -50,7 +50,12 @@ export const ChangeEmail: FC = () => {
                         onBlur={emailBlurHandler}
                         inputHasError={emailInputHasError}
                     />
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
+                        disabled={emailInputHasError}
+                    >
                         Endre e-post
                     </SubmitButton>
                 </Form>
