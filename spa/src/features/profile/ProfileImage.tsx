@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { FC, MouseEventHandler } from 'react';
 import styled from 'styled-components';
-import { GoogleIcon } from '../../components/Navigation/Buttons';
+import { GoogleIcon } from '../../components/Navigation/GoogleIcon';
 import { MyTheme } from '../../styles/global';
 
 export const ProfilePictureWrapper = styled.div`

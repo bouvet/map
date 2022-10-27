@@ -8,7 +8,8 @@ import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewType } from '../../../utils/types.d';
 import { Img } from '../../locationRegistration/components/ImageUploader';
-import { CloseButton } from '../../../components/UI';
+import { CloseButton, SubmitButton } from '../../../components/UI';
+import { MyTheme } from '../../../styles/global';
 
 interface ReviewProps {
     open: boolean;
@@ -26,7 +27,7 @@ const AddReview = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     borderRadius: 3,
-    p: 7,
+    p: 5,
     pt: 5,
 };
 
@@ -151,36 +152,53 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 <>
                                     <Img src={imageUrl} alt="blobb" />
                                     <ButtonWrapper>
-                                        <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
-                                        <Button size="large" component="label" startIcon={<Autorenew />}>
+                                        <Button
+                                            sx={{ textTransform: 'none', color: 'red' }}
+                                            size="large"
+                                            onClick={removeImage}
+                                            startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                                        >
+                                            Slett
+                                        </Button>
+                                        <Button
+                                            sx={{ textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                                            size="large"
+                                            component="label"
+                                            startIcon={<Autorenew />}
+                                        >
                                             <input
                                                 hidden
                                                 accept="image/png, image/webp, image/jpg, image/jpeg"
                                                 type="file"
                                                 onChange={(e) => handleImageChange(e)}
                                             />
+                                            Bytt
                                         </Button>
                                     </ButtonWrapper>
                                 </>
                             ) : (
-                                <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
-                                    Last opp
+                                <Button
+                                    sx={{ padding: 2, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                                    component="label"
+                                    startIcon={<AddAPhoto />}
+                                >
                                     <input
                                         hidden
                                         accept="image/png, image/webp, image/jpg, image/jpeg"
                                         type="file"
                                         onChange={(e) => handleImageChange(e)}
                                     />
+                                    Last opp
                                 </Button>
                             )}
                             {!value ? (
-                                <Button disabled variant="contained">
+                                <SubmitButton disabled variant="contained" sx={{ width: 230 }}>
                                     Send inn
-                                </Button>
+                                </SubmitButton>
                             ) : (
-                                <Button type="submit" variant="contained">
+                                <SubmitButton type="submit" variant="contained" sx={{ width: 230 }}>
                                     Send inn
-                                </Button>
+                                </SubmitButton>
                             )}
                         </Stack>
                         <CloseButton onClick={handleCloseAddReview} />

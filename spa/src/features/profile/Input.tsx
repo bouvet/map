@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { GoogleIcon } from '../../components/Navigation/Buttons';
+import { GoogleIcon } from '../../components/Navigation/GoogleIcon';
 import { MyTheme } from '../../styles/global';
 
 const Line = styled.hr`

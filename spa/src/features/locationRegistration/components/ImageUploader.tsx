@@ -6,6 +6,7 @@ import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { registrationActions } from '../../../store/state/registration.state';
+import { MyTheme } from '../../../styles/global';
 
 const ImageUploaderWrapper = styled.div`
     width: 100%;
@@ -57,19 +58,36 @@ export const ImageUploader: FC = () => {
                 <>
                     <Img src={imageUrl} alt="blobb" />
                     <ButtonWrapper>
-                        <Button size="large" onClick={removeImage} startIcon={<DeleteIcon style={{ color: 'red' }} />} />
-                        <Button size="large" component="label" startIcon={<Autorenew />}>
+                        <Button
+                            sx={{ textTransform: 'none', color: 'red' }}
+                            size="large"
+                            onClick={removeImage}
+                            startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                        >
+                            Slett
+                        </Button>
+                        <Button
+                            sx={{ textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                            size="large"
+                            component="label"
+                            startIcon={<Autorenew style={{ color: `${MyTheme.colors.accent}` }} />}
+                        >
                             <input
                                 hidden
                                 accept="image/png, image/jpeg, image/webp, image/jpg"
                                 type="file"
                                 onChange={(e) => handleImageChange(e)}
                             />
+                            Bytt
                         </Button>
                     </ButtonWrapper>
                 </>
             ) : (
-                <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                <Button
+                    sx={{ padding: 7, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                    component="label"
+                    startIcon={<AddAPhoto />}
+                >
                     <input
                         hidden
                         accept="image/png, image/jpeg, image/webp, image/jpg"
