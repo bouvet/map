@@ -15,10 +15,11 @@ var app = builder.Build();
   app.UseExceptionHandler("/error");
   app.UseResponseCompression();
   app.UseHttpsRedirection();
+  app.UseRouting();
+  // app.MapGet("/auth", () => Results.Redirect("/"));
+  app.UseStaticFiles();
   app.UseAuthentication();
   app.UseAuthorization();
   app.MapControllers();
-  app.UseDefaultFiles();
-  app.UseStaticFiles();
   app.Run();
 }

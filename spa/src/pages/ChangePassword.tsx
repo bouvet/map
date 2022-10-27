@@ -6,7 +6,7 @@ import { validateEmail } from '../utils/emailValidator';
 import { loginServices } from '../features/login/services/login.services';
 import { Form } from '../components/Form/Form';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { BackButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
+import { BackButton, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -35,26 +35,24 @@ export const ChangePassword: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <SectionContainer>
             <BackButton onClick={() => navigate(-1)} />
-            <SectionContainer>
-                <PageTitle>Endre passord</PageTitle>
-                <PageSubtitle>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</PageSubtitle>
-                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
-                    <StyledInput
-                        label="E-post"
-                        type="email"
-                        errorMessage="Vennligst oppgi en gyldig e-post"
-                        value={email}
-                        onChange={emailChangeHandler}
-                        onBlur={emailBlurHandler}
-                        inputHasError={emailInputHasError}
-                    />
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
-                        Send link
-                    </SubmitButton>
-                </Form>
-            </SectionContainer>
-        </PageContainer>
+            <PageTitle>Endre passord</PageTitle>
+            <PageSubtitle>Fyll inn din e-postadresse så sender vi deg en link for å endre passord.</PageSubtitle>
+            <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                <StyledInput
+                    label="E-post"
+                    type="email"
+                    errorMessage="Vennligst oppgi en gyldig e-post"
+                    value={email}
+                    onChange={emailChangeHandler}
+                    onBlur={emailBlurHandler}
+                    inputHasError={emailInputHasError}
+                />
+                <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={emailInputHasError}>
+                    Send link
+                </SubmitButton>
+            </Form>
+        </SectionContainer>
     );
 };
