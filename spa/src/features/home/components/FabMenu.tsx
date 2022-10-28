@@ -41,11 +41,7 @@ export const FabMenu: FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
     const handleLogOut = () => dispatch(authActions.logOut());
 
-    const { user } = useStateSelector((state) => state.auth);
-    let userRole = '';
-    user?.roles?.forEach((x) => {
-        userRole = x.name;
-    });
+    const { isAdmin } = useStateSelector((state) => state.auth);
 
     // there's probably a better way to do it
     // ul, li,
@@ -56,7 +52,7 @@ export const FabMenu: FC = () => {
         <>
             {(() => {
                 if (isAuthenticated) {
-                    if (userRole === 'Administrator') {
+                    if (isAdmin) {
                         return (
                             <>
                                 <Fab

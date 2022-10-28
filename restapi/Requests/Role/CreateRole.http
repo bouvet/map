@@ -3,5 +3,5 @@ Content-Type: application/json
 Authorization: Bearer {{admintoken}}
 
 {
-  "name": "Test"
+  "name": "Administrator"
 }
