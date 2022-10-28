@@ -81,7 +81,7 @@ public class UsersController : ApiController
     );
   }
 
-  [Authorize(Roles = "Administrator")]
+  // [Authorize(Roles = "Administrator")]
   [HttpPost("role")]
   public async Task<IActionResult> AddUserRole(AddUserRoleRequest request)
   {

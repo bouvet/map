@@ -26,10 +26,15 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
 
   public async Task<ErrorOr<CreateEmailResult>> Handle(CreateEmailCommand request, CancellationToken cancellationToken)
   {
-    var alreadyExists = await dataContext.Emails.AnyAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
+    var emailInDb = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
     var userExists = await dataContext.Users.AnyAsync(user => user.Email.ToLower() == request.Email, cancellationToken);
 
-    if (alreadyExists)
+    if (emailInDb is not null && emailInDb.Confirmed)
+    {
+      // TODO: return something
+    }
+
+    if (emailInDb is not null)
     {
       return Errors.EmailService.AlreadyRegistered;
     }
