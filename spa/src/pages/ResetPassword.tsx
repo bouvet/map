@@ -118,7 +118,7 @@ export const ResetPassword: FC = () => {
                         showPassword={showConfirmPassword}
                     />
                     {/* add button disabled */}
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
                         Endre passord
                     </SubmitButton>
                 </Form>

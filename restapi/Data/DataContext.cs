@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PrivateImageCloud.Api.Common.Persistence;
 using restapi.Entities;
 
 namespace restapi.Data;
@@ -45,6 +46,8 @@ public class DataContext : DbContext
 
     modelBuilder.Entity<Image>().HasOne(image => image.Uploader);
     modelBuilder.Entity<Image>().Navigation(image => image.Uploader).AutoInclude();
+
+    modelBuilder.Seed();
   }
 
   public DbSet<Location> Locations => Set<Location>();

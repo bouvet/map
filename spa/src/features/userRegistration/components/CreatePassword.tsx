@@ -84,7 +84,7 @@ export const CreatePassword: FC = () => {
                 <SectionContainer>
                     <PageTitle className="registration">Passord</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
-                    <Form onSubmit={onSubmitHandler}>
+                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                         <StyledInput
                             label="Passord*"
                             type={inputTypeCreate}
@@ -108,11 +108,13 @@ export const CreatePassword: FC = () => {
                             showPassword={showConfirmPassword}
                         />
                         {/* add button disabled */}
-                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-10vh' }}>
                             Gå videre
                         </SubmitButton>
                     </Form>
-                    <LinkButton onClick={() => navigate('/register/personal-info')}>Gå tilbake</LinkButton>
+                    <LinkButton sx={{ width: 150 }} onClick={() => navigate('/register/personal-info')}>
+                        Gå tilbake
+                    </LinkButton>
                 </SectionContainer>
             </PageContainer>
         </>

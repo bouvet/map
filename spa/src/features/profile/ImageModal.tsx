@@ -1,12 +1,12 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { ProfilePictureProps } from './ProfileImage';
-import { Button as UploadButton } from './Buttons';
 import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
+import { SubmitButton } from '../../components/UI';
 
 const BackDrop = styled.div`
     width: 100%;
@@ -89,13 +89,24 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
                     {image ? (
                         <>
                             <ProfilePicture imageUrl={imageUrl} />
-                            <IconButton onClick={removeImage}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <UploadButton>Bekreft</UploadButton>
+                            <Button
+                                sx={{ textTransform: 'none', color: 'red' }}
+                                size="large"
+                                onClick={removeImage}
+                                startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                            >
+                                Slett
+                            </Button>
+                            <SubmitButton type="submit" variant="contained" sx={{ width: 230 }}>
+                                Bekreft
+                            </SubmitButton>
                         </>
                     ) : (
-                        <Button variant="outlined" component="label" startIcon={<AddAPhoto />}>
+                        <Button
+                            sx={{ padding: 2, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                            component="label"
+                            startIcon={<AddAPhoto />}
+                        >
                             <input
                                 hidden
                                 accept="image/png, image/jpeg, image/webp, image/jpg"

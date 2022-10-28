@@ -9,8 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../hooks/useInput';
-import { useStateDispatch } from '../../hooks/useRedux';
-import { userServices } from '../userRegistration/services/user.services';
+// import { useStateDispatch } from '../../hooks/useRedux';
+// import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
 
@@ -19,9 +19,6 @@ export const DeleteAccount: FC = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
-    // const handleClickOpen = () => setOpen(true);
-    // const handleConfirm = () => navigate('/login'); // change, call dialog before onsubmit
-    // @ts-ignore
     const handleConfirm = () => deleteAccount();
     const handleCloseDialog = () => setOpen(false);
 
@@ -62,7 +59,8 @@ export const DeleteAccount: FC = () => {
         // check if password is correct
         // dispatch(userServices.deleteAccount());
         console.log('Konto er slettet');
-        navigate('/');
+        setOpen(false);
+        // navigate('/');
     };
 
     return (
@@ -82,8 +80,8 @@ export const DeleteAccount: FC = () => {
             </Dialog>
             <SectionContainer>
                 <PageTitle>Slett konto</PageTitle>
-                <PageSubtitle>For å slette kontoen må du skrive inn passordet ditt.</PageSubtitle>
-                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
+                <PageSubtitle style={{ marginTop: '1rem' }}>For å slette kontoen må du skrive inn passordet ditt.</PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                     <StyledInput
                         label="Passord"
                         type={inputType}
@@ -95,7 +93,12 @@ export const DeleteAccount: FC = () => {
                         toggleShowPassword={togglePasswordHandler}
                         showPassword={showPassword}
                     />
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }} disabled={passwordInputHasError}>
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
+                        disabled={passwordInputHasError}
+                    >
                         Bekreft
                     </SubmitButton>
                 </Form>

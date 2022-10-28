@@ -100,7 +100,7 @@ export const PersonalInfo: FC = () => {
                         Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
                         omtaler.
                     </PageSubtitle>
-                    <Form onSubmit={onSubmitHandler}>
+                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                         <StyledInput
                             label="Fornavn*"
                             errorMessage="Vennligst fyll inn fornavn"
@@ -132,7 +132,7 @@ export const PersonalInfo: FC = () => {
                         <SubmitButton
                             type="submit"
                             variant="contained"
-                            sx={{ marginTop: 'auto' }}
+                            sx={{ marginTop: 'auto', marginBottom: '-10vh' }}
                             disabled={firstNameInputHasError || lastNameInputHasError}
                         >
                             Gå videre

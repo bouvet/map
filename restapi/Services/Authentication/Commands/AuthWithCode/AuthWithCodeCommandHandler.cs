@@ -58,6 +58,20 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
     {
       var userToken = jwtGenerator.GenerateUserToken(user);
 
+      if (user.AccessToken == "Admin")
+      {
+        var adminRole = await dataContext.Roles.SingleOrDefaultAsync(role => role.Name == "Administrator", cancellationToken: cancellationToken);
+        if (adminRole is not null)
+        {
+          user.Roles.Add(adminRole);
+        }
+        var userRole = await dataContext.Roles.SingleOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
+        if (userRole is not null)
+        {
+          user.Roles.Add(userRole);
+        }
+      }
+
       user.AccessToken = authResponse.Value.Access_token;
       user.RefreshToken = authResponse.Value.Refresh_token;
       user.AuthenticationMethod = "Google";
@@ -85,22 +99,41 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
           return createEmailResult.Errors;
         }
 
-        return new AuthWithCodeResult(null, createEmailResult.Value.Id, createEmailResult.Value.Token, false, true, false);
+        var emailNotVerifiedUser = new User
+        {
+          Id = Guid.NewGuid(),
+          Email = emailFromGoogle,
+          FirstName = userInfoResponse.Value.Given_name,
+          LastName = userInfoResponse.Value.Family_name
+        };
+
+        return new AuthWithCodeResult(emailNotVerifiedUser, createEmailResult.Value.Id, createEmailResult.Value.Token, false, true, false);
       }
 
-      var resendCodeCommand = new ResendCodeCommand(email.Id);
-
-      ErrorOr<CreateEmailResult> resendCodeResult = await mediator.Send(resendCodeCommand, cancellationToken);
-
-      if (resendCodeResult.IsError)
+      if (!email.Confirmed)
       {
-        return resendCodeResult.Errors;
-      }
+        var resendCodeCommand = new ResendCodeCommand(email.Id);
 
-      return new AuthWithCodeResult(null, resendCodeResult.Value.Id, resendCodeResult.Value.Token, false, true, false);
+        ErrorOr<CreateEmailResult> resendCodeResult = await mediator.Send(resendCodeCommand, cancellationToken);
+
+        if (resendCodeResult.IsError)
+        {
+          return resendCodeResult.Errors;
+        }
+
+        var emailVerifiedUser = new User
+        {
+          Id = Guid.NewGuid(),
+          Email = emailFromGoogle,
+          FirstName = userInfoResponse.Value.Given_name,
+          LastName = userInfoResponse.Value.Family_name
+        };
+
+        return new AuthWithCodeResult(emailVerifiedUser, resendCodeResult.Value.Id, resendCodeResult.Value.Token, false, true, false);
+      }
     }
 
-    // User does not have an account but has a verified email with google:
+    // User does not have an account but has a verified email with us or google:
 
     var newUser = new User
     {

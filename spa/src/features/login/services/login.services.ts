@@ -23,12 +23,12 @@ export const loginServices = {
                 if (invalidCreds) {
                     dispatch(snackbarActions.setNotify({ message: 'Feil epost eller passord', severity: 'error', autohideDuration: null }));
                     dispatch(authActions.setLoading(false));
+                } else {
+                    console.error('error', error.response.data.errors['Authentication.InvalidCredentials'][0]);
+
+                    dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                    dispatch(authActions.setLoading(false));
                 }
-
-                console.error('error', error.response.data.errors['Authentication.InvalidCredentials'][0]);
-
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-                dispatch(authActions.setLoading(false));
             }
         };
     },

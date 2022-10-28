@@ -2,8 +2,8 @@ POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin@email.com",
-  "password": "12345qwerty"
+  "email": "verden.venter.app@gmail.com",
+  "password": "testtest"
 }
 
 ###

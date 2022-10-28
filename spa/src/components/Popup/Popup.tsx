@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
 import { MyTheme } from '../../styles/global';
-import { RoundButton } from '../Navigation/Buttons';
 import { StarRating } from '../StarRating/StarRating';
+import { Fab } from '../UI';
 
 interface PopupContentProps {
     name: string;
@@ -25,7 +25,7 @@ export const PopupCard = styled.div`
     bottom: 10px;
     right: 4%;
     border-radius: 10px;
-    z-index: 10;
+    z-index: 1000;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 `;
 
@@ -48,16 +48,21 @@ const PopupImage = styled.div<PopUpImageProp>`
 
 const ExpandLink: FC = () => <span className="material-symbols-outlined">open_in_full</span>;
 
-const ExpandBtn = styled(RoundButton)`
+const ExpandBtn = styled(Fab)`
     position: absolute;
     height: 40px;
     width: 40px;
     top: 10px;
     right: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    background-color: ${MyTheme.colors.lightBase};
+    color: ${MyTheme.colors.darkBase};
 `;
 
 const CloseBtn = styled(ExpandBtn)`
     left: 10px;
+    background-color: ${MyTheme.colors.opaque};
+    color: ${MyTheme.colors.lightBase};
 `;
 
 const PopupContent = styled.div`
@@ -111,16 +116,12 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     return (
         <PopupWrapper>
             <PopupImage imageURL={image}>
-                <CloseBtn backgroundColor={MyTheme.colors.opaque} textColor={MyTheme.colors.lightBase} onClick={handleClickClose}>
+                <CloseBtn onClick={handleClickClose}>
                     <span className="material-symbols-outlined">close</span>
                 </CloseBtn>
             </PopupImage>
             <PopupContent>
-                <ExpandBtn
-                    backgroundColor={MyTheme.colors.lightBase}
-                    textColor={MyTheme.colors.darkBase}
-                    onClick={handleClickShowLocationPage}
-                >
+                <ExpandBtn onClick={handleClickShowLocationPage}>
                     <ExpandLink />
                 </ExpandBtn>
                 <Parkname>{name}</Parkname>

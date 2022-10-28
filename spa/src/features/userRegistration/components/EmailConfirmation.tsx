@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -65,7 +65,7 @@ export const EmailConfirmation: FC = () => {
                 <SectionContainer>
                     <PageTitle className="registration">Bekreft e-post</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
-                    <Form>
+                    <Form style={{ marginTop: '1rem' }}>
                         <PageSubtitle>Skriv inn koden for å bekrefte e-postadressen {email}</PageSubtitle>
                         <Box
                             sx={{
@@ -87,10 +87,10 @@ export const EmailConfirmation: FC = () => {
                             ))}
                         </Box>
                     </Form>
-                    <LinkButton sx={{ width: 125, margin: 0 }} onClick={resendCode}>
+                    <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', margin: 0, width: 150 }} onClick={resendCode}>
                         Send ny kode
                     </LinkButton>
-                    <LinkButton sx={{ width: 125, margin: 0 }} onClick={() => navigate('/register/email')}>
+                    <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/email')}>
                         Endre e-post
                     </LinkButton>
                 </SectionContainer>
