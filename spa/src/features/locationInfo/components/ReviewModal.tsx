@@ -118,7 +118,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         <Modal open={open}>
             <>
                 <Backdrop onClick={handleCloseAddReview} />
-                <form onSubmit={(e) => onSubmitHandler(e)}>
+                <form onSubmit={onSubmitHandler}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{

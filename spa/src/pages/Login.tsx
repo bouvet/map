@@ -11,8 +11,6 @@ export const Login: FC = () => {
 
     if (isAuthenticated) {
         return <Navigate to="/" replace />;
-        // navigate('/', { replace: true });
-        // window.location.reload();
     }
 
     return (

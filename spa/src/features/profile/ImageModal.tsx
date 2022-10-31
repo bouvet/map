@@ -8,7 +8,7 @@ import { ProfilePictureProps } from './ProfileImage';
 import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
 import { SubmitButton } from '../../components/UI';
 
-const BackDrop = styled.div`
+const Backdrop = styled.div`
     width: 100%;
     height: 100vh;
     display: flex;
@@ -82,7 +82,7 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
     }, [image]);
 
     return (
-        <BackDrop>
+        <Backdrop>
             <Modal>
                 <CloseButton onClick={handleClick} />
                 <ModalContent>
@@ -118,6 +118,6 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
                     )}
                 </ModalContent>
             </Modal>
-        </BackDrop>
+        </Backdrop>
     );
 };

@@ -103,14 +103,14 @@ export const SwipeableEdgeDrawer: FC = () => {
     const updateCurrentReviewsCallback = useCallback(() => {
         if (currentReviews) {
             const temp = currentReviews
-                .filter((item) => item.text)
+                .filter((item) => item.created) // text
                 .map((item: IReviewTypeGet) => (
                     <Review
                         key={item.id}
                         date={moment(item.created).format('L')}
                         // @ts-ignore
                         name={item.creator?.firstName}
-                        age={moment(item.creator?.dob).fromNow(true)}
+                        age={moment(item.creator?.dob).fromNow(true)} // not working
                         rating={item.rating}
                         review={item.text}
                     />

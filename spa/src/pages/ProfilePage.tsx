@@ -2,7 +2,6 @@ import { ChangeEvent, Dispatch, FC, FormEvent, useEffect, useMemo, useState } fr
 import { Outlet } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/nb';
-// import { Form } from '../features/profile/Form';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps, ProfileLink } from '../features/profile/Input';
 import { ProfileHeader } from '../features/profile/ProfileHeader';
@@ -12,7 +11,9 @@ import { snackbarActions } from '../store/state/snackbar.state';
 import { CenterFlex } from '../components/Form/Input';
 import { LinkButton, PageContainer, SectionContainer, SubmitButton } from '../components/UI';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { Form } from '../components/Form/Form';
+// import { Form } from '../components/Form/Form';
+import { EditModal } from '../features/profile/EditModal';
+import { Form } from '../features/profile/Form';
 
 export const ProfilePage: FC = () => {
     const dispatch = useStateDispatch();
@@ -35,7 +36,6 @@ export const ProfilePage: FC = () => {
 
     moment.locale('nb');
 
-    // add possibility to edit name, dob and categories + see changes on submit
     const InputContent: InputProps[] = useMemo(
         () => [
             { type: 'text', value: `${firstName} ${lastName}`, icon: 'person' },
@@ -50,7 +50,6 @@ export const ProfilePage: FC = () => {
         e.preventDefault();
     };
 
-    // check: values cannot be empty
     // callback?
 
     // const editUserDetails = async () => {
@@ -75,6 +74,10 @@ export const ProfilePage: FC = () => {
 
     const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);
 
+    const [openEditModal, setOpenEditModal] = useState(false);
+    const handleOpenEditModal = () => setOpenEditModal(true);
+    const handleCloseEditModal = () => setOpenEditModal(false);
+
     return (
         <>
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
@@ -94,30 +97,14 @@ export const ProfilePage: FC = () => {
                         <span>
                             <ProfileLink to="/profile/delete-account">Slett konto</ProfileLink>
                         </span>
-                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
+                        {/* <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
                             Oppdater profil
-                        </SubmitButton>
+                        </SubmitButton> */}
+                        <EditModal open={openEditModal} close={handleCloseEditModal} />
+                        <LinkButton onClick={handleOpenEditModal}>Rediger info</LinkButton>
                     </Form>
                 </SectionContainer>
             </PageContainer>
-
-            {/* <Form onSubmit={onSubmitHandler}>
-                <StyledInput
-                    label="Fornavn"
-                    errorMessage="Vennligst fyll inn fornavn"
-                    value={enteredFirstName}
-                    onChange={firstNameChangeHandler}
-                    onBlur={firstNameBlurHandler}
-                    inputHasError={firstNameInputHasError}
-                />
-
-                <LinkButton onClick={() => navigate('/profile/change-email')}>Endre e-post</LinkButton>
-                <LinkButton onClick={() => navigate('/change-password')}>Endre passord</LinkButton>
-                <LinkButton onClick={() => navigate('/profile/delete-account')}>Slett konto</LinkButton>
-                <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
-                    Oppdater profil
-                </SubmitButton>
-            </Form> */}
             <Outlet />
         </>
     );

@@ -58,6 +58,7 @@ export const PersonalInfo: FC = () => {
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {
             firstNameBlurHandler();
+            lastNameBlurHandler();
 
             if (!enteredFirstNameIsValid || !enteredLastNameIsValid) return;
             dispatch(userActions.setFirstName(enteredFirstName));

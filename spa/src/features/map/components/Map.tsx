@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, FC, MutableRefObject, Ref } from 'react';
+import { useCallback, useEffect, useRef, useState, FC, Ref } from 'react';
 import { Map as ReactMap, MapRef } from 'react-map-gl';
 import { CircularProgress } from '@mui/material';
 import { CustomMarker } from './CustomMarker';
@@ -53,17 +53,11 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     const mapRef: Ref<MapRef> = useRef(null);
 
-    const calculateCameraView = () => {
-        // @ts-ignore
-        // console.log(mapRef.current.getCenter());
-    };
-
     const onMapLoad = useCallback(
         (e: any) => {
             if (mapRef.current !== null) {
                 mapRef.current.on('move', () => {
                     setViewState(e.viewState);
-                    calculateCameraView();
                 });
 
                 mapRef.current.on('moveend', () => {
@@ -94,7 +88,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
 
     return (
         <>
-            {/* dont use ref */}
+            {/* not recommended to use ref */}
             {/* {!mapRef && (
                 <PageContainer>
                     <CircularProgress color="primary" size={80} />
@@ -104,7 +98,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
             <ReactMap
                 {...viewState}
                 ref={mapRef}
-                reuseMaps
+                // reuseMaps // cause of map bug after login
                 onLoad={onMapLoad}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
                 mapboxAccessToken={MAPBOX_TOKEN}
