@@ -8,7 +8,6 @@ import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
 import { validateEmail } from '../../utils/emailValidator';
-import { loginServices } from '../login/services/login.services';
 import { userServices } from '../userRegistration/services/user.services';
 
 export const ChangeEmail: FC = () => {

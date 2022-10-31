@@ -7,7 +7,7 @@ import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 
 const HeaderWrapper = styled.div`
     width: 100%;
-    height: 250px;
+    height: 350px;
     position: relative;
     display: flex;
     justify-content: center;

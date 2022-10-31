@@ -1,8 +1,8 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, FormEvent, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/nb';
-import { Form } from '../features/profile/Form';
+// import { Form } from '../features/profile/Form';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps, ProfileLink } from '../features/profile/Input';
 import { ProfileHeader } from '../features/profile/ProfileHeader';
@@ -10,7 +10,9 @@ import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { userServices } from '../features/userRegistration/services/user.services';
 import { snackbarActions } from '../store/state/snackbar.state';
 import { CenterFlex } from '../components/Form/Input';
-import { PageContainer, SectionContainer, SubmitButton } from '../components/UI';
+import { LinkButton, PageContainer, SectionContainer, SubmitButton } from '../components/UI';
+import { StyledInput } from '../components/Form/StyledElements/StyledInput';
+import { Form } from '../components/Form/Form';
 
 export const ProfilePage: FC = () => {
     const dispatch = useStateDispatch();
@@ -72,26 +74,50 @@ export const ProfilePage: FC = () => {
     const ToggleImageModal = () => setImageModalIsActive((current) => !current);
 
     const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);
+
     return (
         <>
             {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
-            <ProfileHeader handleClick={ToggleImageModal} />
-            <Form onSubmit={onSubmitHandler}>
-                {inputs}
-                <span>
-                    <ProfileLink to="/profile/change-email">Endre e-post</ProfileLink>
-                </span>
-                <span>
-                    <ProfileLink to="/change-password">Endre passord</ProfileLink>
-                </span>
-                <span>
-                    {/* add functionality + check if login from email, Google or Vipps */}
-                    <ProfileLink to="/profile/delete-account">Slett konto</ProfileLink>
-                </span>
+            <PageContainer>
+                <ProfileHeader handleClick={ToggleImageModal} />
+                <SectionContainer>
+                    <Form onSubmit={onSubmitHandler}>
+                        {inputs}
+                        <span>
+                            <ProfileLink to="/profile/change-email">Endre e-post</ProfileLink>
+                        </span>
+                        <span>
+                            <ProfileLink to="/change-password">Endre passord</ProfileLink>
+                        </span>
+                        {/* add functionality + check if login from email, Google or Vipps */}
+                        {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
+                        <span>
+                            <ProfileLink to="/profile/delete-account">Slett konto</ProfileLink>
+                        </span>
+                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
+                            Oppdater profil
+                        </SubmitButton>
+                    </Form>
+                </SectionContainer>
+            </PageContainer>
+
+            {/* <Form onSubmit={onSubmitHandler}>
+                <StyledInput
+                    label="Fornavn"
+                    errorMessage="Vennligst fyll inn fornavn"
+                    value={enteredFirstName}
+                    onChange={firstNameChangeHandler}
+                    onBlur={firstNameBlurHandler}
+                    inputHasError={firstNameInputHasError}
+                />
+
+                <LinkButton onClick={() => navigate('/profile/change-email')}>Endre e-post</LinkButton>
+                <LinkButton onClick={() => navigate('/change-password')}>Endre passord</LinkButton>
+                <LinkButton onClick={() => navigate('/profile/delete-account')}>Slett konto</LinkButton>
                 <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
                     Oppdater profil
                 </SubmitButton>
-            </Form>
+            </Form> */}
             <Outlet />
         </>
     );

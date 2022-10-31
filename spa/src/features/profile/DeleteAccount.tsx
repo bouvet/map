@@ -9,14 +9,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../hooks/useInput';
-import { useStateDispatch } from '../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
 
 export const DeleteAccount: FC = () => {
-    // const dispatch = useStateDispatch();
+    const dispatch = useStateDispatch();
     const navigate = useNavigate();
+
+    const { user } = useStateSelector((state) => state.auth);
 
     const [open, setOpen] = useState(false);
     const handleConfirm = () => deleteAccount();
@@ -52,15 +54,16 @@ export const DeleteAccount: FC = () => {
 
         if (!enteredPasswordIsValid) return;
 
+        // TODO: check if password is correct
         setOpen(true);
     };
 
     const deleteAccount = async () => {
-        // check if password is correct
-        // dispatch(userServices.deleteAccount());
-        console.log('Konto er slettet');
-        setOpen(false);
-        // navigate('/');
+        // @ts-ignore
+        const successStatus: boolean = await dispatch(userServices.deleteAccount({ id: user?.id }));
+        if (successStatus) {
+            navigate('/');
+        }
     };
 
     return (

@@ -77,7 +77,7 @@ export const PersonalInfoGoogle: FC = () => {
         nbNO,
     );
 
-    // TO-DO: pre-fill name inputs from Google account?
+    // TODO: pre-fill name inputs from Google account?
 
     useEffect(() => {
         if (firstName) {

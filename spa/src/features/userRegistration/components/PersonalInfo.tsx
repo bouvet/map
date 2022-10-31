@@ -97,7 +97,7 @@ export const PersonalInfo: FC = () => {
                     <PageTitle className="registration">Personlig informasjon</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <PageSubtitle>
-                        Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
+                        Her kan du fylle inn profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
                         omtaler.
                     </PageSubtitle>
                     <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>

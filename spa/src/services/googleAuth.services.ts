@@ -55,7 +55,7 @@ export const googleAuthServices = {
                 }, 2000);
             } catch (error: any) {
                 console.log(error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt..', severity: 'error', autohideDuration: null }));
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             } finally {
                 clearTimeout(timer);
             }
