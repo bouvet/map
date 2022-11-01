@@ -42,12 +42,9 @@ export const ProfilePage: FC = () => {
 
     const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);
 
-    const [imageModalIsActive, setImageModalIsActive] = useState(false);
-    const ToggleImageModal = () => setImageModalIsActive((current) => !current);
-
-    // const [openImageModal, setOpenImageModal] = useState(false);
-    // const handleOpenImageModal = () => setOpenImageModal(true);
-    // const handleCloseImageModal = () => setOpenImageModal(false);
+    const [openImageModal, setOpenImageModal] = useState(false);
+    const handleOpenImageModal = () => setOpenImageModal(true);
+    const handleCloseImageModal = () => setOpenImageModal(false);
 
     const [openEditModal, setOpenEditModal] = useState(false);
     const handleOpenEditModal = () => setOpenEditModal(true);
@@ -55,13 +52,12 @@ export const ProfilePage: FC = () => {
 
     return (
         <>
-            {imageModalIsActive && <ImageModal handleClick={ToggleImageModal} />}
             <PageContainer>
-                <ProfileHeader handleClick={ToggleImageModal} />
+                <ImageModal open={openImageModal} close={handleCloseImageModal} />
+                <ProfileHeader handleClick={handleOpenImageModal} />
                 <SectionContainer>
                     {inputs}
-                    {/* add functionality + check if login from email, Google or Vipps */}
-                    {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
+                    <EditModal open={openEditModal} close={handleCloseEditModal} />
                     <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={handleOpenEditModal}>
                         Rediger info
                     </LinkButton>
@@ -74,7 +70,8 @@ export const ProfilePage: FC = () => {
                     <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/profile/delete-account')}>
                         Slett konto
                     </LinkButton>
-                    <EditModal open={openEditModal} close={handleCloseEditModal} />
+                    {/* add functionality + check if login from email, Google or Vipps */}
+                    {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
                 </SectionContainer>
             </PageContainer>
             <Outlet />

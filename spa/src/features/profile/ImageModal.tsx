@@ -1,12 +1,19 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { Button, Box, ClickAwayListener, Modal } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
-import { ProfilePictureProps } from './ProfileImage';
 import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
 import { SubmitButton } from '../../components/UI';
+import { useStateDispatch } from '../../hooks/useRedux';
+import { userServices } from '../userRegistration/services/user.services';
+import { Form } from '../../components/Form/Form';
+
+interface ModalProps {
+    open: boolean;
+    close: Function;
+}
 
 const ModalStyle = {
     position: 'relative',
@@ -38,6 +45,7 @@ interface ProfilePictureImageProps {
 export const ProfilePicture = styled.div<ProfilePictureImageProps>`
     aspect-ratio: 1;
     height: 200px;
+    width: 200px;
     border-radius: 50%;
     background-image: url(${({ imageUrl }) => imageUrl});
     background-position: center;
@@ -46,11 +54,11 @@ export const ProfilePicture = styled.div<ProfilePictureImageProps>`
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 `;
 
-export const ImageModal: FC<ProfilePictureProps> = (props) => {
+export const ImageModal: FC<ModalProps> = ({ open, close }) => {
+    const dispatch = useStateDispatch();
+
     const [image, setImage] = useState<File | undefined>(undefined);
     const [imageUrl, setImageUrl] = useState('');
-
-    const { handleClick } = props;
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -70,45 +78,57 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
         }
     }, [image]);
 
+    const handleCloseImageModal = () => {
+        close();
+    };
+
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+        // dispatch(userServices.editInfo({ image }));
+        e.preventDefault();
+        console.log('Bilde er oppdatert');
+        handleCloseImageModal();
+    };
+
     return (
-        // @ts-ignore
-        <Modal open={handleClick}>
+        <Modal open={open}>
             <>
-                {/* @ts-ignore */}
-                <ClickAwayListener onClickAway={handleClick}>
+                <ClickAwayListener onClickAway={handleCloseImageModal}>
                     <Box sx={ModalStyle}>
-                        <CloseButton onClick={handleClick} />
+                        <CloseButton onClick={handleCloseImageModal} />
                         <ModalContent>
-                            {image ? (
-                                <>
-                                    <ProfilePicture imageUrl={imageUrl} />
+                            <Form onSubmit={onSubmitHandler}>
+                                {image ? (
+                                    <>
+                                        <ProfilePicture imageUrl={imageUrl} />
+                                        <Button
+                                            sx={{ textTransform: 'none', color: 'red' }}
+                                            size="large"
+                                            onClick={removeImage}
+                                            startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                                        >
+                                            Slett
+                                        </Button>
+                                        <SubmitButton type="submit" variant="contained">
+                                            Last opp
+                                        </SubmitButton>
+                                    </>
+                                ) : (
                                     <Button
-                                        sx={{ textTransform: 'none', color: 'red' }}
-                                        size="large"
-                                        onClick={removeImage}
-                                        startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                                        sx={{ padding: 2, textTransform: 'none' }}
+                                        style={{ color: `${MyTheme.colors.accent}` }}
+                                        component="label"
+                                        startIcon={<AddAPhoto />}
                                     >
-                                        Slett
-                                    </Button>
-                                    <SubmitButton type="submit" variant="contained" sx={{ width: 230 }}>
+                                        <input
+                                            hidden
+                                            accept="image/png, image/jpeg, image/webp, image/jpg"
+                                            type="file"
+                                            onChange={(e) => handleImageChange(e)}
+                                        />
                                         Last opp
-                                    </SubmitButton>
-                                </>
-                            ) : (
-                                <Button
-                                    sx={{ padding: 2, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
-                                    component="label"
-                                    startIcon={<AddAPhoto />}
-                                >
-                                    <input
-                                        hidden
-                                        accept="image/png, image/jpeg, image/webp, image/jpg"
-                                        type="file"
-                                        onChange={(e) => handleImageChange(e)}
-                                    />
-                                    Last opp
-                                </Button>
-                            )}
+                                    </Button>
+                                )}
+                            </Form>
                         </ModalContent>
                     </Box>
                 </ClickAwayListener>
