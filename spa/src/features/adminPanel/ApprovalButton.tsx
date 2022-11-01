@@ -30,6 +30,7 @@ interface ButtonMethodProp {
 
 export const ApproveButton: FC<ButtonMethodProp> = (props) => {
     const { handleClick } = props;
+
     return (
         <Button color={MyTheme.colors.success} onClick={handleClick}>
             <Icon className="material-symbols-outlined">done_outline</Icon>

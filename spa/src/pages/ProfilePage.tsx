@@ -1,22 +1,16 @@
-import { ChangeEvent, Dispatch, FC, FormEvent, useEffect, useMemo, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { FC, useMemo, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/nb';
 import { ImageModal } from '../features/profile/ImageModal';
-import { Input, InputProps, ProfileLink } from '../features/profile/Input';
+import { Input, InputProps } from '../features/profile/Input';
 import { ProfileHeader } from '../features/profile/ProfileHeader';
-import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { userServices } from '../features/userRegistration/services/user.services';
-import { snackbarActions } from '../store/state/snackbar.state';
-import { CenterFlex } from '../components/Form/Input';
-import { LinkButton, PageContainer, SectionContainer, SubmitButton } from '../components/UI';
-import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-// import { Form } from '../components/Form/Form';
+import { useStateSelector } from '../hooks/useRedux';
+import { LinkButton, PageContainer, SectionContainer } from '../components/UI';
 import { EditModal } from '../features/profile/EditModal';
-import { Form } from '../features/profile/Form';
 
 export const ProfilePage: FC = () => {
-    const dispatch = useStateDispatch();
+    const navigate = useNavigate();
 
     const { user } = useStateSelector((state) => state.auth);
 
@@ -46,33 +40,14 @@ export const ProfilePage: FC = () => {
         [dob, email, categories, firstName, lastName],
     );
 
-    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    };
-
-    // callback?
-
-    // const editUserDetails = async () => {
-    //     const formData = new FormData();
-    //     formData.append('firstName', firstName);
-    //     formData.append('lastName', lastName);
-    //     formData.append('dob', dob);
-    //     // favorites
-    //     // profile photo
-
-    //     const successStatus: boolean = await dispatch(userService.editUser(formData));
-
-    //     if (successStatus) {
-    //         dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
-    //     } else {
-    //         dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-    //     }
-    // };
+    const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);
 
     const [imageModalIsActive, setImageModalIsActive] = useState(false);
     const ToggleImageModal = () => setImageModalIsActive((current) => !current);
 
-    const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);
+    // const [openImageModal, setOpenImageModal] = useState(false);
+    // const handleOpenImageModal = () => setOpenImageModal(true);
+    // const handleCloseImageModal = () => setOpenImageModal(false);
 
     const [openEditModal, setOpenEditModal] = useState(false);
     const handleOpenEditModal = () => setOpenEditModal(true);
@@ -84,25 +59,22 @@ export const ProfilePage: FC = () => {
             <PageContainer>
                 <ProfileHeader handleClick={ToggleImageModal} />
                 <SectionContainer>
-                    <Form onSubmit={onSubmitHandler}>
-                        {inputs}
-                        <span>
-                            <ProfileLink to="/profile/change-email">Endre e-post</ProfileLink>
-                        </span>
-                        <span>
-                            <ProfileLink to="/change-password">Endre passord</ProfileLink>
-                        </span>
-                        {/* add functionality + check if login from email, Google or Vipps */}
-                        {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
-                        <span>
-                            <ProfileLink to="/profile/delete-account">Slett konto</ProfileLink>
-                        </span>
-                        {/* <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
-                            Oppdater profil
-                        </SubmitButton> */}
-                        <EditModal open={openEditModal} close={handleCloseEditModal} />
-                        <LinkButton onClick={handleOpenEditModal}>Rediger info</LinkButton>
-                    </Form>
+                    {inputs}
+                    {/* add functionality + check if login from email, Google or Vipps */}
+                    {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
+                    <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={handleOpenEditModal}>
+                        Rediger info
+                    </LinkButton>
+                    <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/change-password')}>
+                        Endre passord
+                    </LinkButton>
+                    <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/profile/change-email')}>
+                        Endre e-post
+                    </LinkButton>
+                    <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/profile/delete-account')}>
+                        Slett konto
+                    </LinkButton>
+                    <EditModal open={openEditModal} close={handleCloseEditModal} />
                 </SectionContainer>
             </PageContainer>
             <Outlet />

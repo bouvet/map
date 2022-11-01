@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Box, ClickAwayListener, Modal } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
@@ -8,30 +8,19 @@ import { ProfilePictureProps } from './ProfileImage';
 import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
 import { SubmitButton } from '../../components/UI';
 
-const Backdrop = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${MyTheme.colors.opaque};
-    position: absolute;
-    z-index: 5;
-`;
-
-const Modal = styled.div`
-    width: 90%;
-    height: 90vh;
-    max-height: 500px;
-    max-width: 400px;
-    background-color: ${MyTheme.colors.lightBase};
-    z-index: 6;
-    position: relative;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
+const ModalStyle = {
+    position: 'relative',
+    top: '50%',
+    left: '50%',
+    zIndex: '1301',
+    width: '65%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: 3,
+    p: 7,
+    pt: 9,
+};
 
 const ModalContent = styled.div`
     width: 80%;
@@ -82,42 +71,48 @@ export const ImageModal: FC<ProfilePictureProps> = (props) => {
     }, [image]);
 
     return (
-        <Backdrop>
-            <Modal>
-                <CloseButton onClick={handleClick} />
-                <ModalContent>
-                    {image ? (
-                        <>
-                            <ProfilePicture imageUrl={imageUrl} />
-                            <Button
-                                sx={{ textTransform: 'none', color: 'red' }}
-                                size="large"
-                                onClick={removeImage}
-                                startIcon={<DeleteIcon style={{ color: 'red' }} />}
-                            >
-                                Slett
-                            </Button>
-                            <SubmitButton type="submit" variant="contained" sx={{ width: 230 }}>
-                                Bekreft
-                            </SubmitButton>
-                        </>
-                    ) : (
-                        <Button
-                            sx={{ padding: 2, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
-                            component="label"
-                            startIcon={<AddAPhoto />}
-                        >
-                            <input
-                                hidden
-                                accept="image/png, image/jpeg, image/webp, image/jpg"
-                                type="file"
-                                onChange={(e) => handleImageChange(e)}
-                            />
-                            Last opp
-                        </Button>
-                    )}
-                </ModalContent>
-            </Modal>
-        </Backdrop>
+        // @ts-ignore
+        <Modal open={handleClick}>
+            <>
+                {/* @ts-ignore */}
+                <ClickAwayListener onClickAway={handleClick}>
+                    <Box sx={ModalStyle}>
+                        <CloseButton onClick={handleClick} />
+                        <ModalContent>
+                            {image ? (
+                                <>
+                                    <ProfilePicture imageUrl={imageUrl} />
+                                    <Button
+                                        sx={{ textTransform: 'none', color: 'red' }}
+                                        size="large"
+                                        onClick={removeImage}
+                                        startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                                    >
+                                        Slett
+                                    </Button>
+                                    <SubmitButton type="submit" variant="contained" sx={{ width: 230 }}>
+                                        Last opp
+                                    </SubmitButton>
+                                </>
+                            ) : (
+                                <Button
+                                    sx={{ padding: 2, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                                    component="label"
+                                    startIcon={<AddAPhoto />}
+                                >
+                                    <input
+                                        hidden
+                                        accept="image/png, image/jpeg, image/webp, image/jpg"
+                                        type="file"
+                                        onChange={(e) => handleImageChange(e)}
+                                    />
+                                    Last opp
+                                </Button>
+                            )}
+                        </ModalContent>
+                    </Box>
+                </ClickAwayListener>
+            </>
+        </Modal>
     );
 };

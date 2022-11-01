@@ -1,11 +1,10 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { Box, Modal, TextField } from '@mui/material';
+import { Box, ClickAwayListener, Modal, TextField } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider, nbNO } from '@mui/x-date-pickers';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import moment from 'moment';
-import styled from 'styled-components';
 import { CloseButton, SubmitButton } from '../../components/UI';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
 import { Form } from '../../components/Form/Form';
@@ -17,14 +16,15 @@ import { snackbarActions } from '../../store/state/snackbar.state';
 import { ICategory } from '../../utils/types.d';
 import { RegisterButtonFavorites } from '../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../components/Filter/FilterMenu';
+import { userServices } from '../userRegistration/services/user.services';
 
 interface ModalProps {
     open: boolean;
     close: Function;
 }
 
-const BoxStyle = {
-    position: 'absolute',
+const ModalStyle = {
+    position: 'relative',
     top: '50%',
     left: '50%',
     zIndex: '1301',
@@ -36,12 +36,6 @@ const BoxStyle = {
     p: 7,
     pt: 9,
 };
-
-const Backdrop = styled.div`
-    height: 100vh;
-    width: 100%;
-    z-index: 0;
-`;
 
 export const EditModal: FC<ModalProps> = ({ open, close }) => {
     const dispatch = useStateDispatch();
@@ -91,6 +85,7 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         if (!dob) {
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {
@@ -99,7 +94,17 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
 
             if (!enteredFirstNameIsValid || !enteredLastNameIsValid) return;
 
-            console.log(firstName);
+            dispatch(
+                userServices.editInfo({
+                    id: user.id,
+                    firstName: enteredFirstName,
+                    lastName: enteredLastName,
+                    dob,
+                    // favoriteCategoryIds: categories,
+                }),
+            );
+
+            close();
         }
     };
 
@@ -127,47 +132,49 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
 
     return (
         <Modal open={open}>
-            {/* <Backdrop onClick={handleCloseEditModal}> */}
-            <Box sx={BoxStyle}>
-                <CloseButton onClick={handleCloseEditModal} />
-                <Form onSubmit={onSubmitHandler}>
-                    <StyledInput
-                        label="Fornavn"
-                        errorMessage="Vennligst fyll inn fornavn"
-                        value={enteredFirstName}
-                        onChange={firstNameChangeHandler}
-                        onBlur={firstNameBlurHandler}
-                        inputHasError={firstNameInputHasError}
-                    />
-                    <StyledInput
-                        label="Etternavn"
-                        errorMessage="Vennligst fyll inn etternavn"
-                        value={enteredLastName}
-                        onChange={lastNameChangeHandler}
-                        onBlur={lastNameBlurHandler}
-                        inputHasError={lastNameInputHasError}
-                    />
-                    <Label>Fødselsdato</Label>
-                    <ThemeProvider theme={theme}>
-                        <LocalizationProvider dateAdapter={AdapterMoment}>
-                            <MobileDatePicker
-                                label="åååå.mm.dd"
-                                value={dob || null}
-                                onChange={(newValue) => handleChangeDob(newValue)}
-                                renderInput={(params) => <TextField {...params} />}
-                                maxDate={new Date()}
+            <>
+                <ClickAwayListener onClickAway={handleCloseEditModal}>
+                    <Box sx={ModalStyle}>
+                        <CloseButton onClick={handleCloseEditModal} />
+                        <Form onSubmit={onSubmitHandler}>
+                            <StyledInput
+                                label="Fornavn"
+                                errorMessage="Vennligst fyll inn fornavn"
+                                value={enteredFirstName}
+                                onChange={firstNameChangeHandler}
+                                onBlur={firstNameBlurHandler}
+                                inputHasError={firstNameInputHasError}
                             />
-                        </LocalizationProvider>
-                    </ThemeProvider>
-                    <Label>Favoritter</Label>
-                    {/* show favorites as clicked */}
-                    <FilterMenuContent>{mappedFilter}</FilterMenuContent>
-                    <SubmitButton type="submit" variant="contained">
-                        Lagre endringer
-                    </SubmitButton>
-                </Form>
-            </Box>
-            {/* </Backdrop> */}
+                            <StyledInput
+                                label="Etternavn"
+                                errorMessage="Vennligst fyll inn etternavn"
+                                value={enteredLastName}
+                                onChange={lastNameChangeHandler}
+                                onBlur={lastNameBlurHandler}
+                                inputHasError={lastNameInputHasError}
+                            />
+                            <Label>Fødselsdato</Label>
+                            <ThemeProvider theme={theme}>
+                                <LocalizationProvider dateAdapter={AdapterMoment}>
+                                    <MobileDatePicker
+                                        label="åååå.mm.dd"
+                                        value={dob || null}
+                                        onChange={(newValue) => handleChangeDob(newValue)}
+                                        renderInput={(params) => <TextField {...params} />}
+                                        maxDate={new Date()}
+                                    />
+                                </LocalizationProvider>
+                            </ThemeProvider>
+                            <Label>Favoritter</Label>
+                            {/* show favorites as clicked */}
+                            <FilterMenuContent>{mappedFilter}</FilterMenuContent>
+                            <SubmitButton type="submit" variant="contained">
+                                Lagre endringer
+                            </SubmitButton>
+                        </Form>
+                    </Box>
+                </ClickAwayListener>
+            </>
         </Modal>
     );
 };

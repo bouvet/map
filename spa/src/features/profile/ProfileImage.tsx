@@ -8,7 +8,7 @@ export const ProfilePictureWrapper = styled.div`
     aspect-ratio: 1;
     height: 150px;
     border-radius: 50%;
-    background-image: url(https://imageio.forbes.com/specials-images/imageserve/5c76b7d331358e35dd2773a9/0x0.jpg?format=jpg&crop=4401,4401,x0,y0,safe&height=416&width=416&fit=bounds);
+    // background-image: url(https://imageio.forbes.com/specials-images/imageserve/5c76b7d331358e35dd2773a9/0x0.jpg?format=jpg&crop=4401,4401,x0,y0,safe&height=416&width=416&fit=bounds);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

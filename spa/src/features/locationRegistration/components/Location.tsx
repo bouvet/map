@@ -5,7 +5,7 @@ import { ReactMapGL } from '../../map';
 
 const MapWrapper = styled.div`
     width: 100%;
-    height: calc(100% - 100px);
+    height: calc(100% - 40px);
     position: relative;
 `;
 
