@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useRef, useState, FC, Ref } from 'react';
 import { Map as ReactMap, MapRef } from 'react-map-gl';
-import { CircularProgress } from '@mui/material';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ILatLong, ILocation } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
-import { PageContainer } from '../../../components/UI';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -87,50 +85,39 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
     };
 
     return (
-        <>
-            {/* not recommended to use ref */}
-            {/* {!mapRef && (
-                <PageContainer>
-                    <CircularProgress color="primary" size={80} />
-                </PageContainer>
-            )}
-            {mapRef && ( */}
-            <ReactMap
-                {...viewState}
-                ref={mapRef}
-                // reuseMaps // cause of map bug after login
-                onLoad={onMapLoad}
-                mapStyle="mapbox://styles/mapbox/streets-v11"
-                mapboxAccessToken={MAPBOX_TOKEN}
-            >
-                {!addingLocation &&
-                    selectedFilterCategory &&
-                    filteredLocations
-                        .filter((location) => location.properties.status === 'Approved')
-                        .map((location) => (
-                            <CustomMarker
-                                key={location.id}
-                                coordinates={location.geometry.coordinates}
-                                onClickHandler={onClickHandler}
-                                markerLocation={location}
-                                selectedMarker={selectedMarker}
-                            />
-                        ))}
-                {!addingLocation &&
-                    !selectedFilterCategory &&
-                    locations
-                        .filter((location) => location.properties.status === 'Approved')
-                        .map((location) => (
-                            <CustomMarker
-                                key={location.id}
-                                coordinates={location.geometry.coordinates}
-                                onClickHandler={onClickHandler}
-                                markerLocation={location}
-                                selectedMarker={selectedMarker}
-                            />
-                        ))}
-            </ReactMap>
-            {/* )} */}
-        </>
+        <ReactMap
+            {...viewState}
+            ref={mapRef}
+            onLoad={onMapLoad}
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            mapboxAccessToken={MAPBOX_TOKEN}
+        >
+            {!addingLocation &&
+                selectedFilterCategory &&
+                filteredLocations
+                    .filter((location) => location.properties.status === 'Approved')
+                    .map((location) => (
+                        <CustomMarker
+                            key={location.id}
+                            coordinates={location.geometry.coordinates}
+                            onClickHandler={onClickHandler}
+                            markerLocation={location}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
+            {!addingLocation &&
+                !selectedFilterCategory &&
+                locations
+                    .filter((location) => location.properties.status === 'Approved')
+                    .map((location) => (
+                        <CustomMarker
+                            key={location.id}
+                            coordinates={location.geometry.coordinates}
+                            onClickHandler={onClickHandler}
+                            markerLocation={location}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
+        </ReactMap>
     );
 };

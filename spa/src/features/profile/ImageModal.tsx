@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
-import { SubmitButton } from '../../components/UI';
+import { LinkButton, SubmitButton } from '../../components/UI';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { Form } from '../../components/Form/Form';
@@ -80,6 +80,8 @@ export const ImageModal: FC<ModalProps> = ({ open, close }) => {
 
     const handleCloseImageModal = () => {
         close();
+        setImage(undefined);
+        setImageUrl('');
     };
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {

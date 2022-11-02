@@ -4,10 +4,10 @@ import moment from 'moment';
 import 'moment/locale/nb';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps } from '../features/profile/Input';
-import { ProfileHeader } from '../features/profile/ProfileHeader';
 import { useStateSelector } from '../hooks/useRedux';
 import { LinkButton, PageContainer, SectionContainer } from '../components/UI';
 import { EditModal } from '../features/profile/EditModal';
+import { DefaultProfilePicture, ProfilePicture } from '../features/profile/ProfileImage';
 
 export const ProfilePage: FC = () => {
     const navigate = useNavigate();
@@ -27,6 +27,13 @@ export const ProfilePage: FC = () => {
             categories = c.name;
         }
     });
+
+    const image = '';
+
+    const defaultImage =
+        'https://imageio.forbes.com/specials-images/imageserve/5c76b7d331358e35dd2773a9/0x0.jpg?format=jpg&crop=4401,4401,x0,y0,safe&height=416&width=416&fit=bounds';
+
+    const name = `${firstName} ${lastName}`;
 
     moment.locale('nb');
 
@@ -54,7 +61,19 @@ export const ProfilePage: FC = () => {
         <>
             <PageContainer>
                 <ImageModal open={openImageModal} close={handleCloseImageModal} />
-                <ProfileHeader handleClick={handleOpenImageModal} />
+
+                {/* {image === '' ? (
+                    <ProfilePicture backgroundImage={defaultImage} handleClick={handleOpenImageModal} />
+                ) : (
+                    <ProfilePicture backgroundImage={image} handleClick={handleOpenImageModal} />
+                )} */}
+
+                {image === '' ? (
+                    <DefaultProfilePicture name={name} handleClick={handleOpenImageModal} />
+                ) : (
+                    <ProfilePicture backgroundImage={image} handleClick={handleOpenImageModal} />
+                )}
+
                 <SectionContainer>
                     {inputs}
                     <EditModal open={openEditModal} close={handleCloseEditModal} />
