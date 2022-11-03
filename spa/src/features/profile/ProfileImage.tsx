@@ -4,20 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
-import { deepPurple } from '@mui/material/colors';
 import { GoogleIcon } from '../../components/Navigation/GoogleIcon';
 import { BackButton } from '../../components/UI';
 import { MyTheme } from '../../styles/global';
 
 type ImageProp = {
-    backgroundImage?: string | undefined;
+    imageUrl?: string | undefined;
 };
 
 export const ProfilePictureWrapper = styled.div<ImageProp>`
     aspect-ratio: 1;
     height: 150px;
     border-radius: 50%;
-    background-image: url(${({ backgroundImage }) => backgroundImage});
+    background-image: url(${({ imageUrl }) => imageUrl});
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -43,6 +42,13 @@ const ButtonChangePicture = styled.button`
     top: 5px;
 `;
 
+const ButtonWrapper = styled.div`
+    position: absolute;
+    display: flex;
+    top: 85px;
+    margin-left: 130px;
+`;
+
 const HeaderWrapper = styled.div`
     width: 100%;
     height: 350px;
@@ -59,8 +65,7 @@ const ColouredSection = styled.div`
 
 interface ProfilePictureProps {
     handleClick: MouseEventHandler<HTMLButtonElement>;
-    backgroundImage?: string | undefined;
-    // name?: string | undefined;
+    imageUrl: string | undefined;
 }
 
 interface DefaultProfilePictureProps {
@@ -68,7 +73,7 @@ interface DefaultProfilePictureProps {
     name: string;
 }
 
-export const ProfilePicture: FC<ProfilePictureProps> = ({ handleClick, backgroundImage }) => {
+export const ProfilePicture: FC<ProfilePictureProps> = ({ handleClick, imageUrl }) => {
     const navigate = useNavigate();
     const handleBackClick = () => {
         navigate('/');
@@ -78,7 +83,7 @@ export const ProfilePicture: FC<ProfilePictureProps> = ({ handleClick, backgroun
         <HeaderWrapper>
             <BackButton onClick={handleBackClick} />
             <ColouredSection />
-            <ProfilePictureWrapper backgroundImage={backgroundImage}>
+            <ProfilePictureWrapper imageUrl={imageUrl}>
                 <ButtonChangePicture type="button" onClick={handleClick}>
                     <GoogleIcon color="white" className="material-symbols-outlined">
                         add
@@ -110,8 +115,6 @@ function stringToColor(string: string) {
 }
 
 function stringAvatar(name: string) {
-    console.log('test fullname', name);
-    console.log(typeof name);
     return {
         sx: {
             bgcolor: stringToColor(name),
@@ -122,6 +125,7 @@ function stringAvatar(name: string) {
             position: 'absolute',
             top: 75,
             boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)',
+            fontSize: '2rem',
         },
         children: `${name.toString().split(' ')[0][0]}${name.toString().split(' ')[1][0]}`,
     };
@@ -137,40 +141,20 @@ export const DefaultProfilePicture: FC<DefaultProfilePictureProps> = ({ handleCl
         <HeaderWrapper>
             <BackButton onClick={handleBackClick} />
             <ColouredSection />
-            {/* @ts-ignore */}
-            {/* <Avatar
-                sx={{
-                    bgcolor: deepPurple[500],
-                    aspectRatio: 1,
-                    height: 150,
-                    width: 150,
-                    zIndex: 1,
-                    position: 'absolute',
-                    top: 75,
-                    boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)',
-                }}
-                >
-            VV */}
-
-            <Avatar {...stringAvatar('Verden Venter')} />
-
-            <ButtonChangePicture type="button" onClick={handleClick}>
-                <GoogleIcon color="white" className="material-symbols-outlined">
-                    add
-                </GoogleIcon>
-            </ButtonChangePicture>
-            {/* <ButtonChangePicture type="button" onClick={handleClick}>
+            <Avatar {...stringAvatar(name)} />
+            <ButtonWrapper>
                 <Badge
                     overlap="circular"
                     sx={{ position: 'absolute' }}
                     badgeContent={
-                        <GoogleIcon color="white" className="material-symbols-outlined">
-                            add
-                        </GoogleIcon>
+                        <ButtonChangePicture type="button" onClick={handleClick}>
+                            <GoogleIcon color="white" className="material-symbols-outlined">
+                                add
+                            </GoogleIcon>
+                        </ButtonChangePicture>
                     }
                 />
-            </ButtonChangePicture> */}
-            {/* </Avatar> */}
+            </ButtonWrapper>
         </HeaderWrapper>
     );
 };

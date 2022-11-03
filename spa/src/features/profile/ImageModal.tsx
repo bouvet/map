@@ -2,13 +2,16 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { Button, Box, ClickAwayListener, Modal } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { CloseButton } from '../../components/UI/Buttons/NavigationButtons';
-import { LinkButton, SubmitButton } from '../../components/UI';
-import { useStateDispatch } from '../../hooks/useRedux';
+import { SubmitButton } from '../../components/UI';
+import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { Form } from '../../components/Form/Form';
+
+// TODO: styling
 
 interface ModalProps {
     open: boolean;
@@ -16,7 +19,7 @@ interface ModalProps {
 }
 
 const ModalStyle = {
-    position: 'relative',
+    position: 'absolute',
     top: '50%',
     left: '50%',
     zIndex: '1301',
@@ -31,11 +34,17 @@ const ModalStyle = {
 
 const ModalContent = styled.div`
     width: 80%;
-    margin-inline: 10%;
+    // height: calc(80vh - 250px);
+    // margin-inline: 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+    // display: flex;
+    flex-direction: row;
 `;
 
 interface ProfilePictureImageProps {
@@ -43,9 +52,12 @@ interface ProfilePictureImageProps {
 }
 
 export const ProfilePicture = styled.div<ProfilePictureImageProps>`
+    // position: absolute;
+    max-width: 90%;
+    max-height: 60vh;
     aspect-ratio: 1;
-    height: 200px;
-    width: 200px;
+    // height: 200px;
+    // width: 200px;
     border-radius: 50%;
     background-image: url(${({ imageUrl }) => imageUrl});
     background-position: center;
@@ -56,6 +68,8 @@ export const ProfilePicture = styled.div<ProfilePictureImageProps>`
 
 export const ImageModal: FC<ModalProps> = ({ open, close }) => {
     const dispatch = useStateDispatch();
+
+    const { user } = useStateSelector((state) => state.auth);
 
     const [image, setImage] = useState<File | undefined>(undefined);
     const [imageUrl, setImageUrl] = useState('');
@@ -85,7 +99,8 @@ export const ImageModal: FC<ModalProps> = ({ open, close }) => {
     };
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-        // dispatch(userServices.editInfo({ image }));
+        // @ts-ignore
+        dispatch(userServices.editInfo({ id: user?.id, image }));
         e.preventDefault();
         console.log('Bilde er oppdatert');
         handleCloseImageModal();
@@ -102,16 +117,32 @@ export const ImageModal: FC<ModalProps> = ({ open, close }) => {
                                 {image ? (
                                     <>
                                         <ProfilePicture imageUrl={imageUrl} />
-                                        <Button
-                                            sx={{ textTransform: 'none', color: 'red' }}
-                                            size="large"
-                                            onClick={removeImage}
-                                            startIcon={<DeleteIcon style={{ color: 'red' }} />}
-                                        >
-                                            Slett
-                                        </Button>
+                                        <ButtonWrapper>
+                                            <Button
+                                                sx={{ textTransform: 'none', color: 'red' }}
+                                                size="large"
+                                                onClick={removeImage}
+                                                startIcon={<DeleteIcon style={{ color: 'red' }} />}
+                                            >
+                                                Slett
+                                            </Button>
+                                            <Button
+                                                sx={{ textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                                                size="large"
+                                                component="label"
+                                                startIcon={<Autorenew style={{ color: `${MyTheme.colors.accent}` }} />}
+                                            >
+                                                <input
+                                                    hidden
+                                                    accept="image/png, image/jpeg, image/webp, image/jpg"
+                                                    type="file"
+                                                    onChange={(e) => handleImageChange(e)}
+                                                />
+                                                Bytt
+                                            </Button>
+                                        </ButtonWrapper>
                                         <SubmitButton type="submit" variant="contained">
-                                            Last opp
+                                            Lagre endringer
                                         </SubmitButton>
                                     </>
                                 ) : (

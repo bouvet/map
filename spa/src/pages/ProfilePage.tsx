@@ -27,16 +27,11 @@ export const ProfilePage: FC = () => {
             categories = c.name;
         }
     });
-
-    const image = '';
-
-    const defaultImage =
-        'https://imageio.forbes.com/specials-images/imageserve/5c76b7d331358e35dd2773a9/0x0.jpg?format=jpg&crop=4401,4401,x0,y0,safe&height=416&width=416&fit=bounds';
-
+    const image = user?.webpImage?.cdnUri;
+    console.log('bilde', image);
     const name = `${firstName} ${lastName}`;
 
     moment.locale('nb');
-
     const InputContent: InputProps[] = useMemo(
         () => [
             { type: 'text', value: `${firstName} ${lastName}`, icon: 'person' },
@@ -61,19 +56,11 @@ export const ProfilePage: FC = () => {
         <>
             <PageContainer>
                 <ImageModal open={openImageModal} close={handleCloseImageModal} />
-
-                {/* {image === '' ? (
-                    <ProfilePicture backgroundImage={defaultImage} handleClick={handleOpenImageModal} />
-                ) : (
-                    <ProfilePicture backgroundImage={image} handleClick={handleOpenImageModal} />
-                )} */}
-
-                {image === '' ? (
+                {!image ? (
                     <DefaultProfilePicture name={name} handleClick={handleOpenImageModal} />
                 ) : (
-                    <ProfilePicture backgroundImage={image} handleClick={handleOpenImageModal} />
+                    <ProfilePicture imageUrl={image} handleClick={handleOpenImageModal} />
                 )}
-
                 <SectionContainer>
                     {inputs}
                     <EditModal open={openEditModal} close={handleCloseEditModal} />
@@ -86,11 +73,12 @@ export const ProfilePage: FC = () => {
                     <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/profile/change-email')}>
                         Endre e-post
                     </LinkButton>
+                    {/* // TODO: check if login from email, Google or Vipps  */}
                     <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/profile/delete-account')}>
                         Slett konto
                     </LinkButton>
-                    {/* add functionality + check if login from email, Google or Vipps */}
                     {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
+                    {/* <LinkButton onClick={}>Koble fra Vipps-konto</LinkButton> */}
                 </SectionContainer>
             </PageContainer>
             <Outlet />
