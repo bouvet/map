@@ -80,14 +80,4 @@ export const loginServices = {
             }
         };
     },
-    changeEmail() {
-        return async () => {
-            try {
-                const changeEmail = await API.put('/');
-                console.log(changeEmail);
-            } catch (error) {
-                console.error('error', error);
-            }
-        };
-    },
 };

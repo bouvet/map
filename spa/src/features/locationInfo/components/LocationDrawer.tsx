@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, ReactElement, useCallback } from 'react';
 import { Global } from '@emotion/react';
-import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
+import { SwipeableDrawer, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import moment from 'moment';
@@ -14,6 +14,7 @@ import { StarRating } from '../../../components/StarRating/StarRating';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewTypeGet } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
+import { LinkButton } from '../../../components/UI';
 
 const drawerBleeding = 56;
 
@@ -102,14 +103,14 @@ export const SwipeableEdgeDrawer: FC = () => {
     const updateCurrentReviewsCallback = useCallback(() => {
         if (currentReviews) {
             const temp = currentReviews
-                .filter((item) => item.text)
+                .filter((item) => item.created) // was item.text
                 .map((item: IReviewTypeGet) => (
                     <Review
                         key={item.id}
                         date={moment(item.created).format('L')}
                         // @ts-ignore
                         name={item.creator?.firstName}
-                        age={moment(item.creator?.dob).fromNow(true)}
+                        age={moment(item.creator?.dob).fromNow(true)} // updating?
                         rating={item.rating}
                         review={item.text}
                     />
@@ -208,7 +209,9 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <b>Omtaler</b>
                         </ContentContainer>
                         {reviewList && reviewList}
-                        <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
+                        <LinkButton sx={{ width: 150 }} onClick={handleOpenAddReview}>
+                            Legg til omtale
+                        </LinkButton>
                         <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
                         <Snackbar
                             open={openSuccessMessage}

@@ -36,12 +36,17 @@ export const userServices = {
         };
     },
     editInfo(payload: IUserTypeEdit) {
-        return async () => {
+        return async (dispatch: AppDispatch) => {
             try {
                 const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log(editUser);
+
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
+                }, 500);
             } catch (error) {
                 console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             }
         };
     },

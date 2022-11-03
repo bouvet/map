@@ -118,7 +118,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         <Modal open={open}>
             <>
                 <Backdrop onClick={handleCloseAddReview} />
-                <form onSubmit={(e) => onSubmitHandler(e)}>
+                <form onSubmit={onSubmitHandler}>
                     <Box sx={AddReview}>
                         <Box
                             sx={{
@@ -161,7 +161,8 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                             Slett
                                         </Button>
                                         <Button
-                                            sx={{ textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                                            sx={{ textTransform: 'none' }}
+                                            style={{ color: `${MyTheme.colors.accent}` }}
                                             size="large"
                                             component="label"
                                             startIcon={<Autorenew />}
@@ -178,7 +179,8 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
                                 </>
                             ) : (
                                 <Button
-                                    sx={{ padding: 2, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                                    sx={{ padding: 2, textTransform: 'none' }}
+                                    style={{ color: `${MyTheme.colors.accent}` }}
                                     component="label"
                                     startIcon={<AddAPhoto />}
                                 >

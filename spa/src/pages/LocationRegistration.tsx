@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BackButton } from '../components/UI';
+import { BackButton, PageContainer } from '../components/UI';
 import {
     PageHeader,
     ProgressBar,
@@ -133,58 +133,60 @@ export const LocationRegistration: FC = () => {
                 <Loading />
             ) : (
                 <>
-                    <RegistrationHeader>
-                        <BackButton onClick={() => navigate('/')} />
-                        <PageHeader>Legg til treningssted</PageHeader>
-                        <ProgressBar pageIndex={pageIndex} />
-                    </RegistrationHeader>
-                    <RegistrationContentWrapper>
-                        {pageIndex === 1 && <Information />}
-                        {pageIndex === 2 && <ImageUploader />}
-                        {pageIndex === 0 ? (
-                            <>
-                                <MapView handleClick={handleGetLocation} />
-                                <CenterPin>📍</CenterPin>
-                                {currentMapCenter.lat ? (
-                                    <RegistrationButton
+                    <PageContainer>
+                        <RegistrationHeader>
+                            <BackButton onClick={() => navigate('/')} />
+                            <PageHeader>Legg til treningssted</PageHeader>
+                            <ProgressBar pageIndex={pageIndex} />
+                        </RegistrationHeader>
+                        <RegistrationContentWrapper>
+                            {pageIndex === 1 && <Information />}
+                            {pageIndex === 2 && <ImageUploader />}
+                            {pageIndex === 0 ? (
+                                <>
+                                    <MapView handleClick={handleGetLocation} />
+                                    <CenterPin>📍</CenterPin>
+                                    {currentMapCenter.lat ? (
+                                        <RegistrationButton
+                                            text={MyTheme.colors.lightBase}
+                                            background={MyTheme.colors.accent}
+                                            onClick={handleForwardClick}
+                                        >
+                                            Velg punkt
+                                        </RegistrationButton>
+                                    ) : (
+                                        <RegistrationButton disabled text={MyTheme.colors.lightBase} background={MyTheme.colors.accent}>
+                                            Velg punkt
+                                        </RegistrationButton>
+                                    )}
+                                </>
+                            ) : (
+                                <RegistrationButtonWrapper>
+                                    <RegistrationButtonLeft
+                                        text={MyTheme.colors.lightBase}
+                                        background={MyTheme.colors.darkBase}
+                                        onClick={handleBackClick}
+                                    >
+                                        Tilbake
+                                    </RegistrationButtonLeft>
+
+                                    <RegistrationButtonRight
                                         text={MyTheme.colors.lightBase}
                                         background={MyTheme.colors.accent}
+                                        disabled={
+                                            !(currentTitle && currentCategories[0] && currentDescription) ||
+                                            currentTitle.length < 5 ||
+                                            currentDescription.length < 20
+                                        }
                                         onClick={handleForwardClick}
                                     >
-                                        Velg punkt
-                                    </RegistrationButton>
-                                ) : (
-                                    <RegistrationButton disabled text={MyTheme.colors.lightBase} background={MyTheme.colors.accent}>
-                                        Velg punkt
-                                    </RegistrationButton>
-                                )}
-                            </>
-                        ) : (
-                            <RegistrationButtonWrapper>
-                                <RegistrationButtonLeft
-                                    text={MyTheme.colors.lightBase}
-                                    background={MyTheme.colors.darkBase}
-                                    onClick={handleBackClick}
-                                >
-                                    Tilbake
-                                </RegistrationButtonLeft>
-
-                                <RegistrationButtonRight
-                                    text={MyTheme.colors.lightBase}
-                                    background={MyTheme.colors.accent}
-                                    disabled={
-                                        !(currentTitle && currentCategories[0] && currentDescription) ||
-                                        currentTitle.length < 5 ||
-                                        currentDescription.length < 20
-                                    }
-                                    onClick={handleForwardClick}
-                                >
-                                    {pageIndex === 1 && 'Videre'}
-                                    {pageIndex === 2 && 'Fullfør'}
-                                </RegistrationButtonRight>
-                            </RegistrationButtonWrapper>
-                        )}
-                    </RegistrationContentWrapper>
+                                        {pageIndex === 1 && 'Videre'}
+                                        {pageIndex === 2 && 'Fullfør'}
+                                    </RegistrationButtonRight>
+                                </RegistrationButtonWrapper>
+                            )}
+                        </RegistrationContentWrapper>
+                    </PageContainer>
                 </>
             )}
         </>

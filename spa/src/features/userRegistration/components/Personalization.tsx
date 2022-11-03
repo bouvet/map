@@ -17,9 +17,9 @@ export const Personalization: FC = () => {
         <RegisterButtonFavorites key={item.name} id={item.id} text={item.name} emoji={item.emoji} />
     ));
 
-    useEffect(() => {
-        dispatch(mapServices.getLocations());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(mapServices.getLocations());
+    // }, [dispatch]);
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

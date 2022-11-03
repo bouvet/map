@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState, FC, MutableRefObject } from 'react';
-import { Map as ReactMap } from 'react-map-gl';
+import { useCallback, useEffect, useRef, useState, FC, Ref } from 'react';
+import { Map as ReactMap, MapRef } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ILatLong, ILocation } from '../../../utils/types.d';
@@ -49,30 +49,24 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
         };
     }, [currentUserLocation, dispatch, hasUserLocation]);
 
-    const mapRef: MutableRefObject<null> = useRef(null);
-
-    const calculateCameraView = () => {
-        // @ts-ignore
-        // console.log(mapRef.current.getCenter());
-    };
+    const mapRef: Ref<MapRef> = useRef(null);
 
     const onMapLoad = useCallback(
         (e: any) => {
-            if (mapRef.current) {
-                // @ts-ignore
+            if (mapRef.current !== null) {
                 mapRef.current.on('move', () => {
                     setViewState(e.viewState);
-                    calculateCameraView();
                 });
-                // @ts-ignore
+
                 mapRef.current.on('moveend', () => {
-                    // @ts-ignore
-                    const currentCenter = mapRef.current.getCenter();
-                    const currentCenterObj: ILatLong = {
-                        long: currentCenter.lng,
-                        lat: currentCenter.lat,
-                    };
-                    dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
+                    if (mapRef.current) {
+                        const currentCenter = mapRef.current.getCenter();
+                        const currentCenterObj: ILatLong = {
+                            long: currentCenter.lng,
+                            lat: currentCenter.lat,
+                        };
+                        dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
+                    }
                 });
             }
         },

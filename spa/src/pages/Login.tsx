@@ -10,7 +10,7 @@ export const Login: FC = () => {
     const navigate = useNavigate();
 
     if (isAuthenticated) {
-        return <Navigate replace to="/" />;
+        return <Navigate to="/" replace />;
     }
 
     return (
