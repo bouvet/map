@@ -35,10 +35,12 @@ public static class ModelBuilderExtensions
       {
         Id = Guid.NewGuid(),
         Email = "verden.venter.app@gmail.com",
+        Password = BCrypt.Net.BCrypt.HashPassword("123123123"),
         FirstName = "Verden",
         LastName = "Venter",
         Registered = currentTime,
-        AccessToken = "Admin"
+        AccessToken = "Admin",
+        DOB = currentTime
       }
     );
   }

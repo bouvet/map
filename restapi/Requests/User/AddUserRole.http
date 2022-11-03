@@ -3,6 +3,6 @@ Content-Type: application/json
 Authorization: Bearer {{admintoken}}
 
 {
-  "userId": "6281e1e8-3d85-45b8-bba2-594dbf2969cb",
-  "roleId": "a518c442-02ea-420b-1d25-08daa6be5af1"
+  "userId": "f1c8c9b1-f4fa-4927-ae3f-39aa0c61f082",
+  "roleId": "f4e24c36-162b-4df2-420d-08dab8b3a485"
 }

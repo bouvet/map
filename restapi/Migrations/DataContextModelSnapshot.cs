@@ -290,6 +290,26 @@ namespace restapi.Migrations
                     b.HasIndex("EditorId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8d3cf447-1d52-4b94-9715-6ea654ae3164"),
+                            Created = new DateTime(2022, 10, 28, 12, 6, 54, 775, DateTimeKind.Unspecified).AddTicks(6994),
+                            Name = "Administrator"
+                        },
+                        new
+                        {
+                            Id = new Guid("ede81988-93fe-4b65-938b-0c3c5594fcef"),
+                            Created = new DateTime(2022, 10, 28, 12, 6, 54, 775, DateTimeKind.Unspecified).AddTicks(6994),
+                            Name = "Registering"
+                        },
+                        new
+                        {
+                            Id = new Guid("1048fc7f-e24a-473e-a5f6-749cc31696a0"),
+                            Created = new DateTime(2022, 10, 28, 12, 6, 54, 775, DateTimeKind.Unspecified).AddTicks(6994),
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("restapi.Entities.User", b =>
@@ -355,6 +375,22 @@ namespace restapi.Migrations
                     b.HasIndex("WebpImageId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0d18b0c1-e52f-40bc-a461-7796c200ade0"),
+                            AccessToken = "Admin",
+                            AuthenticationMethod = "Email",
+                            DOB = new DateTime(2022, 10, 28, 12, 6, 54, 775, DateTimeKind.Unspecified).AddTicks(6994),
+                            Email = "verden.venter.app@gmail.com",
+                            FirstName = "Verden",
+                            LastName = "Venter",
+                            Password = "$2a$11$tjCMprXXeLE7MTK3Oe7ks.42CyKMMM7spSuDCS5nkGXCFRl2q0SI6",
+                            PhoneNumber = 0,
+                            PostalCode = 0,
+                            Registered = new DateTime(2022, 10, 28, 12, 6, 54, 775, DateTimeKind.Unspecified).AddTicks(6994)
+                        });
                 });
 
             modelBuilder.Entity("RoleUser", b =>
