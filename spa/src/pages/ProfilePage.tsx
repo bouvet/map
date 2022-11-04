@@ -28,18 +28,17 @@ export const ProfilePage: FC = () => {
         }
     });
     const image = user?.webpImage?.cdnUri;
-    console.log('bilde', image);
     const name = `${firstName} ${lastName}`;
 
     moment.locale('nb');
     const InputContent: InputProps[] = useMemo(
         () => [
-            { type: 'text', value: `${firstName} ${lastName}`, icon: 'person' },
-            { type: 'text', value: moment(dob).format('L'), icon: 'calendar_month' },
-            { type: 'email', value: email, icon: 'mail' },
-            { type: 'text', value: categories, icon: 'favorite_border' },
+            { value: `${firstName} ${lastName}`, icon: 'person' },
+            { value: moment(dob).format('L'), icon: 'calendar_month' },
+            { value: email, icon: 'mail' },
+            { value: categories, icon: 'favorite_border' },
         ],
-        [dob, email, categories, firstName, lastName],
+        [categories, dob, email, firstName, lastName],
     );
 
     const inputs = InputContent.map((item: InputProps) => <Input key={item.icon} {...item} />);

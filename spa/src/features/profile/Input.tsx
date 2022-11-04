@@ -1,8 +1,6 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { GoogleIcon } from '../../components/Navigation/GoogleIcon';
-import { MyTheme } from '../../styles/global';
 
 const Line = styled.hr`
     width: 100%;
@@ -20,11 +18,6 @@ const InputField = styled.input`
     border-radius: 10px;
     &:focus {
         outline: none;
-        background-color: hsl(0, 0%, 85.49019607843137%);
-        text-decoration: underline;
-    }
-    &:not(:focus):invalid {
-        outline: 1px solid red;
     }
 `;
 
@@ -36,24 +29,13 @@ const InputWrapper = styled.div`
     align-items: center;
 `;
 
-export const ProfileLink = styled(Link)`
-    color: ${MyTheme.colors.accent};
-    text-decoration: underline;
-    font-size: ${MyTheme.fontSize.body};
-    width: 80%;
-    margin-inline: 10%;
-    padding-block: 10px;
-`;
-
 export interface InputProps {
-    type: string;
     icon: string;
     value?: string;
-    setter?: Function;
 }
 
 export const Input: FC<InputProps> = (props) => {
-    const { type, icon, value, setter } = props;
+    const { icon, value } = props;
 
     return (
         <>
@@ -61,11 +43,7 @@ export const Input: FC<InputProps> = (props) => {
                 <GoogleIcon color="black" className="material-symbols-outlined">
                     {icon}
                 </GoogleIcon>
-                {setter ? (
-                    <InputField type={type} value={value} required onChange={(e) => setter(e.target.value)} />
-                ) : (
-                    <InputField type={type} value={value} readOnly />
-                )}
+                <InputField value={value} readOnly />
             </InputWrapper>
             <Line />
         </>
