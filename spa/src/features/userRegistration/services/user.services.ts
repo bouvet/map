@@ -38,8 +38,9 @@ export const userServices = {
     editInfo(payload: IUserTypeEdit) {
         return async (dispatch: AppDispatch) => {
             try {
-                const editUser = await API.put(`/users/${payload.id}`, { headers: { 'Content-Type': 'multipart/form-data' } });
+                const editUser = await API.put(`/users/${payload.id}`, payload, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log(editUser);
+                console.log('Payload', payload);
 
                 setTimeout(() => {
                     dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));

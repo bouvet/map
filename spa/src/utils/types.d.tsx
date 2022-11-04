@@ -153,8 +153,7 @@ export interface IUserTypeEdit {
     dob?: string;
     email?: string;
     favoriteCategoryIds?: Array<string>;
-    // in database?
-    image?: File;
+    profileImage?: File;
 }
 
 export interface IUser {
