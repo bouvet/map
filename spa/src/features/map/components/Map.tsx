@@ -5,6 +5,7 @@ import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ILatLong, ILocation } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
+import { mapServices } from '../services/map.services';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -32,6 +33,7 @@ export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
     }, [currentMapCenter.lat, currentMapCenter.long]);
 
     useEffect(() => {
+        dispatch(mapServices.getLocations());
         setViewStateCurrentMapCenter();
     }, [dispatch, setViewStateCurrentMapCenter]);
 
