@@ -88,7 +88,8 @@ export const PersonalInfo: FC = () => {
         if (lastName) {
             setInitialLastName(lastName);
         }
-    }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>

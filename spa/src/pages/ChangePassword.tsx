@@ -34,7 +34,6 @@ export const ChangePassword: FC = () => {
         const successStatus: boolean = await dispatch(loginServices.getToken({ email: enteredEmail }));
         if (successStatus) {
             navigate(-1);
-            console.log('sjekk', enteredEmail);
         }
     };
 
@@ -45,7 +44,8 @@ export const ChangePassword: FC = () => {
         if (email) {
             setInitialEmail(email);
         }
-    }, [setInitialEmail, user?.email, email]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <PageContainer>
