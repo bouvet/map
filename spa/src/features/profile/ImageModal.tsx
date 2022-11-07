@@ -10,8 +10,7 @@ import { SubmitButton } from '../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { Form } from '../../components/Form/Form';
-
-// TODO: styling
+import { IUserTypeEdit } from '../../utils/types.d';
 
 interface ModalProps {
     open: boolean;
@@ -33,18 +32,18 @@ const ModalStyle = {
 };
 
 const ModalContent = styled.div`
-    width: 80%;
-    // height: calc(80vh - 250px);
-    // margin-inline: 10%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0px auto;
 `;
 
 const ButtonWrapper = styled.div`
-    // display: flex;
+    display: flex;
     flex-direction: row;
+    justify-content: center;
 `;
 
 interface ProfilePictureImageProps {
@@ -52,12 +51,10 @@ interface ProfilePictureImageProps {
 }
 
 export const ProfilePicture = styled.div<ProfilePictureImageProps>`
-    // position: absolute;
-    max-width: 90%;
-    max-height: 60vh;
+    max-width: 80%;
+    max-height: 40vh;
+    margin-left: 10%;
     aspect-ratio: 1;
-    // height: 200px;
-    // width: 200px;
     border-radius: 50%;
     background-image: url(${({ imageUrl }) => imageUrl});
     background-position: center;
@@ -99,10 +96,15 @@ export const ImageModal: FC<ModalProps> = ({ open, close }) => {
     };
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-        // @ts-ignore
-        dispatch(userServices.editInfo({ id: user?.id, image }));
         e.preventDefault();
-        console.log('Bilde er oppdatert');
+
+        const payload: IUserTypeEdit = {
+            // @ts-ignore
+            id: user?.id,
+            profileImage: image,
+        };
+
+        dispatch(userServices.editInfo(payload));
         handleCloseImageModal();
     };
 

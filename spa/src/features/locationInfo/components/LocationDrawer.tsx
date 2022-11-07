@@ -103,14 +103,15 @@ export const SwipeableEdgeDrawer: FC = () => {
     const updateCurrentReviewsCallback = useCallback(() => {
         if (currentReviews) {
             const temp = currentReviews
-                .filter((item) => item.created) // was item.text
+                .filter((item) => item.text)
+                .sort((itemA, itemB) => (itemA.created > itemB.created ? -1 : 1))
                 .map((item: IReviewTypeGet) => (
                     <Review
                         key={item.id}
                         date={moment(item.created).format('L')}
                         // @ts-ignore
                         name={item.creator?.firstName}
-                        age={moment(item.creator?.dob).fromNow(true)} // updating?
+                        age={moment(item.creator?.dob).fromNow(true)}
                         rating={item.rating}
                         review={item.text}
                     />
@@ -123,6 +124,8 @@ export const SwipeableEdgeDrawer: FC = () => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.webpImage)
+                // @ts-ignore
+                .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
                 .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (currentlySelectedLocation.properties.webpImage.cdnUri) {

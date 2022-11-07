@@ -1,13 +1,15 @@
 import { FC, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { SubmitButton, PageContainer, PageTitle, SectionContainer } from '../../components/UI';
+import { SubmitButton, PageContainer, PageTitle, SectionContainer, BackButton } from '../../components/UI';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { categoryServices } from './services/category.services';
 
 export const CreateCategory: FC = () => {
     const dispatch = useStateDispatch();
+    const navigate = useNavigate();
 
     const {
         value: name,
@@ -38,6 +40,7 @@ export const CreateCategory: FC = () => {
 
     return (
         <PageContainer>
+            <BackButton onClick={() => navigate('/admin')} />
             <SectionContainer>
                 <PageTitle>Legg til kategori</PageTitle>
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
@@ -60,7 +63,7 @@ export const CreateCategory: FC = () => {
                     <SubmitButton
                         type="submit"
                         variant="contained"
-                        sx={{ marginTop: 'auto' }}
+                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
                         disabled={nameInputHasError || emojiInputHasError}
                     >
                         Legg til

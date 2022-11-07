@@ -108,14 +108,12 @@ export const LocationBlock: FC<LocationProps> = (props) => {
 
     return (
         <LocationBlockWrapper>
-            <LocationSplitWrapper>
+            <LocationSplitWrapper onClick={() => setIsActive(!isActive)}>
                 <LeftFlex>
                     <Title>{title.length < 25 ? title : `${title.slice(0, 22)}...`}</Title>
                 </LeftFlex>
                 <RightFlex>
-                    <Icon className="material-symbols-outlined" onClick={() => setIsActive(!isActive)}>
-                        {isActive ? 'expand_less' : 'expand_more'}
-                    </Icon>
+                    <Icon className="material-symbols-outlined">{isActive ? 'expand_less' : 'expand_more'}</Icon>
                 </RightFlex>
             </LocationSplitWrapper>
             {isActive && (
