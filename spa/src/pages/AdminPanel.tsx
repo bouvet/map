@@ -1,6 +1,7 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LeftFlex, RightFlex, SplitWrapper } from '../components/Form/Input';
+import { LinkButton } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { FilterSelect } from '../features/adminPanel/FilterSelect';
 import { LocationBlock, LocationWrapper } from '../features/adminPanel/LocationBlock';
@@ -44,6 +45,7 @@ export const AdminPanel: FC = () => {
                 <SplitWrapper>
                     <LeftFlex>
                         <BackButton onClick={() => navigate('/')} />
+                        <LinkButton onClick={() => navigate('/admin/create-category')}>Opprett kategori</LinkButton>
                     </LeftFlex>
                     <RightFlex>
                         <FilterSelect setter={setSelectedFilter} />

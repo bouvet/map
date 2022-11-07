@@ -153,8 +153,7 @@ export interface IUserTypeEdit {
     dob?: string;
     email?: string;
     favoriteCategoryIds?: Array<string>;
-    // in database?
-    image?: File;
+    profileImage?: File;
 }
 
 export interface IUser {
@@ -210,7 +209,7 @@ export interface IUser {
         },
     ];
     // in database?
-    originalImage?: {
+    originalProfileImage?: {
         id: string;
         originalFileName: string;
         blobUri: string;
@@ -219,7 +218,7 @@ export interface IUser {
         uploaded: string;
         originalImageId: null;
     };
-    webpImage?: {
+    webpProfileImage?: {
         id: string;
         originalFileName: string;
         blobUri: string;

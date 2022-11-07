@@ -13,7 +13,7 @@ import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { Label } from '../../components/Form/Input';
 import { userActions } from '../../store/state/user.state';
 import { snackbarActions } from '../../store/state/snackbar.state';
-import { ICategory } from '../../utils/types.d';
+import { ICategory, IUserTypeEdit } from '../../utils/types.d';
 import { RegisterButtonFavorites } from '../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../components/Filter/FilterMenu';
 import { userServices } from '../userRegistration/services/user.services';
@@ -53,6 +53,8 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
     //         categories = c.name;
     //     }
     // });
+
+    const { favoriteCategoryIds } = useStateSelector((state) => state.user);
 
     const { categories } = useStateSelector((state) => state.map);
     const mappedFilter = categories.map((item: ICategory) => (
@@ -94,16 +96,15 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
 
             if (!enteredFirstNameIsValid || !enteredLastNameIsValid) return;
 
-            dispatch(
-                userServices.editInfo({
-                    id: user.id,
-                    firstName: enteredFirstName,
-                    lastName: enteredLastName,
-                    dob,
-                    // favoriteCategoryIds: categories,
-                }),
-            );
+            const payload: IUserTypeEdit = {
+                id: user.id,
+                firstName: enteredFirstName,
+                lastName: enteredLastName,
+                dob,
+                favoriteCategoryIds,
+            };
 
+            dispatch(userServices.editInfo(payload));
             close();
         }
     };
@@ -124,7 +125,8 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
         if (lastName) {
             setInitialLastName(lastName);
         }
-    }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleCloseEditModal = () => {
         close();

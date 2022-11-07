@@ -56,6 +56,7 @@ export const googleAuthServices = {
             } catch (error: any) {
                 console.log(error);
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(authActions.setLoading(false)); // redirect back to login-page?
             } finally {
                 clearTimeout(timer);
             }
