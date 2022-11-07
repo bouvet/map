@@ -1,10 +1,11 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useStateDispatch } from '../../../hooks/useRedux';
 import { GoogleIcon } from '../../../components/Navigation/GoogleIcon';
 import { Fab as FabButton } from '../../../components/UI';
+import { useStateDispatch } from '../../../hooks/useRedux';
 import { authActions } from '../../../store/state/auth.state';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
 
 const fabSize = 42;
@@ -222,8 +223,10 @@ export const GuestMenu: FC = () => {
 export const UserMenu: FC = () => {
     const [isActive, setIsActive] = useState(false);
     const dispatch = useStateDispatch();
-    const handleLogOut = () => dispatch(authActions.logOut());
-
+    const handleLogOut = () => {
+        dispatch(authActions.logOut());
+        dispatch(snackbarActions.setNotify({ message: 'Du er logget ut', severity: 'info' }));
+    };
     const handleClick = () => {
         setIsActive(!isActive);
     };
@@ -285,8 +288,10 @@ export const UserMenu: FC = () => {
 export const AdminMenu: FC = () => {
     const [isActive, setIsActive] = useState(false);
     const dispatch = useStateDispatch();
-    const handleLogOut = () => dispatch(authActions.logOut());
-
+    const handleLogOut = () => {
+        dispatch(authActions.logOut());
+        dispatch(snackbarActions.setNotify({ message: 'Du er logget ut', severity: 'info' }));
+    };
     const handleClick = () => {
         setIsActive(!isActive);
     };
