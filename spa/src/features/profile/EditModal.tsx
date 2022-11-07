@@ -105,7 +105,6 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
             };
 
             dispatch(userServices.editInfo(payload));
-            console.log(payload);
             close();
         }
     };

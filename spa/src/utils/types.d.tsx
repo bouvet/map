@@ -209,7 +209,7 @@ export interface IUser {
         },
     ];
     // in database?
-    originalImage?: {
+    originalProfileImage?: {
         id: string;
         originalFileName: string;
         blobUri: string;
@@ -218,7 +218,7 @@ export interface IUser {
         uploaded: string;
         originalImageId: null;
     };
-    webpImage?: {
+    webpProfileImage?: {
         id: string;
         originalFileName: string;
         blobUri: string;

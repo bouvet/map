@@ -14,10 +14,13 @@ export const ProfilePage: FC = () => {
 
     const { user } = useStateSelector((state) => state.auth);
 
+    console.log('user from state', user);
+
     const firstName = user?.firstName;
     const lastName = user?.lastName;
     const dob = user?.dob;
     const email = user?.email;
+    // const categories = user?.favoriteCategories;
     let categories = '';
     user?.favoriteCategories?.forEach((c, index) => {
         // @ts-ignore
@@ -27,7 +30,7 @@ export const ProfilePage: FC = () => {
             categories = c.name;
         }
     });
-    const image = user?.webpImage?.cdnUri;
+    const image = user?.webpProfileImage?.cdnUri;
     const name = `${firstName} ${lastName}`;
 
     moment.locale('nb');

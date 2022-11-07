@@ -111,7 +111,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                         date={moment(item.created).format('L')}
                         // @ts-ignore
                         name={item.creator?.firstName}
-                        age={moment(item.creator?.dob).fromNow(true)} // updating?
+                        age={moment(item.creator?.dob).fromNow(true)}
                         rating={item.rating}
                         review={item.text}
                     />
