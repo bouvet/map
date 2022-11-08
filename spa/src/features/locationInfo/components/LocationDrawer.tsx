@@ -96,7 +96,7 @@ export const SwipeableEdgeDrawer: FC = () => {
 
     useEffect(() => {
         dispatch(reviewServices.getReviews(id));
-    }, [id, dispatch]);
+    }, [dispatch, id]);
 
     moment.locale('nb');
 
@@ -149,6 +149,10 @@ export const SwipeableEdgeDrawer: FC = () => {
     const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
     const handleOpenSuccessMessage = () => setOpenSuccessMessage(true);
     const handleCloseSuccessMessage = () => setOpenSuccessMessage(false);
+
+    const [openErrorMessage, setOpenErrorMessage] = useState(false);
+    const handleOpenErrorMessage = () => setOpenErrorMessage(true);
+    const handleCloseErrorMessage = () => setOpenErrorMessage(false);
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -215,7 +219,12 @@ export const SwipeableEdgeDrawer: FC = () => {
                         <LinkButton sx={{ width: 150 }} onClick={handleOpenAddReview}>
                             Legg til omtale
                         </LinkButton>
-                        <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
+                        <ReviewModal
+                            open={openAddReview}
+                            close={handleCloseAddReview}
+                            success={handleOpenSuccessMessage}
+                            error={handleOpenErrorMessage}
+                        />
                         <Snackbar
                             open={openSuccessMessage}
                             autoHideDuration={3000}
@@ -223,6 +232,14 @@ export const SwipeableEdgeDrawer: FC = () => {
                             sx={{ display: 'inline' }}
                         >
                             <Alert severity="success">Innsending fullført!</Alert>
+                        </Snackbar>
+                        <Snackbar
+                            open={openErrorMessage}
+                            autoHideDuration={3000}
+                            onClose={handleCloseErrorMessage}
+                            sx={{ display: 'inline' }}
+                        >
+                            <Alert severity="error">Noe gikk galt</Alert>
                         </Snackbar>
                     </ContentWrapper>
                 </SwipeableDrawer>
