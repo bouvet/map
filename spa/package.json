@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@microsoft/applicationinsights-react-js": "^3.4.0",
+    "@microsoft/applicationinsights-web": "^2.8.9",
     "@mui/base": "^5.0.0-alpha.104",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
