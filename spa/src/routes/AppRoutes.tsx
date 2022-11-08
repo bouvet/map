@@ -1,7 +1,18 @@
 import { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { App } from '../App';
+import { CreateCategory } from '../features/adminPanel';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
+import { ChangeEmail, DeleteAccount } from '../features/profile';
+import {
+    CreatePassword,
+    EmailConfirmation,
+    EmailInput,
+    Onboarding,
+    PersonalInfo,
+    PersonalInfoGoogle,
+    Personalization,
+} from '../features/userRegistration';
 import {
     AdminPanel,
     AuthenticationSpinner,
@@ -13,17 +24,7 @@ import {
     Register,
     ResetPassword,
 } from '../pages';
-import {
-    CreatePassword,
-    EmailConfirmation,
-    EmailInput,
-    Onboarding,
-    PersonalInfo,
-    PersonalInfoGoogle,
-    Personalization,
-} from '../features/userRegistration';
-import { ChangeEmail, DeleteAccount } from '../features/profile';
-import { CreateCategory } from '../features/adminPanel';
+import { RegisterWorkout } from '../pages/RegisterWorkout';
 
 export const AppRoutes: FC = () => (
     <Routes>
@@ -59,6 +60,16 @@ export const AppRoutes: FC = () => (
                     element={
                         <RequireAuth>
                             <LocationRegistration />
+                        </RequireAuth>
+                    }
+                />
+            </Route>
+            <Route path="register-workout">
+                <Route
+                    index
+                    element={
+                        <RequireAuth>
+                            <RegisterWorkout />
                         </RequireAuth>
                     }
                 />

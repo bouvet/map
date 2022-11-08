@@ -235,7 +235,7 @@ export const UserMenu: FC = () => {
         <>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
@@ -247,13 +247,25 @@ export const UserMenu: FC = () => {
             </Fab>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
                 <Link to="/location-registration">
                     <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                         add
+                    </GoogleIcon>
+                </Link>
+            </Fab>
+            <Fab
+                style={{
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
+                }}
+            >
+                <Link to="/register-workout">
+                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
+                        fitness_center
                     </GoogleIcon>
                 </Link>
             </Fab>
@@ -300,7 +312,7 @@ export const AdminMenu: FC = () => {
         <>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 5 + fabSize * 4}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
@@ -312,7 +324,7 @@ export const AdminMenu: FC = () => {
             </Fab>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
@@ -324,13 +336,25 @@ export const AdminMenu: FC = () => {
             </Fab>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
                 <Link to="/location-registration">
                     <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                         add
+                    </GoogleIcon>
+                </Link>
+            </Fab>
+            <Fab
+                style={{
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
+                }}
+            >
+                <Link to="/register-workout">
+                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
+                        fitness_center
                     </GoogleIcon>
                 </Link>
             </Fab>
