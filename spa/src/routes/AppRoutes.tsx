@@ -13,6 +13,7 @@ import {
     PersonalInfoGoogle,
     Personalization,
 } from '../features/userRegistration';
+import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
 import {
     AdminPanel,
     AuthenticationSpinner,
@@ -70,6 +71,17 @@ export const AppRoutes: FC = () => (
                     element={
                         <RequireAuth>
                             <RegisterWorkout />
+                        </RequireAuth>
+                    }
+                />
+            </Route>
+
+            <Route path="create-workout">
+                <Route
+                    index
+                    element={
+                        <RequireAuth>
+                            <CreateWorkout />
                         </RequireAuth>
                     }
                 />
