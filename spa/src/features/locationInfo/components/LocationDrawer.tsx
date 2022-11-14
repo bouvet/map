@@ -1,20 +1,22 @@
-import { FC, useState, useEffect, ReactElement, useCallback } from 'react';
 import { Global } from '@emotion/react';
-import { SwipeableDrawer, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
-import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
+import { Alert, Box, CssBaseline, Snackbar, SwipeableDrawer } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { styled as materialStyled, StyledEngineProvider } from '@mui/material/styles';
 import moment from 'moment';
 import 'moment/locale/nb';
+import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { MyTheme } from '../../../styles/global';
+import { StarRating } from '../../../components/StarRating/StarRating';
+import { LinkButton, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { mapActions } from '../../../store/state/map.state';
+import { snackbarActions } from '../../../store/state/snackbar.state';
+import { MyTheme } from '../../../styles/global';
+import { IReviewTypeGet } from '../../../utils/types.d';
+import { reviewServices } from '../services/locationinfo.services';
+import { AddSessionModal } from './AddSessionModal';
 import { Review } from './Review';
 import { ReviewModal } from './ReviewModal';
-import { StarRating } from '../../../components/StarRating/StarRating';
-import { reviewServices } from '../services/locationinfo.services';
-import { IReviewTypeGet } from '../../../utils/types.d';
-import { mapActions } from '../../../store/state/map.state';
-import { LinkButton } from '../../../components/UI';
 
 const drawerBleeding = 56;
 
@@ -91,6 +93,14 @@ export const SwipeableEdgeDrawer: FC = () => {
     const locationDescription = currentlySelectedLocation.properties.description;
     const locationRating = currentlySelectedLocation.properties.rating;
     const { id } = currentlySelectedLocation;
+    const Dato = new Date();
+    const [sessions, setSessions] = useState([
+        {
+            title: currentlySelectedLocation.properties.title,
+            category: currentlySelectedLocation.properties.category[0].name,
+            date: Dato.toDateString(),
+        },
+    ]);
 
     const dispatch = useStateDispatch();
 
@@ -158,7 +168,41 @@ export const SwipeableEdgeDrawer: FC = () => {
         dispatch(mapActions.setHomeMarkerFocus(false));
         dispatch(mapActions.setPopupVisibility(false));
         dispatch(mapActions.setSelectedMarker(''));
+
+        // const handleSomeButtonClick = (prev) => {
+        // setSessions((prev) => ...prev, sessions?)
+        // }
+
+        // session array bør inneholde navn på lokasjon, dato for registrering og kategori på trening
+
+        // for å kun vise antal økter per lokasjon så kan man kjøre en array.filter() metode på navn for å kune hente ut data i arrayet
+        // som passer med lokasjonsnavnet på kartet.
+
+        // for (let i = 0; i < sessions.length; i++) {
+        //
+        // }
     };
+
+    const handleNewWorkoutEvent = () => {
+        setSessions([
+            ...sessions,
+            {
+                title: currentlySelectedLocation.properties.title,
+                category: currentlySelectedLocation.properties.category[0].name,
+                date: Dato.toDateString(),
+            },
+        ]);
+    };
+
+    const [openSessionModal, setOpenSessionModal] = useState(false);
+    const handleSessionModalOpen = () => setOpenSessionModal(true);
+    const handleSessionModalClose = () => setOpenSessionModal(false);
+    const [addedNewSession, SetAddedNewSession] = useState(false);
+    const handleSuccessMessageOpen = () => {
+        SetAddedNewSession(true);
+        dispatch(snackbarActions.setNotify({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+    };
+    // const handleSuccessMessageClose = () => SetAddedNewSession(false);
 
     return (
         <StyledEngineProvider>
@@ -206,6 +250,39 @@ export const SwipeableEdgeDrawer: FC = () => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
+                        <SubmitButton
+                            type="submit"
+                            variant="contained"
+                            style={{ height: 35, width: 100, marginTop: '2%' }}
+                            onClick={() => {
+                                handleSessionModalOpen();
+                            }}
+                        >
+                            Ny økt
+                        </SubmitButton>
+                        <AddSessionModal
+                            open={openSessionModal}
+                            close={handleSessionModalClose}
+                            locationTitle={locationTitle}
+                            handleNewSession={handleNewWorkoutEvent}
+                            sessions={sessions}
+                            success={handleSuccessMessageOpen}
+                        />
+                        {/* <Snackbar
+                            open={addedNewSession}
+                            onClose={handleSuccessMessageClose}
+                            autoHideDuration={3000}
+                            sx={{ display: 'inline' }}
+                        >
+                            <Alert severity="success">Ny treningsøkt registrert!</Alert>
+                        </Snackbar> */}
+                        <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10, marginBottom: -20 }}>
+                            <p>Antall økter: </p>
+                            <span role="img" aria-label="flexed biceps">
+                                💪
+                            </span>
+                            <p>{sessions.length}</p>
+                        </div>
                         <ImageContainer>{imageList && imageList}</ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>

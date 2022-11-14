@@ -1,5 +1,5 @@
 import Slide from '@mui/material/Slide';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { FilterButton } from '../components/Filter/FilterButtons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
 import { Popup, PopupCard } from '../components/Popup/Popup';
@@ -44,6 +44,13 @@ export const Home: FC = () => {
             });
         }
     };
+
+    useEffect(() => {
+        document.body.style.overflowY = 'hidden';
+        return () => {
+            document.body.style.overflowY = 'auto';
+        };
+    }, []);
 
     return (
         <SectionContainer style={{ height: '100%', width: '100%' }}>
