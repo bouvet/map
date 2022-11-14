@@ -31,7 +31,7 @@ export const App = () => {
 
     return (
         <PageContainer id="PageContainer">
-            {loading && <FullPageSpinner />}
+            {/* {loading && <FullPageSpinner />} */}
             <Outlet />
             <CustomizedSnackbars />
         </PageContainer>

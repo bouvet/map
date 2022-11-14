@@ -84,7 +84,8 @@ export const ImageUploader: FC = () => {
                 </>
             ) : (
                 <Button
-                    sx={{ padding: 7, textTransform: 'none', color: `${MyTheme.colors.accent}` }}
+                    sx={{ padding: 7, textTransform: 'none' }}
+                    style={{ color: `${MyTheme.colors.accent}` }}
                     component="label"
                     startIcon={<AddAPhoto />}
                 >

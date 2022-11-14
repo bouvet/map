@@ -22,7 +22,9 @@ export const DialogButton: FC = () => {
             <Dialog open={open}>
                 <DialogTitle id="alert-dialog-title">Avbryt registrering</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">Sikker på at du ønsker å avslutte registreringen?</DialogContentText>
+                    <DialogContentText id="alert-dialog-description">
+                        Er du sikker på at du ønsker å avslutte registreringen?
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Ja</Button>

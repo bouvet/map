@@ -28,6 +28,8 @@ export const PersonalInfo: FC = () => {
     const handleChangeDob = (timestamp: Date | null) => {
         if (timestamp !== null) {
             dispatch(userActions.setDob(moment(timestamp).format('L')));
+            console.log('timestamp', moment(timestamp).format('L'));
+            console.log('timestamp2', moment(timestamp).format('DD.MM.YYYY'));
         }
     };
 
@@ -58,6 +60,7 @@ export const PersonalInfo: FC = () => {
             dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
         } else {
             firstNameBlurHandler();
+            lastNameBlurHandler();
 
             if (!enteredFirstNameIsValid || !enteredLastNameIsValid) return;
             dispatch(userActions.setFirstName(enteredFirstName));
@@ -87,7 +90,8 @@ export const PersonalInfo: FC = () => {
         if (lastName) {
             setInitialLastName(lastName);
         }
-    }, [firstName, lastName, setInitialFirstName, setInitialLastName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
@@ -97,7 +101,7 @@ export const PersonalInfo: FC = () => {
                     <PageTitle className="registration">Personlig informasjon</PageTitle>
                     <ProgressBarForm pageIndex={pageIndex} />
                     <PageSubtitle>
-                        Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
+                        Her kan du fylle inn profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
                         omtaler.
                     </PageSubtitle>
                     <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
@@ -121,11 +125,12 @@ export const PersonalInfo: FC = () => {
                         <ThemeProvider theme={theme}>
                             <LocalizationProvider dateAdapter={AdapterMoment}>
                                 <MobileDatePicker
-                                    label="åååå.mm.dd"
+                                    label="dd.mm.åååå"
                                     value={dob || null}
+                                    // @ts-ignore
                                     onChange={(newValue) => handleChangeDob(newValue)}
                                     renderInput={(params) => <TextField {...params} />}
-                                    maxDate={new Date()}
+                                    disableFuture
                                 />
                             </LocalizationProvider>
                         </ThemeProvider>

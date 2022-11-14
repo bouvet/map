@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, ReactElement, useCallback } from 'react';
 import { Global } from '@emotion/react';
-import { SwipeableDrawer, Button, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
+import { SwipeableDrawer, Box, CssBaseline, Snackbar, Alert } from '@mui/material';
 import { StyledEngineProvider, styled as materialStyled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import moment from 'moment';
@@ -14,6 +14,7 @@ import { StarRating } from '../../../components/StarRating/StarRating';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewTypeGet } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
+import { LinkButton } from '../../../components/UI';
 
 const drawerBleeding = 56;
 
@@ -103,6 +104,7 @@ export const SwipeableEdgeDrawer: FC = () => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.text)
+                .sort((itemA, itemB) => (itemA.created > itemB.created ? -1 : 1))
                 .map((item: IReviewTypeGet) => (
                     <Review
                         key={item.id}
@@ -122,6 +124,8 @@ export const SwipeableEdgeDrawer: FC = () => {
         if (currentReviews) {
             const temp = currentReviews
                 .filter((item) => item.webpImage)
+                // @ts-ignore
+                .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
                 .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (currentlySelectedLocation.properties.webpImage.cdnUri) {
@@ -208,7 +212,9 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <b>Omtaler</b>
                         </ContentContainer>
                         {reviewList && reviewList}
-                        <Button onClick={handleOpenAddReview}>Legg til omtale</Button>
+                        <LinkButton sx={{ width: 150 }} onClick={handleOpenAddReview}>
+                            Legg til omtale
+                        </LinkButton>
                         <ReviewModal open={openAddReview} close={handleCloseAddReview} success={handleOpenSuccessMessage} />
                         <Snackbar
                             open={openSuccessMessage}

@@ -5,12 +5,12 @@ import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../utils/types.d';
 import { Form } from '../../../components/Form/Form';
-import { mapServices } from '../../map';
 import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { mapServices } from '../../map';
 
 export const Personalization: FC = () => {
-    const navigate = useNavigate();
     const dispatch = useStateDispatch();
+    const navigate = useNavigate();
 
     const { categories } = useStateSelector((state) => state.map);
     const mappedFilter = categories.map((item: ICategory) => (
