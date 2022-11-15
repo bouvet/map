@@ -229,27 +229,3 @@ export interface IUser {
     };
     token: string;
 }
-
-export interface ILoginType {
-    email: string;
-    password: string;
-}
-
-export interface IEmailType {
-    email: string;
-}
-
-export interface IConfirmCode {
-    email: string;
-    confirmationCode: string;
-}
-
-export interface IPasswordType {
-    password: string;
-    confirmPassword: string;
-}
-
-export interface ICategoryTypePost {
-    name: string;
-    emoji: string;
-}

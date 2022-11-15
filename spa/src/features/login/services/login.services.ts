@@ -3,10 +3,9 @@ import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { sleep } from '../../../utils/sleep';
-import { IEmailType, ILoginType, IPasswordType } from '../../../utils/types.d';
 
 export const loginServices = {
-    login(payload: ILoginType) {
+    login(payload: ILoginPayload) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data } = await API.post('/auth/login', payload);
@@ -32,7 +31,7 @@ export const loginServices = {
             }
         };
     },
-    getToken(payload: IEmailType) {
+    getToken(payload: { email: string }) {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.post('/auth/reset-password', payload);
@@ -53,7 +52,7 @@ export const loginServices = {
             }
         };
     },
-    changePassword(payload: IPasswordType) {
+    changePassword(payload: IPasswordPayload) {
         return async (dispatch: AppDispatch) => {
             try {
                 dispatch(authActions.setLoading(true));
@@ -78,3 +77,13 @@ export const loginServices = {
         };
     },
 };
+
+interface ILoginPayload {
+    email: string;
+    password: string;
+}
+
+interface IPasswordPayload {
+    password: string;
+    confirmPassword: string;
+}

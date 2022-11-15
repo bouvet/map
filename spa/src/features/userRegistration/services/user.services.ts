@@ -5,10 +5,10 @@ import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { uiActions } from '../../../store/state/ui.state';
 import { sleep } from '../../../utils/sleep';
-import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit, IUser } from '../../../utils/types.d';
+import { IUserTypeEdit, IUser } from '../../../utils/types.d';
 
 export const userServices = {
-    register(user: IUserType, authMethod: string = 'Email') {
+    register(user: IRegisterPayload, authMethod: string = 'Email') {
         return async (dispatch: AppDispatch) => {
             try {
                 let url = '/auth/register';
@@ -49,7 +49,7 @@ export const userServices = {
             }
         };
     },
-    getCode(payload: IEmailType) {
+    getCode(payload: { email: string }) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data } = await API.post('/email', payload);
@@ -88,7 +88,7 @@ export const userServices = {
             }
         };
     },
-    confirmCode(payload: IConfirmCode) {
+    confirmCode(payload: IConfirmCodePayload) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data } = await API.post('/email/confirm', payload);
@@ -117,3 +117,17 @@ export const userServices = {
         };
     },
 };
+
+interface IRegisterPayload {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    dob: string;
+    favoriteCategoryIds?: Array<string>;
+}
+
+interface IConfirmCodePayload {
+    email: string;
+    confirmationCode: string;
+}
