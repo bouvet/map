@@ -44,15 +44,6 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
     const firstName = user?.firstName;
     const lastName = user?.lastName;
     const dob = user?.dob;
-    // let categories = '';
-    // user?.favoriteCategories?.forEach((c, index) => {
-    //     // @ts-ignore
-    //     if (user?.favoriteCategories?.length > 1 && index > 0) {
-    //         categories = `${categories}, ${c.name}`;
-    //     } else {
-    //         categories = c.name;
-    //     }
-    // });
 
     const { favoriteCategoryIds } = useStateSelector((state) => state.user);
 
@@ -168,9 +159,9 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
                                 </LocalizationProvider>
                             </ThemeProvider>
                             <Label>Favoritter</Label>
-                            {/* show favorites as clicked */}
+                            {/* show current favorites as clicked */}
                             <FilterMenuContent>{mappedFilter}</FilterMenuContent>
-                            <SubmitButton type="submit" variant="contained">
+                            <SubmitButton type="submit" variant="contained" disabled={firstNameInputHasError || lastNameInputHasError}>
                                 Lagre endringer
                             </SubmitButton>
                         </Form>
