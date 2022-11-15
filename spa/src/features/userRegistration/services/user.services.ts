@@ -4,6 +4,7 @@ import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
 import { uiActions } from '../../../store/state/ui.state';
+import { sleep } from '../../../utils/sleep';
 import { IEmailType, IConfirmCode, IUserType, IUserTypeEdit, IUser } from '../../../utils/types.d';
 
 export const userServices = {
@@ -56,9 +57,8 @@ export const userServices = {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('id', data.id);
 
-                setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Kode er sendt', severity: 'success' }));
-                }, 500);
+                await sleep(500);
+                dispatch(snackbarActions.setNotify({ message: 'Kode er sendt', severity: 'success' }));
 
                 return true;
             } catch (error) {
@@ -81,9 +81,8 @@ export const userServices = {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('id', data.id);
 
-                setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Ny kode er sendt', severity: 'success' }));
-                }, 500);
+                await sleep(500);
+                dispatch(snackbarActions.setNotify({ message: 'Ny kode er sendt', severity: 'success' }));
             } catch (error) {
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             }
@@ -94,10 +93,9 @@ export const userServices = {
             try {
                 const { data } = await API.post('/email/confirm', payload);
                 console.log(data);
-                setTimeout(() => {
-                    dispatch(uiActions.setShouldNavigate(true));
-                }, 500);
+                await sleep(500);
 
+                dispatch(uiActions.setShouldNavigate(true));
                 dispatch(snackbarActions.setNotify({ message: 'Kode er bekreftet', severity: 'success' }));
                 return true;
             } catch (error) {
@@ -111,9 +109,8 @@ export const userServices = {
             try {
                 await API.delete(`/users/${payload.id}`);
 
-                setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Konto er slettet', severity: 'success' }));
-                }, 500);
+                await sleep(500);
+                dispatch(snackbarActions.setNotify({ message: 'Konto er slettet', severity: 'success' }));
             } catch (error) {
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
             }

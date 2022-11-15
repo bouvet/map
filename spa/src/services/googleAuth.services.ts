@@ -3,6 +3,7 @@ import { AppDispatch } from '../store';
 import { authActions } from '../store/state/auth.state';
 import { API } from '../lib/api';
 import { userActions } from '../store/state/user.state';
+import { sleep } from '../utils/sleep';
 
 interface IAuthenticateWithCodeResponse {
     id?: string;
@@ -29,7 +30,6 @@ interface IAuthenticateWithCodeResponse {
 export const googleAuthServices = {
     authenticate(code: string) {
         return async (dispatch: AppDispatch) => {
-            let timer;
             try {
                 const { data: user }: { data: IAuthenticateWithCodeResponse } = await API.post('/auth/code', { code });
 
@@ -50,15 +50,12 @@ export const googleAuthServices = {
                 }
 
                 dispatch(authActions.userLogin(user));
-                timer = setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
-                }, 2000);
+                await sleep(2000);
+                dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
             } catch (error: any) {
                 console.log(error);
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
                 dispatch(authActions.setLoading(false)); // redirect back to login-page?
-            } finally {
-                clearTimeout(timer);
             }
         };
     },
