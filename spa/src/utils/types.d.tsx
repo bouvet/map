@@ -12,7 +12,7 @@ export interface IGeometry {
 export interface IProperties {
     title: string;
     description: string;
-    originalImage: {
+    originalImage?: {
         id: string;
         blobUri: string;
         cdnUri: string;
@@ -28,7 +28,7 @@ export interface IProperties {
         locationId: string;
         reviewId: string | null;
     };
-    webpImage: {
+    webpImage?: {
         id: string;
         blobUri: string;
         cdnUri: string;

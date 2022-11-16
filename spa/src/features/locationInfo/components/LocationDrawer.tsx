@@ -128,14 +128,14 @@ export const SwipeableEdgeDrawer: FC = () => {
                 .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
                 .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
-            if (currentlySelectedLocation.properties.webpImage.cdnUri) {
+            if (currentlySelectedLocation.properties.webpImage) {
                 const mainImg = (
                     <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.webpImage.cdnUri} />
                 );
                 setImageList((imageList) => [mainImg, ...imageList]);
             }
         }
-    }, [currentReviews, currentlySelectedLocation.properties.webpImage.cdnUri]);
+    }, [currentReviews, currentlySelectedLocation.properties.webpImage]);
 
     useEffect(() => {
         updateCurrentReviewsCallback();

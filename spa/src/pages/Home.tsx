@@ -66,7 +66,10 @@ export const Home: FC = () => {
                                     name={currentlySelectedLocation.properties.title}
                                     description={currentlySelectedLocation.properties.description}
                                     rating={currentlySelectedLocation.properties.rating}
-                                    image={currentlySelectedLocation.properties.webpImage.cdnUri}
+                                    image={
+                                        currentlySelectedLocation.properties.webpImage &&
+                                        currentlySelectedLocation.properties.webpImage.cdnUri
+                                    }
                                 />
                             </>
                         )}
