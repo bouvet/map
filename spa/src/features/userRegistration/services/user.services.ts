@@ -31,7 +31,7 @@ export const userServices = {
 
                 dispatch(authActions.userLogin(data));
             } catch (error) {
-                // dispatch(authActions.logOut());
+                dispatch(authActions.logOut());
             }
         };
     },
@@ -41,7 +41,9 @@ export const userServices = {
                 await API.put(`/users/${payload.id}`, payload, { headers: { 'Content-Type': 'multipart/form-data' } });
                 console.log('Payload', payload);
 
-                dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
+                setTimeout(() => {
+                    dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
+                }, 500);
             } catch (error) {
                 console.error('error', error);
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
