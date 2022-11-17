@@ -1,19 +1,19 @@
-import { FC } from 'react';
 import Slide from '@mui/material/Slide';
+import { FC, useEffect } from 'react';
 import { FilterButton } from '../components/Filter/FilterButtons';
 import { FilterMenu } from '../components/Filter/FilterMenu';
 import { Popup, PopupCard } from '../components/Popup/Popup';
-import { ReactMapGL } from '../features/map';
-import { useStateSelector, useStateDispatch } from '../hooks/useRedux';
-import { useFilterEvent } from '../utils/filterLogic';
+import { SectionContainer } from '../components/UI';
+import { BackButton } from '../components/UI/Buttons/NavigationButtons';
+import { FabMenu } from '../features/home/components/FabMenu';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { mapActions } from '../store/state/map.state';
-import { ICategory, ILatLong } from '../utils/types.d';
 import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
-import { FabMenu } from '../features/home/components/FabMenu';
-import { BackButton } from '../components/UI/Buttons/NavigationButtons';
-import { SectionContainer } from '../components/UI';
+import { ReactMapGL } from '../features/map';
+import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+import { mapActions } from '../store/state/map.state';
+import { useFilterEvent } from '../utils/filterLogic';
+import { ICategory, ILatLong } from '../utils/types.d';
 
 export const Home: FC = () => {
     useFilterEvent();
@@ -45,8 +45,15 @@ export const Home: FC = () => {
         }
     };
 
+    useEffect(() => {
+        document.body.style.overflowY = 'hidden';
+        return () => {
+            document.body.style.overflowY = 'auto';
+        };
+    }, []);
+
     return (
-        <SectionContainer style={{ height: '100%', width: '100%' }}>
+        <SectionContainer style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
             {!homeMarkerFocus ? (
                 <>
                     <FilterMenu>{mappedFilter}</FilterMenu>
@@ -55,7 +62,9 @@ export const Home: FC = () => {
             ) : (
                 <BackButton onClick={handleBackClick} />
             )}
+            {/* <div style={{ position: 'relative', top: 0, left: 0, height: '100%', width: '100%' }}> */}
             <ReactMapGL />
+            {/* </div> */}
             {!homeMarkerFocus && <FabMenu />}
             {!homeMarkerFocus && (
                 <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
@@ -66,7 +75,10 @@ export const Home: FC = () => {
                                     name={currentlySelectedLocation.properties.title}
                                     description={currentlySelectedLocation.properties.description}
                                     rating={currentlySelectedLocation.properties.rating}
-                                    image={currentlySelectedLocation.properties.webpImage.cdnUri}
+                                    image={
+                                        currentlySelectedLocation.properties.webpImage &&
+                                        currentlySelectedLocation.properties.webpImage.cdnUri
+                                    }
                                 />
                             </>
                         )}

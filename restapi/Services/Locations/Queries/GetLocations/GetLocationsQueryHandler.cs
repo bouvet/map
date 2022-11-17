@@ -18,7 +18,7 @@ public class GetLocationsQueryHandler : IRequestHandler<GetLocationsQuery, Error
 
   public async Task<ErrorOr<List<LocationResult>>> Handle(GetLocationsQuery request, CancellationToken cancellationToken)
   {
-    var locations = await dataContext.Locations.ToListAsync(cancellationToken: cancellationToken);
+    var locations = await dataContext.Locations.Where(l => request.Status == l.Status.ToLower()).ToListAsync(cancellationToken: cancellationToken);
 
     var locationResultList = new List<LocationResult>();
 

@@ -8,6 +8,7 @@ using restapi.Contracts.Locations;
 using restapi.Data;
 using restapi.Services.Locations.Commands.Delete;
 using restapi.Services.Locations.Common;
+using restapi.Services.Locations.Queries.GetLocations;
 
 namespace restapi.Controllers;
 
@@ -41,10 +42,11 @@ public class LocationsController : ApiController
     );
   }
 
-  [HttpGet]
-  public async Task<IActionResult> GetLocations()
+  [HttpGet("{status}")]
+  public async Task<IActionResult> GetLocations(string status = "approved")
   {
-    var getLocationsQuery = locationMapper.MapGetLocationsQueryToCommand();
+    var getLocationsQuery = new GetLocationsQuery(status.ToLower());
+
     ErrorOr<List<LocationResult>> getLocationsResult = await mediator.Send(getLocationsQuery);
 
     return getLocationsResult.Match(

@@ -12,7 +12,6 @@ namespace restapi.Common.Services.Mappers.Locations;
 public interface ILocationMapper
 {
   CreateLocationCommand MapCreateRequestToCommand(CreateLocationRequest request, string userId);
-  GetLocationsQuery MapGetLocationsQueryToCommand();
   GetLocationByProximityQuery MapGetByProximityToCommand(double latitude, double longitude, Guid categoryId);
   GetLocationByIdQuery MapGetByIdToCommand(Guid id);
   UpdateLocationCommand MapUpdateToCommand(UpdateLocationRequest request, Location? location, Guid? userId);

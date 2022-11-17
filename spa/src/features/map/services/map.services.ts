@@ -3,14 +3,14 @@ import { AppDispatch } from '../../../store/index';
 import { API } from '../../../lib/api';
 
 export const mapServices = {
-    getLocations() {
+    getLocations(filter: string = 'approved') {
         return async (dispatch: AppDispatch) => {
             try {
                 dispatch(mapActions.setLoading(true));
 
-                const { data: LocationData } = await API.get('/Locations');
+                const { data: locations } = await API.get(`/locations/${filter}`);
 
-                dispatch(mapActions.loadLocations(LocationData));
+                dispatch(mapActions.loadLocations(locations));
 
                 // TODO: filter list later...
                 const { data: CategoriesData } = await API.get('/Categories');

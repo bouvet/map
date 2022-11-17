@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { CustomizedSnackbars } from './components/Snackbar/Snackbar';
-import { FullPageSpinner, PageContainer } from './components/UI';
+import { PageContainer } from './components/UI';
 import { userServices } from './features/userRegistration/services/user.services';
-import { useStateDispatch, useStateSelector } from './hooks/useRedux';
+import { useStateDispatch } from './hooks/useRedux';
 import { authActions } from './store/state/auth.state';
 
 export const App = () => {
-    const { loading } = useStateSelector((state) => state.auth);
     const dispatch = useStateDispatch();
 
     useEffect(() => {
@@ -28,10 +27,15 @@ export const App = () => {
             clearTimeout(timer);
         };
     }, [dispatch]);
+    useEffect(() => {
+        document.body.style.overflowX = 'hidden';
+        return () => {
+            document.body.style.overflowX = 'auto';
+        };
+    }, []);
 
     return (
-        <PageContainer id="PageContainer">
-            {/* {loading && <FullPageSpinner />} */}
+        <PageContainer>
             <Outlet />
             <CustomizedSnackbars />
         </PageContainer>

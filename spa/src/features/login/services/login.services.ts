@@ -2,10 +2,10 @@ import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { IEmailType, ILoginType, IPasswordType } from '../../../utils/types.d';
+import { sleep } from '../../../utils/sleep';
 
 export const loginServices = {
-    login(payload: ILoginType) {
+    login(payload: ILoginPayload) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data } = await API.post('/auth/login', payload);
@@ -13,10 +13,9 @@ export const loginServices = {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data));
 
-                setTimeout(() => {
-                    dispatch(authActions.userLogin(data));
-                    dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
-                }, 2000);
+                await sleep(2000);
+                dispatch(authActions.userLogin(data));
+                dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
             } catch (error: any) {
                 const invalidCreds = error.response.data.errors['Authentication.InvalidCredentials'][0];
 
@@ -32,19 +31,18 @@ export const loginServices = {
             }
         };
     },
-    getToken(payload: IEmailType) {
+    getToken(payload: { email: string }) {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.post('/auth/reset-password', payload);
 
-                setTimeout(() => {
-                    dispatch(
-                        snackbarActions.setNotify({
-                            message: `En link for å tilbakestille passordet er sendt til ${payload.email}`,
-                            severity: 'success',
-                        }),
-                    );
-                }, 500);
+                await sleep(500);
+                dispatch(
+                    snackbarActions.setNotify({
+                        message: `En link for å tilbakestille passordet er sendt til ${payload.email}`,
+                        severity: 'success',
+                    }),
+                );
 
                 return true;
             } catch (error) {
@@ -54,7 +52,7 @@ export const loginServices = {
             }
         };
     },
-    changePassword(payload: IPasswordType) {
+    changePassword(payload: IPasswordPayload) {
         return async (dispatch: AppDispatch) => {
             try {
                 dispatch(authActions.setLoading(true));
@@ -63,21 +61,29 @@ export const loginServices = {
                 console.log(data);
 
                 dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
-                setTimeout(() => {
-                    dispatch(authActions.setLoading(false));
-                    dispatch(authActions.setChangePasswordSuccess(true));
-                }, 500);
+                await sleep(500);
+                dispatch(authActions.setLoading(false));
+                dispatch(authActions.setChangePasswordSuccess(true));
 
                 return true;
             } catch (error) {
                 console.error('error', error);
-                setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-                    dispatch(authActions.setLoading(false));
-                }, 500);
+                await sleep(500);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(authActions.setLoading(false));
 
                 return false;
             }
         };
     },
 };
+
+interface ILoginPayload {
+    email: string;
+    password: string;
+}
+
+interface IPasswordPayload {
+    password: string;
+    confirmPassword: string;
+}
