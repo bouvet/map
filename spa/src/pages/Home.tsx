@@ -11,9 +11,10 @@ import { EmojiButton } from '../features/locationRegistration/components/Locatio
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { ReactMapGL } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+import { ICategory } from '../interfaces';
 import { mapActions } from '../store/state/map.state';
 import { useFilterEvent } from '../utils/filterLogic';
-import { ICategory, ILatLong } from '../utils/types.d';
+import { ILatLong } from '../utils/types.d';
 
 export const Home: FC = () => {
     useFilterEvent();

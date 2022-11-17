@@ -2,10 +2,11 @@ import { useCallback, useEffect, useRef, useState, FC, Ref } from 'react';
 import { Map as ReactMap, MapRef } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { ILatLong, ILocation } from '../../../utils/types.d';
+import { ILatLong } from '../../../utils/types.d';
 import { mapActions } from '../../../store/state/map.state';
 import { registrationActions } from '../../../store/state/registration.state';
 import { mapServices } from '../services/map.services';
+import { ILocation } from '../../../interfaces';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 

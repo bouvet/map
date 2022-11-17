@@ -5,7 +5,7 @@ import { Form } from '../../../components/Form/Form';
 import { BackButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { ICategory } from '../../../utils/types.d';
+import { ICategory } from '../../../interfaces';
 import { SelectWorkout } from './FilterWorkout';
 
 export const CreateWorkout: FC = () => {

@@ -5,9 +5,9 @@ import { RegisterButton } from '../../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { Text } from '../../../components/UI';
 import { useStateSelector } from '../../../hooks/useRedux';
+import { ICategory } from '../../../interfaces';
 import { registrationActions } from '../../../store/state/registration.state';
 import { MyTheme } from '../../../styles/global';
-import { ICategory } from '../../../utils/types.d';
 
 const InformationWrapper = styled.div`
     width: 100%;
