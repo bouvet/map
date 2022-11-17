@@ -1,10 +1,11 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useStateDispatch } from '../../../hooks/useRedux';
 import { GoogleIcon } from '../../../components/Navigation/GoogleIcon';
 import { Fab as FabButton } from '../../../components/UI';
+import { useStateDispatch } from '../../../hooks/useRedux';
 import { authActions } from '../../../store/state/auth.state';
+import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
 
 const fabSize = 42;
@@ -69,8 +70,10 @@ export const GuestMenu: FC = () => {
 export const UserMenu: FC = () => {
     const [isActive, setIsActive] = useState(false);
     const dispatch = useStateDispatch();
-    const handleLogOut = () => dispatch(authActions.logOut());
-
+    const handleLogOut = () => {
+        dispatch(authActions.logOut());
+        dispatch(snackbarActions.setNotify({ message: 'Du er logget ut', severity: 'info' }));
+    };
     const handleClick = () => {
         setIsActive(!isActive);
     };
@@ -79,7 +82,7 @@ export const UserMenu: FC = () => {
         <>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
@@ -91,13 +94,25 @@ export const UserMenu: FC = () => {
             </Fab>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
                 <Link to="/location-registration">
                     <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                         add
+                    </GoogleIcon>
+                </Link>
+            </Fab>
+            <Fab
+                style={{
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
+                }}
+            >
+                <Link to="/register-workout">
+                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
+                        fitness_center
                     </GoogleIcon>
                 </Link>
             </Fab>
@@ -132,8 +147,10 @@ export const UserMenu: FC = () => {
 export const AdminMenu: FC = () => {
     const [isActive, setIsActive] = useState(false);
     const dispatch = useStateDispatch();
-    const handleLogOut = () => dispatch(authActions.logOut());
-
+    const handleLogOut = () => {
+        dispatch(authActions.logOut());
+        dispatch(snackbarActions.setNotify({ message: 'Du er logget ut', severity: 'info' }));
+    };
     const handleClick = () => {
         setIsActive(!isActive);
     };
@@ -142,7 +159,7 @@ export const AdminMenu: FC = () => {
         <>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 5 + fabSize * 4}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
@@ -154,7 +171,7 @@ export const AdminMenu: FC = () => {
             </Fab>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 4 + fabSize * 3}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
@@ -166,13 +183,25 @@ export const AdminMenu: FC = () => {
             </Fab>
             <Fab
                 style={{
-                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 3 + fabSize * 2}px)` : 'translateY(0)',
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
                 <Link to="/location-registration">
                     <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                         add
+                    </GoogleIcon>
+                </Link>
+            </Fab>
+            <Fab
+                style={{
+                    transform: isActive ? `translateY(-${largeFabSize + fabMargin * 2 + fabSize}px)` : 'translateY(0)',
+                    boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
+                }}
+            >
+                <Link to="/register-workout">
+                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
+                        fitness_center
                     </GoogleIcon>
                 </Link>
             </Fab>

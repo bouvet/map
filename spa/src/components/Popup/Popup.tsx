@@ -130,6 +130,10 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                     {displayedDescription}
                     <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 50 && 'les mer'}</ReadMoreLink>
                 </Bodytext>
+                <span style={{ float: 'left' }} role="img" aria-label="flexed biceps">
+                    💪
+                </span>
+                <p style={{ float: 'left', fontSize: 12 }}>10</p>
             </PopupContent>
         </PopupWrapper>
     );

@@ -27,6 +27,12 @@ export const App = () => {
             clearTimeout(timer);
         };
     }, [dispatch]);
+    useEffect(() => {
+        document.body.style.overflowX = 'hidden';
+        return () => {
+            document.body.style.overflowX = 'auto';
+        };
+    }, []);
 
     return (
         <PageContainer>
