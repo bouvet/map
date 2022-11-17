@@ -1,5 +1,5 @@
 import { Global } from '@emotion/react';
-import { Alert, Box, CssBaseline, Snackbar, SwipeableDrawer } from '@mui/material';
+import { Alert, Box, Button, CssBaseline, Snackbar, SwipeableDrawer } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { styled as materialStyled, StyledEngineProvider } from '@mui/material/styles';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import { MyTheme } from '../../../styles/global';
 import { IReviewTypeGet } from '../../../utils/types.d';
 import { reviewServices } from '../services/locationinfo.services';
 import { AddSessionModal } from './AddSessionModal';
+import { ConfirmDeleteModal } from './ConfirmDeleteModal';
 import { Review } from './Review';
 import { ReviewModal } from './ReviewModal';
 
@@ -207,7 +208,11 @@ export const SwipeableEdgeDrawer: FC = () => {
         dispatch(snackbarActions.setNotify({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
     };
     // const handleSuccessMessageClose = () => SetAddedNewSession(false);
+    const [confirmModal, setConfirmModal] = useState(false);
+    const handleOpenConfirmModal = () => setConfirmModal(true);
+    const handleCloseConfirmModal = () => setConfirmModal(false);
 
+    const { isAdmin } = useStateSelector((state) => state.auth);
     return (
         <StyledEngineProvider>
             <Root>
@@ -297,6 +302,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                         <LinkButton sx={{ width: 150 }} onClick={handleOpenAddReview}>
                             Legg til omtale
                         </LinkButton>
+
                         <ReviewModal
                             open={openAddReview}
                             close={handleCloseAddReview}
@@ -320,6 +326,14 @@ export const SwipeableEdgeDrawer: FC = () => {
                             <Alert severity="error">Noe gikk galt</Alert>
                         </Snackbar>
                     </ContentWrapper>
+                    {isAdmin ? (
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button variant="contained" style={{ backgroundColor: '#dc1111' }} onClick={handleOpenConfirmModal}>
+                                Slett lokasjon
+                            </Button>
+                        </div>
+                    ) : null}
+                    <ConfirmDeleteModal open={confirmModal} close={handleCloseConfirmModal} locationTitle={locationTitle} />
                 </SwipeableDrawer>
             </Root>
         </StyledEngineProvider>

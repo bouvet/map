@@ -1,13 +1,11 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 import { LinkButton, ModalContainer, SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { StatusSelector } from '../features/adminPanel';
-import { LocationBlock } from '../features/adminPanel/LocationBlock';
 import { mapServices } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { ILocation } from '../utils/types.d';
 
 export type ApprovalFilterCategories = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
 
@@ -38,8 +36,11 @@ export const AdminPanel: FC = () => {
         dispatch(mapServices.getLocations('under review'));
     }, [dispatch]);
 
+    const [modalHandler, setModalHandler] = useState(false);
+
     const handleCloseImageModal = () => {
         console.log('click');
+        setModalHandler(false);
     };
 
     return (
@@ -49,7 +50,7 @@ export const AdminPanel: FC = () => {
             </header>
             <SectionContainer>
                 <BackButton onClick={() => navigate('/')} />
-                {/* <LinkButton onClick={() => navigate('/admin/create-category')}>Opprett kategori</LinkButton> */}
+                <LinkButton onClick={() => navigate('/admin/create-category')}>Opprett kategori</LinkButton>
 
                 <StatusSelector onChangeHandler={onSelectStatusHandler} />
 
@@ -106,7 +107,7 @@ export const AdminPanel: FC = () => {
                     </li>
                 </ul>
             </SectionContainer>
-            <ModalContainer open onCloseHandler={handleCloseImageModal}>
+            <ModalContainer open={modalHandler} onCloseHandler={handleCloseImageModal}>
                 <p>SOme content</p>
                 <p>SOme content</p>
                 <p>SOme content</p>

@@ -47,6 +47,8 @@ const authState = createSlice({
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             state.loading = false;
+            state.isAdmin = false;
+            state.emailIsValid = false;
         },
     },
 });

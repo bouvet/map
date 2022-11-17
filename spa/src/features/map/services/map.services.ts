@@ -1,6 +1,6 @@
-import { mapActions } from '../../../store/state/map.state';
-import { AppDispatch } from '../../../store/index';
 import { API } from '../../../lib/api';
+import { AppDispatch } from '../../../store/index';
+import { mapActions } from '../../../store/state/map.state';
 
 export const mapServices = {
     getLocations(filter: string = 'approved') {
@@ -8,7 +8,9 @@ export const mapServices = {
             try {
                 dispatch(mapActions.setLoading(true));
 
-                const { data: locations } = await API.get(`/locations/${filter}`);
+                const { data: locations } = await API.get(`/locations/`);
+                // categories and locations wont load with the filter in the route
+                // const { data: locations } = await API.get(`/locations/${filter}`);
 
                 dispatch(mapActions.loadLocations(locations));
 
