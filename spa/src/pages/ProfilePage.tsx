@@ -8,19 +8,17 @@ import { useStateSelector } from '../hooks/useRedux';
 import { LinkButton, PageContainer, SectionContainer } from '../components/UI';
 import { EditModal } from '../features/profile/EditModal';
 import { DefaultProfilePicture, ProfilePicture } from '../features/profile/ProfileImage';
+import { MyTheme } from '../styles/global';
 
 export const ProfilePage: FC = () => {
     const navigate = useNavigate();
 
     const { user } = useStateSelector((state) => state.auth);
 
-    console.log('user from state', user);
-
     const firstName = user?.firstName;
     const lastName = user?.lastName;
     const dob = user?.dob;
     const email = user?.email;
-    // const categories = user?.favoriteCategories;
     let categories = '';
     user?.favoriteCategories?.forEach((c, index) => {
         // @ts-ignore
@@ -76,7 +74,10 @@ export const ProfilePage: FC = () => {
                         Endre e-post
                     </LinkButton>
                     {/* // TODO: check if login from email, Google or Vipps  */}
-                    <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/profile/delete-account')}>
+                    <LinkButton
+                        sx={{ width: 140, margin: 0, float: 'left', color: MyTheme.colors.alert }}
+                        onClick={() => navigate('/profile/delete-account')}
+                    >
                         Slett konto
                     </LinkButton>
                     {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}

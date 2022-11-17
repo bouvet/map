@@ -15,6 +15,7 @@ interface ReviewProps {
     open: boolean;
     close: Function;
     success: Function;
+    error: Function;
 }
 
 const AddReview = {
@@ -51,7 +52,7 @@ const ButtonWrapper = styled.div`
     flex-direction: row;
 `;
 
-export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
+export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
@@ -68,8 +69,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
     const dispatch = useStateDispatch();
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
-
-    const handleOpenSuccessMessage = () => success();
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -95,7 +94,8 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
         }
     };
 
-    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (value === 0 || value === null) {
             e.preventDefault();
         } else {
@@ -107,10 +107,15 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success }) => {
             if (image) {
                 payload.image = image;
             }
-            dispatch(reviewServices.postReview(payload));
-            e.preventDefault();
+            // @ts-ignore
+            const successStatus: boolean = await dispatch(reviewServices.postReview(payload));
+
+            if (successStatus) {
+                success();
+            } else {
+                error();
+            }
             handleCloseAddReview();
-            handleOpenSuccessMessage();
         }
     };
 

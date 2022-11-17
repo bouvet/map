@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { StyledEngineProvider } from '@mui/material/styles';
+// import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
+// import { reactPlugin } from './AppInsights';
 import './index.css';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
@@ -16,7 +18,12 @@ root.render(
     <BrowserRouter>
         <Provider store={store}>
             <StyledEngineProvider injectFirst>
+                {/* <AppInsightsErrorBoundary 
+                    onError={() => console.log('AppInsights: Something went wrong')} 
+                    appInsights={reactPlugin}
+                > */}
                 <AppRoutes />
+                {/* </AppInsightsErrorBoundary> */}
             </StyledEngineProvider>
         </Provider>
     </BrowserRouter>,

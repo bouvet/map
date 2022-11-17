@@ -1,10 +1,9 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { ICategoryTypePost } from '../../../utils/types.d';
 
 export const categoryServices = {
-    create(payload: ICategoryTypePost) {
+    create(payload: ICreatePayload) {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.post('/categories', payload);
@@ -20,3 +19,8 @@ export const categoryServices = {
         };
     },
 };
+
+interface ICreatePayload {
+    name: string;
+    emoji: string;
+}

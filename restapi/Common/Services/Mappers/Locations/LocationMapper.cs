@@ -50,11 +50,6 @@ public class LocationMapper : ILocationMapper
     return new GetLocationByProximityQuery(latitude, longitude, categoryId);
   }
 
-  public GetLocationsQuery MapGetLocationsQueryToCommand()
-  {
-    return new GetLocationsQuery();
-  }
-
   public List<LocationResponse> MapResultListToResponseList(List<LocationResult> resultList)
   {
     var responseList = new List<LocationResponse>();

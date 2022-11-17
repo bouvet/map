@@ -3,17 +3,13 @@ import { useStateSelector } from '../../../hooks/useRedux';
 import { AdminMenu, GuestMenu, UserMenu } from './FabButtons';
 
 export const FabMenu: FC = () => {
-    const { user } = useStateSelector((state) => state.auth);
-    let userRole = '';
-    user?.roles?.forEach((x) => {
-        userRole = x.name;
-    });
+    const { isAuthenticated, isAdmin } = useStateSelector((state) => state.auth);
 
     return (
         <>
-            {userRole === '' && <GuestMenu />}
-            {userRole === 'User' && <UserMenu />}
-            <AdminMenu />
+            {!isAuthenticated && <GuestMenu />}
+            {isAuthenticated && <UserMenu />}
+            {isAdmin && <AdminMenu />}
         </>
     );
 };

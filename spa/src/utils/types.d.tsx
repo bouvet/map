@@ -12,7 +12,7 @@ export interface IGeometry {
 export interface IProperties {
     title: string;
     description: string;
-    originalImage: {
+    originalImage?: {
         id: string;
         blobUri: string;
         cdnUri: string;
@@ -28,7 +28,7 @@ export interface IProperties {
         locationId: string;
         reviewId: string | null;
     };
-    webpImage: {
+    webpImage?: {
         id: string;
         blobUri: string;
         cdnUri: string;
@@ -228,28 +228,4 @@ export interface IUser {
         originalImageId: string;
     };
     token: string;
-}
-
-export interface ILoginType {
-    email: string;
-    password: string;
-}
-
-export interface IEmailType {
-    email: string;
-}
-
-export interface IConfirmCode {
-    email: string;
-    confirmationCode: string;
-}
-
-export interface IPasswordType {
-    password: string;
-    confirmPassword: string;
-}
-
-export interface ICategoryTypePost {
-    name: string;
-    emoji: string;
 }
