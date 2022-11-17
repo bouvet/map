@@ -268,6 +268,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                             sessions={sessions}
                             success={handleSuccessMessageOpen}
                         />
+
                         {/* <Snackbar
                             open={addedNewSession}
                             onClose={handleSuccessMessageClose}

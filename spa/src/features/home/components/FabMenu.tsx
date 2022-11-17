@@ -13,7 +13,7 @@ export const FabMenu: FC = () => {
         <>
             {userRole === '' && <GuestMenu />}
             {userRole === 'User' && <UserMenu />}
-            {userRole === 'Administrator' && <AdminMenu />}
+            <AdminMenu />
         </>
     );
 };

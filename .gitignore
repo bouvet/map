@@ -10,3 +10,4 @@ restapi/Properties/ServiceDependencies/local/secrets1.arm.json
 
 spa/.git
 spa/.github
+.DS_Store
