@@ -12,6 +12,7 @@
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently */
+    box-sizing: border-box;
 }
 
 input,
@@ -22,6 +23,10 @@ textarea {
     -moz-user-select: text; /* Old versions of Firefox */
     -ms-user-select: text; /* Internet Explorer/Edge */
     user-select: text; /* Non-prefixed version, currently */
+}
+
+ul {
+    list-style: none;
 }
 
 *::-webkit-scrollbar {

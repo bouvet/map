@@ -41,6 +41,16 @@ public static class ModelBuilderExtensions
         Registered = currentTime,
         AccessToken = "Admin",
         DOB = currentTime
+      },
+      new User
+      {
+        Id = Guid.NewGuid(),
+        Email = "jdoe@email.com",
+        Password = BCrypt.Net.BCrypt.HashPassword("123123123"),
+        FirstName = "John",
+        LastName = "Doe",
+        Registered = currentTime,
+        DOB = currentTime
       }
     );
   }

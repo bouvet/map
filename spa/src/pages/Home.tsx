@@ -46,7 +46,7 @@ export const Home: FC = () => {
     };
 
     return (
-        <SectionContainer style={{ height: '100%', width: '100%' }}>
+        <SectionContainer style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
             {!homeMarkerFocus ? (
                 <>
                     <FilterMenu>{mappedFilter}</FilterMenu>
@@ -55,7 +55,9 @@ export const Home: FC = () => {
             ) : (
                 <BackButton onClick={handleBackClick} />
             )}
+            {/* <div style={{ position: 'relative', top: 0, left: 0, height: '100%', width: '100%' }}> */}
             <ReactMapGL />
+            {/* </div> */}
             {!homeMarkerFocus && <FabMenu />}
             {!homeMarkerFocus && (
                 <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>

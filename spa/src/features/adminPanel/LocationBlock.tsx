@@ -46,7 +46,7 @@ const ButtonWrapper = styled.div`
 `;
 
 interface LocationProps {
-    item: ILocation;
+    location: ILocation;
 }
 
 const LocationInformation = styled.div`
@@ -66,9 +66,10 @@ const CategoryHeader = styled.p`
     margin-top: 10px;
 `;
 
-export const LocationBlock: FC<LocationProps> = (props) => {
-    const { item } = props;
-    const { title, status, description, webpImage, category } = item.properties;
+export const LocationBlock: FC<LocationProps> = ({ location }) => {
+    const { id } = location;
+
+    const { title, status, description, webpImage, category } = location.properties;
 
     const [isActive, setIsActive] = useState(false);
 
@@ -77,7 +78,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
     const { locations } = useStateSelector((state) => state.map);
 
     const handleApprove = async () => {
-        const location = locations.filter((location) => location.id === item.id)[0];
+        const location = locations.filter((location) => location.id === id)[0];
         const payload: IPutLocation = {
             id: location.id,
             title: location.properties.title,
@@ -89,7 +90,7 @@ export const LocationBlock: FC<LocationProps> = (props) => {
     };
 
     const handleReject = async () => {
-        const location = locations.filter((location) => location.id === item.id)[0];
+        const location = locations.filter((location) => location.id === id)[0];
         const payload: IPutLocation = {
             id: location.id,
             title: location.properties.title,

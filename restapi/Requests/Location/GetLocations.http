@@ -1,1 +1,1 @@
-GET {{host}}/api/locations
+GET {{host}}/api/locations/approved

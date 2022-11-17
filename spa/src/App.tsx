@@ -29,7 +29,7 @@ export const App = () => {
     }, [dispatch]);
 
     return (
-        <PageContainer id="PageContainer">
+        <PageContainer>
             <Outlet />
             <CustomizedSnackbars />
         </PageContainer>
