@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BackdropContainer } from './BackdropContainer';
 
 interface Props {
     center?: boolean;
@@ -19,14 +20,6 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Backdrop = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1999;
-`;
-
 const Modal = styled.div`
     width: 85%;
     padding: 1rem;
@@ -38,7 +31,7 @@ const Modal = styled.div`
 
 export const ModalContainer: React.FC<Props> = ({ center, style, closeModalHandler, children }) => (
     <Container style={{ justifyContent: center ? 'center' : '' }}>
-        <Backdrop onClick={closeModalHandler} />
+        <BackdropContainer backdropClickHandler={closeModalHandler} />
         <Modal style={{ marginTop: center ? '' : '1rem', ...style }}>{children}</Modal>
     </Container>
 );

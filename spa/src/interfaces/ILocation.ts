@@ -8,6 +8,8 @@ export interface ILocation {
     pinColor?: string;
 }
 
+export type LocationStatus = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
+
 interface IProperties {
     title: string;
     description: string;
@@ -43,7 +45,7 @@ interface IProperties {
         locationId: string;
         reviewId: string | null;
     };
-    status: string;
+    status: LocationStatus;
     rating: number;
     category: Array<ICategory>;
 }

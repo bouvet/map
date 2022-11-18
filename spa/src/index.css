@@ -29,6 +29,12 @@ ul {
     list-style: none;
 }
 
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
 *::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
 }

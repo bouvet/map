@@ -1,35 +1,139 @@
 import React from 'react';
-import { Button, CloseButton, FlexRowContainer, ModalContainer } from '../../../components/UI';
-import { ILocation } from '../../../interfaces';
+
 import { MyTheme } from '../../../styles/global';
+
+import { useStateDispatch } from '../../../hooks/useRedux';
+import { approvalServices } from '../services/approval.services';
+import { ILocation, LocationStatus } from '../../../interfaces';
+
+import { Button, CloseButton, FlexRowContainer, ModalContainer } from '../../../components/UI';
 
 interface Props {
     location: ILocation | null;
-    closeModalHandler: (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void;
+    closeModalHandler: (event?: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void;
+    removeLocationFromList: Function;
 }
 
-export const Modal: React.FC<Props> = ({ location, closeModalHandler }) => (
-    <ModalContainer closeModalHandler={closeModalHandler} center>
-        <div style={{ position: 'relative' }}>
-            <CloseButton onClick={closeModalHandler} sx={{ top: 0, left: 0 }} />
-            <img
-                src="https://raw.githubusercontent.com/bouvet/map/master/restapi/Requests/Assets/Lura-Skatepark-Review.png"
-                alt=""
-                style={{ width: '100%', borderRadius: '3px' }}
-            />
-            <h2 style={{ padding: '0.5rem 0' }}>{location?.properties.title}</h2>
-            <p style={{ fontSize: '0.8rem', maxHeight: '10rem', overflow: 'scroll' }}>{location?.properties.description}</p>
-            <p style={{ padding: '1.5rem 0', textAlign: 'center' }}>
-                Status: <span style={{ color: `${MyTheme.colors.warning}`, fontWeight: '700' }}>Under Review</span>
-            </p>
-            <FlexRowContainer spacing="space-between" style={{ paddingBottom: '1rem' }}>
-                <Button variant="contained" sx={{ width: '45%' }}>
-                    Godkjenn
-                </Button>
-                <Button variant="contained" color="error" sx={{ width: '45%' }}>
-                    Avslå
-                </Button>
-            </FlexRowContainer>
-        </div>
-    </ModalContainer>
-);
+export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLocationFromList }) => {
+    const dispatch = useStateDispatch();
+
+    let statusColor: string;
+    let statusText: string = 'Under Behandling';
+
+    const status = location?.properties.status;
+
+    switch (status) {
+        case 'Approved':
+            statusColor = `${MyTheme.colors.success}`;
+            statusText = 'Godkjent';
+            break;
+        case 'Rejected':
+            statusColor = `${MyTheme.colors.alert}`;
+            statusText = 'Avslått';
+            break;
+        case 'Reported':
+            statusColor = `${MyTheme.colors.alert}`;
+            statusText = 'Rapportert';
+            break;
+        case 'Under Review':
+            statusColor = `${MyTheme.colors.warning}`;
+            statusText = 'Under Behandling';
+            break;
+        default:
+            statusColor = `${MyTheme.colors.alert}`;
+    }
+
+    const updateLocationHandler = (status: LocationStatus) => {
+        if (location?.id) {
+            dispatch(approvalServices.updateLocationStatus(status, location?.id));
+            removeLocationFromList(location.id);
+            closeModalHandler();
+        }
+    };
+
+    const deleteLocationHandler = () => {
+        if (location?.id) {
+            dispatch(approvalServices.deleteLocation(location?.id));
+            removeLocationFromList(location.id);
+            closeModalHandler();
+        }
+    };
+
+    return (
+        <ModalContainer closeModalHandler={closeModalHandler} center>
+            {location && (
+                <div style={{ position: 'relative' }}>
+                    <CloseButton onClick={closeModalHandler} sx={{ top: 0, left: 0 }} />
+                    {location?.properties.webpImage?.cdnUri && (
+                        <img
+                            src={location?.properties.webpImage?.cdnUri}
+                            alt={location?.properties.title}
+                            style={{ width: '100%', borderRadius: '3px' }}
+                        />
+                    )}
+                    {!location?.properties.webpImage?.cdnUri && (
+                        <div
+                            style={{
+                                height: '9rem',
+                                backgroundColor: 'lightgray',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: '3px',
+                            }}
+                        >
+                            Bruker har ikke valgt et bilde
+                        </div>
+                    )}
+                    <h2 style={{ padding: '0.5rem 0' }}>{location?.properties.title}</h2>
+                    <p style={{ fontSize: '0.8rem', maxHeight: '10rem', overflow: 'scroll' }}>{location?.properties.description}</p>
+                    <p style={{ padding: '1.5rem 0' }}>
+                        Status: <span style={{ color: `${statusColor}`, fontWeight: '700' }}>{statusText}</span>
+                    </p>
+                    <FlexRowContainer spacing="space-between" style={{ paddingBottom: '1rem' }}>
+                        {status !== 'Approved' && status !== 'Rejected' && (
+                            <Button variant="contained" sx={{ width: '45%' }} onClick={() => updateLocationHandler('Approved')}>
+                                Godkjenn
+                            </Button>
+                        )}
+                        {status === 'Approved' && (
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                sx={{ width: '45%' }}
+                                onClick={() => updateLocationHandler('Under Review')}
+                            >
+                                Behandle
+                            </Button>
+                        )}
+                        {status === 'Rejected' && (
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                sx={{ width: '45%' }}
+                                onClick={() => updateLocationHandler('Under Review')}
+                            >
+                                Behandle
+                            </Button>
+                        )}
+                        {status !== 'Rejected' && (
+                            <Button
+                                variant="contained"
+                                color="error"
+                                sx={{ width: '45%' }}
+                                onClick={() => updateLocationHandler('Rejected')}
+                            >
+                                Avslå
+                            </Button>
+                        )}
+                        {status === 'Rejected' && (
+                            <Button variant="contained" color="error" sx={{ width: '45%' }} onClick={deleteLocationHandler}>
+                                Slett
+                            </Button>
+                        )}
+                    </FlexRowContainer>
+                </div>
+            )}
+        </ModalContainer>
+    );
+};

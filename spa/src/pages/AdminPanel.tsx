@@ -1,17 +1,23 @@
-import { FC, useEffect, useState } from 'react';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
-import styled from 'styled-components';
-import { SectionContainer } from '../components/UI';
-import { Modal, StatusSelector } from '../features/adminPanel';
-import { mapServices } from '../features/map';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import { IconButton } from '@mui/material';
+
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+import { mapServices } from '../features/map';
 import { ILocation } from '../interfaces';
-import { MyTheme } from '../styles/global';
 
-export type ApprovalFilterCategories = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
+import { DrawerContainer, SectionContainer } from '../components/UI';
+import { LocationList, LocationListItem, Modal, StatusSelector } from '../features/adminPanel';
+import { mapActions } from '../store/state/map.state';
+import { Header } from '../components/Navigation';
 
-export const AdminPanel: FC = () => {
+export const AdminPanel: React.FC = () => {
+    const [openDrawer, setOpenDrawer] = useState(false);
     const [location, setLocation] = useState<ILocation | null>(null);
 
     const { locations } = useStateSelector((state) => state.map);
@@ -38,85 +44,84 @@ export const AdminPanel: FC = () => {
         setLocation(null);
     };
 
-    const List = styled.ul`
-        width: 100%;
-        margin-top: 1rem;
-        max-height: 75vh;
-        overflow: scroll;
-    `;
+    const chooseLocationHandler = (location: ILocation) => {
+        setLocation(location);
+    };
 
-    const ListItem = styled.li`
-        padding: 0.5rem;
-        background-color: ${MyTheme.colors.accent};
-        margin-bottom: 0.5rem;
-        color: white;
-    `;
+    const removeLocationFromList = (locationId: string) => {
+        const filteredLocations = locations.filter((location) => location.id !== locationId);
+        dispatch(mapActions.loadLocations(filteredLocations));
+    };
+
+    const toggleDrawerHandler = () => {
+        setOpenDrawer((open) => !open);
+    };
 
     return (
         <>
-            <header style={{ width: '100%', height: '3rem', backgroundColor: `${MyTheme.colors.accent}` }}>
-                <span>Hamburger</span>
-            </header>
-            <SectionContainer>
-                {/* <BackButton onClick={() => navigate('/')} /> */}
-                {/* <LinkButton onClick={() => navigate('/admin/create-category')}>Opprett kategori</LinkButton> */}
+            <Header>
+                <IconButton
+                    color="inherit"
+                    aria-label="Navigate home"
+                    onClick={() => navigate('/')}
+                    sx={{
+                        mr: 'auto',
+                        width: '4rem',
+                        alignItems: 'center',
+                        display: {
+                            xs: 'flex',
+                            sm: 'none',
+                        },
+                    }}
+                >
+                    <ArrowBack sx={{ color: 'white' }} />
+                </IconButton>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={toggleDrawerHandler}
+                    sx={{
+                        ml: 'auto',
+                        width: '4rem',
+                        alignItems: 'center',
+                        display: {
+                            xs: 'flex',
+                            sm: 'none',
+                        },
+                    }}
+                >
+                    <MenuIcon sx={{ color: 'white' }} />
+                </IconButton>
+            </Header>
 
+            <SectionContainer>
                 <StatusSelector onChangeHandler={onSelectStatusHandler} />
 
-                {/* {locations.map((location: ILocation) => (
-                <LocationBlock key={location.id} location={location} />
-            ))} */}
-                <List>
-                    {/* {locations.map((location: ILocation) => (
-                        <li key={location.id} style={{ padding: '0.5rem', backgroundColor: 'lightgray', marginBottom: '0.5rem' }}>
-                            <span>{location.properties.title}</span>
-                        </li>
-                    ))} */}
-                    <ListItem onClick={() => setLocation(locations[0])}>
-                        <span>skate park nummer 1</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 2</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 3</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 4</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 5</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 6</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 7</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 8</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 9</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 10</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 11</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 12</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 13</span>
-                    </ListItem>
-                    <ListItem>
-                        <span>skate park nummer 14</span>
-                    </ListItem>
-                </List>
+                {locations.length > 0 && (
+                    <LocationList>
+                        {locations.map((location: ILocation) => (
+                            <LocationListItem key={location.id} location={location} onClickHandler={chooseLocationHandler}>
+                                <span>{location.properties.title}</span>
+                            </LocationListItem>
+                        ))}
+                    </LocationList>
+                )}
+
+                {locations.length === 0 && <div style={{ marginTop: '2rem' }}>Hurra 🎉 - ingenting å gjøre her 👍</div>}
+
+                {location && (
+                    <Modal location={location} closeModalHandler={closeModalHandler} removeLocationFromList={removeLocationFromList} />
+                )}
             </SectionContainer>
-            {location && <Modal location={location} closeModalHandler={closeModalHandler} />}
+
+            <DrawerContainer
+                drawerOpen={openDrawer}
+                openCloseToggle={toggleDrawerHandler}
+                links={[
+                    { to: '/admin/create-category', label: 'Opprett Kategori' },
+                    { to: '/', label: 'Hjem' },
+                ]}
+            />
         </>
     );
 };

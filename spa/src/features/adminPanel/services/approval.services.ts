@@ -1,17 +1,31 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { snackbarActions } from '../../../store/state/snackbar.state';
-import { IPutLocation } from '../../../utils/types.d';
+
+import { LocationStatus } from '../../../interfaces';
 
 export const approvalServices = {
-    updateLocation(payload: IPutLocation) {
+    updateLocationStatus(status: LocationStatus, locationId: string) {
         return async (dispatch: AppDispatch) => {
             try {
-                const putResponse = await API.put(`/Locations/${payload.id}`, payload, {
+                const formData = new FormData();
+                formData.append('status', status);
+
+                await API.put(`/locations/${locationId}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
-                console.log(putResponse);
-                dispatch(snackbarActions.setNotify({ message: 'Status er oppdatert', severity: 'success' }));
+                dispatch(snackbarActions.setNotify({ message: 'Status er oppdatert', severity: 'success', autohideDuration: 1 }));
+            } catch (error) {
+                console.error(error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+            }
+        };
+    },
+    deleteLocation(locationId: string) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                await API.delete(`/locations/${locationId}`);
+                dispatch(snackbarActions.setNotify({ message: 'Lokasjonen er slettet', severity: 'success', autohideDuration: 1 }));
             } catch (error) {
                 console.error(error);
                 dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
