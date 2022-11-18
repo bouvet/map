@@ -1,4 +1,4 @@
-import { ILocation } from './types.d';
+import { ILocation } from '../interfaces';
 
 /**
  * returns a filtered array containing only locations with @param category.

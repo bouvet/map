@@ -2,7 +2,7 @@ import { useEffect, useState, FC } from 'react';
 import { Marker } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import { MyTheme } from '../../../styles/global';
-import { ILocation } from '../../../utils/types.d';
+import { ILocation } from '../../../interfaces';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
