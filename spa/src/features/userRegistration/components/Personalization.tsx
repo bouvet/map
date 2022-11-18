@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { RegisterButtonFavorites } from '../../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { ICategory } from '../../../utils/types.d';
 import { Form } from '../../../components/Form/Form';
 import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { mapServices } from '../../map';
+import { ICategory } from '../../../interfaces';
 
 export const Personalization: FC = () => {
     const dispatch = useStateDispatch();

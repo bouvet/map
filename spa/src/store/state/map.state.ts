@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICategory, ILocation } from '../../utils/types.d';
+import { ICategory, ILocation } from '../../interfaces';
 
 const initialState = {
     loading: true,

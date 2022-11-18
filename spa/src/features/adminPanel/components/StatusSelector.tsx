@@ -16,10 +16,10 @@ interface StatusSelectorProps {
 
 export const StatusSelector: FC<StatusSelectorProps> = ({ onChangeHandler }) => {
     const options = [
-        { value: 'Under Review', label: 'Under Review' },
-        { value: 'Approved', label: 'Approved' },
-        { value: 'Rejected', label: 'Rejected' },
-        { value: 'Reported', label: 'Reported' },
+        { value: 'Under Review', label: 'Under Behandling' },
+        { value: 'Approved', label: 'Godkjent' },
+        { value: 'Rejected', label: 'Avslått' },
+        { value: 'Reported', label: 'Rapportert' },
     ];
 
     return (
