@@ -5,23 +5,25 @@ using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Locations;
 using restapi.Common.Services.Mappers.Reviews;
 using restapi.Common.Services.Mappers.Roles;
+using restapi.Common.Services.Mappers.Sessions;
 using restapi.Common.Services.Mappers.Users;
 
 namespace restapi.Common.Services.Mappings;
 
 public static class DependencyInjection
 {
-  public static IServiceCollection AddMappers(this IServiceCollection services)
-  {
-    services.AddScoped<IAuthenticationMapper, AuthenticationMapper>();
-    services.AddScoped<ICategoryMapper, CategoryMapper>();
-    services.AddScoped<ILocationMapper, LocationMapper>();
-    services.AddScoped<IReviewMapper, ReviewMapper>();
-    services.AddScoped<IRoleMapper, RoleMapper>();
-    services.AddScoped<IUserMapper, UserMapper>();
-    services.AddScoped<IImageStorageMapper, ImageStorageMapper>();
-    services.AddScoped<IEmailMapper, EmailMapper>();
+    public static IServiceCollection AddMappers(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthenticationMapper, AuthenticationMapper>();
+        services.AddScoped<ICategoryMapper, CategoryMapper>();
+        services.AddScoped<ILocationMapper, LocationMapper>();
+        services.AddScoped<IReviewMapper, ReviewMapper>();
+        services.AddScoped<IRoleMapper, RoleMapper>();
+        services.AddScoped<IUserMapper, UserMapper>();
+        services.AddScoped<IImageStorageMapper, ImageStorageMapper>();
+        services.AddScoped<IEmailMapper, EmailMapper>();
+        services.AddScoped<ISessionMapper, SessionMapper>();
 
-    return services;
-  }
+        return services;
+    }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using restapi.Data;
 
@@ -11,9 +12,10 @@ using restapi.Data;
 namespace restapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221122103029_SessionUser")]
+    partial class SessionUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,20 +296,20 @@ namespace restapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d02a4fc6-118a-497e-aa02-ca173514757f"),
-                            Created = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440),
+                            Id = new Guid("a3c76229-3f5a-4446-99fd-45dd4b4e044a"),
+                            Created = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970),
                             Name = "Administrator"
                         },
                         new
                         {
-                            Id = new Guid("5efe7e1e-c173-47d6-b202-263c7df35385"),
-                            Created = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440),
+                            Id = new Guid("ee9c2c7a-4186-421f-a207-c236ed05ec6f"),
+                            Created = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970),
                             Name = "Registering"
                         },
                         new
                         {
-                            Id = new Guid("05d6e54e-f862-4f6a-a062-9adcf5a7ac35"),
-                            Created = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440),
+                            Id = new Guid("e26f9e1a-8fa0-42d6-ba72-8198726c6a19"),
+                            Created = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970),
                             Name = "User"
                         });
                 });
@@ -403,30 +405,30 @@ namespace restapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("04c5a3bc-7a8c-4fd7-b57d-ac83c9b5c8c5"),
+                            Id = new Guid("dd7f213a-6c96-40c4-a53e-0b33700120fa"),
                             AccessToken = "Admin",
                             AuthenticationMethod = "Email",
-                            DOB = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440),
+                            DOB = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970),
                             Email = "verden.venter.app@gmail.com",
                             FirstName = "Verden",
                             LastName = "Venter",
-                            Password = "$2a$11$WwtmuADzusgq/DiIggwzSee2N9JJP4nRzxNf6UYKS1tSWwwt1r0Nq",
+                            Password = "$2a$11$Fs8R5wCsQhLrotFNwujF1ukdzYkHzz9FWzlufKogpXG.BRXvtgePO",
                             PhoneNumber = 0,
                             PostalCode = 0,
-                            Registered = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440)
+                            Registered = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970)
                         },
                         new
                         {
-                            Id = new Guid("7cf5bb84-76b8-4b3c-980a-be4c95e2ff44"),
+                            Id = new Guid("b786d8a2-5d6f-4a17-913d-34cf8b4ab3b2"),
                             AuthenticationMethod = "Email",
-                            DOB = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440),
+                            DOB = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970),
                             Email = "jdoe@email.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "$2a$11$Efj5mMpd5250CcbLSg4wR.kJC7SL11JwOclA7Swzg.CfpESKDSDNa",
+                            Password = "$2a$11$GK6CKhTTLGrh91eD1SnqMuZ2qw./.ycaCZscvzwYKcS4C7PVwCDyu",
                             PhoneNumber = 0,
                             PostalCode = 0,
-                            Registered = new DateTime(2022, 11, 22, 12, 3, 32, 576, DateTimeKind.Unspecified).AddTicks(1440)
+                            Registered = new DateTime(2022, 11, 22, 11, 30, 28, 557, DateTimeKind.Unspecified).AddTicks(3970)
                         });
                 });
 
@@ -585,7 +587,7 @@ namespace restapi.Migrations
                         .IsRequired();
 
                     b.HasOne("restapi.Entities.User", "User")
-                        .WithMany("Sessions")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -628,11 +630,6 @@ namespace restapi.Migrations
             modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("restapi.Entities.User", b =>
-                {
-                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }
