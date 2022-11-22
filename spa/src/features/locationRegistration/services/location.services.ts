@@ -27,7 +27,8 @@ export const locationServices = {
                     );
                     return response;
                 }
-                const response = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}/category`);
+                const response = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}`);
+                console.log(response.data);
                 return response;
             } catch (error) {
                 return error;

@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../../styles/global';
-import { ReactMapGL } from '../../map';
+import { Map } from '../../map';
 
 const MapWrapper = styled.div`
     width: 100%;
@@ -115,8 +115,6 @@ interface MapViewProp {
 export const MapView: FC<MapViewProp> = ({ handleClick }) => (
     <MapWrapper>
         <EmojiButton text="Min plassering" emoji="📍" onClick={handleClick} top="10px" left="5px" />
-        <div className="registration-container">
-            <ReactMapGL addingLocation />
-        </div>
+        <div className="registration-container">{/* <Map addingLocation /> */}</div>
     </MapWrapper>
 );

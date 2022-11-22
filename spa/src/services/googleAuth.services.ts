@@ -4,28 +4,7 @@ import { authActions } from '../store/state/auth.state';
 import { API } from '../lib/api';
 import { userActions } from '../store/state/user.state';
 import { sleep } from '../utils/sleep';
-
-interface IAuthenticateWithCodeResponse {
-    id?: string;
-    emailId?: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    address?: string;
-    authenticationMethod: string;
-    postalArea?: string;
-    postalCode?: number;
-    phoneNumber?: number;
-    dob: Date;
-    registered?: Date;
-    updated?: Date;
-    roles?: [];
-    favoriteCategories?: [];
-    isLoggingIn: boolean;
-    isRegistering: boolean;
-    emailIsVerified: boolean;
-    token: string;
-}
+import { IAuthenticateWithCodeResponse } from '../interfaces';
 
 export const googleAuthServices = {
     authenticate(code: string) {

@@ -1,5 +1,5 @@
-export * from './AdminPanel';
-export * from './AuthenticationSpinner';
+export * from './Admin';
+export * from './Auth';
 export * from './ChangePassword';
 export * from './Home';
 export * from './Loading';

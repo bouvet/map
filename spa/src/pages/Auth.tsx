@@ -3,17 +3,17 @@ import { useLocation } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useStateDispatch } from '../hooks/useRedux';
 import { googleAuthServices } from '../services/googleAuth.services';
-import { mapServices } from '../features/map';
+// import { mapServices } from '../features/map';
 import { PageContainer } from '../components/UI';
 
 const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
-export const AuthenticationSpinner: FC = () => {
+export const Auth: FC = () => {
     const location = useLocation();
 
     const dispatch = useStateDispatch();
 
-    dispatch(mapServices.getLocations());
+    // dispatch(mapServices.getLocations());
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);

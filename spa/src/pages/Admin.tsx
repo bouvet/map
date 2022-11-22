@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
@@ -15,8 +14,9 @@ import { DrawerContainer, SectionContainer } from '../components/UI';
 import { LocationList, LocationListItem, Modal, StatusSelector } from '../features/adminPanel';
 import { mapActions } from '../store/state/map.state';
 import { Header } from '../components/Navigation';
+import { locationStatus } from '../types';
 
-export const AdminPanel: React.FC = () => {
+export const Admin: React.FC = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const [location, setLocation] = useState<ILocation | null>(null);
 
@@ -26,12 +26,12 @@ export const AdminPanel: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(mapServices.getLocations('under review'));
+        dispatch(mapServices.getLocations('Under Review'));
     }, [dispatch]);
 
     const onSelectStatusHandler = (
         option: SingleValue<{
-            value: string;
+            value: locationStatus;
             label: string;
         }>,
     ) => {
@@ -63,7 +63,7 @@ export const AdminPanel: React.FC = () => {
                 <IconButton
                     color="inherit"
                     aria-label="Navigate home"
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('..')}
                     sx={{
                         mr: 'auto',
                         width: '4rem',

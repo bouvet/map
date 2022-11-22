@@ -1,34 +1,58 @@
-import Slide from '@mui/material/Slide';
-import { FC, useEffect } from 'react';
-import { FilterButton } from '../components/Filter/FilterButtons';
-import { FilterMenu } from '../components/Filter/FilterMenu';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Collapse, Fab, Slide } from '@mui/material';
 import { Popup, PopupCard } from '../components/Popup/Popup';
 import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
-import { FabMenu } from '../features/home/components/FabMenu';
+import { HomeFooter, HomeHeader } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { EmojiButton } from '../features/locationRegistration/components/Location';
 import { locationServices } from '../features/locationRegistration/services/location.services';
-import { ReactMapGL } from '../features/map';
+import { mapServices, Map } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { ICategory } from '../interfaces';
+import { ICategory, ILocation } from '../interfaces';
 import { mapActions } from '../store/state/map.state';
-import { useFilterEvent } from '../utils/filterLogic';
+import { uiActions } from '../store/state/ui.state';
 import { ILatLong } from '../utils/types.d';
+import { GoogleIcon } from '../components/Navigation/GoogleIcon';
+import { MyTheme } from '../styles/global';
 
-export const Home: FC = () => {
-    useFilterEvent();
-    const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus, selectedFilterCategory } =
-        useStateSelector((state) => state.map);
+export const Home: React.FC = () => {
+    const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
+
+    const [showMenu, setShowMenu] = useState(false);
+
+    const { showLocationInfoPopup, showLocationInfoDrawer } = useStateSelector((state) => state.ui);
+
+    const { loading, categories, selectedFilterCategory } = useStateSelector((state) => state.map);
+
     const { currentUserLocation } = useStateSelector((state) => state.registration);
-    const mappedFilter = categoriesWithLocations.map((item: ICategory) =>
-        item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
-    );
+
     const dispatch = useStateDispatch();
-    const handleBackClick = () => {
-        dispatch(mapActions.setHomeMarkerFocus(false));
-        dispatch(mapActions.setPopupVisibility(false));
-        dispatch(mapActions.setSelectedMarker(''));
+
+    useEffect(() => {
+        dispatch(mapServices.getLocations());
+    }, [dispatch]);
+
+    const onMarkerSelectHandler = (location: ILocation) => {
+        if (selectedLocation && selectedLocation.id === location.id) {
+            setSelectedLocation(null);
+            dispatch(uiActions.setShowLocationPopup(false));
+            return;
+        }
+        setSelectedLocation(location);
+        dispatch(uiActions.setShowLocationPopup(true));
+    };
+
+    const onCategorySelectHandler = (category: ICategory) => {
+        if (selectedCategory && selectedCategory.id === category.id) {
+            setSelectedCategory(null);
+            dispatch(mapActions.filterLocations(null));
+            return;
+        }
+        setSelectedCategory(category);
+        dispatch(mapActions.filterLocations(category.id));
     };
 
     const handleLocationClick = () => {
@@ -46,47 +70,83 @@ export const Home: FC = () => {
         }
     };
 
-    useEffect(() => {
-        document.body.style.overflowY = 'hidden';
-        return () => {
-            document.body.style.overflowY = 'auto';
-        };
-    }, []);
+    const showMenuToggler = () => {
+        setShowMenu(!showMenu);
+    };
 
     return (
         <SectionContainer style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
-            {!homeMarkerFocus ? (
-                <>
-                    <FilterMenu>{mappedFilter}</FilterMenu>
-                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="16px" />
-                </>
-            ) : (
-                <BackButton onClick={handleBackClick} />
+            {!showLocationInfoPopup && (
+                <HomeHeader onCategorySelectHandler={onCategorySelectHandler} categories={categories} selectedCategory={selectedCategory} />
             )}
-            {/* <div style={{ position: 'relative', top: 0, left: 0, height: '100%', width: '100%' }}> */}
-            <ReactMapGL />
-            {/* </div> */}
-            {!homeMarkerFocus && <FabMenu />}
-            {!homeMarkerFocus && (
-                <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
+
+            {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
+
+            {!loading && <Map selectedLocation={selectedLocation} onMarkerSelectHandler={onMarkerSelectHandler} />}
+
+            {!showLocationInfoPopup && (
+                <HomeFooter getUserLocationHandler={handleLocationClick} showMenuToggler={showMenuToggler} showMenu={showMenu} />
+            )}
+            <Menu>
+                <ul>
+                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
+                        <MenuListItem>
+                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
+                        </MenuListItem>
+                    </Collapse>
+                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
+                        <MenuListItem>
+                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
+                        </MenuListItem>
+                    </Collapse>
+                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
+                        <MenuListItem>
+                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
+                        </MenuListItem>
+                    </Collapse>
+                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
+                        <MenuListItem>
+                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
+                        </MenuListItem>
+                    </Collapse>
+                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
+                        <MenuListItem>
+                            <Fab size="small" sx={{ backgroundColor: 'white', textAlign: 'center' }}>
+                                <Link to="/login">
+                                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
+                                        login
+                                    </GoogleIcon>
+                                </Link>
+                            </Fab>
+                        </MenuListItem>
+                    </Collapse>
+                </ul>
+            </Menu>
+
+            {selectedLocation && showLocationInfoPopup && (
+                <Slide direction="up" in={!!selectedLocation} mountOnEnter unmountOnExit>
                     <PopupCard>
-                        {popUpIsVisible && (
-                            <>
-                                <Popup
-                                    name={currentlySelectedLocation.properties.title}
-                                    description={currentlySelectedLocation.properties.description}
-                                    rating={currentlySelectedLocation.properties.rating}
-                                    image={
-                                        currentlySelectedLocation.properties.webpImage &&
-                                        currentlySelectedLocation.properties.webpImage.cdnUri
-                                    }
-                                />
-                            </>
-                        )}
+                        <Popup location={selectedLocation} />
                     </PopupCard>
                 </Slide>
             )}
-            {homeMarkerFocus && <SwipeableEdgeDrawer />}
+
+            {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
         </SectionContainer>
     );
 };
+
+const Menu = styled.nav`
+    position: absolute;
+    bottom: 5.7rem;
+    right: 0;
+    width: 5.1rem;
+`;
+
+const MenuListItem = styled.li`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0;
+`;

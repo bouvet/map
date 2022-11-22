@@ -14,17 +14,7 @@ import {
     Personalization,
 } from '../features/userRegistration';
 import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
-import {
-    AdminPanel,
-    AuthenticationSpinner,
-    ChangePassword,
-    Home,
-    LocationRegistration,
-    Login,
-    ProfilePage,
-    Register,
-    ResetPassword,
-} from '../pages';
+import { Admin, Auth, ChangePassword, Home, LocationRegistration, Login, ProfilePage, Register, ResetPassword } from '../pages';
 import { RegisterWorkout } from '../pages/RegisterWorkout';
 
 export const AppRoutes: FC = () => (
@@ -43,7 +33,7 @@ export const AppRoutes: FC = () => (
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="change-password" element={<ChangePassword />} />
 
-            <Route path="auth" element={<AuthenticationSpinner />} />
+            <Route path="auth" element={<Auth />} />
 
             <Route path="register" element={<Register />}>
                 <Route path="email" element={<EmailInput />} />
@@ -119,7 +109,7 @@ export const AppRoutes: FC = () => (
                     index
                     element={
                         <RequireAdmin>
-                            <AdminPanel />
+                            <Admin />
                         </RequireAdmin>
                     }
                 />

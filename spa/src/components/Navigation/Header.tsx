@@ -4,7 +4,7 @@ import { MyTheme } from '../../styles/global';
 
 interface Props {
     children: React.ReactNode;
-    style?: {};
+    style?: React.CSSProperties;
 }
 
 const StyledHeader = styled.header`
