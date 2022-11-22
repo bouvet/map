@@ -1,0 +1,8 @@
+POST {{host}}/api/sessions
+Content-Type: application/json
+Authorization: Bearer 
+{
+    "LocationId": "ffc2d4f7-2e13-4010-bbd6-0725e299e607",
+    "UserId": "0d18b0c1-e52f-40bc-a461-7796c200ade0",
+    "Registered": "2022-11-22T08:47:39.903Z"
+}
