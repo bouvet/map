@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Collapse, Fab, Slide } from '@mui/material';
-import { Popup, PopupCard } from '../components/Popup/Popup';
+
 import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
-import { HomeFooter, HomeHeader } from '../features/home';
+import { HomeFooter, HomeHeader, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
 import { locationServices } from '../features/locationRegistration/services/location.services';
 import { mapServices, Map } from '../features/map';
@@ -14,8 +11,6 @@ import { ICategory, ILocation } from '../interfaces';
 import { mapActions } from '../store/state/map.state';
 import { uiActions } from '../store/state/ui.state';
 import { ILatLong } from '../utils/types.d';
-import { GoogleIcon } from '../components/Navigation/GoogleIcon';
-import { MyTheme } from '../styles/global';
 
 export const Home: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
@@ -55,7 +50,7 @@ export const Home: React.FC = () => {
         dispatch(mapActions.filterLocations(category.id));
     };
 
-    const handleLocationClick = () => {
+    const getUserLocationHandler = () => {
         if (currentUserLocation.lat) {
             dispatch(locationServices.getClosestLocation(currentUserLocation, selectedFilterCategory));
         } else {
@@ -85,68 +80,14 @@ export const Home: React.FC = () => {
             {!loading && <Map selectedLocation={selectedLocation} onMarkerSelectHandler={onMarkerSelectHandler} />}
 
             {!showLocationInfoPopup && (
-                <HomeFooter getUserLocationHandler={handleLocationClick} showMenuToggler={showMenuToggler} showMenu={showMenu} />
+                <HomeFooter getUserLocationHandler={getUserLocationHandler} showMenuToggler={showMenuToggler} showMenu={showMenu} />
             )}
-            <Menu>
-                <ul>
-                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
-                        <MenuListItem>
-                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
-                        </MenuListItem>
-                    </Collapse>
-                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
-                        <MenuListItem>
-                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
-                        </MenuListItem>
-                    </Collapse>
-                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
-                        <MenuListItem>
-                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
-                        </MenuListItem>
-                    </Collapse>
-                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
-                        <MenuListItem>
-                            <Fab size="small" sx={{ backgroundColor: 'white' }} />
-                        </MenuListItem>
-                    </Collapse>
-                    <Collapse in={showMenu} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
-                        <MenuListItem>
-                            <Fab size="small" sx={{ backgroundColor: 'white', textAlign: 'center' }}>
-                                <Link to="/login">
-                                    <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
-                                        login
-                                    </GoogleIcon>
-                                </Link>
-                            </Fab>
-                        </MenuListItem>
-                    </Collapse>
-                </ul>
-            </Menu>
 
-            {selectedLocation && showLocationInfoPopup && (
-                <Slide direction="up" in={!!selectedLocation} mountOnEnter unmountOnExit>
-                    <PopupCard>
-                        <Popup location={selectedLocation} />
-                    </PopupCard>
-                </Slide>
-            )}
+            <HomeMenu showMenu={showMenu} />
+
+            {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
 
             {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
         </SectionContainer>
     );
 };
-
-const Menu = styled.nav`
-    position: absolute;
-    bottom: 5.7rem;
-    right: 0;
-    width: 5.1rem;
-`;
-
-const MenuListItem = styled.li`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.3rem 0;
-`;

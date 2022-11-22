@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { App } from '../App';
-import { CreateCategory } from '../features/adminPanel';
+import { Category } from '../features/adminPanel';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
 import { ChangeEmail, DeleteAccount } from '../features/profile';
 import {
@@ -104,23 +104,9 @@ export const AppRoutes: FC = () => (
                 />
             </Route>
 
-            <Route path="admin">
-                <Route
-                    index
-                    element={
-                        <RequireAdmin>
-                            <Admin />
-                        </RequireAdmin>
-                    }
-                />
-                <Route
-                    path="create-category"
-                    element={
-                        <RequireAdmin>
-                            <CreateCategory />
-                        </RequireAdmin>
-                    }
-                />
+            <Route path="admin" element={<RequireAdmin />}>
+                <Route index element={<Admin />} />
+                <Route path="category" element={<Category />} />
             </Route>
             <Route path="*" element={<Home />} />
         </Route>

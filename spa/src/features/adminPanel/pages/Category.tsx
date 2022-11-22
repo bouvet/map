@@ -1,13 +1,13 @@
 import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form } from '../../components/Form/Form';
-import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { SubmitButton, PageContainer, PageTitle, SectionContainer, BackButton } from '../../components/UI';
-import { useInput } from '../../hooks/useInput';
-import { useStateDispatch } from '../../hooks/useRedux';
-import { categoryServices } from './services/category.services';
+import { Form } from '../../../components/Form/Form';
+import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { BackButton, PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { useInput } from '../../../hooks/useInput';
+import { useStateDispatch } from '../../../hooks/useRedux';
+import { categoryServices } from '../services';
 
-export const CreateCategory: FC = () => {
+export const Category: FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
@@ -17,6 +17,7 @@ export const CreateCategory: FC = () => {
         hasError: nameInputHasError,
         inputBlurHandler: nameBlurHandler,
         valueChangeHandler: nameChangeHandler,
+        reset: resetNameInput,
     } = useInput((value) => value.trim().length >= 1);
 
     const {
@@ -25,6 +26,7 @@ export const CreateCategory: FC = () => {
         hasError: emojiInputHasError,
         inputBlurHandler: emojiBlurHandler,
         valueChangeHandler: emojiChangeHandler,
+        reset: resetEmojiInput,
     } = useInput((value) => value.trim().length >= 1);
 
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -36,11 +38,13 @@ export const CreateCategory: FC = () => {
         if (!nameIsValid || !emojiIsValid) return;
 
         dispatch(categoryServices.create({ name, emoji }));
+        resetNameInput();
+        resetEmojiInput();
     };
 
     return (
         <PageContainer>
-            <BackButton onClick={() => navigate('/admin')} />
+            <BackButton onClick={() => navigate('..')} />
             <SectionContainer>
                 <PageTitle>Legg til kategori</PageTitle>
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>

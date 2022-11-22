@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
-
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowBack from '@mui/icons-material/ArrowBack';
-import { IconButton } from '@mui/material';
-
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+
+import { mapActions } from '../store/state/map.state';
 import { mapServices } from '../features/map';
+
 import { ILocation } from '../interfaces';
+import { locationStatus } from '../types';
 
 import { DrawerContainer, SectionContainer } from '../components/UI';
-import { LocationList, LocationListItem, Modal, StatusSelector } from '../features/adminPanel';
-import { mapActions } from '../store/state/map.state';
-import { Header } from '../components/Navigation';
-import { locationStatus } from '../types';
+import { AdminHeader, LocationList, LocationListItem, Modal, StatusSelector } from '../features/adminPanel';
 
 export const Admin: React.FC = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -23,7 +18,6 @@ export const Admin: React.FC = () => {
     const { locations } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
-    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(mapServices.getLocations('Under Review'));
@@ -59,41 +53,7 @@ export const Admin: React.FC = () => {
 
     return (
         <>
-            <Header>
-                <IconButton
-                    color="inherit"
-                    aria-label="Navigate home"
-                    onClick={() => navigate('..')}
-                    sx={{
-                        mr: 'auto',
-                        width: '4rem',
-                        alignItems: 'center',
-                        display: {
-                            xs: 'flex',
-                            sm: 'none',
-                        },
-                    }}
-                >
-                    <ArrowBack sx={{ color: 'white' }} />
-                </IconButton>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={toggleDrawerHandler}
-                    sx={{
-                        ml: 'auto',
-                        width: '4rem',
-                        alignItems: 'center',
-                        display: {
-                            xs: 'flex',
-                            sm: 'none',
-                        },
-                    }}
-                >
-                    <MenuIcon sx={{ color: 'white' }} />
-                </IconButton>
-            </Header>
-
+            <AdminHeader toggleDrawerHandler={toggleDrawerHandler} />
             <SectionContainer>
                 <StatusSelector onChangeHandler={onSelectStatusHandler} />
 
@@ -118,7 +78,7 @@ export const Admin: React.FC = () => {
                 drawerOpen={openDrawer}
                 openCloseToggle={toggleDrawerHandler}
                 links={[
-                    { to: '/admin/create-category', label: 'Opprett Kategori' },
+                    { to: '/admin/category', label: 'Opprett Kategori' },
                     { to: '/', label: 'Hjem' },
                 ]}
             />

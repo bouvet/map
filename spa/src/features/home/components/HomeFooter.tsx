@@ -4,7 +4,6 @@ import Fab from '@mui/material/Fab';
 
 import { PillButton } from '../../../components/UI';
 import { MyTheme } from '../../../styles/global';
-import { FabMenu } from './FabMenu';
 
 interface Props {
     getUserLocationHandler: () => void;
@@ -29,7 +28,6 @@ export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuTo
         >
             <span className="material-symbols-outlined">{showMenu ? 'close' : 'menu'}</span>
         </Fab>
-        {/* <FabMenu /> */}
     </Footer>
 );
 
