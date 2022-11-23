@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { App } from '../App';
-import { Category } from '../features/adminPanel';
+import { Category } from '../features/admin';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
 import { ChangeEmail, DeleteAccount } from '../features/profile';
 import {
@@ -14,7 +14,7 @@ import {
     Personalization,
 } from '../features/userRegistration';
 import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
-import { Admin, Auth, ChangePassword, Home, LocationRegistration, Login, ProfilePage, Register, ResetPassword } from '../pages';
+import { Admin, Auth, ChangePassword, Home, AddLocation, Login, ProfilePage, Register, ResetPassword } from '../pages';
 import { RegisterWorkout } from '../pages/RegisterWorkout';
 
 export const AppRoutes: FC = () => (
@@ -45,16 +45,10 @@ export const AppRoutes: FC = () => (
                 <Route path="onboarding" element={<Onboarding />} />
             </Route>
 
-            <Route path="location-registration">
-                <Route
-                    index
-                    element={
-                        <RequireAuth>
-                            <LocationRegistration />
-                        </RequireAuth>
-                    }
-                />
+            <Route path="add-location">
+                <Route index element={<AddLocation />} />
             </Route>
+
             <Route path="register-workout">
                 <Route
                     index

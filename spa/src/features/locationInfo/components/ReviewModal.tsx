@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewType } from '../../../utils/types.d';
-import { Img } from '../../locationRegistration/components/ImageUploader';
+import { Img } from '../../add-location/components/ImageUploader';
 import { CloseButton, SubmitButton } from '../../../components/UI';
 import { MyTheme } from '../../../styles/global';
 

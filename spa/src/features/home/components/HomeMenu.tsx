@@ -23,7 +23,7 @@ export const HomeMenu: React.FC<Props> = ({ showMenu }) => {
             <ul>
                 {isAuthenticated && <MenuButton endpoint="/profile" icon="person" visible={showMenu} />}
                 {isAdmin && <MenuButton endpoint="/admin" icon="admin_panel_settings" visible={showMenu} />}
-                {isAuthenticated && <MenuButton endpoint="/location-registration" icon="add" visible={showMenu} />}
+                <MenuButton endpoint="/add-location" icon="add" visible={showMenu} />
                 {isAuthenticated && <MenuButton endpoint="/register-workout" icon="fitness_center" visible={showMenu} />}
                 {isAuthenticated && <MenuButton icon="logout" visible={showMenu} onClickHandler={logoutHandler} />}
                 {!isAuthenticated && <MenuButton endpoint="/login" icon="login" visible={showMenu} />}

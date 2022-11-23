@@ -4,7 +4,7 @@ import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { HomeFooter, HomeHeader, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { locationServices } from '../features/locationRegistration/services/location.services';
+import { locationServices } from '../features/add-location/services/location.services';
 import { mapServices, Map } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ICategory, ILocation } from '../interfaces';
@@ -32,20 +32,24 @@ export const Home: React.FC = () => {
 
     const onMarkerSelectHandler = (location: ILocation) => {
         if (selectedLocation && selectedLocation.id === location.id) {
+            setShowMenu(false);
             setSelectedLocation(null);
             dispatch(uiActions.setShowLocationPopup(false));
             return;
         }
+        setShowMenu(false);
         setSelectedLocation(location);
         dispatch(uiActions.setShowLocationPopup(true));
     };
 
     const onCategorySelectHandler = (category: ICategory) => {
         if (selectedCategory && selectedCategory.id === category.id) {
+            setShowMenu(false);
             setSelectedCategory(null);
             dispatch(mapActions.filterLocations(null));
             return;
         }
+        setShowMenu(false);
         setSelectedCategory(category);
         dispatch(mapActions.filterLocations(category.id));
     };

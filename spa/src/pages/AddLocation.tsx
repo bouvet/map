@@ -1,6 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BackButton, PageContainer } from '../components/UI';
+import { AddLocationHeader } from '../features/add-location';
 import {
     PageHeader,
     ProgressBar,
@@ -10,18 +11,18 @@ import {
     RegistrationButtonWrapper,
     RegistrationContentWrapper,
     RegistrationHeader,
-} from '../features/locationRegistration/components/Common';
-import { ImageUploader } from '../features/locationRegistration/components/ImageUploader';
-import { Information } from '../features/locationRegistration/components/Information';
-import { Loading } from '../features/locationRegistration/components/Loading';
-import { CenterPin, MapView } from '../features/locationRegistration/components/Location';
-import { locationServices } from '../features/locationRegistration/services/location.services';
+} from '../features/add-location/components/Common';
+import { ImageUploader } from '../features/add-location/components/ImageUploader';
+import { Information } from '../features/add-location/components/Information';
+import { Loading } from '../features/add-location/components/Loading';
+import { CenterPin, MapView } from '../features/add-location/components/Location';
+import { locationServices } from '../features/add-location/services/location.services';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { registrationActions } from '../store/state/registration.state';
 import { snackbarActions } from '../store/state/snackbar.state';
 import { MyTheme } from '../styles/global';
 
-export const LocationRegistration: FC = () => {
+export const AddLocation: FC = () => {
     const { currentMapCenter, currentTitle, currentDescription, currentCategories, currentImage } = useStateSelector(
         (state) => state.registration,
     );
@@ -133,60 +134,59 @@ export const LocationRegistration: FC = () => {
                 <Loading />
             ) : (
                 <>
-                    <PageContainer>
-                        <RegistrationHeader>
-                            <BackButton onClick={() => navigate('/')} />
-                            <PageHeader>Legg til treningssted</PageHeader>
-                            <ProgressBar pageIndex={pageIndex} />
-                        </RegistrationHeader>
-                        <RegistrationContentWrapper>
-                            {pageIndex === 1 && <Information />}
-                            {pageIndex === 2 && <ImageUploader />}
-                            {pageIndex === 0 ? (
-                                <>
-                                    <MapView handleClick={handleGetLocation} />
-                                    <CenterPin>📍</CenterPin>
-                                    {currentMapCenter.lat ? (
-                                        <RegistrationButton
-                                            text={MyTheme.colors.lightBase}
-                                            background={MyTheme.colors.accent}
-                                            onClick={handleForwardClick}
-                                        >
-                                            Velg punkt
-                                        </RegistrationButton>
-                                    ) : (
-                                        <RegistrationButton disabled text={MyTheme.colors.lightBase} background={MyTheme.colors.accent}>
-                                            Velg punkt
-                                        </RegistrationButton>
-                                    )}
-                                </>
-                            ) : (
-                                <RegistrationButtonWrapper>
-                                    <RegistrationButtonLeft
-                                        text={MyTheme.colors.lightBase}
-                                        background={MyTheme.colors.darkBase}
-                                        onClick={handleBackClick}
-                                    >
-                                        Tilbake
-                                    </RegistrationButtonLeft>
-
-                                    <RegistrationButtonRight
+                    <AddLocationHeader />
+                    {/* <RegistrationHeader> */}
+                    {/* <BackButton onClick={() => navigate('..')} /> */}
+                    {/* <PageHeader>Legg til treningssted</PageHeader> */}
+                    <ProgressBar pageIndex={pageIndex} />
+                    {/* </RegistrationHeader> */}
+                    <RegistrationContentWrapper>
+                        {pageIndex === 1 && <Information />}
+                        {pageIndex === 2 && <ImageUploader />}
+                        {pageIndex === 0 ? (
+                            <>
+                                <MapView handleClick={handleGetLocation} />
+                                <CenterPin>📍</CenterPin>
+                                {currentMapCenter.lat ? (
+                                    <RegistrationButton
                                         text={MyTheme.colors.lightBase}
                                         background={MyTheme.colors.accent}
-                                        disabled={
-                                            !(currentTitle && currentCategories[0] && currentDescription) ||
-                                            currentTitle.length < 5 ||
-                                            currentDescription.length < 20
-                                        }
                                         onClick={handleForwardClick}
                                     >
-                                        {pageIndex === 1 && 'Videre'}
-                                        {pageIndex === 2 && 'Fullfør'}
-                                    </RegistrationButtonRight>
-                                </RegistrationButtonWrapper>
-                            )}
-                        </RegistrationContentWrapper>
-                    </PageContainer>
+                                        Velg punkt
+                                    </RegistrationButton>
+                                ) : (
+                                    <RegistrationButton disabled text={MyTheme.colors.lightBase} background={MyTheme.colors.accent}>
+                                        Velg punkt
+                                    </RegistrationButton>
+                                )}
+                            </>
+                        ) : (
+                            <RegistrationButtonWrapper>
+                                <RegistrationButtonLeft
+                                    text={MyTheme.colors.lightBase}
+                                    background={MyTheme.colors.darkBase}
+                                    onClick={handleBackClick}
+                                >
+                                    Tilbake
+                                </RegistrationButtonLeft>
+
+                                <RegistrationButtonRight
+                                    text={MyTheme.colors.lightBase}
+                                    background={MyTheme.colors.accent}
+                                    disabled={
+                                        !(currentTitle && currentCategories[0] && currentDescription) ||
+                                        currentTitle.length < 5 ||
+                                        currentDescription.length < 20
+                                    }
+                                    onClick={handleForwardClick}
+                                >
+                                    {pageIndex === 1 && 'Videre'}
+                                    {pageIndex === 2 && 'Fullfør'}
+                                </RegistrationButtonRight>
+                            </RegistrationButtonWrapper>
+                        )}
+                    </RegistrationContentWrapper>
                 </>
             )}
         </>

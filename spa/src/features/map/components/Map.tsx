@@ -1,5 +1,5 @@
 import { useRef, useState, FC, Ref } from 'react';
-import { Map as ReactMap, MapboxEvent, MapRef, ViewStateChangeEvent } from 'react-map-gl';
+import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { ILocation } from '../../../interfaces';
@@ -57,8 +57,8 @@ export const Map: FC<MapProp> = ({ selectedLocation, onMarkerSelectHandler }) =>
         setViewState(event.viewState);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const onMapLoadHandler = (event: MapboxEvent) => {
+    const onMapLoadHandler = () => {
+        console.log('[onMapLoadHandler]: Map loaded');
         setMapLoading(false);
     };
 

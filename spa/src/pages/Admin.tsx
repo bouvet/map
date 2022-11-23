@@ -9,7 +9,7 @@ import { ILocation } from '../interfaces';
 import { locationStatus } from '../types';
 
 import { DrawerContainer, SectionContainer } from '../components/UI';
-import { AdminHeader, LocationList, LocationListItem, Modal, StatusSelector } from '../features/adminPanel';
+import { AdminHeader, LocationList, LocationListItem, Modal, StatusSelector } from '../features/admin';
 
 export const Admin: React.FC = () => {
     const [openDrawer, setOpenDrawer] = useState(false);

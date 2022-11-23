@@ -13,7 +13,7 @@ interface Props {
 
 export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuToggler, showMenu }) => (
     <Footer>
-        <PillButton onClick={getUserLocationHandler} style={{ padding: '1.2rem 0.8rem' }}>
+        <PillButton onClick={getUserLocationHandler} style={{ padding: '1.2rem 0.8rem', marginTop: '0.7rem' }}>
             🔍 Nærmeste lokasjon
         </PillButton>
         <Fab
@@ -35,12 +35,11 @@ const Footer = styled.footer`
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 7rem;
+    height: 5.5rem;
     width: 100%;
     background-color: transparent;
     z-index: 5;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 0 0.8rem;
 `;

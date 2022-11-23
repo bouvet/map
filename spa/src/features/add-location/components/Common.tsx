@@ -28,15 +28,6 @@ export const PageHeader = styled.h1`
     font-weight: normal;
 `;
 
-export const ProgressBarWrapper = styled.div`
-    width: 90%;
-    height: 70px;
-    margin: 40px 5% 0px 5%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 5px;
-`;
-
 const ProgressElementWrapper = styled.div`
     height: 100%;
     position: relative;
@@ -106,3 +97,12 @@ export const ProgressBar: FC<ProgressBarProps> = ({ pageIndex }) => (
         <ProgressElement completed={pageIndex >= 2} icon="add_photo_alternate" />
     </ProgressBarWrapper>
 );
+
+export const ProgressBarWrapper = styled.section`
+    width: 90%;
+    /* height: 5rem; */
+    /* margin: 40px 5% 0px 5%; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+`;
