@@ -45,10 +45,6 @@ button {
     width: 100%;
 }
 
-.registration-container {
-    height: calc(100vh - 200px);
-}
-
 .white-button {
     background-color: white;
     color: #282828;

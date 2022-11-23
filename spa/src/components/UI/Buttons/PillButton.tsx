@@ -17,4 +17,9 @@ export const PillButton = styled.button<IPillButtonProps>`
     display: flex;
     align-items: center;
     white-space: nowrap;
+    :disabled {
+        background-color: ${MyTheme.colors.grey};
+        color: ${MyTheme.colors.lightBase};
+        cursor: not-allowed;
+    }
 `;

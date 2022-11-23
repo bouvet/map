@@ -1,8 +1,10 @@
-import { useRef, useState, FC, Ref } from 'react';
+import React, { useRef, useState, Ref } from 'react';
 import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
 import { CustomMarker } from './CustomMarker';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { ILocation } from '../../../interfaces';
+import { mapboxBaseUri, mapboxStreets } from '../../../styles/map-styles';
+import { MapStyleMenu } from './MapStyleMenu';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -11,7 +13,7 @@ interface MapProp {
     onMarkerSelectHandler: (location: ILocation) => void;
 }
 
-export const Map: FC<MapProp> = ({ selectedLocation, onMarkerSelectHandler }) => {
+export const Map: React.FC<MapProp> = ({ selectedLocation, onMarkerSelectHandler }) => {
     const [viewState, setViewState] = useState({
         longitude: 5.7063,
         latitude: 58.9566,
@@ -19,6 +21,8 @@ export const Map: FC<MapProp> = ({ selectedLocation, onMarkerSelectHandler }) =>
     });
 
     const [mapLoading, setMapLoading] = useState(true);
+
+    const [mapStyle, setMapStyle] = useState(`${mapboxStreets}`);
 
     const { filteredLocations } = useStateSelector((state) => state.map);
 
@@ -95,26 +99,31 @@ export const Map: FC<MapProp> = ({ selectedLocation, onMarkerSelectHandler }) =>
     //     }
     // };
 
+    const setMapStyleHandler = (mapStyle: string) => {
+        setMapStyle(mapStyle);
+    };
+
     return (
-        <ReactMap
-            {...viewState}
-            ref={mapRef}
-            onLoad={onMapLoadHandler}
-            onMove={onMapMoveHandler}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            mapboxAccessToken={MAPBOX_TOKEN}
-        >
-            {!mapLoading &&
-                filteredLocations.map((location) => (
-                    <CustomMarker
-                        key={location.id}
-                        coordinates={location.geometry.coordinates}
-                        onClick={onMarkerSelectHandler}
-                        location={location}
-                        selectedLocation={selectedLocation}
-                    />
-                ))}
-            {/* {!addingLocation &&
+        <>
+            <ReactMap
+                {...viewState}
+                ref={mapRef}
+                onLoad={onMapLoadHandler}
+                onMove={onMapMoveHandler}
+                mapStyle={`${mapboxBaseUri}${mapStyle}`}
+                mapboxAccessToken={MAPBOX_TOKEN}
+            >
+                {!mapLoading &&
+                    filteredLocations.map((location) => (
+                        <CustomMarker
+                            key={location.id}
+                            coordinates={location.geometry.coordinates}
+                            onClick={onMarkerSelectHandler}
+                            location={location}
+                            selectedLocation={selectedLocation}
+                        />
+                    ))}
+                {/* {!addingLocation &&
                 selectedFilterCategory &&
                 filteredLocations
                     .filter((location) => location.properties.status === 'Approved')
@@ -140,6 +149,8 @@ export const Map: FC<MapProp> = ({ selectedLocation, onMarkerSelectHandler }) =>
                             selectedMarker={selectedMarker}
                         />
                     ))} */}
-        </ReactMap>
+            </ReactMap>
+            <MapStyleMenu setMapStyleHandler={setMapStyleHandler} style={{ top: '4rem' }} />
+        </>
     );
 };

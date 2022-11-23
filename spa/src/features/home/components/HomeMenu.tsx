@@ -1,9 +1,9 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { MenuButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { authActions } from '../../../store/state/auth.state';
-import { MenuButton } from './MenuButton';
 
 interface Props {
     showMenu: boolean;
@@ -23,7 +23,7 @@ export const HomeMenu: React.FC<Props> = ({ showMenu }) => {
             <ul>
                 {isAuthenticated && <MenuButton endpoint="/profile" icon="person" visible={showMenu} />}
                 {isAdmin && <MenuButton endpoint="/admin" icon="admin_panel_settings" visible={showMenu} />}
-                <MenuButton endpoint="/add-location" icon="add" visible={showMenu} />
+                <MenuButton endpoint="/add-location" icon="add_location_alt" visible={showMenu} />
                 {isAuthenticated && <MenuButton endpoint="/register-workout" icon="fitness_center" visible={showMenu} />}
                 {isAuthenticated && <MenuButton icon="logout" visible={showMenu} onClickHandler={logoutHandler} />}
                 {!isAuthenticated && <MenuButton endpoint="/login" icon="login" visible={showMenu} />}
