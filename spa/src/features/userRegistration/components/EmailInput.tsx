@@ -7,7 +7,7 @@ import { useStateDispatch } from '../../../hooks/useRedux';
 import { userServices } from '../services/user.services';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { validateEmail } from '../../../utils/emailValidator';
+import { validateEmail } from '../../../utils/email-validator';
 import { userActions } from '../../../store/state/user.state';
 import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
 import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton, Text } from '../../../components/UI';

@@ -11,7 +11,7 @@ interface Props {
     onClickHandler?: () => void;
 }
 
-export const MenuButton: React.FC<Props> = ({ visible, icon, endpoint, onClickHandler }) => (
+export const FabSubMenuButton: React.FC<Props> = ({ visible, icon, endpoint, onClickHandler }) => (
     <Collapse in={visible} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
         <MenuListItem>
             {endpoint && (

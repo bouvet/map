@@ -7,7 +7,7 @@ import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
 import { snackbarActions } from '../../store/state/snackbar.state';
-import { validateEmail } from '../../utils/emailValidator';
+import { validateEmail } from '../../utils/email-validator';
 
 export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();

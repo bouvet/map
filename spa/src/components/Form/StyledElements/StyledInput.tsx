@@ -7,9 +7,9 @@ const Input = styled.input`
     border: 1px solid rgb(193, 193, 193);
     font-size: ${MyTheme.fontSize.header};
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-    width: calc(100% - 22px);
+    width: 100%;
 `;
 
 const InputWrapper = styled.div`
@@ -48,6 +48,7 @@ interface IProps {
     required?: boolean;
     inputHasError?: boolean;
     disabled?: boolean;
+    style?: React.CSSProperties;
     toggleShowPassword?: () => void;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onBlur?: React.ChangeEventHandler<HTMLInputElement>;
@@ -65,20 +66,21 @@ export const StyledInput: React.FC<IProps> = ({
     errorMessage,
     showPassword,
     disabled,
+    style,
     toggleShowPassword,
     onChange,
     onBlur,
     onKeyDown,
 }) => {
-    let style = {};
+    let inputStyle = {};
     if (inputHasError) {
-        style = { border: '1px solid #f52121' };
+        inputStyle = { border: '1px solid #f52121' };
     }
     if (!inputHasError && value) {
-        style = { border: '1px solid #00c600' };
+        inputStyle = { border: '1px solid #00c600' };
     }
     return (
-        <div>
+        <div style={style}>
             <StyledLabel label={label} />
             <InputWrapper>
                 <Input
@@ -90,7 +92,7 @@ export const StyledInput: React.FC<IProps> = ({
                     onChange={onChange}
                     onBlur={onBlur}
                     onKeyDown={onKeyDown}
-                    style={style}
+                    style={inputStyle}
                     disabled={disabled}
                 />
                 {type === 'password' && !showPassword && (

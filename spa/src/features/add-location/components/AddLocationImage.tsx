@@ -27,7 +27,7 @@ const ButtonWrapper = styled.div`
     flex-direction: row;
 `;
 
-export const ImageUploader: FC = () => {
+export const AddLocationImage: FC = () => {
     const [image, setImage] = useState<File | undefined>(undefined);
     const [imageUrl, setImageUrl] = useState('');
 

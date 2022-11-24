@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
-import { HomeFooter, HomeHeader, HomeMenu, LocationInfoPopup } from '../features/home';
+import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { locationServices } from '../features/add-location/services/location.services';
-import { mapServices, Map } from '../features/map';
+import { mapServices } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ICategory, ILocation } from '../interfaces';
 import { mapActions } from '../store/state/map.state';
 import { uiActions } from '../store/state/ui.state';
-import { ILatLong } from '../utils/types.d';
 
 export const Home: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
@@ -20,9 +18,7 @@ export const Home: React.FC = () => {
 
     const { showLocationInfoPopup, showLocationInfoDrawer } = useStateSelector((state) => state.ui);
 
-    const { loading, categories, selectedFilterCategory } = useStateSelector((state) => state.map);
-
-    const { currentUserLocation } = useStateSelector((state) => state.registration);
+    const { categories } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
 
@@ -54,21 +50,6 @@ export const Home: React.FC = () => {
         dispatch(mapActions.filterLocations(category.id));
     };
 
-    const getUserLocationHandler = () => {
-        if (currentUserLocation.lat) {
-            dispatch(locationServices.getClosestLocation(currentUserLocation, selectedFilterCategory));
-        } else {
-            console.log('isGettingLocation');
-            navigator.geolocation.getCurrentPosition((position) => {
-                const userLocation: ILatLong = {
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude,
-                };
-                dispatch(locationServices.getClosestLocation(userLocation, selectedFilterCategory));
-            });
-        }
-    };
-
     const showMenuToggler = () => {
         setShowMenu(!showMenu);
     };
@@ -81,11 +62,13 @@ export const Home: React.FC = () => {
 
             {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
 
-            {!loading && <Map selectedLocation={selectedLocation} onMarkerSelectHandler={onMarkerSelectHandler} />}
-
-            {!showLocationInfoPopup && (
-                <HomeFooter getUserLocationHandler={getUserLocationHandler} showMenuToggler={showMenuToggler} showMenu={showMenu} />
-            )}
+            <HomeMap
+                selectedLocation={selectedLocation}
+                selectedCategory={selectedCategory}
+                onMarkerSelectHandler={onMarkerSelectHandler}
+                showMenuToggler={showMenuToggler}
+                showMenu={showMenu}
+            />
 
             <HomeMenu showMenu={showMenu} />
 

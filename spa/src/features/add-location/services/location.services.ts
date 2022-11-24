@@ -16,22 +16,18 @@ export const locationServices = {
             }
         };
     },
-    getClosestLocation(userLocation: ILatLong, selectedFilterCategory: string) {
+    getClosestLocation(userLocation: ILatLong, selectedCategory: string) {
         return async () => {
             try {
-                console.log(userLocation);
-                console.log(selectedFilterCategory);
-                if (selectedFilterCategory) {
-                    const response = await API.get(
-                        `/Locations/${userLocation.lat}&${userLocation.long}?category=${selectedFilterCategory}`,
-                    );
-                    return response;
+                if (selectedCategory) {
+                    const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}?category=${selectedCategory}`);
+                    console.log(data);
+                    return;
                 }
-                const response = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}`);
-                console.log(response.data);
-                return response;
+                const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}`);
+                console.log(data);
             } catch (error) {
-                return error;
+                console.log(error);
             }
         };
     },

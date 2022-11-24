@@ -1,11 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ViewState } from 'react-map-gl';
 import { ICategory, ILocation } from '../../interfaces';
 
 const initialState = {
-    loading: true,
+    loading: false,
+    mapMoved: false,
+    viewState: {
+        longitude: 5.7063,
+        latitude: 58.9566,
+        zoom: 11,
+    } as ViewState,
     locations: [] as ILocation[],
     filteredLocations: [] as ILocation[],
     categories: [] as ICategory[],
+    userLocation: {
+        lat: 0,
+        lng: 0,
+        shouldFlyTo: false,
+    },
+    closestLocation: {} as ILocation,
     selectedFilterCategory: '',
     selectedMarker: '',
     categoriesWithLocations: [] as ICategory[],
@@ -20,6 +33,12 @@ const mapState = createSlice({
     reducers: {
         setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload;
+        },
+        setMapMoved(state, action: PayloadAction<boolean>) {
+            state.mapMoved = action.payload;
+        },
+        setViewState(state, action: PayloadAction<ViewState>) {
+            state.viewState = action.payload;
         },
         loadLocations(state, action: PayloadAction<ILocation[]>) {
             state.locations = action.payload;
@@ -41,6 +60,14 @@ const mapState = createSlice({
         },
         loadCategories(state, action: PayloadAction<ICategory[]>) {
             state.categories = action.payload;
+        },
+        setUserLocation(state, action: PayloadAction<{ lat: number; lng: number; shouldFlyTo: boolean }>) {
+            state.userLocation = action.payload;
+            state.mapMoved = true;
+            state.loading = false;
+        },
+        setClosestLocation(state, action: PayloadAction<ILocation>) {
+            state.closestLocation = action.payload;
         },
         setSelectedFilterCategory(state, action: PayloadAction<string>) {
             state.selectedFilterCategory = action.payload;
