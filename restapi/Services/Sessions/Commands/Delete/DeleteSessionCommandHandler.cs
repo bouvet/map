@@ -1,0 +1,31 @@
+using ErrorOr;
+using MediatR;
+using restapi.Data;
+
+namespace restapi.Services.Sessions.Commands.Delete;
+
+public class DeleteSessionCommandHandler : IRequestHandler<DeleteSessionCommand, ErrorOr<Deleted>>
+{
+    private readonly DataContext dataContext;
+
+    // private readonly ISender mediator;
+
+    public DeleteSessionCommandHandler(DataContext dataContext)
+    {
+        this.dataContext = dataContext;
+        // this.mediator = mediator;
+    }
+
+    public async Task<ErrorOr<Deleted>> Handle(DeleteSessionCommand request, CancellationToken cancellationToken)
+    {
+        if (request.Session == null)
+        {
+            return Errors.Session.NotFound;
+        }
+
+        dataContext.Sessions.Remove(request.Session);
+        await dataContext.SaveChangesAsync(cancellationToken);
+
+        return Result.Deleted;
+    }
+}

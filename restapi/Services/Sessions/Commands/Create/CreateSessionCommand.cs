@@ -7,5 +7,5 @@ namespace restapi.Services.Sessions.Commands.Create;
 public record CreateSessionCommand(
     Guid LocationId,
     DateTime Registered,
-    Guid UserId
+    Guid? UserId
 ) : IRequest<ErrorOr<SessionResult>>;

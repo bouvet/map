@@ -1,0 +1,4 @@
+@id=e691bff2-96a0-4eb9-9da2-ba91f2ad6e78
+
+DELETE {{host}}/api/sessions/{{id}}
+Authorization: Bearer {{adminToken}}

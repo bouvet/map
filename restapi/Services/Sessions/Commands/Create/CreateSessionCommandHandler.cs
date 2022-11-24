@@ -38,6 +38,8 @@ public class CreateSessionCommandHandler : IRequestHandler<CreateSessionCommand,
             User = user,
             Registered = request.Registered
         };
+        // adds Session items to the database
+        dataContext.Sessions.Add(session);
         await dataContext.SaveChangesAsync(cancellationToken);
         return new SessionResult(session);
     }

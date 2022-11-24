@@ -24,6 +24,8 @@ public class GetSessionQueryHandler : IRequestHandler<GetSessionByIdQuery, Error
             .Include(s => s.User)
             .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken: cancellationToken);
 
+        //  var session = await dataContext.Sessions.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
+
         if (session is null)
         {
             return Errors.Session.NotFound;

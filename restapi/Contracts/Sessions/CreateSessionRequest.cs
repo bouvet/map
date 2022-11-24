@@ -1,7 +1,7 @@
 namespace restapi.Contracts.Sessions;
 
 public record CreateSessionRequest(
-    Guid LocationID,
+    Guid LocationId,
     DateTime Registered,
     Guid UserId
 );
