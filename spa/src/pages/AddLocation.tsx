@@ -1,18 +1,25 @@
+import { FilePondFile } from 'filepond';
 import React, { useState } from 'react';
 
 import { AddLocationHeader, AddLocationImage, AddLocationInfo, AddLocationMap, AddLocationProgressBar } from '../features/add-location';
+import { locationServices } from '../features/add-location/services/location.services';
+import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+import { addLocationActions } from '../store';
 
 export const AddLocation: React.FC = () => {
     const [pageIndex, setPageIndex] = useState(0);
 
-    const formData = new FormData();
+    const { title, description, lat, lng, selectedCategories } = useStateSelector((state) => state.addLocation);
 
-    const chooseLocationHandler = (longitude: number, latitude: number) => {
-        console.log(longitude);
-        console.log(latitude);
-        formData.append('longitude', longitude.toString());
-        formData.append('latitude', latitude.toString());
-        console.log(formData);
+    const dispatch = useStateDispatch();
+
+    const chooseLocationHandler = (lat: number, lng: number) => {
+        // console.log(longitude);
+        // console.log(latitude);
+        // formData.append('longitude', longitude.toString());
+        // formData.append('latitude', latitude.toString());
+        // console.log(formData);
+        dispatch(addLocationActions.setLatLng({ lat, lng }));
         setPageIndex(1);
     };
 
@@ -23,6 +30,26 @@ export const AddLocation: React.FC = () => {
     // longitude = 5.1234
     // latitude = 58.1234
 
+    const onSubmitHandler = (image?: FilePondFile) => {
+        dispatch(addLocationActions.setLoading(true));
+        const formData = new FormData();
+
+        formData.append('title', title.trim());
+        formData.append('description', description.trim());
+        formData.append('latitude', lat.toString());
+        formData.append('longitude', lng.toString());
+
+        selectedCategories.forEach((category) => {
+            formData.append('category', category.id);
+        });
+
+        if (image) {
+            formData.append('image', image.file);
+        }
+
+        dispatch(locationServices.addLocation(formData));
+    };
+
     return (
         <>
             <AddLocationHeader pageIndex={pageIndex} setPageIndex={setPageIndex} />
@@ -30,8 +57,8 @@ export const AddLocation: React.FC = () => {
 
             <AddLocationMap chooseLocationHandler={chooseLocationHandler} pageIndex={pageIndex} />
 
-            {pageIndex === 1 && <AddLocationInfo />}
-            {pageIndex === 2 && <AddLocationImage />}
+            {pageIndex === 1 && <AddLocationInfo setPageIndex={setPageIndex} />}
+            {pageIndex === 2 && <AddLocationImage onSubmitHandler={onSubmitHandler} />}
         </>
     );
 };

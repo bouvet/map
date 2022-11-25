@@ -1,34 +1,34 @@
 import { API } from '../../../lib/api';
-import { ILatLong } from '../../../utils/types.d';
+import { addLocationActions, AppDispatch } from '../../../store';
+// import { ILatLong } from '../../../utils/types.d';
 
 export const locationServices = {
-    postLocation(payload: FormData) {
-        return async () => {
+    addLocation(formData: FormData) {
+        return async (dispatch: AppDispatch) => {
             try {
-                const postResponse = await API.post('/Locations', payload, {
+                const { data } = await API.post('/locations', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
-                console.log(postResponse);
-                return true;
+                console.log(data);
+                dispatch(addLocationActions.setLoading(false));
             } catch (error) {
                 console.error('error', error);
-                return false;
             }
         };
     },
-    getClosestLocation(userLocation: ILatLong, selectedCategory: string) {
-        return async () => {
-            try {
-                if (selectedCategory) {
-                    const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}?category=${selectedCategory}`);
-                    console.log(data);
-                    return;
-                }
-                const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}`);
-                console.log(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-    },
+    // getClosestLocation(userLocation: ILatLong, selectedCategory: string) {
+    //     return async () => {
+    //         try {
+    //             if (selectedCategory) {
+    //                 const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}?category=${selectedCategory}`);
+    //                 console.log(data);
+    //                 return;
+    //             }
+    //             const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}`);
+    //             console.log(data);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     };
+    // },
 };

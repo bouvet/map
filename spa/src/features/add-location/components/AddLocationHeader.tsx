@@ -31,10 +31,6 @@ export const AddLocationHeader: React.FC<Props> = ({ pageIndex, setPageIndex }) 
                 sx={{
                     position: 'absolute',
                     alignItems: 'center',
-                    display: {
-                        xs: 'flex',
-                        sm: 'none',
-                    },
                 }}
             >
                 <ArrowBack sx={{ color: 'white' }} />

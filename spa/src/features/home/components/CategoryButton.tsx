@@ -7,9 +7,10 @@ interface Props {
     category: ICategory;
     selectedCategory: ICategory | null;
     selectCategoryHandler: (category: ICategory) => void;
+    style?: React.CSSProperties;
 }
 
-export const CategoryButton: React.FC<Props> = ({ category, selectedCategory, selectCategoryHandler }) => {
+export const CategoryButton: React.FC<Props> = ({ category, selectedCategory, selectCategoryHandler, style }) => {
     const [selected, setSelected] = useState(false);
 
     useEffect(() => {
@@ -21,7 +22,7 @@ export const CategoryButton: React.FC<Props> = ({ category, selectedCategory, se
     }, [category, selectedCategory]);
 
     return (
-        <PillButton selected={selected} onClick={() => selectCategoryHandler(category)}>
+        <PillButton style={style} selected={selected} onClick={() => selectCategoryHandler(category)}>
             {category.emoji} {category.name}
         </PillButton>
     );

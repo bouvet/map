@@ -54,3 +54,9 @@ button {
     background-color: #ff5b24;
     color: white;
 }
+
+.file-pond-text {
+    color: #007bc0;
+    font-weight: 700;
+    letter-spacing: 1px;
+}

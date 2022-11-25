@@ -1,108 +1,113 @@
-import React, { ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+
 import styled from 'styled-components';
-import { RegisterButton } from '../../../components/Filter/FilterButtons';
-import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { SectionContainer, Text } from '../../../components/UI';
+import { FlexRowContainer, SectionContainer, SubmitButton, Text } from '../../../components/UI';
 import { useInput } from '../../../hooks/useInput';
-import { useStateSelector } from '../../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../interfaces';
-import { registrationActions } from '../../../store/state/registration.state';
+import { addLocationActions } from '../../../store';
 import { MyTheme } from '../../../styles/global';
+import { CategoryButton } from '../../home/components/CategoryButton';
 
-export const AddLocationInfo: React.FC = () => {
+interface Props {
+    setPageIndex: (pageIndex: number) => void;
+}
+
+export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
     const { categories } = useStateSelector((state) => state.map);
-    const mappedFilter = categories.map((item: ICategory) => (
-        <RegisterButton key={item.name} id={item.id} text={item.name} emoji={item.emoji} />
-    ));
 
-    const dispatch = useDispatch();
-    const { currentTitle, currentDescription } = useStateSelector((state) => state.registration);
+    const { selectedCategories, title: locationTitle, description } = useStateSelector((state) => state.addLocation);
 
-    const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value === ' ') {
-            dispatch(registrationActions.setCurrentTitle(''));
-        } else {
-            dispatch(registrationActions.setCurrentTitle(e.target.value));
-        }
-    };
-
-    const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        if (e.target.value === ' ') {
-            dispatch(registrationActions.setCurrentDescription(''));
-        } else {
-            dispatch(registrationActions.setCurrentDescription(e.target.value));
-        }
-    };
+    const dispatch = useStateDispatch();
 
     const {
-        value: name,
-        isValid: nameIsValid,
-        hasError: nameInputHasError,
-        inputBlurHandler: nameBlurHandler,
-        valueChangeHandler: nameChangeHandler,
-        reset: resetNameInput,
+        value: title,
+        hasError: titleInputHasError,
+        inputBlurHandler: titleBlurHandler,
+        valueChangeHandler: titleChangeHandler,
     } = useInput((value) => value.trim().length >= 5);
 
+    const selectCategoryHandler = (selectedCategory: ICategory) => {
+        if (selectedCategories.find((category) => category.id === selectedCategory.id)) {
+            dispatch(
+                addLocationActions.setSelectedCategories(selectedCategories.filter((category) => category.id !== selectedCategory.id)),
+            );
+            return;
+        }
+        dispatch(addLocationActions.setSelectedCategories([...selectedCategories, selectedCategory]));
+    };
+
+    useEffect(() => {
+        if (title.trim().length > 0) {
+            dispatch(addLocationActions.setTitle(title));
+        }
+    }, [dispatch, title]);
+
     return (
-        <SectionContainer>
+        <SectionContainer style={{ paddingTop: '0.5rem' }}>
             <StyledInput
                 label="Navn på lokasjon*"
                 errorMessage="Vennligst fyll inn navn"
-                value={name}
-                onChange={nameChangeHandler}
-                onBlur={nameBlurHandler}
-                inputHasError={nameInputHasError}
+                placeholder="Minimum 5 bokstaver"
+                value={title.trim().length > 0 ? title : locationTitle}
+                onChange={titleChangeHandler}
+                onBlur={titleBlurHandler}
+                inputHasError={titleInputHasError}
                 style={{ width: '100%' }}
             />
-            <CategorySelectWrapper>
-                <Label>Velg kategorier*</Label>
-            </CategorySelectWrapper>
-            <FilterMenuContent>{mappedFilter}</FilterMenuContent>
-            <InputWrapper>
-                <Label>Beskriv stedet*</Label>
-                <ListWrapper>
-                    <Text>Tips til info:</Text>
-                    <ul>
-                        <li>Hva slags utstyr finner man der?</li>
-                        <li>Er utstyret i god stand?</li>
-                        <li>Hvordan kommer man seg dit?</li>
-                        <li>Er stedet ofte opptatt?</li>
-                        <li>Har stedet belysning som slås av på kvelden?</li>
-                    </ul>
-                </ListWrapper>
-                <TextArea onChange={handleChangeDescription} value={currentDescription} maxLength={200} minLength={20} />
-                {currentDescription.length}/200
-            </InputWrapper>
+            <Text style={{ marginTop: '1rem', fontWeight: '600' }}>Velg kategorier*</Text>
+
+            <FlexRowContainer style={{ zIndex: '2', gap: '10px', padding: '20px 30px', paddingLeft: '0.3rem', overflowX: 'scroll' }}>
+                {categories.map((category) => (
+                    <CategoryButton
+                        key={category.id}
+                        category={category}
+                        selectedCategory={selectedCategories?.filter((c) => c.id === category.id)[0] || null}
+                        selectCategoryHandler={selectCategoryHandler}
+                    />
+                ))}
+            </FlexRowContainer>
+
+            <Text style={{ marginBottom: '1rem', fontWeight: '600' }}>Beskriv stedet*</Text>
+
+            <Text style={{ marginBottom: '0.5rem' }}>Tips til info:</Text>
+
+            <ul style={{ listStyle: 'disc', paddingLeft: '1rem', width: '100%' }}>
+                <li style={{ marginBottom: '0.3rem' }}>Hva slags utstyr finner man der?</li>
+                <li style={{ marginBottom: '0.3rem' }}>Er utstyret i god stand?</li>
+                <li style={{ marginBottom: '0.3rem' }}>Hvordan kommer man seg dit?</li>
+                <li style={{ marginBottom: '0.3rem' }}>Er stedet ofte opptatt?</li>
+                <li style={{ marginBottom: '1rem' }}>Har stedet belysning som slås av på kvelden?</li>
+            </ul>
+
+            <TextArea
+                onChange={(e) => dispatch(addLocationActions.setDescription(e.target.value))}
+                value={description}
+                maxLength={200}
+                minLength={20}
+            />
+
+            <Text style={{ padding: '5px' }}>
+                <span style={{ color: description.length < 20 ? 'red' : 'inherit' }}>{description.length} </span>/ 200
+            </Text>
+
+            <SubmitButton
+                sx={{ marginTop: '1rem' }}
+                onClick={() => setPageIndex(2)}
+                disabled={locationTitle.trim().length < 5 || description.trim().length < 20 || selectedCategories.length < 1}
+            >
+                Gå videre
+            </SubmitButton>
         </SectionContainer>
     );
 };
-
-const CategorySelectWrapper = styled.div`
-    width: 95%;
-    padding-left: 5%;
-`;
-
-const Label = styled.div``;
-const InputWrapper = styled.div`
-    width: 100%;
-`;
-
-const Input = styled.input`
-    border-radius: 5px;
-    border: 1px solid ${MyTheme.colors.grey};
-    padding: 5px;
-`;
-
-const ListWrapper = styled.div`
-    padding: 10px;
-`;
 
 const TextArea = styled.textarea`
     border-radius: 5px;
     border: 1px solid ${MyTheme.colors.grey};
     padding: 5px;
-    width: calc(100% - 12px);
-    height: 100px;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100px;
 `;

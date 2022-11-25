@@ -6,9 +6,9 @@ import { MyTheme } from '../../../styles/global';
 const Input = styled.input`
     border: 1px solid rgb(193, 193, 193);
     font-size: ${MyTheme.fontSize.header};
-    padding: 10px;
+    padding: 0.5rem;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.25);
     width: 100%;
 `;
 

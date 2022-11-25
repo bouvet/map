@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { mapServices } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ICategory, ILocation } from '../interfaces';
 import { mapActions } from '../store/state/map.state';
@@ -21,10 +20,6 @@ export const Home: React.FC = () => {
     const { categories } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
-
-    useEffect(() => {
-        dispatch(mapServices.getLocations());
-    }, [dispatch]);
 
     const onMarkerSelectHandler = (location: ILocation) => {
         if (selectedLocation && selectedLocation.id === location.id) {

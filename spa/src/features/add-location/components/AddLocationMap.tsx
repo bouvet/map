@@ -52,7 +52,7 @@ export const AddLocationMap: React.FC<Props> = ({ pageIndex, chooseLocationHandl
                     style={{ padding: '1.2rem 1rem', marginTop: '0.7rem' }}
                     disabled={!mapMoved}
                     selected={mapMoved}
-                    onClick={() => chooseLocationHandler(viewState.longitude, viewState.latitude)}
+                    onClick={() => chooseLocationHandler(viewState.latitude, viewState.longitude)}
                 >
                     📍 Velg Punkt
                 </PillButton>
