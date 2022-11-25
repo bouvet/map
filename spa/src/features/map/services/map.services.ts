@@ -1,25 +1,46 @@
 import { mapActions } from '../../../store/state/map.state';
 import { AppDispatch } from '../../../store/index';
 import { API } from '../../../lib/api';
+import { locationStatus } from '../../../types';
+import { ICategory } from '../../../interfaces';
 
 export const mapServices = {
-    getLocations(filter: string = 'approved') {
+    getLocations(filter: locationStatus = 'Approved') {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(mapActions.setLoading(true));
-
                 const { data: locations } = await API.get(`/locations/${filter}`);
 
                 dispatch(mapActions.loadLocations(locations));
 
-                // TODO: filter list later...
                 const { data: CategoriesData } = await API.get('/Categories');
-                dispatch(mapActions.setCategories(CategoriesData));
-                dispatch(mapActions.setCategoriesWithLocations(CategoriesData));
 
-                dispatch(mapActions.setLoading(false));
+                dispatch(mapActions.loadCategories(CategoriesData));
             } catch (error) {
                 console.error('error', error);
+            }
+        };
+    },
+
+    // eslint-disable-next-line no-undef
+    getClosestLocation(position: GeolocationPosition, selectedCategory: ICategory | null) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                if (selectedCategory) {
+                    const { data } = await API.get(
+                        `/locations/${position.coords.latitude}&${position.coords.longitude}?category=${selectedCategory}`,
+                    );
+
+                    dispatch(mapActions.setLoading(false));
+                    dispatch(mapActions.setClosestLocation(data));
+                    return;
+                }
+
+                const { data } = await API.get(`/locations/${position.coords.latitude}&${position.coords.longitude}`);
+
+                dispatch(mapActions.setLoading(false));
+                dispatch(mapActions.setClosestLocation(data));
+            } catch (error) {
+                console.log(error);
             }
         };
     },

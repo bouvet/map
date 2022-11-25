@@ -2,7 +2,7 @@ import { FC, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { useInput } from '../hooks/useInput';
-import { validateEmail } from '../utils/emailValidator';
+import { validateEmail } from '../utils/email-validator';
 import { loginServices } from '../features/login/services/login.services';
 import { Form } from '../components/Form/Form';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';

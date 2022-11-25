@@ -31,8 +31,11 @@ export const DrawerContainer: React.FC<Props> = ({ drawerOpen, openCloseToggle, 
                 backgroundColor: `${MyTheme.colors.accent}`,
             }}
         >
-            <IconButton sx={{ marginLeft: 'auto', marginRight: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <CloseIcon onClick={openCloseToggle} sx={{ color: 'white' }} />
+            <IconButton
+                onClick={openCloseToggle}
+                sx={{ marginLeft: 'auto', marginRight: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <CloseIcon sx={{ color: 'white' }} />
             </IconButton>
         </div>
         <nav style={{ marginTop: '1rem' }}>

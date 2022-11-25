@@ -8,7 +8,7 @@ import { useInput } from '../../../hooks/useInput';
 import { Checkbox } from '../../../components/Form/Input';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { Form } from '../../../components/Form/Form';
-import { validateEmail } from '../../../utils/emailValidator';
+import { validateEmail } from '../../../utils/email-validator';
 import { LinkButton, SubmitButton } from '../../../components/UI/Buttons';
 import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
 import { Text } from '../../../components/UI';

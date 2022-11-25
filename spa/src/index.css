@@ -45,10 +45,6 @@ button {
     width: 100%;
 }
 
-.registration-container {
-    height: calc(100vh - 200px);
-}
-
 .white-button {
     background-color: white;
     color: #282828;
@@ -57,4 +53,10 @@ button {
 .vipps-button {
     background-color: #ff5b24;
     color: white;
+}
+
+.file-pond-text {
+    color: #007bc0;
+    font-weight: 700;
+    letter-spacing: 1px;
 }

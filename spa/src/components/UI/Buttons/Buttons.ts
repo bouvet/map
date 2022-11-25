@@ -9,6 +9,14 @@ export const Button = styled(MuiButton)(() => ({
     fontSize: 16,
     fontFamily: `${MyTheme.fontFamily.body}`,
     height: 40,
+    color: `${MyTheme.colors.lightBase}`,
+    ':hover': {
+        backgroundColor: `${MyTheme.colors.accent}`,
+    },
+    ':disabled': {
+        backgroundColor: `${MyTheme.colors.grey}`,
+        color: `${MyTheme.colors.lightBase}`,
+    },
 }));
 
 export const SubmitButton = styled(Button)({
