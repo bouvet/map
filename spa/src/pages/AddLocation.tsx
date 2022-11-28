@@ -1,5 +1,6 @@
 import { FilePondFile } from 'filepond';
 import React, { useState } from 'react';
+import { Main } from '../components/Layout';
 
 import { AddLocationHeader, AddLocationImage, AddLocationInfo, AddLocationMap, AddLocationProgressBar } from '../features/add-location';
 import { locationServices } from '../features/add-location/services/location.services';
@@ -41,12 +42,14 @@ export const AddLocation: React.FC = () => {
     return (
         <>
             <AddLocationHeader pageIndex={pageIndex} setPageIndex={setPageIndex} />
-            <AddLocationProgressBar pageIndex={pageIndex} />
 
-            <AddLocationMap chooseLocationHandler={chooseLocationHandler} pageIndex={pageIndex} />
+            <Main style={{ height: 'calc(100vh - 3rem)' }}>
+                <AddLocationProgressBar pageIndex={pageIndex} />
+                <AddLocationMap chooseLocationHandler={chooseLocationHandler} pageIndex={pageIndex} />
 
-            {pageIndex === 1 && <AddLocationInfo setPageIndex={setPageIndex} />}
-            {pageIndex === 2 && <AddLocationImage onSubmitHandler={onSubmitHandler} />}
+                {pageIndex === 1 && <AddLocationInfo setPageIndex={setPageIndex} />}
+                {pageIndex === 2 && <AddLocationImage onSubmitHandler={onSubmitHandler} />}
+            </Main>
         </>
     );
 };

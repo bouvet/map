@@ -12,7 +12,6 @@ import 'moment/locale/nb';
 import { Form } from '../../../components/Form/Form';
 import { Label } from '../../../components/Form/Input';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
@@ -20,6 +19,7 @@ import { StyledInput } from '../../../components/Form/StyledElements/StyledInput
 import { useInput } from '../../../hooks/useInput';
 import { PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { Main } from '../../../components/Layout';
+import { uiActions } from '../../../store';
 
 export const PersonalInfo: FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -58,7 +58,7 @@ export const PersonalInfo: FC = () => {
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!dob) {
-            dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Fødselsdato mangler', severity: 'error' }));
         } else {
             firstNameBlurHandler();
             lastNameBlurHandler();

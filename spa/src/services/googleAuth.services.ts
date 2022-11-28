@@ -1,5 +1,4 @@
-import { snackbarActions } from '../store/state/snackbar.state';
-import { AppDispatch } from '../store';
+import { AppDispatch, uiActions } from '../store';
 import { authActions } from '../store/state/auth.state';
 import { API } from '../lib/api';
 import { userActions } from '../store/state/user.state';
@@ -30,10 +29,10 @@ export const googleAuthServices = {
 
                 dispatch(authActions.userLogin(user));
                 await sleep(2000);
-                dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Du er logget inn', severity: 'success' }));
             } catch (error: any) {
                 console.log(error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                 dispatch(authActions.setLoading(false)); // redirect back to login-page?
             }
         };

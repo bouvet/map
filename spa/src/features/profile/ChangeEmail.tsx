@@ -7,7 +7,7 @@ import { PageTitle, SectionContainer, SubmitButton } from '../../components/UI';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
-import { snackbarActions } from '../../store/state/snackbar.state';
+import { uiActions } from '../../store';
 import { validateEmail } from '../../utils/email-validator';
 
 export const ChangeEmail: FC = () => {
@@ -33,7 +33,7 @@ export const ChangeEmail: FC = () => {
 
         // dispatch(userServices.editInfo({ email }));
 
-        dispatch(snackbarActions.setNotify({ message: 'E-posten er endret', severity: 'success' }));
+        dispatch(uiActions.setShowSnackbar({ message: 'E-posten er endret', severity: 'success' }));
         navigate('/profile');
         console.log('Email: ', email);
     };

@@ -2,13 +2,13 @@ import { AlertColor } from '@mui/material';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface SetNotifyPayload {
-    autohideDuration?: number | null;
+    visibleDuration?: number | null;
     severity?: AlertColor;
     message: string;
 }
 
 interface InitialState {
-    autohideDuration?: number | null;
+    visibleDuration?: number | null;
     severity?: AlertColor;
     message: string;
     isOpen: boolean;
@@ -24,10 +24,10 @@ const snackbarState = createSlice({
     initialState,
     reducers: {
         setNotify(state, action: PayloadAction<SetNotifyPayload>) {
-            const { autohideDuration, severity, message } = action.payload;
+            const { visibleDuration, severity, message } = action.payload;
             state.severity = severity;
             state.message = message;
-            state.autohideDuration = autohideDuration;
+            state.visibleDuration = visibleDuration;
             state.isOpen = true;
         },
         closeNotify: () => initialState,

@@ -1,6 +1,5 @@
 import { API } from '../../../lib/api';
-import { addLocationActions, AppDispatch } from '../../../store';
-// import { ILatLong } from '../../../utils/types.d';
+import { addLocationActions, AppDispatch, uiActions } from '../../../store';
 
 export const locationServices = {
     addLocation(formData: FormData) {
@@ -13,22 +12,15 @@ export const locationServices = {
                 dispatch(addLocationActions.setLoading(false));
             } catch (error) {
                 console.error('error', error);
+                dispatch(
+                    uiActions.setShowSnackbar({
+                        message: 'Lagring av lokasjon feilet, vennligst prøv igjen',
+                        severity: 'error',
+                        visibleDuration: 1500,
+                    }),
+                );
+                dispatch(addLocationActions.setLoading(false));
             }
         };
     },
-    // getClosestLocation(userLocation: ILatLong, selectedCategory: string) {
-    //     return async () => {
-    //         try {
-    //             if (selectedCategory) {
-    //                 const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}?category=${selectedCategory}`);
-    //                 console.log(data);
-    //                 return;
-    //             }
-    //             const { data } = await API.get(`/Locations/${userLocation.lat}&${userLocation.long}`);
-    //             console.log(data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     };
-    // },
 };

@@ -10,7 +10,6 @@ import { StarRating } from '../../../components/StarRating/StarRating';
 import { LinkButton, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ILocation } from '../../../interfaces';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { uiActions } from '../../../store/state/ui.state';
 import { MyTheme } from '../../../styles/global';
 import { IReviewTypeGet } from '../../../utils/types.d';
@@ -210,7 +209,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
     const [addedNewSession, SetAddedNewSession] = useState(false);
     const handleSuccessMessageOpen = () => {
         SetAddedNewSession(true);
-        dispatch(snackbarActions.setNotify({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+        dispatch(uiActions.setShowSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
     };
     // const handleSuccessMessageClose = () => SetAddedNewSession(false);
 
@@ -282,7 +281,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                         {/* <Snackbar
                             open={addedNewSession}
                             onClose={handleSuccessMessageClose}
-                            autoHideDuration={3000}
+                            visibleDuration={3000}
                             sx={{ display: 'inline' }}
                         >
                             <Alert severity="success">Ny treningsøkt registrert!</Alert>

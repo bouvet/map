@@ -11,13 +11,13 @@ import 'moment/locale/en-ca';
 import { Form } from '../../../components/Form/Form';
 import { Label } from '../../../components/Form/Input';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
 import { PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { Main } from '../../../components/Layout';
+import { uiActions } from '../../../store';
 
 export const PersonalInfoGoogle: FC = () => {
     const { email, firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -54,7 +54,7 @@ export const PersonalInfoGoogle: FC = () => {
         e.preventDefault();
         console.log(dob);
         if (!dob) {
-            dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Fødselsdato mangler', severity: 'error' }));
             return;
         }
         firstNameBlurHandler();

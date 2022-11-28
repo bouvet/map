@@ -1,7 +1,6 @@
 import { FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateDispatch } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { Form } from '../../../components/Form/Form';
 import { ProgressBarForm } from '../../../components/Form/ProgressBar';
 import { userActions } from '../../../store/state/user.state';
@@ -10,6 +9,7 @@ import { StyledInput } from '../../../components/Form/StyledElements/StyledInput
 import { useInput } from '../../../hooks/useInput';
 import { LinkButton, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { Main } from '../../../components/Layout';
+import { uiActions } from '../../../store';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -63,7 +63,7 @@ export const CreatePassword: FC = () => {
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (createPassword !== confirmPassword) {
-            dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Passordene er ikke like', severity: 'error' }));
         } else {
             createPasswordBlurHandler();
             confirmPasswordBlurHandler();

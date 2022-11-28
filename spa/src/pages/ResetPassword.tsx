@@ -8,7 +8,7 @@ import { CloseButton } from '../components/UI/Buttons/NavigationButtons';
 import { loginServices } from '../features/login/services/login.services';
 import { useInput } from '../hooks/useInput';
 import { useStateDispatch } from '../hooks/useRedux';
-import { snackbarActions } from '../store/state/snackbar.state';
+import { uiActions } from '../store';
 
 export const ResetPassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -71,7 +71,7 @@ export const ResetPassword: FC = () => {
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
-            dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Passordene er ikke like', severity: 'error' }));
         } else {
             newPasswordBlurHandler();
             confirmPasswordBlurHandler();

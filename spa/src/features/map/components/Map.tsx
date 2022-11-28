@@ -70,6 +70,7 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
                 onMove={onMapMoveHandler}
                 mapStyle={`${mapboxBaseUri}${mapStyle}`}
                 mapboxAccessToken={MAPBOX_TOKEN}
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
             >
                 {mapLoaded && children}
             </ReactMap>

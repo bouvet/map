@@ -39,7 +39,8 @@ export const AddLocationMap: React.FC<Props> = ({ pageIndex, chooseLocationHandl
 
     return (
         <SectionContainer
-            style={{ height: 'calc(100vh - 7.7rem)', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
+            // style={{ height: 'calc(100vh - 7.7rem)', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
+            style={{ height: '100%', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
         >
             <Map mapStyleMenuStyle={{ top: 0 }}>
                 <Marker longitude={viewState.longitude} latitude={viewState.latitude} anchor="bottom">
