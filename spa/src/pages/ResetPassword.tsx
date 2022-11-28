@@ -2,7 +2,8 @@ import { FC, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form } from '../components/Form/Form';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { PageContainer, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
+import { Main } from '../components/Layout';
+import { PageTitle, SectionContainer, SubmitButton } from '../components/UI';
 import { CloseButton } from '../components/UI/Buttons/NavigationButtons';
 import { loginServices } from '../features/login/services/login.services';
 import { useInput } from '../hooks/useInput';
@@ -90,7 +91,7 @@ export const ResetPassword: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <Main>
             <CloseButton onClick={() => navigate('/login')} />
             <SectionContainer>
                 <PageTitle>Tilbakestill passord</PageTitle>
@@ -123,6 +124,6 @@ export const ResetPassword: FC = () => {
                     </SubmitButton>
                 </Form>
             </SectionContainer>
-        </PageContainer>
+        </Main>
     );
 };

@@ -14,21 +14,9 @@ export const AddLocation: React.FC = () => {
     const dispatch = useStateDispatch();
 
     const chooseLocationHandler = (lat: number, lng: number) => {
-        // console.log(longitude);
-        // console.log(latitude);
-        // formData.append('longitude', longitude.toString());
-        // formData.append('latitude', latitude.toString());
-        // console.log(formData);
         dispatch(addLocationActions.setLatLng({ lat, lng }));
         setPageIndex(1);
     };
-
-    // title = ""
-    // description = ""
-    // image = file
-    // category = "60c951f3-d233-442b-7883-08da9ad92895"
-    // longitude = 5.1234
-    // latitude = 58.1234
 
     const onSubmitHandler = (image?: FilePondFile) => {
         dispatch(addLocationActions.setLoading(true));

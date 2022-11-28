@@ -2,7 +2,8 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RegisterButtonFavorites } from '../../../components/Filter/FilterButtons';
 import { Form } from '../../../components/Form/Form';
-import { BackButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { Main } from '../../../components/Layout';
+import { BackButton, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../interfaces';
@@ -38,7 +39,7 @@ export const CreateWorkout: FC = () => {
     // };
 
     return (
-        <PageContainer>
+        <Main>
             <BackButton onClick={() => navigate(-1)} />
             <SectionContainer>
                 <PageTitle>Legg til treningsøkt</PageTitle>
@@ -52,6 +53,6 @@ export const CreateWorkout: FC = () => {
                     </SubmitButton>
                 </Form>
             </SectionContainer>
-        </PageContainer>
+        </Main>
     );
 };

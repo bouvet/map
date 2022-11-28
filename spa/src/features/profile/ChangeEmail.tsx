@@ -2,7 +2,8 @@ import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../components/UI';
+import { Main } from '../../components/Layout';
+import { PageTitle, SectionContainer, SubmitButton } from '../../components/UI';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
@@ -38,7 +39,7 @@ export const ChangeEmail: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <Main>
             <BackButton onClick={() => navigate('/profile')} />
             <SectionContainer>
                 <PageTitle>Endre e-post</PageTitle>
@@ -62,6 +63,6 @@ export const ChangeEmail: FC = () => {
                     </SubmitButton>
                 </Form>
             </SectionContainer>
-        </PageContainer>
+        </Main>
     );
 };

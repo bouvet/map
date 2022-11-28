@@ -4,7 +4,7 @@ import { CircularProgress } from '@mui/material';
 import { useStateDispatch } from '../hooks/useRedux';
 import { googleAuthServices } from '../services/googleAuth.services';
 // import { mapServices } from '../features/map';
-import { PageContainer } from '../components/UI';
+import { Main } from '../components/Layout';
 
 const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
@@ -27,8 +27,8 @@ export const Auth: FC = () => {
     }, [location, dispatch]);
 
     return (
-        <PageContainer>
+        <Main>
             <CircularProgress color="primary" size={80} />
-        </PageContainer>
+        </Main>
     );
 };

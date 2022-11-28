@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { CenterFlex } from '../../../components/Form/Input';
 import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
 import { WrapperOnboarding } from '../../../components/Form/WrapperOnboarding';
-import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { Main } from '../../../components/Layout';
+import { LinkButton, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { userServices } from '../services/user.services';
 import { HowAddLocation } from './HowAddLocation';
@@ -54,75 +55,73 @@ export const Onboarding: FC = () => {
     */
 
     return (
-        <>
-            <PageContainer>
-                <SectionContainer>
-                    <PageTitle>Slik bruker du VerdenVenter</PageTitle>
-                    {pageIndex === 0 ? (
-                        <>
-                            <PageSubtitle>Tips & triks</PageSubtitle>
-                            <CenterFlex>
-                                <WrapperOnboarding>
-                                    <ProgressBarOnboarding pageIndex={pageIndex} />
-                                    <SubmitButton
-                                        type="submit"
-                                        variant="contained"
-                                        sx={{ width: 150, float: 'right' }}
-                                        onClick={handleForwardClick}
-                                    >
-                                        Neste
-                                    </SubmitButton>
-                                    <LinkButton sx={{ width: 150, float: 'left' }} onClick={onSubmitHandler}>
-                                        Hopp over
-                                    </LinkButton>
-                                </WrapperOnboarding>
-                            </CenterFlex>
-                        </>
-                    ) : (
-                        <>
-                            {pageIndex === 1 && (
-                                <>
-                                    <CenterFlex>
-                                        <WrapperOnboarding>
-                                            <ProgressBarOnboarding pageIndex={pageIndex} />
-                                            <SubmitButton
-                                                type="submit"
-                                                variant="contained"
-                                                sx={{ width: 150, float: 'right' }}
-                                                onClick={handleForwardClick}
-                                            >
-                                                Neste
-                                            </SubmitButton>
-                                            <LinkButton sx={{ width: 150, float: 'left' }} onClick={onSubmitHandler}>
-                                                Hopp over
-                                            </LinkButton>
-                                        </WrapperOnboarding>
-                                    </CenterFlex>
-                                </>
-                            )}
-                            {pageIndex === 2 && (
-                                <>
-                                    <CenterFlex>
-                                        <WrapperOnboarding>
-                                            <ProgressBarOnboarding pageIndex={pageIndex} />
-                                            <SubmitButton
-                                                type="submit"
-                                                variant="contained"
-                                                sx={{ width: 150, float: 'right' }}
-                                                onClick={handleForwardClick}
-                                            >
-                                                Fullfør
-                                            </SubmitButton>
-                                        </WrapperOnboarding>
-                                    </CenterFlex>
-                                </>
-                            )}
-                        </>
-                    )}
-                    {pageIndex === 1 && <HowAddLocation />}
-                    {pageIndex === 2 && <HowAddReview />}
-                </SectionContainer>
-            </PageContainer>
-        </>
+        <Main>
+            <SectionContainer>
+                <PageTitle>Slik bruker du VerdenVenter</PageTitle>
+                {pageIndex === 0 ? (
+                    <>
+                        <PageSubtitle>Tips & triks</PageSubtitle>
+                        <CenterFlex>
+                            <WrapperOnboarding>
+                                <ProgressBarOnboarding pageIndex={pageIndex} />
+                                <SubmitButton
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ width: 150, float: 'right' }}
+                                    onClick={handleForwardClick}
+                                >
+                                    Neste
+                                </SubmitButton>
+                                <LinkButton sx={{ width: 150, float: 'left' }} onClick={onSubmitHandler}>
+                                    Hopp over
+                                </LinkButton>
+                            </WrapperOnboarding>
+                        </CenterFlex>
+                    </>
+                ) : (
+                    <>
+                        {pageIndex === 1 && (
+                            <>
+                                <CenterFlex>
+                                    <WrapperOnboarding>
+                                        <ProgressBarOnboarding pageIndex={pageIndex} />
+                                        <SubmitButton
+                                            type="submit"
+                                            variant="contained"
+                                            sx={{ width: 150, float: 'right' }}
+                                            onClick={handleForwardClick}
+                                        >
+                                            Neste
+                                        </SubmitButton>
+                                        <LinkButton sx={{ width: 150, float: 'left' }} onClick={onSubmitHandler}>
+                                            Hopp over
+                                        </LinkButton>
+                                    </WrapperOnboarding>
+                                </CenterFlex>
+                            </>
+                        )}
+                        {pageIndex === 2 && (
+                            <>
+                                <CenterFlex>
+                                    <WrapperOnboarding>
+                                        <ProgressBarOnboarding pageIndex={pageIndex} />
+                                        <SubmitButton
+                                            type="submit"
+                                            variant="contained"
+                                            sx={{ width: 150, float: 'right' }}
+                                            onClick={handleForwardClick}
+                                        >
+                                            Fullfør
+                                        </SubmitButton>
+                                    </WrapperOnboarding>
+                                </CenterFlex>
+                            </>
+                        )}
+                    </>
+                )}
+                {pageIndex === 1 && <HowAddLocation />}
+                {pageIndex === 2 && <HowAddReview />}
+            </SectionContainer>
+        </Main>
     );
 };

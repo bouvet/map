@@ -12,7 +12,8 @@ import { useInput } from '../../hooks/useInput';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
-import { SubmitButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
+import { SubmitButton, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
+import { Main } from '../../components/Layout';
 
 export const DeleteAccount: FC = () => {
     const dispatch = useStateDispatch();
@@ -67,7 +68,7 @@ export const DeleteAccount: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <Main>
             <BackButton onClick={() => navigate('/profile')} />
             <Dialog open={open}>
                 <DialogTitle id="alert-dialog-title">Bekreft sletting</DialogTitle>
@@ -106,6 +107,6 @@ export const DeleteAccount: FC = () => {
                     </SubmitButton>
                 </Form>
             </SectionContainer>
-        </PageContainer>
+        </Main>
     );
 };

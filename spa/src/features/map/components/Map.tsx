@@ -1,9 +1,9 @@
 import React, { useRef, useState, Ref, useEffect } from 'react';
 import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
-import { useDispatch } from 'react-redux';
-import { useStateSelector } from '../../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store/state/map.state';
 import { mapboxBaseUri, mapboxStreets } from '../../../styles/map-styles';
+import { mapServices } from '../services/map.services';
 import { MapStyleMenu } from './MapStyleMenu';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -22,7 +22,7 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
 
     const { userLocation, closestLocation, mapMoved, viewState } = useStateSelector((state) => state.map);
 
-    const dispatch = useDispatch();
+    const dispatch = useStateDispatch();
 
     const onMapMoveHandler = (event: ViewStateChangeEvent) => {
         dispatch(mapActions.setViewState(event.viewState));
@@ -33,6 +33,7 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
 
     const onMapLoadHandler = () => {
         console.log('[onMapLoadHandler]: Map loaded');
+        dispatch(mapServices.getLocations());
         setMapLoaded(true);
     };
 

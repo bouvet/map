@@ -9,7 +9,8 @@ import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { AppDispatch } from '../../../store';
-import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer } from '../../../components/UI';
+import { LinkButton, PageSubtitle, PageTitle, SectionContainer } from '../../../components/UI';
+import { Main } from '../../../components/Layout';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -59,42 +60,40 @@ export const EmailConfirmation: FC = () => {
     const pageIndex = 1;
 
     return (
-        <>
-            <PageContainer>
-                <DialogButton />
-                <SectionContainer>
-                    <PageTitle className="registration">Bekreft e-post</PageTitle>
-                    <ProgressBarForm pageIndex={pageIndex} />
-                    <Form style={{ marginTop: '1rem' }}>
-                        <PageSubtitle>Skriv inn koden for å bekrefte e-postadressen {email}</PageSubtitle>
-                        <Box
-                            sx={{
-                                '& .MuiTextField-root': { m: '1%', width: '14%' },
-                            }}
-                        >
-                            {confirmationCode.map((data, index) => (
-                                <TextField
-                                    type="text"
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={index}
-                                    name={`input-field-${index}`}
-                                    onChange={(e) => handleInputChange(e, index)}
-                                    inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
-                                    required
-                                    onFocus={(e) => e.target.select}
-                                    autoFocus={index === 0}
-                                />
-                            ))}
-                        </Box>
-                    </Form>
-                    <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', margin: 0, width: 150 }} onClick={resendCode}>
-                        Send ny kode
-                    </LinkButton>
-                    <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/email')}>
-                        Endre e-post
-                    </LinkButton>
-                </SectionContainer>
-            </PageContainer>
-        </>
+        <Main>
+            <DialogButton />
+            <SectionContainer>
+                <PageTitle className="registration">Bekreft e-post</PageTitle>
+                <ProgressBarForm pageIndex={pageIndex} />
+                <Form style={{ marginTop: '1rem' }}>
+                    <PageSubtitle>Skriv inn koden for å bekrefte e-postadressen {email}</PageSubtitle>
+                    <Box
+                        sx={{
+                            '& .MuiTextField-root': { m: '1%', width: '14%' },
+                        }}
+                    >
+                        {confirmationCode.map((data, index) => (
+                            <TextField
+                                type="text"
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={index}
+                                name={`input-field-${index}`}
+                                onChange={(e) => handleInputChange(e, index)}
+                                inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*$', maxLength: 1 }}
+                                required
+                                onFocus={(e) => e.target.select}
+                                autoFocus={index === 0}
+                            />
+                        ))}
+                    </Box>
+                </Form>
+                <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', margin: 0, width: 150 }} onClick={resendCode}>
+                    Send ny kode
+                </LinkButton>
+                <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/email')}>
+                    Endre e-post
+                </LinkButton>
+            </SectionContainer>
+        </Main>
     );
 };

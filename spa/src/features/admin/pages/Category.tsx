@@ -2,7 +2,8 @@ import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '../../../components/Form/Form';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { BackButton, PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { Main } from '../../../components/Layout';
+import { BackButton, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { categoryServices } from '../services';
@@ -43,7 +44,7 @@ export const Category: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <Main>
             <BackButton onClick={() => navigate('..')} />
             <SectionContainer>
                 <PageTitle>Legg til kategori</PageTitle>
@@ -74,6 +75,6 @@ export const Category: FC = () => {
                     </SubmitButton>
                 </Form>
             </SectionContainer>
-        </PageContainer>
+        </Main>
     );
 };

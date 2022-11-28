@@ -8,7 +8,8 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { LinkButton, PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { LinkButton, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { Main } from '../../../components/Layout';
 
 export const CreatePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -78,45 +79,43 @@ export const CreatePassword: FC = () => {
     const pageIndex = 3;
 
     return (
-        <>
-            <PageContainer>
-                <DialogButton />
-                <SectionContainer>
-                    <PageTitle className="registration">Passord</PageTitle>
-                    <ProgressBarForm pageIndex={pageIndex} />
-                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
-                        <StyledInput
-                            label="Passord*"
-                            type={inputTypeCreate}
-                            errorMessage="Passord må bestå av minst 8 tegn"
-                            value={createPassword}
-                            onChange={createPasswordChangeHandler}
-                            onBlur={createPasswordBlurHandler}
-                            inputHasError={createPasswordInputHasError}
-                            toggleShowPassword={toggleCreatePasswordHandler}
-                            showPassword={showCreatePassword}
-                        />
-                        <StyledInput
-                            label="Gjenta passord*"
-                            type={inputTypeConfirm}
-                            errorMessage="Passord må bestå av minst 8 tegn"
-                            value={confirmPassword}
-                            onChange={confirmPasswordChangeHandler}
-                            onBlur={confirmPasswordBlurHandler}
-                            inputHasError={confirmPasswordInputHasError}
-                            toggleShowPassword={toggleConfirmPasswordHandler}
-                            showPassword={showConfirmPassword}
-                        />
-                        {/* add button disabled */}
-                        <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
-                            Gå videre
-                        </SubmitButton>
-                    </Form>
-                    <LinkButton sx={{ marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/personal-info')}>
-                        Gå tilbake
-                    </LinkButton>
-                </SectionContainer>
-            </PageContainer>
-        </>
+        <Main>
+            <DialogButton />
+            <SectionContainer>
+                <PageTitle className="registration">Passord</PageTitle>
+                <ProgressBarForm pageIndex={pageIndex} />
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
+                    <StyledInput
+                        label="Passord*"
+                        type={inputTypeCreate}
+                        errorMessage="Passord må bestå av minst 8 tegn"
+                        value={createPassword}
+                        onChange={createPasswordChangeHandler}
+                        onBlur={createPasswordBlurHandler}
+                        inputHasError={createPasswordInputHasError}
+                        toggleShowPassword={toggleCreatePasswordHandler}
+                        showPassword={showCreatePassword}
+                    />
+                    <StyledInput
+                        label="Gjenta passord*"
+                        type={inputTypeConfirm}
+                        errorMessage="Passord må bestå av minst 8 tegn"
+                        value={confirmPassword}
+                        onChange={confirmPasswordChangeHandler}
+                        onBlur={confirmPasswordBlurHandler}
+                        inputHasError={confirmPasswordInputHasError}
+                        toggleShowPassword={toggleConfirmPasswordHandler}
+                        showPassword={showConfirmPassword}
+                    />
+                    {/* add button disabled */}
+                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto' }}>
+                        Gå videre
+                    </SubmitButton>
+                </Form>
+                <LinkButton sx={{ marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/personal-info')}>
+                    Gå tilbake
+                </LinkButton>
+            </SectionContainer>
+        </Main>
     );
 };

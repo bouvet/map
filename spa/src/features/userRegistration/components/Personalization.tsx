@@ -4,9 +4,10 @@ import { RegisterButtonFavorites } from '../../../components/Filter/FilterButton
 import { FilterMenuContent } from '../../../components/Filter/FilterMenu';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { Form } from '../../../components/Form/Form';
-import { LinkButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { LinkButton, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
 import { mapServices } from '../../map';
 import { ICategory } from '../../../interfaces';
+import { Main } from '../../../components/Layout';
 
 export const Personalization: FC = () => {
     const dispatch = useStateDispatch();
@@ -27,7 +28,7 @@ export const Personalization: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <Main>
             <SectionContainer>
                 <PageTitle>Personalisering</PageTitle>
                 <PageSubtitle>Velg dine favoritter:</PageSubtitle>
@@ -41,6 +42,6 @@ export const Personalization: FC = () => {
                     Hopp over
                 </LinkButton>
             </SectionContainer>
-        </PageContainer>
+        </Main>
     );
 };
