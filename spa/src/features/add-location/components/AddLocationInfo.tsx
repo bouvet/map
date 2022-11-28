@@ -48,7 +48,7 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
         <SectionContainer style={{ paddingTop: '0.5rem' }}>
             <StyledInput
                 label="Navn på lokasjon*"
-                errorMessage="Vennligst fyll inn navn"
+                errorMessage="Navn må være minimum 5 bokstaver"
                 placeholder="Minimum 5 bokstaver"
                 value={title.trim().length > 0 ? title : locationTitle}
                 onChange={titleChangeHandler}

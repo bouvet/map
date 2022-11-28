@@ -74,7 +74,7 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
             >
                 {mapLoaded && children}
             </ReactMap>
-            <MapStyleMenu setMapStyleHandler={setMapStyleHandler} style={{ top: '4rem', ...mapStyleMenuStyle }} />
+            <MapStyleMenu setMapStyleHandler={setMapStyleHandler} mapStyle={mapStyle} style={{ top: '4rem', ...mapStyleMenuStyle }} />
         </>
     );
 };

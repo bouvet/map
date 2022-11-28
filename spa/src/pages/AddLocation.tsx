@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FilePondFile } from 'filepond';
-import React, { useState } from 'react';
+
 import { Main } from '../components/Layout';
 
 import { AddLocationHeader, AddLocationImage, AddLocationInfo, AddLocationMap, AddLocationProgressBar } from '../features/add-location';
@@ -11,8 +13,10 @@ export const AddLocation: React.FC = () => {
     const [pageIndex, setPageIndex] = useState(0);
 
     const { title, description, lat, lng, selectedCategories } = useStateSelector((state) => state.addLocation);
+    const { shouldNavigate } = useStateSelector((state) => state.ui);
 
     const dispatch = useStateDispatch();
+    const navigate = useNavigate();
 
     const chooseLocationHandler = (lat: number, lng: number) => {
         dispatch(addLocationActions.setLatLng({ lat, lng }));
@@ -38,6 +42,12 @@ export const AddLocation: React.FC = () => {
 
         dispatch(locationServices.addLocation(formData));
     };
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/');
+        }
+    }, [shouldNavigate, navigate]);
 
     return (
         <>

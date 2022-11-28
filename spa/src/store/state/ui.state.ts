@@ -33,7 +33,7 @@ const uiState = createSlice({
             state.snackbar.visible = true;
             state.snackbar.message = message;
             state.snackbar.severity = severity;
-            state.snackbar.visibleDuration = visibleDuration || 3000;
+            state.snackbar.visibleDuration = visibleDuration || 5000;
         },
         setCloseSnackbar(state) {
             state.snackbar = initialState.snackbar;
