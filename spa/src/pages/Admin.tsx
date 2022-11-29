@@ -8,11 +8,11 @@ import { mapServices } from '../features/map';
 import { ILocation } from '../interfaces';
 import { locationStatus } from '../types';
 
-import { DrawerContainer, SectionContainer } from '../components/UI';
-import { AdminHeader, LocationList, LocationListItem, Modal, StatusSelector } from '../features/admin';
+import { LocationList, LocationListItem, Modal, StatusSelector } from '../features/admin';
+import { Section } from '../components/Layout';
+import { Header, Sidebar } from '../components/Navigation';
 
 export const Admin: React.FC = () => {
-    const [openDrawer, setOpenDrawer] = useState(false);
     const [location, setLocation] = useState<ILocation | null>(null);
 
     const { locations } = useStateSelector((state) => state.map);
@@ -47,14 +47,10 @@ export const Admin: React.FC = () => {
         dispatch(mapActions.loadLocations(filteredLocations));
     };
 
-    const toggleDrawerHandler = () => {
-        setOpenDrawer((open) => !open);
-    };
-
     return (
         <>
-            <AdminHeader toggleDrawerHandler={toggleDrawerHandler} />
-            <SectionContainer>
+            <Header>Behandle lokasjoner</Header>
+            <Section>
                 <StatusSelector onChangeHandler={onSelectStatusHandler} />
 
                 {locations.length > 0 && (
@@ -72,16 +68,9 @@ export const Admin: React.FC = () => {
                 {location && (
                     <Modal location={location} closeModalHandler={closeModalHandler} removeLocationFromList={removeLocationFromList} />
                 )}
-            </SectionContainer>
+            </Section>
 
-            <DrawerContainer
-                drawerOpen={openDrawer}
-                openCloseToggle={toggleDrawerHandler}
-                links={[
-                    { to: '/admin/category', label: 'Opprett Kategori' },
-                    { to: '/', label: 'Hjem' },
-                ]}
-            />
+            <Sidebar />
         </>
     );
 };

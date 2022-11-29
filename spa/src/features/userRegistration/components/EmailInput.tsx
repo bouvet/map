@@ -10,7 +10,8 @@ import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/email-validator';
 import { userActions } from '../../../store/state/user.state';
 import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
-import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton, Text } from '../../../components/UI';
+import { PageSubtitle, PageTitle, SubmitButton, Text } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -47,41 +48,39 @@ export const EmailInput: FC = () => {
     const pageIndex = 0;
 
     return (
-        <>
-            <PageContainer>
-                <CloseButton onClick={() => navigate('/login')} />
-                <SectionContainer>
-                    <PageTitle className="registration">E-post</PageTitle>
-                    <ProgressBarForm pageIndex={pageIndex} />
-                    <ListWrapper>
-                        <Text>Ved å opprette bruker kan du:</Text>
-                        <ul>
-                            <li>Legge til lokasjoner</li>
-                            <li>Få personlig tilpasning og anbefalinger</li>
-                        </ul>
-                    </ListWrapper>
-                    <PageSubtitle>Fyll inn din e-postadresse for å motta en bekreftelseskode.</PageSubtitle>
-                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
-                        <StyledInput
-                            label="E-post*"
-                            type="email"
-                            errorMessage="Vennligst oppgi en gyldig e-post"
-                            value={email}
-                            onChange={emailChangeHandler}
-                            onBlur={emailBlurHandler}
-                            inputHasError={emailInputHasError}
-                        />
-                        <SubmitButton
-                            type="submit"
-                            variant="contained"
-                            sx={{ marginTop: 'auto', marginBottom: '-10vh' }}
-                            disabled={emailInputHasError}
-                        >
-                            Send kode
-                        </SubmitButton>
-                    </Form>
-                </SectionContainer>
-            </PageContainer>
-        </>
+        <Main>
+            <CloseButton onClick={() => navigate('/login')} />
+            <Section>
+                <PageTitle className="registration">E-post</PageTitle>
+                <ProgressBarForm pageIndex={pageIndex} />
+                <ListWrapper>
+                    <Text>Ved å opprette bruker kan du:</Text>
+                    <ul>
+                        <li>Legge til lokasjoner</li>
+                        <li>Få personlig tilpasning og anbefalinger</li>
+                    </ul>
+                </ListWrapper>
+                <PageSubtitle>Fyll inn din e-postadresse for å motta en bekreftelseskode.</PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
+                    <StyledInput
+                        label="E-post*"
+                        type="email"
+                        errorMessage="Vennligst oppgi en gyldig e-post"
+                        value={email}
+                        onChange={emailChangeHandler}
+                        onBlur={emailBlurHandler}
+                        inputHasError={emailInputHasError}
+                    />
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto', marginBottom: '-10vh' }}
+                        disabled={emailInputHasError}
+                    >
+                        Send kode
+                    </SubmitButton>
+                </Form>
+            </Section>
+        </Main>
     );
 };

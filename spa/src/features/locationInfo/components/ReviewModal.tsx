@@ -4,14 +4,16 @@ import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Autorenew from '@mui/icons-material/Autorenew';
 import styled from 'styled-components';
-import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { useStateDispatch } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewType } from '../../../utils/types.d';
 import { Img } from '../../add-location/components/AddLocationImage';
 import { CloseButton, SubmitButton } from '../../../components/UI';
 import { MyTheme } from '../../../styles/global';
+import { ILocation } from '../../../interfaces';
 
 interface ReviewProps {
+    selectedLocation: ILocation;
     open: boolean;
     close: Function;
     success: Function;
@@ -52,7 +54,7 @@ const ButtonWrapper = styled.div`
     flex-direction: row;
 `;
 
-export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) => {
+export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, success, error }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
@@ -67,8 +69,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) =>
         setImageUrl('');
     };
     const dispatch = useStateDispatch();
-
-    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -102,7 +102,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) =>
             const payload: IReviewType = {
                 rating: value,
                 text: review,
-                locationId: currentlySelectedLocation.id,
+                locationId: selectedLocation.id,
             };
             if (image) {
                 payload.image = image;

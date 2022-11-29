@@ -24,5 +24,10 @@ export const SubmitButton = styled(Button)({
 });
 
 export const LinkButton = styled(Button)({
+    borderRadius: 0,
     color: `${MyTheme.colors.accent}`,
+    ':hover': {
+        backgroundColor: `${MyTheme.colors.accent}`,
+        color: `${MyTheme.colors.lightBase}`,
+    },
 });

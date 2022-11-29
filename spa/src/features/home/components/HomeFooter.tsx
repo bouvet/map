@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuToggler, showMenu, loadingUserLocation }) => (
-    <Footer>
+    <Footer style={{ bottom: 0 }}>
         <PillButton
             onClick={getUserLocationHandler}
             style={{

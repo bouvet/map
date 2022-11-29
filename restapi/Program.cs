@@ -15,7 +15,6 @@ var app = builder.Build();
   app.UseExceptionHandler("/error");
   app.UseResponseCompression();
   app.UseHttpsRedirection();
-  app.UseStaticFiles(); // re-added
   app.UseAuthentication();
   app.UseAuthorization();
   app.MapControllers();

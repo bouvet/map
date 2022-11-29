@@ -1,79 +1,94 @@
-import { FC, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Form } from '../../../components/Form/Form';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { BackButton, PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
-import { useInput } from '../../../hooks/useInput';
-import { useStateDispatch } from '../../../hooks/useRedux';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+import { Button } from '@mui/material';
+
+import { Main, Section } from '../../../components/Layout';
+import { Header, Sidebar } from '../../../components/Navigation';
+import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { MyTheme } from '../../../styles/global';
+import { CategoryListItem } from '../components';
 import { categoryServices } from '../services';
 
-export const Category: FC = () => {
+export const Category = () => {
+    const [emoji, setEmoji] = useState('');
+    const [name, setName] = useState('');
+
+    const { categories } = useStateSelector((state) => state.map);
+
     const dispatch = useStateDispatch();
-    const navigate = useNavigate();
 
-    const {
-        value: name,
-        isValid: nameIsValid,
-        hasError: nameInputHasError,
-        inputBlurHandler: nameBlurHandler,
-        valueChangeHandler: nameChangeHandler,
-        reset: resetNameInput,
-    } = useInput((value) => value.trim().length >= 1);
+    useEffect(() => {
+        dispatch(categoryServices.get());
+    }, [dispatch]);
 
-    const {
-        value: emoji,
-        isValid: emojiIsValid,
-        hasError: emojiInputHasError,
-        inputBlurHandler: emojiBlurHandler,
-        valueChangeHandler: emojiChangeHandler,
-        reset: resetEmojiInput,
-    } = useInput((value) => value.trim().length >= 1);
-
-    const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: React.FormEvent) => {
         e.preventDefault();
+        if (emoji.trim().length < 1 || name.trim().length < 1) return;
 
-        nameBlurHandler();
-        emojiBlurHandler();
-
-        if (!nameIsValid || !emojiIsValid) return;
-
-        dispatch(categoryServices.create({ name, emoji }));
-        resetNameInput();
-        resetEmojiInput();
+        dispatch(categoryServices.create(emoji, name));
+        setEmoji('');
+        setName('');
     };
 
     return (
-        <PageContainer>
-            <BackButton onClick={() => navigate('..')} />
-            <SectionContainer>
-                <PageTitle>Legg til kategori</PageTitle>
-                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
-                    <StyledInput
-                        label="Navn*"
-                        errorMessage="Vennligst fyll inn navn"
-                        value={name}
-                        onChange={nameChangeHandler}
-                        onBlur={nameBlurHandler}
-                        inputHasError={nameInputHasError}
-                    />
-                    <StyledInput
-                        label="Emoji*"
-                        errorMessage="Vennligst fyll inn emoji"
-                        value={emoji}
-                        onChange={emojiChangeHandler}
-                        onBlur={emojiBlurHandler}
-                        inputHasError={emojiInputHasError}
-                    />
-                    <SubmitButton
-                        type="submit"
-                        variant="contained"
-                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
-                        disabled={nameInputHasError || emojiInputHasError}
-                    >
-                        Legg til
-                    </SubmitButton>
-                </Form>
-            </SectionContainer>
-        </PageContainer>
+        <>
+            <Header>Behandle Kategorier</Header>
+            <Main>
+                <Section>
+                    <form onSubmit={onSubmitHandler} style={{ width: '100%' }}>
+                        <div style={{ display: 'flex', marginBottom: '1rem' }}>
+                            <Input
+                                type="text"
+                                value={emoji}
+                                placeholder="⚽"
+                                onChange={(e) => setEmoji(e.target.value)}
+                                style={{
+                                    width: '15%',
+                                    marginRight: '1rem',
+                                }}
+                            />
+                            <Input
+                                type="text"
+                                value={name}
+                                placeholder="Fotball"
+                                onChange={(e) => setName(e.target.value)}
+                                style={{
+                                    width: '85%',
+                                }}
+                            />
+                        </div>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="success"
+                            sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
+                            disabled={emoji.trim().length < 1 || name.trim().length < 1}
+                        >
+                            Legg til kategori
+                        </Button>
+                    </form>
+                </Section>
+                <Section style={{ paddingTop: 0, maxHeight: '60vh', overflow: 'scroll' }}>
+                    <p style={{ width: '100%', textAlign: 'left', marginBottom: '1rem', fontWeight: 600 }}>Kategorier i bruk</p>
+                    <ul style={{ width: '100%' }}>
+                        {categories.map((category) => (
+                            <CategoryListItem key={category.id} category={category} />
+                        ))}
+                    </ul>
+                </Section>
+            </Main>
+            <Sidebar />
+        </>
     );
 };
+
+const Input = styled.input`
+    padding: 0.3rem;
+    border: none;
+    border-bottom: 1px solid ${MyTheme.colors.accent};
+    font-size: 1rem;
+    &:focus {
+        outline: none;
+    }
+`;

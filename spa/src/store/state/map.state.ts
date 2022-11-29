@@ -19,12 +19,6 @@ const initialState = {
         shouldFlyTo: false,
     },
     closestLocation: {} as ILocation,
-    selectedFilterCategory: '',
-    selectedMarker: '',
-    categoriesWithLocations: [] as ICategory[],
-    popUpIsVisible: false,
-    currentlySelectedLocation: {} as ILocation,
-    homeMarkerFocus: false,
 };
 
 const mapState = createSlice({
@@ -61,6 +55,9 @@ const mapState = createSlice({
         loadCategories(state, action: PayloadAction<ICategory[]>) {
             state.categories = action.payload;
         },
+        addCategory(state, action: PayloadAction<ICategory>) {
+            state.categories.push(action.payload);
+        },
         setUserLocation(state, action: PayloadAction<{ lat: number; lng: number; shouldFlyTo: boolean }>) {
             state.userLocation = action.payload;
             state.mapMoved = true;
@@ -68,21 +65,6 @@ const mapState = createSlice({
         },
         setClosestLocation(state, action: PayloadAction<ILocation>) {
             state.closestLocation = action.payload;
-        },
-        setSelectedFilterCategory(state, action: PayloadAction<string>) {
-            state.selectedFilterCategory = action.payload;
-        },
-        setSelectedMarker(state, action: PayloadAction<string>) {
-            state.selectedMarker = action.payload;
-        },
-        setPopupVisibility(state, action: PayloadAction<boolean>) {
-            state.popUpIsVisible = action.payload;
-        },
-        setCurrentlySelectedLocation(state, action: PayloadAction<ILocation>) {
-            state.currentlySelectedLocation = action.payload;
-        },
-        setHomeMarkerFocus(state, action: PayloadAction<boolean>) {
-            state.homeMarkerFocus = action.payload;
         },
     },
 });

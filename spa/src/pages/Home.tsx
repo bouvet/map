@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
+import { Main, Section } from '../components/Layout';
 
-import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ICategory, ILocation } from '../interfaces';
-import { mapActions } from '../store/state/map.state';
-import { uiActions } from '../store/state/ui.state';
+import { mapActions, uiActions } from '../store';
 
 export const Home: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
@@ -50,26 +49,29 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <SectionContainer style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
+        <>
             {!showLocationInfoPopup && (
                 <HomeHeader onCategorySelectHandler={onCategorySelectHandler} categories={categories} selectedCategory={selectedCategory} />
             )}
+            <Main>
+                <Section style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
+                    {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
 
-            {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
+                    <HomeMap
+                        selectedLocation={selectedLocation}
+                        selectedCategory={selectedCategory}
+                        onMarkerSelectHandler={onMarkerSelectHandler}
+                        showMenuToggler={showMenuToggler}
+                        showMenu={showMenu}
+                    />
 
-            <HomeMap
-                selectedLocation={selectedLocation}
-                selectedCategory={selectedCategory}
-                onMarkerSelectHandler={onMarkerSelectHandler}
-                showMenuToggler={showMenuToggler}
-                showMenu={showMenu}
-            />
+                    <HomeMenu showMenu={showMenu} />
 
-            <HomeMenu showMenu={showMenu} />
+                    {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
 
-            {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
-
-            {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
-        </SectionContainer>
+                    {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
+                </Section>
+            </Main>
+        </>
     );
 };

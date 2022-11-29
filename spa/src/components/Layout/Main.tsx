@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const SectionContainer = styled.section`
-    width: 100%;
-    padding: 1.5rem;
+export const Main = styled.main`
+    /* min-height: 100vh; */
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -13,18 +13,14 @@ export const AdminHeader: React.FC<Props> = ({ toggleDrawerHandler }) => {
     const navigate = useNavigate();
 
     return (
-        <Header style={{ padding: '0 1rem' }}>
+        <Header>
             <IconButton
                 color="inherit"
-                aria-label="Navigate home"
+                aria-label="Navigate back"
                 onClick={() => navigate('..')}
                 sx={{
                     mr: 'auto',
                     alignItems: 'center',
-                    display: {
-                        xs: 'flex',
-                        sm: 'none',
-                    },
                 }}
             >
                 <ArrowBack sx={{ color: 'white' }} />
@@ -36,10 +32,6 @@ export const AdminHeader: React.FC<Props> = ({ toggleDrawerHandler }) => {
                 sx={{
                     ml: 'auto',
                     alignItems: 'center',
-                    display: {
-                        xs: 'flex',
-                        sm: 'none',
-                    },
                 }}
             >
                 <Menu sx={{ color: 'white' }} />

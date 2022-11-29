@@ -1,9 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { ISnackbar } from '../../interfaces';
+
 const initialState = {
     shouldNavigate: false,
     showLocationInfoPopup: false,
     showLocationInfoDrawer: false,
+    snackbar: {
+        visible: false,
+        message: '',
+        visibleDuration: 0,
+        severity: undefined,
+    } as ISnackbar,
+    showSidebar: false,
 };
 
 const uiState = createSlice({
@@ -18,6 +27,20 @@ const uiState = createSlice({
         },
         setShowLocationDrawer(state, action: PayloadAction<boolean>) {
             state.showLocationInfoDrawer = action.payload;
+        },
+        setShowSnackbar(state, action: PayloadAction<ISnackbar>) {
+            const { message, severity, visibleDuration } = action.payload;
+
+            state.snackbar.visible = true;
+            state.snackbar.message = message;
+            state.snackbar.severity = severity;
+            state.snackbar.visibleDuration = visibleDuration || 5000;
+        },
+        setCloseSnackbar(state) {
+            state.snackbar = initialState.snackbar;
+        },
+        toggleShowSidebar(state) {
+            state.showSidebar = !state.showSidebar;
         },
     },
 });

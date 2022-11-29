@@ -6,7 +6,8 @@ import { validateEmail } from '../utils/email-validator';
 import { loginServices } from '../features/login/services/login.services';
 import { Form } from '../components/Form/Form';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { BackButton, PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
+import { BackButton, PageSubtitle, PageTitle, SubmitButton } from '../components/UI';
+import { Main, Section } from '../components/Layout';
 
 export const ChangePassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -48,9 +49,9 @@ export const ChangePassword: FC = () => {
     }, []);
 
     return (
-        <PageContainer>
+        <Main>
             <BackButton onClick={() => navigate(-1)} />
-            <SectionContainer>
+            <Section>
                 <PageTitle>Endre passord</PageTitle>
                 <PageSubtitle style={{ marginTop: '1rem' }}>
                     Fyll inn din e-postadresse så sender vi deg en link for å endre passord.
@@ -74,7 +75,7 @@ export const ChangePassword: FC = () => {
                         Send link
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
-        </PageContainer>
+            </Section>
+        </Main>
     );
 };
