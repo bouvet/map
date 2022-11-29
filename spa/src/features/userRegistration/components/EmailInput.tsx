@@ -10,8 +10,8 @@ import { useInput } from '../../../hooks/useInput';
 import { validateEmail } from '../../../utils/email-validator';
 import { userActions } from '../../../store/state/user.state';
 import { CloseButton } from '../../../components/UI/Buttons/NavigationButtons';
-import { PageSubtitle, PageTitle, SectionContainer, SubmitButton, Text } from '../../../components/UI';
-import { Main } from '../../../components/Layout';
+import { PageSubtitle, PageTitle, SubmitButton, Text } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
 
 const ListWrapper = styled.div`
     padding: 10px;
@@ -50,7 +50,7 @@ export const EmailInput: FC = () => {
     return (
         <Main>
             <CloseButton onClick={() => navigate('/login')} />
-            <SectionContainer>
+            <Section>
                 <PageTitle className="registration">E-post</PageTitle>
                 <ProgressBarForm pageIndex={pageIndex} />
                 <ListWrapper>
@@ -80,7 +80,7 @@ export const EmailInput: FC = () => {
                         Send kode
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

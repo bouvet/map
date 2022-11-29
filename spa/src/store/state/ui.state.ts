@@ -12,6 +12,7 @@ const initialState = {
         visibleDuration: 0,
         severity: undefined,
     } as ISnackbar,
+    showSidebar: false,
 };
 
 const uiState = createSlice({
@@ -37,6 +38,9 @@ const uiState = createSlice({
         },
         setCloseSnackbar(state) {
             state.snackbar = initialState.snackbar;
+        },
+        toggleShowSidebar(state) {
+            state.showSidebar = !state.showSidebar;
         },
     },
 });

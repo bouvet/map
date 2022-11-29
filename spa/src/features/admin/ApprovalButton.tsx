@@ -28,15 +28,11 @@ interface ButtonMethodProp {
     handleClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const ApproveButton: FC<ButtonMethodProp> = (props) => {
-    const { handleClick } = props;
-
-    return (
-        <Button color={MyTheme.colors.success} onClick={handleClick}>
-            <Icon className="material-symbols-outlined">done_outline</Icon>
-        </Button>
-    );
-};
+export const ApproveButton: FC = () => (
+    <Button color={MyTheme.colors.success}>
+        <Icon className="material-symbols-outlined">done_outline</Icon>
+    </Button>
+);
 
 export const RejectButton: FC<ButtonMethodProp> = (props) => {
     const { handleClick } = props;

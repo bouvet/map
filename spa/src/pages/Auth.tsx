@@ -1,19 +1,19 @@
-import { FC, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-import { useStateDispatch } from '../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { googleAuthServices } from '../services/googleAuth.services';
-// import { mapServices } from '../features/map';
 import { Main } from '../components/Layout';
 
 const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
-export const Auth: FC = () => {
+export const Auth: React.FC = () => {
+    const { shouldNavigate } = useStateSelector((state) => state.ui);
+
     const location = useLocation();
+    const navigate = useNavigate();
 
     const dispatch = useStateDispatch();
-
-    // dispatch(mapServices.getLocations());
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -26,8 +26,14 @@ export const Auth: FC = () => {
         }
     }, [location, dispatch]);
 
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/');
+        }
+    }, [shouldNavigate, navigate]);
+
     return (
-        <Main>
+        <Main style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <CircularProgress color="primary" size={80} />
         </Main>
     );

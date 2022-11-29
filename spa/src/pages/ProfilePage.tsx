@@ -5,11 +5,11 @@ import 'moment/locale/nb';
 import { ImageModal } from '../features/profile/ImageModal';
 import { Input, InputProps } from '../features/profile/Input';
 import { useStateSelector } from '../hooks/useRedux';
-import { LinkButton, SectionContainer } from '../components/UI';
+import { LinkButton } from '../components/UI';
 import { EditModal } from '../features/profile/EditModal';
 import { DefaultProfilePicture, ProfilePicture } from '../features/profile/ProfileImage';
 import { MyTheme } from '../styles/global';
-import { Main } from '../components/Layout';
+import { Main, Section } from '../components/Layout';
 
 export const ProfilePage: FC = () => {
     const navigate = useNavigate();
@@ -62,7 +62,7 @@ export const ProfilePage: FC = () => {
                 ) : (
                     <ProfilePicture imageUrl={image} handleClick={handleOpenImageModal} />
                 )}
-                <SectionContainer>
+                <Section>
                     {inputs}
                     <EditModal open={openEditModal} close={handleCloseEditModal} />
                     <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={handleOpenEditModal}>
@@ -83,7 +83,7 @@ export const ProfilePage: FC = () => {
                     </LinkButton>
                     {/* <LinkButton onClick={}>Koble fra Google-konto</LinkButton> */}
                     {/* <LinkButton onClick={}>Koble fra Vipps-konto</LinkButton> */}
-                </SectionContainer>
+                </Section>
             </Main>
             <Outlet />
         </>

@@ -2,8 +2,8 @@ import { Button } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Main } from '../components/Layout';
-import { BackButton, SectionContainer } from '../components/UI';
+import { Main, Section } from '../components/Layout';
+import { BackButton } from '../components/UI';
 import { WorkoutBlock } from '../features/workoutRegistration/Components/Workout';
 
 export const WorkoutHeader = styled.div`
@@ -71,7 +71,7 @@ export const RegisterWorkout: FC = () => {
     return (
         <Main>
             <BackButton onClick={() => navigate(-1)} />
-            <SectionContainer>
+            <Section>
                 <WorkoutHeader style={{ fontWeight: 700 }}>Dine treningsøkter</WorkoutHeader>
                 {september ? (
                     <div
@@ -100,7 +100,7 @@ export const RegisterWorkout: FC = () => {
                         </Button>
                     </div>
                 ))}
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

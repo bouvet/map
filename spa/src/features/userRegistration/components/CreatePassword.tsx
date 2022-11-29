@@ -7,8 +7,8 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { LinkButton, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
-import { Main } from '../../../components/Layout';
+import { LinkButton, PageTitle, SubmitButton } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
 import { uiActions } from '../../../store';
 
 export const CreatePassword: FC = () => {
@@ -81,7 +81,7 @@ export const CreatePassword: FC = () => {
     return (
         <Main>
             <DialogButton />
-            <SectionContainer>
+            <Section>
                 <PageTitle className="registration">Passord</PageTitle>
                 <ProgressBarForm pageIndex={pageIndex} />
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
@@ -115,7 +115,7 @@ export const CreatePassword: FC = () => {
                 <LinkButton sx={{ marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/personal-info')}>
                     Gå tilbake
                 </LinkButton>
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

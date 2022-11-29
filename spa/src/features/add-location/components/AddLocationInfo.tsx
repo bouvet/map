@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
-import { FlexRowContainer, SectionContainer, SubmitButton, Text } from '../../../components/UI';
+import { Section } from '../../../components/Layout';
+import { FlexRowContainer, SubmitButton, Text } from '../../../components/UI';
 import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../interfaces';
@@ -45,7 +46,7 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
     }, [dispatch, title]);
 
     return (
-        <SectionContainer style={{ paddingTop: '0.5rem' }}>
+        <Section style={{ paddingTop: '0.5rem' }}>
             <StyledInput
                 label="Navn på lokasjon*"
                 errorMessage="Navn må være minimum 5 bokstaver"
@@ -99,7 +100,7 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
             >
                 Gå videre
             </SubmitButton>
-        </SectionContainer>
+        </Section>
     );
 };
 

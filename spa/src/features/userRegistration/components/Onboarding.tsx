@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { CenterFlex } from '../../../components/Form/Input';
 import { ProgressBarOnboarding } from '../../../components/Form/ProgressBar';
 import { WrapperOnboarding } from '../../../components/Form/WrapperOnboarding';
-import { Main } from '../../../components/Layout';
-import { LinkButton, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
+import { LinkButton, PageSubtitle, PageTitle, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { userServices } from '../services/user.services';
 import { HowAddLocation } from './HowAddLocation';
@@ -56,7 +56,7 @@ export const Onboarding: FC = () => {
 
     return (
         <Main>
-            <SectionContainer>
+            <Section>
                 <PageTitle>Slik bruker du VerdenVenter</PageTitle>
                 {pageIndex === 0 ? (
                     <>
@@ -121,7 +121,7 @@ export const Onboarding: FC = () => {
                 )}
                 {pageIndex === 1 && <HowAddLocation />}
                 {pageIndex === 2 && <HowAddReview />}
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

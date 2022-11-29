@@ -18,7 +18,7 @@ export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
     const [showPassword, setShowPassword] = useState(false);
 
-    const [rememberStatus, setRememberStatus] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
 
     const { loading } = useStateSelector((state) => state.auth);
     const dispatch = useStateDispatch();
@@ -94,27 +94,18 @@ export const LoginForm: FC = () => {
                 showPassword={showPassword}
             />
             <FlexRowContainer spacing="space-between">
-                <div>
-                    <Checkbox type="checkbox" checked={rememberStatus} onChange={(e) => setRememberStatus(e.target.checked)} />
-                    Husk meg
-                    {/* {rememberStatus} */}
-                </div>
-                <LinkButton
-                    sx={{ width: 140, margin: 0, float: 'left' }}
-                    onClick={() => navigate('/change-password', { state: { enteredEmail } })}
-                >
-                    Glemt passord
-                </LinkButton>
+                <FlexRowContainer>
+                    <Checkbox type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
+                    <Text style={{ whiteSpace: 'nowrap' }}>Husk meg</Text>
+                </FlexRowContainer>
+                <LinkButton onClick={() => navigate('/change-password', { state: { enteredEmail } })}>Glemt passord</LinkButton>
             </FlexRowContainer>
-            {/* add disabled button */}
-            <SubmitButton type="submit" variant="contained">
+            <SubmitButton type="submit" variant="contained" disabled={!enteredEmailIsValid || !enteredPasswordIsValid}>
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
             </SubmitButton>
             <FlexRowContainer spacing="space-between">
                 <Text>Ikke registrert?</Text>
-                <LinkButton sx={{ width: 140, margin: 0, float: 'left' }} onClick={() => navigate('/register/email')}>
-                    Registrer deg
-                </LinkButton>
+                <LinkButton onClick={() => navigate('/register/email')}>Registrer deg</LinkButton>
             </FlexRowContainer>
         </Form>
     );

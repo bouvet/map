@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SectionContainer = styled.section`
+export const Section = styled.section`
     width: 100%;
     padding: 1.5rem;
     display: flex;

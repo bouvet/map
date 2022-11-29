@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Main } from '../components/Layout';
+import { Main, Section } from '../components/Layout';
 
-import { SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
@@ -56,7 +55,7 @@ export const Home: React.FC = () => {
                 <HomeHeader onCategorySelectHandler={onCategorySelectHandler} categories={categories} selectedCategory={selectedCategory} />
             )}
             <Main>
-                <SectionContainer style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
+                <Section style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
                     {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
 
                     <HomeMap
@@ -72,7 +71,7 @@ export const Home: React.FC = () => {
                     {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
 
                     {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
-                </SectionContainer>
+                </Section>
             </Main>
         </>
     );

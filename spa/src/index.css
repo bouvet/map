@@ -35,6 +35,48 @@ button {
     outline: none;
 }
 
+.sidebar-link {
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    display: block;
+    padding: 0.5rem 0;
+    padding-left: 2.5rem;
+}
+
+.sidebar-link:visited {
+    color: #007bc0;
+}
+
+.sidebar-link:hover {
+    background-color: #007bc0;
+    color: white;
+}
+
+.sidebar-link--btn {
+    background-color: #007bc0;
+    color: white;
+    padding-left: 0;
+}
+
+.sidebar-link--btn:visited {
+    color: white;
+}
+
+.sidebar-link--btn:hover {
+    background-color: #0067a3;
+}
+
+.sidebar-link--active,
+.sidebar-link--active:visited {
+    background-color: #007bc0;
+    color: white;
+}
+
+.sidebar-link--active:hover {
+    background-color: #0067a3;
+}
+
 *::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
 }

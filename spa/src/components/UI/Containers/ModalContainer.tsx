@@ -22,6 +22,7 @@ const Container = styled.div`
 
 const Modal = styled.div`
     width: 85%;
+    max-height: 90vh;
     padding: 1rem;
     background-color: white;
     border-radius: 3px;

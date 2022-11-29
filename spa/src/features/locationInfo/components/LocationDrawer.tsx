@@ -303,6 +303,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                             Legg til omtale
                         </LinkButton>
                         <ReviewModal
+                            selectedLocation={selectedLocation}
                             open={openAddReview}
                             close={handleCloseAddReview}
                             success={handleOpenSuccessMessage}

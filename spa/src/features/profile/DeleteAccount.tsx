@@ -12,8 +12,8 @@ import { useInput } from '../../hooks/useInput';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { userServices } from '../userRegistration/services/user.services';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
-import { SubmitButton, PageSubtitle, PageTitle, SectionContainer } from '../../components/UI';
-import { Main } from '../../components/Layout';
+import { SubmitButton, PageSubtitle, PageTitle } from '../../components/UI';
+import { Main, Section } from '../../components/Layout';
 
 export const DeleteAccount: FC = () => {
     const dispatch = useStateDispatch();
@@ -82,7 +82,7 @@ export const DeleteAccount: FC = () => {
                     <Button onClick={handleCloseDialog}>Nei</Button>
                 </DialogActions>
             </Dialog>
-            <SectionContainer>
+            <Section>
                 <PageTitle>Slett konto</PageTitle>
                 <PageSubtitle style={{ marginTop: '1rem' }}>For å slette kontoen må du skrive inn passordet ditt.</PageSubtitle>
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
@@ -106,7 +106,7 @@ export const DeleteAccount: FC = () => {
                         Bekreft
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

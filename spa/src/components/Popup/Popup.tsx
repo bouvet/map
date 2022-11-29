@@ -100,7 +100,7 @@ export const Popup: FC<Props> = ({ location }) => {
 
     const dispatch = useStateDispatch();
 
-    const { popUpIsVisible } = useStateSelector((state) => state.map);
+    // const { popUpIsVisible } = useStateSelector((state) => state.map);
 
     const handleClickClose = () => {
         dispatch(uiActions.setShowLocationPopup(false));

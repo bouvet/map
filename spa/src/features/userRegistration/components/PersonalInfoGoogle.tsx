@@ -15,8 +15,8 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
-import { Main } from '../../../components/Layout';
+import { PageSubtitle, PageTitle, SubmitButton } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
 import { uiActions } from '../../../store';
 
 export const PersonalInfoGoogle: FC = () => {
@@ -93,7 +93,7 @@ export const PersonalInfoGoogle: FC = () => {
     return (
         <Main>
             <DialogButton />
-            <SectionContainer style={{ height: '100%' }}>
+            <Section style={{ height: '100%' }}>
                 <PageTitle>Personlig informasjon</PageTitle>
                 <PageSubtitle style={{ marginTop: '1rem' }}>
                     Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i omtaler.
@@ -137,7 +137,7 @@ export const PersonalInfoGoogle: FC = () => {
                         Gå videre
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

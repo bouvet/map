@@ -6,7 +6,7 @@ import { useStateDispatch } from '../../../hooks/useRedux';
 import { approvalServices } from '../services/approval.services';
 import { ILocation, LocationStatus } from '../../../interfaces';
 
-import { Button, CloseButton, FlexRowContainer, ModalContainer } from '../../../components/UI';
+import { Button, CloseButton, FlexRowContainer, ModalContainer, PillButton } from '../../../components/UI';
 
 interface Props {
     location: ILocation | null;
@@ -60,7 +60,7 @@ export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLoca
     };
 
     return (
-        <ModalContainer closeModalHandler={closeModalHandler} center>
+        <ModalContainer closeModalHandler={closeModalHandler}>
             {location && (
                 <div style={{ position: 'relative' }}>
                     <CloseButton onClick={closeModalHandler} sx={{ top: 0, left: 0 }} />
@@ -68,7 +68,7 @@ export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLoca
                         <img
                             src={location?.properties.webpImage?.cdnUri}
                             alt={location?.properties.title}
-                            style={{ width: '100%', borderRadius: '3px' }}
+                            style={{ width: '100%', borderRadius: '3px', objectFit: 'cover', maxHeight: '30vh' }}
                         />
                     )}
                     {!location?.properties.webpImage?.cdnUri && (
@@ -90,7 +90,14 @@ export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLoca
                     <p style={{ padding: '1.5rem 0' }}>
                         Status: <span style={{ color: `${statusColor}`, fontWeight: '700' }}>{statusText}</span>
                     </p>
-                    <FlexRowContainer spacing="space-between" style={{ paddingBottom: '1rem' }}>
+                    <FlexRowContainer style={{ zIndex: '2', gap: '10px', padding: '5px', overflowX: 'scroll' }}>
+                        {location?.properties.category.map((category) => (
+                            <PillButton key={category.id}>
+                                {category.emoji} {category.name}
+                            </PillButton>
+                        ))}
+                    </FlexRowContainer>
+                    <FlexRowContainer spacing="space-between" style={{ padding: '1.5rem 0' }}>
                         {status !== 'Approved' && status !== 'Rejected' && (
                             <Button variant="contained" sx={{ width: '45%' }} onClick={() => updateLocationHandler('Approved')}>
                                 Godkjenn

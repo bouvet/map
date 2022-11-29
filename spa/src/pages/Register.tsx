@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { SectionContainer } from '../components/UI';
+import { Section } from '../components/Layout';
 
 export const Register = () => (
-    <SectionContainer>
+    <Section>
         <Outlet />
-    </SectionContainer>
+    </Section>
 );

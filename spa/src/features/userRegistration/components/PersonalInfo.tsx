@@ -17,8 +17,8 @@ import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
-import { Main } from '../../../components/Layout';
+import { PageSubtitle, PageTitle, SubmitButton } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
 import { uiActions } from '../../../store';
 
 export const PersonalInfo: FC = () => {
@@ -97,7 +97,7 @@ export const PersonalInfo: FC = () => {
     return (
         <Main>
             <DialogButton />
-            <SectionContainer>
+            <Section>
                 <PageTitle className="registration">Personlig informasjon</PageTitle>
                 <ProgressBarForm pageIndex={pageIndex} />
                 <PageSubtitle>
@@ -143,7 +143,7 @@ export const PersonalInfo: FC = () => {
                         Gå videre
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

@@ -9,8 +9,8 @@ import { DialogButton } from '../../../components/Form/DialogButton';
 import { userServices } from '../services/user.services';
 import { useStateSelector } from '../../../hooks/useRedux';
 import { AppDispatch } from '../../../store';
-import { LinkButton, PageSubtitle, PageTitle, SectionContainer } from '../../../components/UI';
-import { Main } from '../../../components/Layout';
+import { LinkButton, PageSubtitle, PageTitle } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
 
 export const EmailConfirmation: FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -62,7 +62,7 @@ export const EmailConfirmation: FC = () => {
     return (
         <Main>
             <DialogButton />
-            <SectionContainer>
+            <Section>
                 <PageTitle className="registration">Bekreft e-post</PageTitle>
                 <ProgressBarForm pageIndex={pageIndex} />
                 <Form style={{ marginTop: '1rem' }}>
@@ -93,7 +93,7 @@ export const EmailConfirmation: FC = () => {
                 <LinkButton sx={{ marginTop: 'auto', marginBottom: '-10vh', width: 150 }} onClick={() => navigate('/register/email')}>
                     Endre e-post
                 </LinkButton>
-            </SectionContainer>
+            </Section>
         </Main>
     );
 };

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import { Marker } from 'react-map-gl';
-import { Footer } from '../../../components/Layout';
-import { MyLocationButton, PillButton, SectionContainer } from '../../../components/UI';
+import { Footer, Section } from '../../../components/Layout';
+import { MyLocationButton, PillButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store/state/map.state';
 import { getUserLocation } from '../../../utils';
@@ -38,7 +38,7 @@ export const AddLocationMap: React.FC<Props> = ({ pageIndex, chooseLocationHandl
     }, [dispatch]);
 
     return (
-        <SectionContainer
+        <Section
             // style={{ height: 'calc(100vh - 7.7rem)', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
             style={{ height: '100%', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
         >
@@ -60,6 +60,6 @@ export const AddLocationMap: React.FC<Props> = ({ pageIndex, chooseLocationHandl
 
                 <MyLocationButton onClickHandler={getUserLocationHandler} loadingUserLocation={loading} />
             </Footer>
-        </SectionContainer>
+        </Section>
     );
 };
