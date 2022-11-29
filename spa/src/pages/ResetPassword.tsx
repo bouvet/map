@@ -2,12 +2,13 @@ import { FC, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form } from '../components/Form/Form';
 import { StyledInput } from '../components/Form/StyledElements/StyledInput';
-import { PageContainer, PageTitle, SectionContainer, SubmitButton } from '../components/UI';
+import { Main, Section } from '../components/Layout';
+import { PageTitle, SubmitButton } from '../components/UI';
 import { CloseButton } from '../components/UI/Buttons/NavigationButtons';
 import { loginServices } from '../features/login/services/login.services';
 import { useInput } from '../hooks/useInput';
 import { useStateDispatch } from '../hooks/useRedux';
-import { snackbarActions } from '../store/state/snackbar.state';
+import { uiActions } from '../store';
 
 export const ResetPassword: FC = () => {
     const dispatch = useStateDispatch();
@@ -70,7 +71,7 @@ export const ResetPassword: FC = () => {
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
-            dispatch(snackbarActions.setNotify({ message: 'Passordene er ikke like', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Passordene er ikke like', severity: 'error' }));
         } else {
             newPasswordBlurHandler();
             confirmPasswordBlurHandler();
@@ -90,9 +91,9 @@ export const ResetPassword: FC = () => {
     };
 
     return (
-        <PageContainer>
+        <Main>
             <CloseButton onClick={() => navigate('/login')} />
-            <SectionContainer>
+            <Section>
                 <PageTitle>Tilbakestill passord</PageTitle>
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
                     <StyledInput
@@ -122,7 +123,7 @@ export const ResetPassword: FC = () => {
                         Endre passord
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
-        </PageContainer>
+            </Section>
+        </Main>
     );
 };

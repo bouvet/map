@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { CustomizedSnackbars } from './components/Snackbar/Snackbar';
-import { PageContainer } from './components/UI';
 import { userServices } from './features/userRegistration/services/user.services';
 import { useStateDispatch } from './hooks/useRedux';
 import { authActions } from './store/state/auth.state';
@@ -27,17 +26,11 @@ export const App = () => {
             clearTimeout(timer);
         };
     }, [dispatch]);
-    useEffect(() => {
-        document.body.style.overflowX = 'hidden';
-        return () => {
-            document.body.style.overflowX = 'auto';
-        };
-    }, []);
 
     return (
-        <PageContainer>
+        <>
             <Outlet />
             <CustomizedSnackbars />
-        </PageContainer>
+        </>
     );
 };

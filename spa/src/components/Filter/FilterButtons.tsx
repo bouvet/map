@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MyTheme } from '../../styles/global';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
-import { mapActions } from '../../store/state/map.state';
-import { registrationActions } from '../../store/state/registration.state';
 import { userActions } from '../../store/state/user.state';
 
 interface FilterButtonToggledProps {
@@ -41,76 +39,76 @@ const FilterButtonName = styled.span`
     white-space: nowrap;
 `;
 
-export const FilterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }) => {
-    const { selectedFilterCategory } = useStateSelector((state) => state.map);
-    const [select, setSelect] = useState(false);
-    const dispatch = useStateDispatch();
+// export const FilterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }) => {
+//     const { selectedFilterCategory } = useStateSelector((state) => state.map);
+//     const [select, setSelect] = useState(false);
+//     const dispatch = useStateDispatch();
 
-    useEffect(() => {
-        if (selectedFilterCategory === id) {
-            setSelect(true);
-        } else {
-            setSelect(false);
-        }
-    }, [selectedFilterCategory, id]);
+//     useEffect(() => {
+//         if (selectedFilterCategory === id) {
+//             setSelect(true);
+//         } else {
+//             setSelect(false);
+//         }
+//     }, [selectedFilterCategory, id]);
 
-    const updateGlobalStateForSelectedCategory = (category: string) => {
-        dispatch(mapActions.setSelectedFilterCategory(category));
-        dispatch(mapActions.setSelectedMarker(''));
-        dispatch(mapActions.setPopupVisibility(false));
-    };
+//     const updateGlobalStateForSelectedCategory = (category: string) => {
+//         dispatch(mapActions.setSelectedFilterCategory(category));
+//         dispatch(mapActions.setSelectedMarker(''));
+//         dispatch(mapActions.setPopupVisibility(false));
+//     };
 
-    const handleClickFilterButton = () => {
-        if (!select) {
-            updateGlobalStateForSelectedCategory(id);
-        } else {
-            updateGlobalStateForSelectedCategory('');
-        }
-        setSelect(!select);
-    };
+//     const handleClickFilterButton = () => {
+//         if (!select) {
+//             updateGlobalStateForSelectedCategory(id);
+//         } else {
+//             updateGlobalStateForSelectedCategory('');
+//         }
+//         setSelect(!select);
+//     };
 
-    return (
-        <FilterButtonStyle key={id} clicked={select} onClick={handleClickFilterButton}>
-            <FilterButtonEmoji>{emoji}</FilterButtonEmoji>
-            <FilterButtonName>{text}</FilterButtonName>
-        </FilterButtonStyle>
-    );
-};
+//     return (
+//         <FilterButtonStyle key={id} clicked={select} onClick={handleClickFilterButton}>
+//             <FilterButtonEmoji>{emoji}</FilterButtonEmoji>
+//             <FilterButtonName>{text}</FilterButtonName>
+//         </FilterButtonStyle>
+//     );
+// };
 
-export const RegisterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }) => {
-    const { currentCategories } = useStateSelector((state) => state.registration);
-    const [select, setSelect] = useState(false);
-    const dispatch = useStateDispatch();
+// export const RegisterButton: FC<FilterButtonContentProps> = ({ id, text, emoji }) => {
+//     const { currentCategories } = useStateSelector((state) => state.registration);
+//     const [select, setSelect] = useState(false);
+//     const dispatch = useStateDispatch();
 
-    useEffect(() => {
-        if (id && currentCategories.includes(id)) {
-            setSelect(true);
-        } else {
-            setSelect(false);
-        }
-    }, [currentCategories, id]);
+//     useEffect(() => {
+//         if (id && currentCategories.includes(id)) {
+//             setSelect(true);
+//         } else {
+//             setSelect(false);
+//         }
+//     }, [currentCategories, id]);
 
-    const updateGlobalStateForSelectedCategory = () => {
-        if (currentCategories.includes(id)) {
-            const index = currentCategories.indexOf(id);
-            const tempArray = [...currentCategories];
-            if (index !== -1) {
-                tempArray.splice(index, 1);
-                dispatch(registrationActions.setCurrentCategories(tempArray));
-            }
-        } else {
-            // add
-            dispatch(registrationActions.setCurrentCategories([...currentCategories, id]));
-        }
-    };
+//     const updateGlobalStateForSelectedCategory = () => {
+//         if (currentCategories.includes(id)) {
+//             const index = currentCategories.indexOf(id);
+//             const tempArray = [...currentCategories];
+//             if (index !== -1) {
+//                 tempArray.splice(index, 1);
+//                 dispatch(registrationActions.setCurrentCategories(tempArray));
+//             }
+//         } else {
+//             // add
+//             dispatch(registrationActions.setCurrentCategories([...currentCategories, id]));
+//         }
+//     };
 
-    return (
-        <FilterButtonStyle clicked={select} onClick={updateGlobalStateForSelectedCategory}>
-            <FilterButtonEmoji>{emoji}</FilterButtonEmoji>
-            <FilterButtonName>{text}</FilterButtonName>
-        </FilterButtonStyle>
-    );
-};
+//     return (
+//         <FilterButtonStyle clicked={select} onClick={updateGlobalStateForSelectedCategory}>
+//             <FilterButtonEmoji>{emoji}</FilterButtonEmoji>
+//             <FilterButtonName>{text}</FilterButtonName>
+//         </FilterButtonStyle>
+//     );
+// };
 
 // PERSONALIZATION
 

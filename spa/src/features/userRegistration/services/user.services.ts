@@ -2,7 +2,6 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { uiActions } from '../../../store/state/ui.state';
 import { sleep } from '../../../utils/sleep';
 import { IUserTypeEdit, IUser } from '../../../utils/types.d';
@@ -18,10 +17,10 @@ export const userServices = {
                 const { data } = await API.post(url, user);
 
                 dispatch(authActions.userLogin(data));
-                dispatch(snackbarActions.setNotify({ message: 'Bruker er opprettet', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Bruker er opprettet', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -43,11 +42,11 @@ export const userServices = {
                 console.log('Payload', payload);
 
                 setTimeout(() => {
-                    dispatch(snackbarActions.setNotify({ message: 'Profilen er oppdatert', severity: 'success' }));
+                    dispatch(uiActions.setShowSnackbar({ message: 'Profilen er oppdatert', severity: 'success' }));
                 }, 500);
             } catch (error) {
                 console.error('error', error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -60,12 +59,12 @@ export const userServices = {
                 localStorage.setItem('id', data.id);
 
                 await sleep(500);
-                dispatch(snackbarActions.setNotify({ message: 'Kode er sendt', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Kode er sendt', severity: 'success' }));
 
                 return true;
             } catch (error) {
                 console.error('error', error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                 return false;
             }
         };
@@ -84,9 +83,9 @@ export const userServices = {
                 localStorage.setItem('id', data.id);
 
                 await sleep(500);
-                dispatch(snackbarActions.setNotify({ message: 'Ny kode er sendt', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Ny kode er sendt', severity: 'success' }));
             } catch (error) {
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -98,10 +97,10 @@ export const userServices = {
                 await sleep(500);
 
                 dispatch(uiActions.setShouldNavigate(true));
-                dispatch(snackbarActions.setNotify({ message: 'Kode er bekreftet', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Kode er bekreftet', severity: 'success' }));
                 return true;
             } catch (error) {
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                 return false;
             }
         };
@@ -112,9 +111,9 @@ export const userServices = {
                 await API.delete(`/users/${payload.id}`);
 
                 await sleep(500);
-                dispatch(snackbarActions.setNotify({ message: 'Konto er slettet', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Konto er slettet', severity: 'success' }));
             } catch (error) {
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },

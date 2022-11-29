@@ -11,12 +11,13 @@ import 'moment/locale/en-ca';
 import { Form } from '../../../components/Form/Form';
 import { Label } from '../../../components/Form/Input';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { userActions } from '../../../store/state/user.state';
 import { DialogButton } from '../../../components/Form/DialogButton';
 import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { PageContainer, PageSubtitle, PageTitle, SectionContainer, SubmitButton } from '../../../components/UI';
+import { PageSubtitle, PageTitle, SubmitButton } from '../../../components/UI';
+import { Main, Section } from '../../../components/Layout';
+import { uiActions } from '../../../store';
 
 export const PersonalInfoGoogle: FC = () => {
     const { email, firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -53,7 +54,7 @@ export const PersonalInfoGoogle: FC = () => {
         e.preventDefault();
         console.log(dob);
         if (!dob) {
-            dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Fødselsdato mangler', severity: 'error' }));
             return;
         }
         firstNameBlurHandler();
@@ -90,56 +91,53 @@ export const PersonalInfoGoogle: FC = () => {
     }, []);
 
     return (
-        <>
-            <PageContainer>
-                <DialogButton />
-                <SectionContainer style={{ height: '100%' }}>
-                    <PageTitle>Personlig informasjon</PageTitle>
-                    <PageSubtitle style={{ marginTop: '1rem' }}>
-                        Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i
-                        omtaler.
-                    </PageSubtitle>
-                    <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
-                        <StyledInput label="E-post*" placeholder={email} disabled />
-                        <StyledInput
-                            label="Fornavn*"
-                            errorMessage="Vennligst fyll inn fornavn"
-                            value={enteredFirstName}
-                            onChange={firstNameChangeHandler}
-                            onBlur={firstNameBlurHandler}
-                            inputHasError={firstNameInputHasError}
-                        />
-                        <StyledInput
-                            label="Etternavn*"
-                            errorMessage="Vennligst fyll inn etternavn"
-                            value={enteredLastName}
-                            onChange={lastNameChangeHandler}
-                            onBlur={lastNameBlurHandler}
-                            inputHasError={lastNameInputHasError}
-                        />
-                        <Label>Fødselsdato*</Label>
-                        <ThemeProvider theme={theme}>
-                            <LocalizationProvider dateAdapter={AdapterMoment}>
-                                <MobileDatePicker
-                                    label="åååå.mm.dd"
-                                    value={dob || null}
-                                    onChange={(newValue) => handleChangeDob(newValue)}
-                                    renderInput={(params) => <TextField {...params} />}
-                                    maxDate={new Date()}
-                                />
-                            </LocalizationProvider>
-                        </ThemeProvider>
-                        <SubmitButton
-                            type="submit"
-                            variant="contained"
-                            sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
-                            disabled={firstNameInputHasError || lastNameInputHasError}
-                        >
-                            Gå videre
-                        </SubmitButton>
-                    </Form>
-                </SectionContainer>
-            </PageContainer>
-        </>
+        <Main>
+            <DialogButton />
+            <Section style={{ height: '100%' }}>
+                <PageTitle>Personlig informasjon</PageTitle>
+                <PageSubtitle style={{ marginTop: '1rem' }}>
+                    Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i omtaler.
+                </PageSubtitle>
+                <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
+                    <StyledInput label="E-post*" placeholder={email} disabled />
+                    <StyledInput
+                        label="Fornavn*"
+                        errorMessage="Vennligst fyll inn fornavn"
+                        value={enteredFirstName}
+                        onChange={firstNameChangeHandler}
+                        onBlur={firstNameBlurHandler}
+                        inputHasError={firstNameInputHasError}
+                    />
+                    <StyledInput
+                        label="Etternavn*"
+                        errorMessage="Vennligst fyll inn etternavn"
+                        value={enteredLastName}
+                        onChange={lastNameChangeHandler}
+                        onBlur={lastNameBlurHandler}
+                        inputHasError={lastNameInputHasError}
+                    />
+                    <Label>Fødselsdato*</Label>
+                    <ThemeProvider theme={theme}>
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                            <MobileDatePicker
+                                label="åååå.mm.dd"
+                                value={dob || null}
+                                onChange={(newValue) => handleChangeDob(newValue)}
+                                renderInput={(params) => <TextField {...params} />}
+                                maxDate={new Date()}
+                            />
+                        </LocalizationProvider>
+                    </ThemeProvider>
+                    <SubmitButton
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}
+                        disabled={firstNameInputHasError || lastNameInputHasError}
+                    >
+                        Gå videre
+                    </SubmitButton>
+                </Form>
+            </Section>
+        </Main>
     );
 };

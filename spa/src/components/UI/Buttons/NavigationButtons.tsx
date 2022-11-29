@@ -2,12 +2,12 @@ import { FC, MouseEvent } from 'react';
 import MuiFab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material/styles';
+import { styled, SxProps } from '@mui/material/styles';
 import { MyTheme } from '../../../styles/global';
 
 interface ActionProps {
     onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-    sx?: {};
+    sx?: SxProps;
 }
 
 export const Fab = styled(MuiFab)(() => ({

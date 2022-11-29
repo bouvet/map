@@ -2,7 +2,8 @@ import { Button } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton, PageContainer, SectionContainer } from '../components/UI';
+import { Main, Section } from '../components/Layout';
+import { BackButton } from '../components/UI';
 import { WorkoutBlock } from '../features/workoutRegistration/Components/Workout';
 
 export const WorkoutHeader = styled.div`
@@ -68,42 +69,38 @@ export const RegisterWorkout: FC = () => {
     const sortedDate = workoutDate.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     return (
-        <>
-            <>
-                <PageContainer>
-                    <BackButton onClick={() => navigate(-1)} />
-                    <SectionContainer>
-                        <WorkoutHeader style={{ fontWeight: 700 }}>Dine treningsøkter</WorkoutHeader>
-                        {september ? (
-                            <div
-                                style={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    justifyContent: 'flex-start',
-                                    marginBottom: 5,
-                                }}
-                            >
-                                <WorkoutSubHeader style={{ marginRight: 5 }}>September</WorkoutSubHeader>
-                                <WorkoutSubHeader>2022</WorkoutSubHeader>
-                                {/* <WorkoutSubHeader style={{ marginRight: 5 }}>{month}</WorkoutSubHeader>
+        <Main>
+            <BackButton onClick={() => navigate(-1)} />
+            <Section>
+                <WorkoutHeader style={{ fontWeight: 700 }}>Dine treningsøkter</WorkoutHeader>
+                {september ? (
+                    <div
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            marginBottom: 5,
+                        }}
+                    >
+                        <WorkoutSubHeader style={{ marginRight: 5 }}>September</WorkoutSubHeader>
+                        <WorkoutSubHeader>2022</WorkoutSubHeader>
+                        {/* <WorkoutSubHeader style={{ marginRight: 5 }}>{month}</WorkoutSubHeader>
                             <WorkoutSubHeader>{newDate.getFullYear()}</WorkoutSubHeader> */}
-                            </div>
-                        ) : null}
-                        {sortedDate.map((dateItem) => (
-                            <div key={dateItem.id} style={{ width: '100%', display: 'flex', flexDirection: 'row', marginBottom: 10 }}>
-                                <WorkoutBlock dateTitle={dateItem.title} dateCategory={dateItem.category} date={dateItem.date} />
+                    </div>
+                ) : null}
+                {sortedDate.map((dateItem) => (
+                    <div key={dateItem.id} style={{ width: '100%', display: 'flex', flexDirection: 'row', marginBottom: 10 }}>
+                        <WorkoutBlock dateTitle={dateItem.title} dateCategory={dateItem.category} date={dateItem.date} />
 
-                                <Button style={{ borderRadius: '50%' }}>
-                                    <span style={{ color: 'red' }} className="material-symbols-outlined">
-                                        delete
-                                    </span>
-                                </Button>
-                            </div>
-                        ))}
-                    </SectionContainer>
-                </PageContainer>
-            </>
-        </>
+                        <Button style={{ borderRadius: '50%' }}>
+                            <span style={{ color: 'red' }} className="material-symbols-outlined">
+                                delete
+                            </span>
+                        </Button>
+                    </div>
+                ))}
+            </Section>
+        </Main>
     );
 };

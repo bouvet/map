@@ -1,92 +1,77 @@
-import Slide from '@mui/material/Slide';
-import { FC, useEffect } from 'react';
-import { FilterButton } from '../components/Filter/FilterButtons';
-import { FilterMenu } from '../components/Filter/FilterMenu';
-import { Popup, PopupCard } from '../components/Popup/Popup';
-import { SectionContainer } from '../components/UI';
+import React, { useState } from 'react';
+import { Main, Section } from '../components/Layout';
+
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
-import { FabMenu } from '../features/home/components/FabMenu';
+import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
-import { EmojiButton } from '../features/locationRegistration/components/Location';
-import { locationServices } from '../features/locationRegistration/services/location.services';
-import { ReactMapGL } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { ICategory } from '../interfaces';
-import { mapActions } from '../store/state/map.state';
-import { useFilterEvent } from '../utils/filterLogic';
-import { ILatLong } from '../utils/types.d';
+import { ICategory, ILocation } from '../interfaces';
+import { mapActions, uiActions } from '../store';
 
-export const Home: FC = () => {
-    useFilterEvent();
-    const { popUpIsVisible, categoriesWithLocations, currentlySelectedLocation, homeMarkerFocus, selectedFilterCategory } =
-        useStateSelector((state) => state.map);
-    const { currentUserLocation } = useStateSelector((state) => state.registration);
-    const mappedFilter = categoriesWithLocations.map((item: ICategory) =>
-        item.id ? <FilterButton key={item.id} id={item.id} text={item.name} emoji={item.emoji} /> : null,
-    );
+export const Home: React.FC = () => {
+    const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
+
+    const [showMenu, setShowMenu] = useState(false);
+
+    const { showLocationInfoPopup, showLocationInfoDrawer } = useStateSelector((state) => state.ui);
+
+    const { categories } = useStateSelector((state) => state.map);
+
     const dispatch = useStateDispatch();
-    const handleBackClick = () => {
-        dispatch(mapActions.setHomeMarkerFocus(false));
-        dispatch(mapActions.setPopupVisibility(false));
-        dispatch(mapActions.setSelectedMarker(''));
-    };
 
-    const handleLocationClick = () => {
-        if (currentUserLocation.lat) {
-            dispatch(locationServices.getClosestLocation(currentUserLocation, selectedFilterCategory));
-        } else {
-            console.log('isGettingLocation');
-            navigator.geolocation.getCurrentPosition((position) => {
-                const userLocation: ILatLong = {
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude,
-                };
-                dispatch(locationServices.getClosestLocation(userLocation, selectedFilterCategory));
-            });
+    const onMarkerSelectHandler = (location: ILocation) => {
+        if (selectedLocation && selectedLocation.id === location.id) {
+            setShowMenu(false);
+            setSelectedLocation(null);
+            dispatch(uiActions.setShowLocationPopup(false));
+            return;
         }
+        setShowMenu(false);
+        setSelectedLocation(location);
+        dispatch(uiActions.setShowLocationPopup(true));
     };
 
-    useEffect(() => {
-        document.body.style.overflowY = 'hidden';
-        return () => {
-            document.body.style.overflowY = 'auto';
-        };
-    }, []);
+    const onCategorySelectHandler = (category: ICategory) => {
+        if (selectedCategory && selectedCategory.id === category.id) {
+            setShowMenu(false);
+            setSelectedCategory(null);
+            dispatch(mapActions.filterLocations(null));
+            return;
+        }
+        setShowMenu(false);
+        setSelectedCategory(category);
+        dispatch(mapActions.filterLocations(category.id));
+    };
+
+    const showMenuToggler = () => {
+        setShowMenu(!showMenu);
+    };
 
     return (
-        <SectionContainer style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
-            {!homeMarkerFocus ? (
-                <>
-                    <FilterMenu>{mappedFilter}</FilterMenu>
-                    <EmojiButton text="Nærmeste lokasjon" emoji="🔍" onClick={handleLocationClick} bottom="30px" left="16px" />
-                </>
-            ) : (
-                <BackButton onClick={handleBackClick} />
+        <>
+            {!showLocationInfoPopup && (
+                <HomeHeader onCategorySelectHandler={onCategorySelectHandler} categories={categories} selectedCategory={selectedCategory} />
             )}
-            {/* <div style={{ position: 'relative', top: 0, left: 0, height: '100%', width: '100%' }}> */}
-            <ReactMapGL />
-            {/* </div> */}
-            {!homeMarkerFocus && <FabMenu />}
-            {!homeMarkerFocus && (
-                <Slide direction="up" in={popUpIsVisible} mountOnEnter unmountOnExit>
-                    <PopupCard>
-                        {popUpIsVisible && (
-                            <>
-                                <Popup
-                                    name={currentlySelectedLocation.properties.title}
-                                    description={currentlySelectedLocation.properties.description}
-                                    rating={currentlySelectedLocation.properties.rating}
-                                    image={
-                                        currentlySelectedLocation.properties.webpImage &&
-                                        currentlySelectedLocation.properties.webpImage.cdnUri
-                                    }
-                                />
-                            </>
-                        )}
-                    </PopupCard>
-                </Slide>
-            )}
-            {homeMarkerFocus && <SwipeableEdgeDrawer />}
-        </SectionContainer>
+            <Main>
+                <Section style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
+                    {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
+
+                    <HomeMap
+                        selectedLocation={selectedLocation}
+                        selectedCategory={selectedCategory}
+                        onMarkerSelectHandler={onMarkerSelectHandler}
+                        showMenuToggler={showMenuToggler}
+                        showMenu={showMenu}
+                    />
+
+                    <HomeMenu showMenu={showMenu} />
+
+                    {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
+
+                    {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
+                </Section>
+            </Main>
+        </>
     );
 };
