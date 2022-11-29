@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FilePondFile } from 'filepond';
 import { CircularProgress } from '@mui/material';
-import { useStateSelector } from '../../../hooks/useRedux';
+import { useStateSelector } from '../../../hooks';
 import { FilePond } from './FilePond';
 import { SubmitButton } from '../../../components/UI';
 

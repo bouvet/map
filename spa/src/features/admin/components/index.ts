@@ -5,3 +5,4 @@ export * from './LocationListItem';
 export * from './Modal';
 export * from './StatusSelector';
 export * from './CategoryList';
+export * from './LocationCard';

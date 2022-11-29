@@ -20,9 +20,9 @@ export const CustomMarker: React.FC<Props> = ({ coordinates, onClick, selectedLo
 
     useEffect(() => {
         if (selectedLocation && selectedLocation.id === location.id) {
-            setColor(MyTheme.colors.darkBase);
-        } else {
             setColor(MyTheme.colors.accent);
+        } else {
+            setColor(MyTheme.colors.darkBase);
         }
     }, [selectedLocation, location.id]);
 

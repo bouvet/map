@@ -3,7 +3,7 @@ import MuiButton from '@mui/material/Button';
 import { MyTheme } from '../../../styles/global';
 
 export const Button = styled(MuiButton)(() => ({
-    borderRadius: 50,
+    // borderRadius: 50,
     width: '100%',
     textTransform: 'none',
     fontSize: 16,

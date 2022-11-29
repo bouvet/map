@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Divider, Typography } from '@mui/material';
 import { ExpandMore, Done, Close, Edit, Delete } from '@mui/icons-material/';
 
 import { ICategory } from '../../../interfaces';
@@ -44,7 +44,8 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
                         {category.emoji} {category.name}
                     </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Divider />
+                <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginTop: '1rem' }}>
                     {!isEditing && (
                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                             <Button

@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { MyTheme } from '../../../styles/global';
-
-import { useStateDispatch } from '../../../hooks/useRedux';
 import { approvalServices } from '../services/approval.services';
 import { ILocation, LocationStatus } from '../../../interfaces';
+import { useStateDispatch, useLocationStatus } from '../../../hooks';
 
 import { Button, CloseButton, FlexRowContainer, ModalContainer, PillButton } from '../../../components/UI';
 
@@ -17,31 +15,7 @@ interface Props {
 export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLocationFromList }) => {
     const dispatch = useStateDispatch();
 
-    let statusColor: string;
-    let statusText: string = 'Under Behandling';
-
-    const status = location?.properties.status;
-
-    switch (status) {
-        case 'Approved':
-            statusColor = `${MyTheme.colors.success}`;
-            statusText = 'Godkjent';
-            break;
-        case 'Rejected':
-            statusColor = `${MyTheme.colors.alert}`;
-            statusText = 'Avslått';
-            break;
-        case 'Reported':
-            statusColor = `${MyTheme.colors.alert}`;
-            statusText = 'Rapportert';
-            break;
-        case 'Under Review':
-            statusColor = `${MyTheme.colors.warning}`;
-            statusText = 'Under Behandling';
-            break;
-        default:
-            statusColor = `${MyTheme.colors.alert}`;
-    }
+    const { status, color } = useLocationStatus(location?.properties.status);
 
     const updateLocationHandler = (status: LocationStatus) => {
         if (location?.id) {
@@ -88,7 +62,7 @@ export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLoca
                     <h2 style={{ padding: '0.5rem 0' }}>{location?.properties.title}</h2>
                     <p style={{ fontSize: '0.8rem', maxHeight: '10rem', overflow: 'scroll' }}>{location?.properties.description}</p>
                     <p style={{ padding: '1.5rem 0' }}>
-                        Status: <span style={{ color: `${statusColor}`, fontWeight: '700' }}>{statusText}</span>
+                        Status: <span style={{ color: `${color}`, fontWeight: '700' }}>{status}</span>
                     </p>
                     <FlexRowContainer style={{ zIndex: '2', gap: '10px', padding: '5px', overflowX: 'scroll' }}>
                         {location?.properties.category.map((category) => (
