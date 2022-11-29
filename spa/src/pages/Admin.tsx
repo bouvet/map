@@ -8,7 +8,7 @@ import { mapServices } from '../features/map';
 import { ILocation } from '../interfaces';
 import { locationStatus } from '../types';
 
-import { LocationCard, LocationList, LocationListItem, Modal, StatusSelector } from '../features/admin';
+import { LocationCard, Modal, StatusSelector } from '../features/admin';
 import { Section } from '../components/Layout';
 import { Header, Sidebar } from '../components/Navigation';
 
@@ -54,16 +54,11 @@ export const Admin: React.FC = () => {
                 <StatusSelector onChangeHandler={onSelectStatusHandler} />
 
                 {locations.length > 0 && (
-                    // <LocationList>
                     <ul style={{ width: '100%', marginTop: '2rem' }}>
                         {locations.map((location: ILocation) => (
-                            // <LocationListItem key={location.id} location={location} onClickHandler={chooseLocationHandler}>
-                            //     <span>{location.properties.title}</span>
-                            // </LocationListItem>
                             <LocationCard key={location.id} location={location} onClickHandler={chooseLocationHandler} />
                         ))}
                     </ul>
-                    // </LocationList>
                 )}
 
                 {locations.length === 0 && <div style={{ marginTop: '2rem' }}>Hurra 🎉 - ingenting å gjøre her 👍</div>}
