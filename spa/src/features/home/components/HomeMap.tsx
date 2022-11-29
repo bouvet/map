@@ -3,9 +3,8 @@ import React from 'react';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory, ILocation } from '../../../interfaces';
 
-import { CustomMarker } from './CustomMarker';
 import { HomeFooter } from './HomeFooter';
-import { Map, mapServices } from '../../map';
+import { CustomMarker, Map, mapServices } from '../../map';
 import { getUserLocation } from '../../../utils';
 import { mapActions } from '../../../store/state/map.state';
 
