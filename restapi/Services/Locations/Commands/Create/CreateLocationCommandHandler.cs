@@ -106,16 +106,6 @@ public class CreateLocationCommandHandler : IRequestHandler<CreateLocationComman
       errors.Add(Errors.Location.InvalidDescription);
     }
 
-    if (request.Longitude is < Location.MinLongitudeValue or > Location.MaxLongitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLongitude);
-    }
-
-    if (request.Latitude is < Location.MinLatitudeValue or > Location.MaxLatitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLatitude);
-    }
-
     return errors;
   }
 }

@@ -123,16 +123,6 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
       errors.Add(Errors.Location.InvalidDescription);
     }
 
-    if (request.Longitude is > 0 && request.Longitude is < Location.MinLongitudeValue or > Location.MaxLongitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLongitude);
-    }
-
-    if (request.Latitude is > 0 && request.Latitude is < Location.MinLatitudeValue or > Location.MaxLatitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLatitude);
-    }
-
     if (errors.Count > 0)
     {
       return errors;
