@@ -6,8 +6,7 @@ import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/ho
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ICategory, ILocation } from '../interfaces';
-import { mapActions } from '../store/state/map.state';
-import { uiActions } from '../store/state/ui.state';
+import { mapActions, uiActions } from '../store';
 
 export const Home: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);

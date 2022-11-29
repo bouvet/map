@@ -4,7 +4,7 @@ import { Marker } from 'react-map-gl';
 import { Footer, Section } from '../../../components/Layout';
 import { MyLocationButton, PillButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { mapActions } from '../../../store/state/map.state';
+import { mapActions } from '../../../store';
 import { getUserLocation } from '../../../utils';
 import { Map } from '../../map';
 

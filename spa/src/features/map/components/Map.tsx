@@ -1,7 +1,7 @@
 import React, { useRef, useState, Ref, useEffect } from 'react';
 import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { mapActions } from '../../../store/state/map.state';
+import { mapActions } from '../../../store';
 import { mapboxBaseUri, mapboxStreets } from '../../../styles/map-styles';
 import { mapServices } from '../services/map.services';
 import { MapStyleMenu } from './MapStyleMenu';
