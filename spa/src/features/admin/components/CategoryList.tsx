@@ -7,10 +7,10 @@ import { Main, Section } from '../../../components/Layout';
 import { Header, Sidebar } from '../../../components/Navigation';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { MyTheme } from '../../../styles/global';
-import { CategoryListItem } from '../components';
 import { categoryServices } from '../services';
+import { CategoryListItem } from './CategoryListItem';
 
-export const Category = () => {
+export const CategoryList = () => {
     const [emoji, setEmoji] = useState('');
     const [name, setName] = useState('');
 

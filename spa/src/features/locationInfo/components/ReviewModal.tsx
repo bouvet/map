@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewType } from '../../../utils/types.d';
-import { Img } from '../../add-location/components/AddLocationImage';
 import { CloseButton, SubmitButton } from '../../../components/UI';
 import { MyTheme } from '../../../styles/global';
 import { ILocation } from '../../../interfaces';
@@ -52,6 +51,11 @@ const Backdrop = styled.div`
 const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
+`;
+
+const Img = styled.img`
+    max-width: 80%;
+    max-height: 40vh;
 `;
 
 export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, success, error }) => {

@@ -1,8 +1,7 @@
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
-import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
+import { useStateDispatch } from '../../hooks/useRedux';
 import { ILocation } from '../../interfaces';
-import { mapActions } from '../../store/state/map.state';
 import { uiActions } from '../../store/state/ui.state';
 import { MyTheme } from '../../styles/global';
 import { StarRating } from '../StarRating/StarRating';
