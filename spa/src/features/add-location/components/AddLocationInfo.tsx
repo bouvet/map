@@ -106,7 +106,7 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
 
 const TextArea = styled.textarea`
     border-radius: 5px;
-    border: 1px solid ${MyTheme.colors.grey};
+    border: 1px solid ${MyTheme.colors.gray};
     padding: 5px;
     min-width: 100%;
     max-width: 100%;

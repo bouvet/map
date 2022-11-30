@@ -3,7 +3,6 @@ import MuiButton from '@mui/material/Button';
 import { MyTheme } from '../../../styles/global';
 
 export const Button = styled(MuiButton)(() => ({
-    // borderRadius: 50,
     width: '100%',
     textTransform: 'none',
     fontSize: 16,
@@ -12,9 +11,10 @@ export const Button = styled(MuiButton)(() => ({
     color: `${MyTheme.colors.lightBase}`,
     ':hover': {
         backgroundColor: `${MyTheme.colors.accent}`,
+        color: 'white',
     },
     ':disabled': {
-        backgroundColor: `${MyTheme.colors.grey}`,
+        backgroundColor: `${MyTheme.colors.gray}`,
         color: `${MyTheme.colors.lightBase}`,
     },
 }));

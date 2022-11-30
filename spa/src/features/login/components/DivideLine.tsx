@@ -1,34 +1,34 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { MyTheme } from '../../../styles/global';
 
 const Wrapper = styled.div`
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
 `;
 
 const Line = styled.hr`
-    background-color: #b8b8b8;
-    width: 90%;
+    background-color: ${MyTheme.colors.gray};
+    width: 100%;
     height: 2px;
     border: none;
     position: absolute;
+    top: 50%;
 `;
 
 const TextWrapper = styled.span`
-    padding: 10px;
-    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
 `;
 
 const Text = styled.p`
+    background-color: white;
     color: #787878;
-    margin: 0px;
-    padding: 0px;
+    padding: 0 10px;
+    z-index: 1;
 `;
 
 export const DivideLine: FC = () => (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Main, Section } from '../components/Layout';
 
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
-import { HomeHeader, HomeMap, HomeMenu, LocationInfoPopup } from '../features/home';
+import { HomeHeader, HomeMap, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ICategory, ILocation } from '../interfaces';
@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
                 <HomeHeader onCategorySelectHandler={onCategorySelectHandler} categories={categories} selectedCategory={selectedCategory} />
             )}
             <Main>
-                <Section style={{ position: 'absolute', height: '100%', width: '100%', padding: 0 }}>
+                <Section style={{ position: 'absolute', height: '100%', width: '100%', padding: 0, maxWidth: '100%' }}>
                     {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
 
                     <HomeMap
@@ -64,8 +64,6 @@ export const Home: React.FC = () => {
                         showMenuToggler={showMenuToggler}
                         showMenu={showMenu}
                     />
-
-                    <HomeMenu showMenu={showMenu} />
 
                     {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
 

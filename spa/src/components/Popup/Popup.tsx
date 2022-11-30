@@ -35,7 +35,7 @@ const PopupWrapper = styled.div`
 
 const PopupImage = styled.div<PopUpImageProp>`
     background: url(${(props) => props.imageURL});
-    background-color: ${MyTheme.colors.grey};
+    background-color: ${MyTheme.colors.gray};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

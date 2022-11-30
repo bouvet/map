@@ -18,7 +18,7 @@ export const PillButton = styled.button<IPillButtonProps>`
     align-items: center;
     white-space: nowrap;
     :disabled {
-        background-color: ${MyTheme.colors.grey};
+        background-color: ${MyTheme.colors.gray};
         color: ${MyTheme.colors.lightBase};
         cursor: not-allowed;
     }

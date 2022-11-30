@@ -25,7 +25,7 @@ const ProgressElementWrapper = styled.div`
 const ProgressStatusLine = styled.div<ProgessCompletionProp>`
     width: 100%;
     height: 5px;
-    background-color: ${(props) => (props.completed ? MyTheme.colors.accent : MyTheme.colors.grey)};
+    background-color: ${(props) => (props.completed ? MyTheme.colors.accent : MyTheme.colors.gray)};
     position: absolute;
     bottom: 0px;
 `;

@@ -100,6 +100,7 @@ export const LoginForm: FC = () => {
                 </FlexRowContainer>
                 <LinkButton onClick={() => navigate('/change-password', { state: { enteredEmail } })}>Glemt passord</LinkButton>
             </FlexRowContainer>
+
             <SubmitButton type="submit" variant="contained" disabled={!enteredEmailIsValid || !enteredPasswordIsValid}>
                 {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
             </SubmitButton>

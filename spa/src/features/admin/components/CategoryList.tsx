@@ -35,7 +35,7 @@ export const CategoryList = () => {
         <>
             <Header>Behandle Kategorier</Header>
             <Main>
-                <Section>
+                <Section style={{ height: '10rem' }}>
                     <form onSubmit={onSubmitHandler} style={{ width: '100%' }}>
                         <div style={{ display: 'flex', marginBottom: '1rem' }}>
                             <Input
@@ -69,9 +69,9 @@ export const CategoryList = () => {
                         </Button>
                     </form>
                 </Section>
-                <Section style={{ paddingTop: 0, maxHeight: '60vh', overflow: 'scroll' }}>
+                <Section style={{ paddingTop: 0 }}>
                     <p style={{ width: '100%', textAlign: 'left', marginBottom: '1rem', fontWeight: 600 }}>Kategorier i bruk</p>
-                    <ul style={{ width: '100%' }}>
+                    <ul style={{ width: '100%', maxHeight: '60vh', overflow: 'scroll' }}>
                         {categories.map((category) => (
                             <CategoryListItem key={category.id} category={category} />
                         ))}

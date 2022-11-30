@@ -5,6 +5,7 @@ import { CircularProgress } from '@mui/material';
 import { FabMenuButton, PillButton } from '../../../components/UI';
 import { Footer } from '../../../components/Layout';
 import { MyTheme } from '../../../styles/global';
+import { HomeMenu } from './HomeMenu';
 
 interface Props {
     getUserLocationHandler: () => void;
@@ -20,7 +21,7 @@ export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuTo
             style={{
                 padding: '1.2rem 0.8rem',
                 marginTop: '0.7rem',
-                backgroundColor: loadingUserLocation ? `${MyTheme.colors.grey}` : `${MyTheme.colors.lightBase}`,
+                backgroundColor: loadingUserLocation ? `${MyTheme.colors.gray}` : `${MyTheme.colors.lightBase}`,
                 color: loadingUserLocation ? `${MyTheme.colors.lightBase}` : `${MyTheme.colors.darkColor}`,
             }}
             disabled={loadingUserLocation}
@@ -28,5 +29,6 @@ export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuTo
             {!loadingUserLocation ? '🔍' : <CircularProgress color="inherit" size={17} sx={{ marginRight: '0.6rem' }} />} Nærmeste lokasjon
         </PillButton>
         <FabMenuButton showMenu={showMenu} showMenuToggler={showMenuToggler} />
+        <HomeMenu showMenu={showMenu} />
     </Footer>
 );

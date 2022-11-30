@@ -2,11 +2,13 @@ import React from 'react';
 
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
+import styled from 'styled-components';
+
 import { Button, Drawer } from '@mui/material';
 
-import { MyTheme } from '../../styles/global';
+import { MyTheme, deviceWidth } from '../../styles/global';
 
-import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
+import { useStateDispatch, useStateSelector } from '../../hooks';
 import { authActions, uiActions } from '../../store';
 
 export const Sidebar: React.FC = () => {
@@ -31,18 +33,16 @@ export const Sidebar: React.FC = () => {
 
     return (
         <Drawer anchor="right" open={showSidebar} onClose={closeSidebarHandler}>
-            <div
-                style={{
-                    width: '75vw',
-                    height: '3rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    backgroundColor: `${MyTheme.colors.accent}`,
-                }}
-            />
-
-            <nav style={{ marginTop: '1rem', height: '100%' }}>
-                <ul style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            <nav style={{ height: '100%' }}>
+                <SidebarHeader />
+                <ul
+                    style={{
+                        height: `calc(100% - ${MyTheme.size.header.height.mobileS})`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.3rem',
+                    }}
+                >
                     {isAdmin && (
                         <li>
                             <NavLink
@@ -83,7 +83,7 @@ export const Sidebar: React.FC = () => {
                         </NavLink>
                     </li>
                     {isAuthenticated && (
-                        <li style={{ marginBottom: '1.5rem', marginTop: 'auto' }}>
+                        <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
                             <Button
                                 className="sidebar-link sidebar-link--btn"
                                 onClick={logoutHandler}
@@ -99,10 +99,9 @@ export const Sidebar: React.FC = () => {
     );
 };
 
-// {/* {links.map((link) => (
-//                         <li style={{ marginBottom: '0.5rem' }} key={link.label}>
-//                             <Link to={link.to} onClick={() => dispatch(uiActions.toggleShowSidebar())}>
-//                                 <LinkButton sx={{ justifyContent: 'left', paddingLeft: '3rem' }}>{link.label}</LinkButton>
-//                             </Link>
-//                         </li>
-//                     ))} */}
+const SidebarHeader = styled.div`
+    width: 75vw;
+    height: ${MyTheme.size.header.height.mobileS};
+    background-color: ${MyTheme.colors.accent};
+    max-width: ${deviceWidth.mobileS};
+`;

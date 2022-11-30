@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import { header } from './header';
+
 export const MyTheme = {
     colors: {
         accent: '#007BC0',
@@ -7,7 +9,7 @@ export const MyTheme = {
         lightBase: '#FFFFFF',
         darkColor: '#000000',
         opaque: 'rgba(0, 0, 0, 0.5)',
-        grey: '#A7A7A7',
+        gray: '#A7A7A7',
         alert: '#D32F2F',
         success: '#2E7D32',
         warning: '#ffa726',
@@ -22,9 +24,12 @@ export const MyTheme = {
         header: '16px',
         largeIcon: '24px',
     },
+    size: {
+        header,
+    },
 };
 
-const size = {
+export const deviceWidth = {
     mobileS: '320px',
     mobileM: '360px',
     mobileL: '425px',
@@ -35,14 +40,14 @@ const size = {
 };
 
 export const device = {
-    mobileS: `screen and (min-width: ${size.mobileS})`,
-    mobileM: `screen and (min-width: ${size.mobileM})`,
-    mobileL: `screen and (min-width: ${size.mobileL})`,
-    tablet: `screen and (min-width: ${size.tablet})`,
-    laptop: `screen and (min-width: ${size.laptop})`,
-    laptopL: `screen and (min-width: ${size.laptopL})`,
-    desktop: `screen and (min-width: ${size.desktop})`,
-    desktopL: `screen and (min-width: ${size.desktop})`,
+    mobileS: `screen and (min-width: ${deviceWidth.mobileS})`,
+    mobileM: `screen and (min-width: ${deviceWidth.mobileM})`,
+    mobileL: `screen and (min-width: ${deviceWidth.mobileL})`,
+    tablet: `screen and (min-width: ${deviceWidth.tablet})`,
+    laptop: `screen and (min-width: ${deviceWidth.laptop})`,
+    laptopL: `screen and (min-width: ${deviceWidth.laptopL})`,
+    desktop: `screen and (min-width: ${deviceWidth.desktop})`,
+    desktopL: `screen and (min-width: ${deviceWidth.desktop})`,
 };
 
 export default createGlobalStyle`

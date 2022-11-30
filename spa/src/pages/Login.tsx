@@ -5,7 +5,7 @@ import { useStateSelector } from '../hooks/useRedux';
 
 import { Main, Section } from '../components/Layout';
 import { Header, Sidebar } from '../components/Navigation';
-import { DivideLine, GoogleLoginLink, LoginForm, VippsLoginLink } from '../features/login';
+import { DivideLine, GoogleLoginLink, LoginForm } from '../features/login';
 
 export const Login: React.FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
@@ -21,7 +21,6 @@ export const Login: React.FC = () => {
             <Main>
                 <Section>
                     <GoogleLoginLink />
-                    <VippsLoginLink />
                     <DivideLine />
                     <LoginForm />
                 </Section>

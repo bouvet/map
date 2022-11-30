@@ -12,7 +12,7 @@ export const VippsLoginLink = () => (
         sx={{ margin: '1rem 0', marginBottom: '0.5rem' }}
         onClick={() => window.location.replace(`!`)}
     >
-        Logg inn med
+        Fortsett med
         <ButtonImage src="https://vipps.no/documents/58/vipps-rgb-white.svg" alt="vipps" />
     </Button>
 );

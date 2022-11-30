@@ -36,5 +36,5 @@ const Menu = styled.nav`
     position: absolute;
     bottom: 5.7rem;
     right: 0;
-    width: 5.1rem;
+    width: 56px;
 `;

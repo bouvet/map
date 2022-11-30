@@ -16,7 +16,7 @@ interface Props {
 
 const StyledHeader = styled.header`
     width: 100%;
-    height: 3rem;
+    height: ${MyTheme.size.header.height.mobileS};
     padding: 0 0.5rem;
     display: flex;
     align-items: center;
