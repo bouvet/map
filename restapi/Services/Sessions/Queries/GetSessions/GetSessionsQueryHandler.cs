@@ -18,6 +18,10 @@ public class GetSessionsQueryHandler : IRequestHandler<GetSessionsQuery, ErrorOr
 
     public async Task<ErrorOr<List<SessionResult>>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
     {
+        if (request.UserId == Guid.Empty)
+        {
+            return Errors.User.NotFound;
+        }
         List<Session> sessions;
 
         if (request.LocationId == Guid.Empty)
@@ -26,7 +30,8 @@ public class GetSessionsQueryHandler : IRequestHandler<GetSessionsQuery, ErrorOr
         }
         else
         {
-            sessions = await dataContext.Sessions.Where(session => request.LocationId == session.Location.Id).ToListAsync(cancellationToken: cancellationToken);
+            sessions = await dataContext.Sessions.Where(session => request.LocationId == session.Location.Id)
+            .Include(session => session.User).Where(session => session.User.Id == request.UserId).ToListAsync(cancellationToken: cancellationToken);
         }
 
         var sessionResultList = new List<SessionResult>();

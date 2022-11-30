@@ -1,8 +1,8 @@
 POST {{host}}/api/sessions
 Content-Type: application/json
-Authorization: Bearer {{userToken}}
+Authorization: Bearer {{adminToken}}
 
 {
-    "LocationId": "5e9b42d8-c87b-4bc0-9e7f-6ea150ae5254",
-    "Registered": "2022-11-24T08:47:39.903Z"
+    "LocationId": "03d90bb0-ec66-40a0-aafc-9fe01c9b164f",
+    "Registered": "2022-11-28T08:47:39.903Z"
 }

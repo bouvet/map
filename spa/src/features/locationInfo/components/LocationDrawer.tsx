@@ -10,9 +10,9 @@ import { StarRating } from '../../../components/StarRating/StarRating';
 import { LinkButton, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store/state/map.state';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { MyTheme } from '../../../styles/global';
 import { IReviewTypeGet } from '../../../utils/types.d';
+import { sessionServices } from '../../session/services/session.services';
 import { reviewServices } from '../services/locationinfo.services';
 import { AddSessionModal } from './AddSessionModal';
 import { ConfirmDeleteModal } from './ConfirmDeleteModal';
@@ -90,23 +90,17 @@ export const SwipeableEdgeDrawer: FC = () => {
     const [imageList, setImageList] = useState<ReactElement[]>([]);
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     const { currentReviews } = useStateSelector((state) => state.review);
+    const { currentSessions } = useStateSelector((state) => state.session);
     const locationTitle = currentlySelectedLocation.properties.title;
     const locationDescription = currentlySelectedLocation.properties.description;
     const locationRating = currentlySelectedLocation.properties.rating;
     const { id } = currentlySelectedLocation;
-    const Dato = new Date();
-    const [sessions, setSessions] = useState([
-        {
-            title: currentlySelectedLocation.properties.title,
-            category: currentlySelectedLocation.properties.category[0].name,
-            date: Dato.toDateString(),
-        },
-    ]);
 
     const dispatch = useStateDispatch();
 
     useEffect(() => {
         dispatch(reviewServices.getReviews(id));
+        dispatch(sessionServices.getSessions(id));
     }, [dispatch, id]);
 
     moment.locale('nb');
@@ -173,41 +167,12 @@ export const SwipeableEdgeDrawer: FC = () => {
         dispatch(mapActions.setHomeMarkerFocus(false));
         dispatch(mapActions.setPopupVisibility(false));
         dispatch(mapActions.setSelectedMarker(''));
-
-        // const handleSomeButtonClick = (prev) => {
-        // setSessions((prev) => ...prev, sessions?)
-        // }
-
-        // session array bør inneholde navn på lokasjon, dato for registrering og kategori på trening
-
-        // for å kun vise antal økter per lokasjon så kan man kjøre en array.filter() metode på navn for å kune hente ut data i arrayet
-        // som passer med lokasjonsnavnet på kartet.
-
-        // for (let i = 0; i < sessions.length; i++) {
-        //
-        // }
-    };
-
-    const handleNewWorkoutEvent = () => {
-        setSessions([
-            ...sessions,
-            {
-                title: currentlySelectedLocation.properties.title,
-                category: currentlySelectedLocation.properties.category[0].name,
-                date: Dato.toDateString(),
-            },
-        ]);
     };
 
     const [openSessionModal, setOpenSessionModal] = useState(false);
     const handleSessionModalOpen = () => setOpenSessionModal(true);
     const handleSessionModalClose = () => setOpenSessionModal(false);
-    const [addedNewSession, SetAddedNewSession] = useState(false);
-    const handleSuccessMessageOpen = () => {
-        SetAddedNewSession(true);
-        dispatch(snackbarActions.setNotify({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
-    };
-    // const handleSuccessMessageClose = () => SetAddedNewSession(false);
+
     const [confirmModal, setConfirmModal] = useState(false);
     const handleOpenConfirmModal = () => setConfirmModal(true);
     const handleCloseConfirmModal = () => setConfirmModal(false);
@@ -263,35 +228,18 @@ export const SwipeableEdgeDrawer: FC = () => {
                             type="submit"
                             variant="contained"
                             style={{ height: 35, width: 100, marginTop: '2%' }}
-                            onClick={() => {
-                                handleSessionModalOpen();
-                            }}
+                            onClick={handleSessionModalOpen}
                         >
                             Ny økt
                         </SubmitButton>
-                        <AddSessionModal
-                            open={openSessionModal}
-                            close={handleSessionModalClose}
-                            locationTitle={locationTitle}
-                            handleNewSession={handleNewWorkoutEvent}
-                            sessions={sessions}
-                            success={handleSuccessMessageOpen}
-                        />
+                        <AddSessionModal open={openSessionModal} close={handleSessionModalClose} locationTitle={locationTitle} />
 
-                        {/* <Snackbar
-                            open={addedNewSession}
-                            onClose={handleSuccessMessageClose}
-                            autoHideDuration={3000}
-                            sx={{ display: 'inline' }}
-                        >
-                            <Alert severity="success">Ny treningsøkt registrert!</Alert>
-                        </Snackbar> */}
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10, marginBottom: -20 }}>
                             <p>Antall økter: </p>
                             <span role="img" aria-label="flexed biceps">
                                 💪
                             </span>
-                            <p>{sessions.length}</p>
+                            <p>{currentSessions.length}</p>
                         </div>
                         <ImageContainer>{imageList && imageList}</ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>

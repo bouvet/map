@@ -1,9 +1,11 @@
-import { Button } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { BackButton, PageContainer, SectionContainer } from '../components/UI';
-import { WorkoutBlock } from '../features/workoutRegistration/Components/Workout';
+import { SessionBlock } from '../features/session/components/SessionBlock';
+import { sessionServices } from '../features/session/services/session.services';
+
+import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 
 export const WorkoutHeader = styled.div`
     width: 100%;
@@ -16,94 +18,56 @@ const WorkoutSubHeader = styled.text`
     font-weight: 600;
 `;
 
+const SessionSubHeaders = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0.5rem;
+`;
+
 export const RegisterWorkout: FC = () => {
     const newDate = new Date();
     const navigate = useNavigate();
+    const dispatch = useStateDispatch();
+    const { currentSessions } = useStateSelector((state) => state.session);
     const formatter = new Intl.DateTimeFormat('default', { month: 'long' });
     const month = formatter.format(new Date());
-    const [workoutDate, setWorkoutDate] = useState([
-        { id: '0', title: 'Tennisbane', category: 'Tennis', date: 'Tue Nov 15 2022' },
-        { id: '1', title: 'Tennisbane', category: 'Tennis', date: 'Wed Sep 15 2022' },
-        { id: '2', title: 'Tennisbane', category: 'Tennis', date: 'Mon Oct 15 2022' },
-    ]);
 
-    /*
-        inherit state from modal in map with array containing title, category and timestamp.
-        should then put each item in the array in a box on the page and filter all items/boxes by month.
-        this will be based on the states registered month and also order them from 1-31 bottom-top.
-        should have a ternary operator to check if there are any items in each month to determine wether or not to display the header.
-        Need at least 1 item per month.
-
-        foreach(let item in workoutDate) {
-            if (item.date(includes('Sep'))) {
-                <WorkoutSubHeader>{item.date}</WorkoutSubHeader>
-                <WorkoutSubHeader>September</WorkoutSubHeader>
-                foreach(let itemReg in item) {
-                    <SessionButton>{itemReg.date}</SessionButton>
-                }
-            } else {
-                return;
-            }
-        }
-        
-    */
-    const [september, setSeptember] = useState(false);
-    const [october, setOctober] = useState(false);
-    const [november, setNovember] = useState(false);
+    const sessionIds: string[] = currentSessions.map((session) => session.id);
 
     useEffect(() => {
-        workoutDate.forEach((item) => {
-            if (item.date.includes('Sep')) {
-                setSeptember(true);
-            }
-            if (item.date.includes('Oct')) {
-                setOctober(true);
-            }
-            if (item.date.includes('Nov')) {
-                setNovember(true);
-            }
-        });
-    }, [workoutDate]);
+        dispatch(sessionServices.getAllSessions());
+    }, [dispatch]);
 
-    const sortedDate = workoutDate.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const HandleSessionBlockDelete = (deleteId: string) => {
+        dispatch(sessionServices.deleteSession(deleteId));
+    };
+
+    // const sortedDate = workoutDate.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     return (
         <>
-            <>
-                <PageContainer>
-                    <BackButton onClick={() => navigate(-1)} />
-                    <SectionContainer>
-                        <WorkoutHeader style={{ fontWeight: 700 }}>Dine treningsøkter</WorkoutHeader>
-                        {september ? (
-                            <div
-                                style={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    justifyContent: 'flex-start',
-                                    marginBottom: 5,
-                                }}
-                            >
-                                <WorkoutSubHeader style={{ marginRight: 5 }}>September</WorkoutSubHeader>
-                                <WorkoutSubHeader>2022</WorkoutSubHeader>
-                                {/* <WorkoutSubHeader style={{ marginRight: 5 }}>{month}</WorkoutSubHeader>
-                            <WorkoutSubHeader>{newDate.getFullYear()}</WorkoutSubHeader> */}
-                            </div>
-                        ) : null}
-                        {sortedDate.map((dateItem) => (
-                            <div key={dateItem.id} style={{ width: '100%', display: 'flex', flexDirection: 'row', marginBottom: 10 }}>
-                                <WorkoutBlock dateTitle={dateItem.title} dateCategory={dateItem.category} date={dateItem.date} />
+            <PageContainer>
+                <BackButton onClick={() => navigate(-1)} />
+                <SectionContainer>
+                    <WorkoutHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</WorkoutHeader>
 
-                                <Button style={{ borderRadius: '50%' }}>
-                                    <span style={{ color: 'red' }} className="material-symbols-outlined">
-                                        delete
-                                    </span>
-                                </Button>
-                            </div>
-                        ))}
-                    </SectionContainer>
-                </PageContainer>
-            </>
+                    <SessionSubHeaders>
+                        <WorkoutSubHeader style={{ marginRight: 5 }}>{newDate.toDateString()}</WorkoutSubHeader>
+                        <WorkoutSubHeader>{newDate.getFullYear()}</WorkoutSubHeader>
+                    </SessionSubHeaders>
+                    {/* prøvde å sette session: ISession, men den klager på at properties ikke har typen ISession */}
+                    {currentSessions.map((session: any) => (
+                        <SessionBlock
+                            key={session.id}
+                            locationTitle={session.locationTitle}
+                            registered={session.registered}
+                            deleteBlock={() => HandleSessionBlockDelete(session.id)}
+                        />
+                    ))}
+                </SectionContainer>
+            </PageContainer>
         </>
     );
 };

@@ -18,13 +18,8 @@ public class GetSessionQueryHandler : IRequestHandler<GetSessionByIdQuery, Error
     public async Task<ErrorOr<SessionResult>> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
     {
         var session = await dataContext
-            .Sessions
-            .Include(s => s.Registered)
-            .Include(s => s.Location)
-            .Include(s => s.User)
-            .SingleOrDefaultAsync(s => s.Id == request.Id, cancellationToken: cancellationToken);
-
-        //  var session = await dataContext.Sessions.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
+            .Sessions.Where(s => s.Id == request.Id).Include(s => s.User)
+            .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
         if (session is null)
         {

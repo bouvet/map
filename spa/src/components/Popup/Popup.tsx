@@ -1,5 +1,6 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { sessionServices } from '../../features/session/services/session.services';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { mapActions } from '../../store/state/map.state';
 import { MyTheme } from '../../styles/global';
@@ -98,6 +99,13 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
     const dispatch = useStateDispatch();
 
     const { popUpIsVisible } = useStateSelector((state) => state.map);
+    const { currentSessions } = useStateSelector((state) => state.session);
+    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
+    const { id } = currentlySelectedLocation;
+
+    useEffect(() => {
+        dispatch(sessionServices.getSessions(id));
+    }, [dispatch, id]);
 
     const handleClickClose = () => {
         dispatch(mapActions.setPopupVisibility(!popUpIsVisible));
@@ -133,7 +141,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 <span style={{ float: 'left' }} role="img" aria-label="flexed biceps">
                     💪
                 </span>
-                <p style={{ float: 'left', fontSize: 12 }}>10</p>
+                <p style={{ float: 'left', fontSize: 12 }}>{currentSessions.length}</p>
             </PopupContent>
         </PopupWrapper>
     );

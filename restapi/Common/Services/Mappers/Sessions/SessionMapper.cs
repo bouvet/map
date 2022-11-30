@@ -3,6 +3,7 @@ using restapi.Entities;
 using restapi.Services.Sessions.Commands.Create;
 using restapi.Services.Sessions.Commands.Delete;
 using restapi.Services.Sessions.Common;
+using restapi.Services.Sessions.Queries.GetAllSessions;
 using restapi.Services.Sessions.Queries.GetSessionById;
 using restapi.Services.Sessions.Queries.GetSessions;
 
@@ -42,9 +43,14 @@ public class SessionMapper : ISessionMapper
         return mappedList;
     }
 
-    public GetSessionsQuery MapGetSessionsToCommand(Guid locationId)
+    public GetSessionsQuery MapGetSessionsToCommand(Guid locationId, Guid? UserId)
     {
-        return new GetSessionsQuery(locationId);
+        return new GetSessionsQuery(locationId, UserId);
+    }
+
+    public GetAllSessionsQuery MapGetAllSessionsToCommand(Guid? UserId)
+    {
+        return new GetAllSessionsQuery(UserId);
     }
 
     public GetSessionByIdQuery MapGetByIdQueryToCommand(Guid id)

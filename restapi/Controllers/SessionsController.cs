@@ -12,10 +12,11 @@ using restapi.Services.Sessions.Common;
 using restapi.Data;
 using restapi.Entities;
 using Microsoft.EntityFrameworkCore;
+using restapi.Services.Sessions.Queries.GetSessionById;
 
 namespace restapi.Controllers;
 
-// [Authorize(Roles = "User")]
+[Authorize(Roles = "User")]
 public class SessionsController : ApiController
 {
     private readonly ISender mediator;
@@ -37,11 +38,9 @@ public class SessionsController : ApiController
     public async Task<IActionResult> CreateSession(CreateSessionRequest request)
     {
         var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
-        Console.WriteLine(authResult.UserId);
+
         var createSessionCommand = sessionMapper.MapCreateRequestToCommand(request, authResult.UserId);
 
-
-        // var createSessionCommand = new CreateSessionCommand(request.LocationID, request.Registered, authResult.UserId);
         ErrorOr<SessionResult> createSessionResult = await mediator.Send(createSessionCommand);
         return createSessionResult.Match(
             result => CreatedAtGetSession(result),
@@ -62,24 +61,30 @@ public class SessionsController : ApiController
         );
     }
 
+    [HttpGet("{mysessions}")]
+    public async Task<IActionResult> GetAllSessions()
+    {
+        var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
+        var getSessionsQuery = sessionMapper.MapGetAllSessionsToCommand(authResult.UserId);
+
+        ErrorOr<List<SessionResult>> getSessionResult = await mediator.Send(getSessionsQuery);
+
+        return getSessionResult.Match(
+            result => Ok(sessionMapper.MapResultListToResponseList(result)),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetSessions(Guid locationId)
     {
-        // var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, LocationId);
-        var getSessionsQuery = sessionMapper.MapGetSessionsToCommand(locationId);
-        // locationId er {00000000-0000-0000-0000-000000000000}
-
-        // var session = await dataContext.Sessions.Include(session => session.User).SingleOrDefaultAsync(session => session.Id == LocationId);
-        // session er null
-        // if (session?.User?.Id != authResult.UserId && session?.Location?.Id != LocationId)
-        // {
-        //     return Forbid();
-        // }
+        var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
+        var getSessionsQuery = sessionMapper.MapGetSessionsToCommand(locationId, authResult.UserId);
 
         ErrorOr<List<SessionResult>> getSessionsResult = await mediator.Send(getSessionsQuery);
 
         return getSessionsResult.Match(
-            result => Ok(result),
+            result => Ok(sessionMapper.MapResultListToResponseList(result)),
             errors => Problem(errors)
         );
     }

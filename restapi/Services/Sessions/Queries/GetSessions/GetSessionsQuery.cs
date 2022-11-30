@@ -5,4 +5,4 @@ using restapi.Services.Sessions.Common;
 
 namespace restapi.Services.Sessions.Queries.GetSessions;
 
-public record GetSessionsQuery(Guid LocationId) : IRequest<ErrorOr<List<SessionResult>>>;
+public record GetSessionsQuery(Guid LocationId, Guid? UserId) : IRequest<ErrorOr<List<SessionResult>>>;

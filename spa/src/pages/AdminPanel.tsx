@@ -4,8 +4,10 @@ import { SingleValue } from 'react-select';
 import { LinkButton, ModalContainer, SectionContainer } from '../components/UI';
 import { BackButton } from '../components/UI/Buttons/NavigationButtons';
 import { StatusSelector } from '../features/adminPanel';
+import { LocationBlock } from '../features/adminPanel/LocationBlock';
 import { mapServices } from '../features/map';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
+import { ILocation } from '../utils/types.d';
 
 export type ApprovalFilterCategories = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
 
@@ -54,9 +56,9 @@ export const AdminPanel: FC = () => {
 
                 <StatusSelector onChangeHandler={onSelectStatusHandler} />
 
-                {/* {locations.map((location: ILocation) => (
-                <LocationBlock key={location.id} location={location} />
-            ))} */}
+                {locations.map((location: ILocation) => (
+                    <LocationBlock key={location.id} location={location} />
+                ))}
                 <ul style={{ width: '100%', marginTop: '1rem', maxHeight: '75vh', overflow: 'scroll' }}>
                     {/* {locations.map((location: ILocation) => (
                         <li key={location.id} style={{ padding: '0.5rem', backgroundColor: 'lightgray', marginBottom: '0.5rem' }}>
