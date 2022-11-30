@@ -27,7 +27,7 @@ export const mapServices = {
             try {
                 if (selectedCategory) {
                     const { data } = await API.get(
-                        `/locations/${position.coords.latitude}&${position.coords.longitude}?category=${selectedCategory}`,
+                        `/locations/${position.coords.latitude}&${position.coords.longitude}?categoryId=${selectedCategory.id}`,
                     );
 
                     dispatch(mapActions.setLoading(false));
@@ -40,7 +40,7 @@ export const mapServices = {
                 dispatch(mapActions.setLoading(false));
                 dispatch(mapActions.setClosestLocation(data));
             } catch (error) {
-                console.log(error);
+                dispatch(mapActions.setLoading(false));
             }
         };
     },
