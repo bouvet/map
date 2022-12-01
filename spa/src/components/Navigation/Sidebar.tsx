@@ -41,6 +41,7 @@ export const Sidebar: React.FC = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.3rem',
+                        paddingTop: '1rem',
                     }}
                 >
                     {isAdmin && (

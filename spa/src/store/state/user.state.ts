@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
+    loading: false,
     email: '',
     password: '',
     firstName: '',
@@ -14,6 +15,9 @@ const userState = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        setLoading(state, action: PayloadAction<boolean>) {
+            state.loading = action.payload;
+        },
         setEmail(state, action: PayloadAction<string>) {
             state.email = action.payload;
         },

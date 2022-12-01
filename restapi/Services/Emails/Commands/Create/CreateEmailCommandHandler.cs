@@ -29,9 +29,16 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
     var emailInDb = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
     var userExists = await dataContext.Users.AnyAsync(user => user.Email.ToLower() == request.Email, cancellationToken);
 
-    if (emailInDb is not null && emailInDb.Confirmed)
+    if (emailInDb?.Confirmed == false && emailInDb.CodeValidTo > dateTimeProvider.UtcNow)
     {
-      // TODO: return something
+      var newToken = jwtGenerator.GenerateRegistrationToken(emailInDb);
+      emailInDb.CodeValidTo = dateTimeProvider.UtcNow.AddHours(48);
+      await dataContext.SaveChangesAsync(cancellationToken);
+      return new CreateEmailResult(
+        emailInDb.Id,
+        emailInDb.Address,
+        newToken
+      );
     }
 
     if (emailInDb is not null)
@@ -72,7 +79,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       Address = request.Email.ToLower(),
       ConfirmationCode = randomNumber,
       Confirmed = false,
-      Created = dateTimeProvider.CEST,
+      Created = dateTimeProvider.UtcNow,
       CodeValidTo = dateTimeProvider.UtcNow.AddHours(48)
     };
 

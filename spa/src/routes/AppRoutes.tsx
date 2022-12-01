@@ -5,15 +5,8 @@ import { FullPageSpinner } from '../components/UI';
 import { CategoryList } from '../features/admin';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
 import { ChangeEmail, DeleteAccount } from '../features/profile';
-import {
-    CreatePassword,
-    EmailConfirmation,
-    EmailInput,
-    Onboarding,
-    PersonalInfo,
-    PersonalInfoGoogle,
-    Personalization,
-} from '../features/userRegistration';
+import { Email, ConfirmCode } from '../features/register';
+import { CreatePassword, Onboarding, PersonalInfo, PersonalInfoGoogle, Personalization } from '../features/userRegistration';
 import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
 import { Auth, ChangePassword, Home, AddLocation, Login, ProfilePage, Register, ResetPassword } from '../pages';
 import { RegisterWorkout } from '../pages/RegisterWorkout';
@@ -40,8 +33,8 @@ export const AppRoutes: FC = () => (
                 <Route path="auth" element={<Auth />} />
 
                 <Route path="register" element={<Register />}>
-                    <Route path="email" element={<EmailInput />} />
-                    <Route path="confirm-code" element={<EmailConfirmation />} />
+                    <Route path="email" element={<Email />} />
+                    <Route path="confirm-code" element={<ConfirmCode />} />
                     <Route path="personal-info" element={<PersonalInfo />} />
                     <Route path="personal-info-google" element={<PersonalInfoGoogle />} />
                     <Route path="create-password" element={<CreatePassword />} />
