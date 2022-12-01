@@ -7,7 +7,6 @@ import { sessionReducer } from './state/session.state';
 import { snackbarReducer } from './state/snackbar.state';
 import { uiReducer } from './state/ui.state';
 import { userReducer } from './state/user.state';
-import { workoutReducer } from './state/workout.state';
 
 export const store = configureStore({
     reducer: {
@@ -18,7 +17,6 @@ export const store = configureStore({
         snackbar: snackbarReducer,
         user: userReducer,
         ui: uiReducer,
-        workout: workoutReducer,
         session: sessionReducer,
     },
 });

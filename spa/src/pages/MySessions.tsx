@@ -26,7 +26,7 @@ const SessionSubHeaders = styled.div`
     margin-bottom: 0.5rem;
 `;
 
-export const RegisterWorkout: FC = () => {
+export const MySessions: FC = () => {
     const newDate = new Date();
     const navigate = useNavigate();
     const dispatch = useStateDispatch();
@@ -46,15 +46,15 @@ export const RegisterWorkout: FC = () => {
         }
     };
 
-    if (currentSessions.length > 0) {
-        const sortedDate = currentSessions.sort((a: any, b: any) => {
-            if (a.registered < b.registered) {
-                return -1;
-            }
+    // if (currentSessions.length > 0) {
+    const sessionsSortedByDate = [...currentSessions].sort((a: any, b: any) => {
+        if (a.registered < b.registered) {
             return 1;
-        });
-    }
+        }
+        return -1;
+    });
 
+    // }
     /*
     først sortere alle datoer fra session table sånn at de går fra eldste til nyeste registrerte datoer.
     Deretter kan man vider sortere datoer som er innenfor en spesifikk måned og år ved å hente ut måned og år
@@ -73,7 +73,7 @@ export const RegisterWorkout: FC = () => {
                     <WorkoutSubHeader style={{ marginRight: 5 }}>{newDate.toDateString()}</WorkoutSubHeader>
                 </SessionSubHeaders>
                 {/* prøvde å sette session: ISession, men den klager på at properties ikke har typen ISession */}
-                {currentSessions.map((session: any) => (
+                {sessionsSortedByDate.map((session: any) => (
                     <SessionBlock
                         key={session.id}
                         locationTitle={session.locationTitle}

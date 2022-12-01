@@ -110,7 +110,7 @@ export const UserMenu: FC = () => {
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
-                <Link to="/register-workout">
+                <Link to="/my-sessions">
                     <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                         fitness_center
                     </GoogleIcon>
@@ -199,7 +199,7 @@ export const AdminMenu: FC = () => {
                     boxShadow: !isActive ? 'none' : '0px 0px 5px rgba(0, 0, 0, 0.25)',
                 }}
             >
-                <Link to="/register-workout">
+                <Link to="/my-sessions">
                     <GoogleIcon color={MyTheme.colors.darkBase} className="material-symbols-outlined">
                         fitness_center
                     </GoogleIcon>
