@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { TextField } from '@mui/material';
 import { Section } from '../../../components/Layout';
@@ -10,15 +10,17 @@ import { registerServices } from '../services/register.services';
 export const ConfirmCode: React.FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
-    // const location = useLocation().state as LocationType;
 
-    const { email } = useStateSelector((state) => state.user);
-    const { shouldNavigate } = useStateSelector((state) => state.ui);
+    const { email, emailVerified } = useStateSelector((state) => state.user);
 
     const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
     const onSubmitHandler = (confirmationCode: string) => {
-        dispatch(registerServices.confirmCode(email, confirmationCode));
+        dispatch(
+            registerServices.confirmCode(email, confirmationCode, () => {
+                navigate('/register/personal-info');
+            }),
+        );
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
@@ -42,11 +44,6 @@ export const ConfirmCode: React.FC = () => {
         dispatch(registerServices.resendCode());
     };
 
-    // if from google redirect to personal-info-google
-    if (shouldNavigate) {
-        return <Navigate replace to="/register/personal-info" />;
-    }
-
     return (
         <Section style={{ flex: '1 1 auto', justifyContent: 'space-between' }}>
             <div>
@@ -68,14 +65,28 @@ export const ConfirmCode: React.FC = () => {
                     />
                 ))}
             </form>
-            <div>
-                <LinkButton sx={{ width: '100%' }} onClick={resendCode}>
-                    Send ny kode
-                </LinkButton>
-                <LinkButton sx={{ marginTop: '1rem', width: '100%' }} onClick={() => navigate('/register/email')}>
-                    Endre e-post
-                </LinkButton>
-            </div>
+            {!emailVerified && (
+                <div>
+                    <LinkButton sx={{ width: '100%' }} onClick={resendCode}>
+                        Send ny kode
+                    </LinkButton>
+                    <LinkButton sx={{ marginTop: '1rem', width: '100%' }} onClick={() => navigate('/register/email')}>
+                        Endre e-post
+                    </LinkButton>
+                </div>
+            )}
+            {emailVerified && (
+                <div>
+                    <p style={{ padding: '2rem 0' }}>E-posten din er bekreftet, du kan fortsette registreringen</p>
+                    <LinkButton
+                        variant="contained"
+                        sx={{ width: '100%', color: 'white' }}
+                        onClick={() => navigate('/register/personal-info')}
+                    >
+                        Fortsett
+                    </LinkButton>
+                </div>
+            )}
         </Section>
     );
 };

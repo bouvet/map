@@ -19,7 +19,7 @@ interface IConfirmCodeResponse {
 }
 
 export const registerServices = {
-    getCode(email: string) {
+    getCode(email: string, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data }: { data: ICrateEmailResponse } = await API.post('/email', { email });
@@ -28,11 +28,14 @@ export const registerServices = {
                 localStorage.setItem('email', data.address);
                 localStorage.setItem('token', data.token);
 
-                await sleep(500);
-
-                dispatch(userActions.setLoading(false));
-                dispatch(uiActions.setShouldNavigate(true));
                 dispatch(uiActions.setShowSnackbar({ message: 'Kode er sendt', severity: 'success' }));
+                dispatch(userActions.setAuthMethod('email'));
+
+                await sleep(500);
+                dispatch(userActions.setLoading(false));
+                if (typeof callback === 'function') {
+                    callback();
+                }
             } catch (error: any) {
                 console.log(error.response.data.title);
                 if (error.response.data.title === 'Email has already been registered') {
@@ -45,33 +48,37 @@ export const registerServices = {
             }
         };
     },
-    confirmCode(email: string, confirmationCode: string) {
+    confirmCode(email: string, confirmationCode: string, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data }: { data: IConfirmCodeResponse } = await API.post('/email/confirm', { email, confirmationCode });
                 console.log(data);
-                await sleep(500);
-
-                dispatch(uiActions.setShouldNavigate(true));
+                dispatch(userActions.setEmailVerified(data.confirmed));
                 dispatch(uiActions.setShowSnackbar({ message: 'Kode er bekreftet', severity: 'success' }));
-                return true;
+
+                localStorage.setItem('emailVerified', JSON.stringify(data.confirmed));
+
+                await sleep(500);
+                if (typeof callback === 'function') {
+                    callback();
+                }
             } catch (error) {
                 dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
-                return false;
             }
         };
     },
-    register(user: IRegisterPayload, authMethod: string = 'Email') {
+    register(user: IRegisterPayload, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                let url = '/auth/register';
-
-                if (authMethod === 'Google') url = '/auth/register-with-google';
-
-                const { data } = await API.post(url, user);
+                const { data } = await API.post('/auth/register', user);
 
                 dispatch(authActions.userLogin(data));
                 dispatch(uiActions.setShowSnackbar({ message: 'Bruker er opprettet', severity: 'success' }));
+
+                await sleep(500);
+                if (typeof callback === 'function') {
+                    callback();
+                }
             } catch (error) {
                 console.error('error', error);
                 dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
@@ -109,10 +116,10 @@ export const registerServices = {
             try {
                 const id = localStorage.getItem('id');
                 if (!id) {
-                    throw new Error('Noe gikk galt');
+                    dispatch(uiActions.setShowSnackbar({ message: 'Vi kunne ikke sende ny kode', severity: 'error' }));
                 }
 
-                const { data } = await API.post(`/resend-code/${id}`);
+                const { data } = await API.post(`/email/resend-code/${id}`);
 
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('id', data.id);

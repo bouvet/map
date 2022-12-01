@@ -6,22 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { MyTheme } from '../../styles/global';
 
 interface Props {
-    pageIndex: number;
-    setPageIndex: (pageIndex: number) => void;
     children?: React.ReactNode;
 }
 
-export const ProgressHeader: React.FC<Props> = ({ pageIndex, setPageIndex, children }) => {
+export const ProgressHeader: React.FC<Props> = ({ children }) => {
     const navigate = useNavigate();
-
-    const handleBackClick = () => {
-        if (pageIndex === 1) {
-            navigate('..');
-        }
-        if (pageIndex > 0) {
-            setPageIndex(pageIndex - 1);
-        }
-    };
 
     return (
         <header
@@ -37,7 +26,7 @@ export const ProgressHeader: React.FC<Props> = ({ pageIndex, setPageIndex, child
             <IconButton
                 color="inherit"
                 aria-label="Navigate home"
-                onClick={handleBackClick}
+                onClick={() => navigate(-1)}
                 sx={{
                     position: 'absolute',
                     alignItems: 'center',

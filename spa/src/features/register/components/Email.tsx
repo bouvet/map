@@ -15,7 +15,6 @@ export const Email: React.FC = () => {
     const [storedEmail, setStoredEmail] = useState('');
 
     const { loading, email } = useStateSelector((state) => state.user);
-    // const { shouldNavigate } = useStateSelector((state) => state.ui);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -37,7 +36,11 @@ export const Email: React.FC = () => {
 
         dispatch(userActions.setLoading(true));
 
-        dispatch(registerServices.getCode(enteredEmail));
+        dispatch(
+            registerServices.getCode(enteredEmail, () => {
+                navigate('/register/confirm-code');
+            }),
+        );
     };
 
     const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {

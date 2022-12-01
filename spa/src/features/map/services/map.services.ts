@@ -12,9 +12,9 @@ export const mapServices = {
 
                 dispatch(mapActions.loadLocations(locations));
 
-                const { data: CategoriesData } = await API.get('/Categories');
+                const { data: categories } = await API.get('/Categories');
 
-                dispatch(mapActions.loadCategories(CategoriesData));
+                dispatch(mapActions.loadCategories(categories));
             } catch (error) {
                 console.error('error', error);
             }
@@ -41,6 +41,18 @@ export const mapServices = {
                 dispatch(mapActions.setClosestLocation(data));
             } catch (error) {
                 dispatch(mapActions.setLoading(false));
+            }
+        };
+    },
+
+    getCategories() {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const { data: categories } = await API.get('/Categories');
+
+                dispatch(mapActions.loadCategories(categories));
+            } catch (error) {
+                console.error('error', error);
             }
         };
     },

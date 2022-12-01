@@ -35,7 +35,7 @@ export const Header: React.FC<Props> = ({ children, style }) => {
             <IconButton
                 color="inherit"
                 aria-label="Navigate back"
-                onClick={() => navigate('..')}
+                onClick={() => navigate(-1)}
                 sx={{
                     alignItems: 'center',
                 }}

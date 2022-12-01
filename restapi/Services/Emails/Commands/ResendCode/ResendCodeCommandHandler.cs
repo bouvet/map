@@ -33,11 +33,6 @@ public class ResendCodeCommandHandler : IRequestHandler<ResendCodeCommand, Error
       return Errors.EmailService.NotFound;
     }
 
-    if (email.Confirmed)
-    {
-      return Errors.EmailService.CodeConfirmed;
-    }
-
     var randomNumberGenerator = new Random();
     var randomNumber = randomNumberGenerator.Next(100000, 999999);
 

@@ -8,6 +8,7 @@ const initialState = {
     lastName: '',
     dob: '',
     authMethod: '',
+    emailVerified: false,
     favoriteCategoryIds: [] as string[],
 };
 
@@ -36,8 +37,22 @@ const userState = createSlice({
         setAuthMethod(state, action: PayloadAction<string>) {
             state.authMethod = action.payload;
         },
+        setEmailVerified(state, action: PayloadAction<boolean>) {
+            state.emailVerified = action.payload;
+        },
         setFavoriteCategoryIds(state, action: PayloadAction<string[]>) {
             state.favoriteCategoryIds = action.payload;
+        },
+        resetState(state) {
+            state.loading = false;
+            state.email = '';
+            state.password = '';
+            state.firstName = '';
+            state.lastName = '';
+            state.dob = '';
+            state.authMethod = '';
+            state.emailVerified = false;
+            state.favoriteCategoryIds = [] as string[];
         },
     },
 });

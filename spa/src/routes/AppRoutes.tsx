@@ -4,11 +4,12 @@ import { App } from '../App';
 import { FullPageSpinner } from '../components/UI';
 import { CategoryList } from '../features/admin';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
+import { HowToAddLocation, HowToAddReview, TipsAndTricks } from '../features/onboarding';
 import { ChangeEmail, DeleteAccount } from '../features/profile';
-import { Email, ConfirmCode } from '../features/register';
-import { CreatePassword, Onboarding, PersonalInfo, PersonalInfoGoogle, Personalization } from '../features/userRegistration';
+import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from '../features/register';
+import { PersonalInfoGoogle } from '../features/userRegistration';
 import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
-import { Auth, ChangePassword, Home, AddLocation, Login, ProfilePage, Register, ResetPassword } from '../pages';
+import { Auth, ChangePassword, Home, AddLocation, Login, ProfilePage, Register, ResetPassword, Onboarding } from '../pages';
 import { RegisterWorkout } from '../pages/RegisterWorkout';
 
 const Admin = lazy(() => import('../pages/Admin'));
@@ -37,9 +38,14 @@ export const AppRoutes: FC = () => (
                     <Route path="confirm-code" element={<ConfirmCode />} />
                     <Route path="personal-info" element={<PersonalInfo />} />
                     <Route path="personal-info-google" element={<PersonalInfoGoogle />} />
-                    <Route path="create-password" element={<CreatePassword />} />
+                    <Route path="password" element={<Password />} />
                     <Route path="personalization" element={<Personalization />} />
-                    <Route path="onboarding" element={<Onboarding />} />
+                </Route>
+
+                <Route path="onboarding" element={<Onboarding />}>
+                    <Route path="tips-and-tricks" element={<TipsAndTricks />} />
+                    <Route path="add-location" element={<HowToAddLocation />} />
+                    <Route path="add-review" element={<HowToAddReview />} />
                 </Route>
 
                 <Route path="add-location">
