@@ -43,10 +43,10 @@ export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTi
                         <Box sx={AddSession}>
                             <Text style={{ textAlign: 'center' }}>Vil du virkelig slette lokasjonen:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
-                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                                 <Button
                                     variant="contained"
-                                    style={{ marginRight: 15, backgroundColor: 'rgb(220 17 17)' }}
+                                    style={{ backgroundColor: 'rgb(220 17 17)' }}
                                     onClick={() => {
                                         console.log('lokasjon slettet');
                                         handleCloseSessionModal();

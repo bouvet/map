@@ -14,7 +14,7 @@ export const WorkoutHeader = styled.div`
     text-align: center;
 `;
 
-const WorkoutSubHeader = styled.text`
+const WorkoutSubHeader = styled.p`
     font-weight: 600;
 `;
 
@@ -31,10 +31,6 @@ export const RegisterWorkout: FC = () => {
     const navigate = useNavigate();
     const dispatch = useStateDispatch();
     const { currentSessions } = useStateSelector((state) => state.session);
-    const formatter = new Intl.DateTimeFormat('default', { month: 'long' });
-    const month = formatter.format(new Date());
-
-    const sessionIds: string[] = currentSessions.map((session) => session.id);
 
     useEffect(() => {
         dispatch(sessionServices.getAllSessions());
@@ -42,32 +38,50 @@ export const RegisterWorkout: FC = () => {
 
     const HandleSessionBlockDelete = (deleteId: string) => {
         dispatch(sessionServices.deleteSession(deleteId));
+
+        for (let i = 0; i < currentSessions.length; i += 1) {
+            if (currentSessions[i].registered?.includes('november')) {
+                <WorkoutSubHeader>{}</WorkoutSubHeader>;
+            }
+        }
     };
 
-    // const sortedDate = workoutDate.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    if (currentSessions.length > 0) {
+        const sortedDate = currentSessions.sort((a: any, b: any) => {
+            if (a.registered < b.registered) {
+                return -1;
+            }
+            return 1;
+        });
+    }
+
+    /*
+    først sortere alle datoer fra session table sånn at de går fra eldste til nyeste registrerte datoer.
+    Deretter kan man vider sortere datoer som er innenfor en spesifikk måned og år ved å hente ut måned og år
+    fra hver eneste session item. 
+
+    Forhåpentligvis kan man da lage dynamiske headere hvor alle session items plasseres under sortert.
+    */
 
     return (
-        <>
-            <PageContainer>
-                <BackButton onClick={() => navigate(-1)} />
-                <SectionContainer>
-                    <WorkoutHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</WorkoutHeader>
+        <PageContainer>
+            <BackButton onClick={() => navigate(-1)} />
+            <SectionContainer>
+                <WorkoutHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</WorkoutHeader>
 
-                    <SessionSubHeaders>
-                        <WorkoutSubHeader style={{ marginRight: 5 }}>{newDate.toDateString()}</WorkoutSubHeader>
-                        <WorkoutSubHeader>{newDate.getFullYear()}</WorkoutSubHeader>
-                    </SessionSubHeaders>
-                    {/* prøvde å sette session: ISession, men den klager på at properties ikke har typen ISession */}
-                    {currentSessions.map((session: any) => (
-                        <SessionBlock
-                            key={session.id}
-                            locationTitle={session.locationTitle}
-                            registered={session.registered}
-                            deleteBlock={() => HandleSessionBlockDelete(session.id)}
-                        />
-                    ))}
-                </SectionContainer>
-            </PageContainer>
-        </>
+                <SessionSubHeaders>
+                    <WorkoutSubHeader style={{ marginRight: 5 }}>{newDate.toDateString()}</WorkoutSubHeader>
+                </SessionSubHeaders>
+                {/* prøvde å sette session: ISession, men den klager på at properties ikke har typen ISession */}
+                {currentSessions.map((session: any) => (
+                    <SessionBlock
+                        key={session.id}
+                        locationTitle={session.locationTitle}
+                        registered={session.registered}
+                        deleteBlock={() => HandleSessionBlockDelete(session.id)}
+                    />
+                ))}
+            </SectionContainer>
+        </PageContainer>
     );
 };

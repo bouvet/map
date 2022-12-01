@@ -43,6 +43,7 @@ export const sessionServices = {
             try {
                 await API.delete(`/Sessions/${sessionId}`);
                 dispatch(sessionActions.removeSession(sessionId));
+                dispatch(snackbarActions.setNotify({ message: 'Treningsøkt slettet', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
             }
