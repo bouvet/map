@@ -10,7 +10,7 @@ import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { uiActions } from '../../store';
 
 interface Props {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     style?: React.CSSProperties;
 }
 

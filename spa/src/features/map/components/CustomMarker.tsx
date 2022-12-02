@@ -3,6 +3,8 @@ import { Marker } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import { MyTheme } from '../../../styles/global';
 import { ILocation } from '../../../interfaces';
+import { useStateSelector } from '../../../hooks';
+import { mapboxSatellite, mapboxStreets } from '../../../styles/map-styles';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
@@ -16,15 +18,22 @@ type Props = {
 };
 
 export const CustomMarker: React.FC<Props> = ({ coordinates, onClick, selectedLocation, location }) => {
+    const { mapStyle } = useStateSelector((state) => state.map);
+
     const [color, setColor] = useState(MyTheme.colors.darkBase);
 
     useEffect(() => {
-        if (selectedLocation && selectedLocation.id === location.id) {
+        if (selectedLocation?.id === location.id) {
             setColor(MyTheme.colors.accent);
-        } else {
+            return;
+        }
+        if (mapStyle === mapboxSatellite) {
+            setColor(MyTheme.colors.lightBase);
+        }
+        if (mapStyle === mapboxStreets) {
             setColor(MyTheme.colors.darkBase);
         }
-    }, [selectedLocation, location.id]);
+    }, [selectedLocation, location.id, mapStyle]);
 
     return (
         <Marker longitude={coordinates[0]} latitude={coordinates[1]} onClick={() => onClick(location)} anchor="bottom">

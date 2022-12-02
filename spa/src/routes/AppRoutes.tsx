@@ -9,7 +9,7 @@ import { ChangeEmail, DeleteAccount } from '../features/profile';
 import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from '../features/register';
 import { PersonalInfoGoogle } from '../features/userRegistration';
 import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
-import { Auth, ChangePassword, Home, AddLocation, Login, ProfilePage, Register, ResetPassword, Onboarding } from '../pages';
+import { Auth, ChangePassword, Home, AddLocation, Login, Profile, Register, ResetPassword, Onboarding } from '../pages';
 import { RegisterWorkout } from '../pages/RegisterWorkout';
 
 const Admin = lazy(() => import('../pages/Admin'));
@@ -79,7 +79,7 @@ export const AppRoutes: FC = () => (
                         index
                         element={
                             <RequireAuth>
-                                <ProfilePage />
+                                <Profile />
                             </RequireAuth>
                         }
                     />

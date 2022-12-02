@@ -92,13 +92,20 @@ button {
     color: #282828;
 }
 
-.vipps-button {
-    background-color: #ff5b24;
-    color: white;
-}
-
 .file-pond-text {
     color: #007bc0;
     font-weight: 700;
     letter-spacing: 1px;
+}
+
+.filepond--credits {
+    display: none;
+}
+
+.filepond--drop-label {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.filepond--drop-label:hover {
+    background-color: #e8e8e8;
 }

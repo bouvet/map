@@ -9,7 +9,7 @@ const initialState = {
     changePasswordSuccess: false,
     emailIsValid: false,
     users: [],
-    user: {} as IUser | null,
+    user: {} as IUser,
 };
 
 const authState = createSlice({
@@ -45,8 +45,11 @@ const authState = createSlice({
             localStorage.clear();
             state.isAdmin = false;
             state.isAuthenticated = false;
-            state.user = null;
+            state.user = initialState.user;
             state.loading = false;
+        },
+        setUserProfileImage(state, action: PayloadAction<Partial<IUser>>) {
+            state.user.webpProfileImage = action.payload.webpProfileImage;
         },
     },
 });

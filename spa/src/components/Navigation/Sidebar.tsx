@@ -44,6 +44,17 @@ export const Sidebar: React.FC = () => {
                         paddingTop: '1rem',
                     }}
                 >
+                    {isAuthenticated && (
+                        <li>
+                            <NavLink
+                                to="/profile"
+                                className={pathname === '/profile' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                onClick={closeSidebarHandler}
+                            >
+                                Profil
+                            </NavLink>
+                        </li>
+                    )}
                     {isAdmin && (
                         <li>
                             <NavLink

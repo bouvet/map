@@ -1,7 +1,6 @@
 import { API } from '../../../lib/api';
 import { AppDispatch, authActions, uiActions, userActions } from '../../../store';
 import { sleep } from '../../../utils/sleep';
-import { IUserTypeEdit, IUser } from '../../../utils/types.d';
 
 interface ICrateEmailResponse {
     id: string;
@@ -85,32 +84,6 @@ export const registerServices = {
             }
         };
     },
-    getInfo(payload: string) {
-        return async (dispatch: AppDispatch) => {
-            try {
-                const { data } = await API.get(`/users/${payload}`);
-
-                dispatch(authActions.userLogin(data));
-            } catch (error) {
-                dispatch(authActions.logOut());
-            }
-        };
-    },
-    editInfo(payload: IUserTypeEdit) {
-        return async (dispatch: AppDispatch) => {
-            try {
-                await API.put(`/users/${payload.id}`, payload, { headers: { 'Content-Type': 'multipart/form-data' } });
-                console.log('Payload', payload);
-
-                setTimeout(() => {
-                    dispatch(uiActions.setShowSnackbar({ message: 'Profilen er oppdatert', severity: 'success' }));
-                }, 500);
-            } catch (error) {
-                console.error('error', error);
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
-            }
-        };
-    },
     resendCode() {
         return async (dispatch: AppDispatch) => {
             try {
@@ -126,18 +99,6 @@ export const registerServices = {
 
                 await sleep(500);
                 dispatch(uiActions.setShowSnackbar({ message: 'Ny kode er sendt', severity: 'success' }));
-            } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
-            }
-        };
-    },
-    deleteAccount(payload: IUser) {
-        return async (dispatch: AppDispatch) => {
-            try {
-                await API.delete(`/users/${payload.id}`);
-
-                await sleep(500);
-                dispatch(uiActions.setShowSnackbar({ message: 'Konto er slettet', severity: 'success' }));
             } catch (error) {
                 dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }

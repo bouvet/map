@@ -11,7 +11,7 @@ export const HowToAddReview: React.FC = () => {
     };
 
     return (
-        <Section style={{ flex: '1 1 auto', justifyContent: 'space-between' }}>
+        <Section>
             <div>Hvordan legge til omtale</div>
 
             <SubmitButton onClick={onFinishedHandler}>Fullfør</SubmitButton>

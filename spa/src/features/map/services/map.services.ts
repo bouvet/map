@@ -11,10 +11,6 @@ export const mapServices = {
                 const { data: locations } = await API.get(`/locations/${filter}`);
 
                 dispatch(mapActions.loadLocations(locations));
-
-                const { data: categories } = await API.get('/Categories');
-
-                dispatch(mapActions.loadCategories(categories));
             } catch (error) {
                 console.error('error', error);
             }

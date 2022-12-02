@@ -47,59 +47,61 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
 
     return (
         <Section style={{ paddingTop: '0.5rem' }}>
-            <StyledInput
-                label="Navn på lokasjon*"
-                errorMessage="Navn må være minimum 5 bokstaver"
-                placeholder="Minimum 5 bokstaver"
-                value={title.trim().length > 0 ? title : locationTitle}
-                onChange={titleChangeHandler}
-                onBlur={titleBlurHandler}
-                inputHasError={titleInputHasError}
-                style={{ width: '100%' }}
-            />
-            <Text style={{ marginTop: '1rem', fontWeight: '600' }}>Velg kategorier*</Text>
+            <div>
+                <StyledInput
+                    label="Navn på lokasjon*"
+                    errorMessage="Navn må være minimum 5 bokstaver"
+                    placeholder="Minimum 5 bokstaver"
+                    value={title.trim().length > 0 ? title : locationTitle}
+                    onChange={titleChangeHandler}
+                    onBlur={titleBlurHandler}
+                    inputHasError={titleInputHasError}
+                    style={{ width: '100%' }}
+                />
+                <Text style={{ marginTop: '1rem', fontWeight: '600' }}>Velg kategorier*</Text>
 
-            <FlexRowContainer style={{ zIndex: '2', gap: '10px', padding: '20px 30px', paddingLeft: '0.3rem', overflowX: 'scroll' }}>
-                {categories.map((category) => (
-                    <CategoryButton
-                        key={category.id}
-                        category={category}
-                        selectedCategory={selectedCategories?.filter((c) => c.id === category.id)[0] || null}
-                        selectCategoryHandler={selectCategoryHandler}
-                    />
-                ))}
-            </FlexRowContainer>
+                <FlexRowContainer style={{ zIndex: '2', gap: '10px', padding: '20px 30px', paddingLeft: '0.3rem', overflowX: 'scroll' }}>
+                    {categories.map((category) => (
+                        <CategoryButton
+                            key={category.id}
+                            category={category}
+                            selectedCategory={selectedCategories?.filter((c) => c.id === category.id)[0] || null}
+                            selectCategoryHandler={selectCategoryHandler}
+                        />
+                    ))}
+                </FlexRowContainer>
 
-            <Text style={{ marginBottom: '1rem', fontWeight: '600' }}>Beskriv stedet*</Text>
+                <Text style={{ marginBottom: '1rem', fontWeight: '600' }}>Beskriv stedet*</Text>
 
-            <Text style={{ marginBottom: '0.5rem' }}>Tips til info:</Text>
+                <Text style={{ marginBottom: '0.5rem' }}>Tips til info:</Text>
 
-            <ul style={{ listStyle: 'disc', paddingLeft: '1rem', width: '100%' }}>
-                <li style={{ marginBottom: '0.3rem' }}>Hva slags utstyr finner man der?</li>
-                <li style={{ marginBottom: '0.3rem' }}>Er utstyret i god stand?</li>
-                <li style={{ marginBottom: '0.3rem' }}>Hvordan kommer man seg dit?</li>
-                <li style={{ marginBottom: '0.3rem' }}>Er stedet ofte opptatt?</li>
-                <li style={{ marginBottom: '1rem' }}>Har stedet belysning som slås av på kvelden?</li>
-            </ul>
+                <ul style={{ listStyle: 'disc', paddingLeft: '1rem', width: '100%' }}>
+                    <li style={{ marginBottom: '0.3rem' }}>Hva slags utstyr finner man der?</li>
+                    <li style={{ marginBottom: '0.3rem' }}>Er utstyret i god stand?</li>
+                    <li style={{ marginBottom: '0.3rem' }}>Hvordan kommer man seg dit?</li>
+                    <li style={{ marginBottom: '0.3rem' }}>Er stedet ofte opptatt?</li>
+                    <li style={{ marginBottom: '1rem' }}>Har stedet belysning som slås av på kvelden?</li>
+                </ul>
 
-            <TextArea
-                onChange={(e) => dispatch(addLocationActions.setDescription(e.target.value))}
-                value={description}
-                maxLength={200}
-                minLength={20}
-            />
+                <TextArea
+                    onChange={(e) => dispatch(addLocationActions.setDescription(e.target.value))}
+                    value={description}
+                    maxLength={200}
+                    minLength={20}
+                />
 
-            <Text style={{ padding: '5px' }}>
-                <span style={{ color: description.length < 20 ? 'red' : 'inherit' }}>{description.length} </span>/ 200
-            </Text>
+                <Text style={{ padding: '5px' }}>
+                    <span style={{ color: description.length < 20 ? 'red' : 'inherit' }}>{description.length} </span>/ 200
+                </Text>
 
-            <SubmitButton
-                sx={{ marginTop: '1rem' }}
-                onClick={() => setPageIndex(2)}
-                disabled={locationTitle.trim().length < 5 || description.trim().length < 20 || selectedCategories.length < 1}
-            >
-                Gå videre
-            </SubmitButton>
+                <SubmitButton
+                    sx={{ marginTop: '1rem' }}
+                    onClick={() => setPageIndex(2)}
+                    disabled={locationTitle.trim().length < 5 || description.trim().length < 20 || selectedCategories.length < 1}
+                >
+                    Gå videre
+                </SubmitButton>
+            </div>
         </Section>
     );
 };

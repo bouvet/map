@@ -45,7 +45,7 @@ export const ConfirmCode: React.FC = () => {
     };
 
     return (
-        <Section style={{ flex: '1 1 auto', justifyContent: 'space-between' }}>
+        <Section>
             <div>
                 <PageSubtitle>Skriv inn koden for å bekrefte din e-postadresse</PageSubtitle>
                 <Text style={{ fontWeight: 600 }}>{email}</Text>

@@ -7,7 +7,7 @@ export const HowToAddLocation: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <Section style={{ flex: '1 1 auto', justifyContent: 'space-between' }}>
+        <Section>
             <div>Hvordan legge til lokasjon</div>
 
             <SubmitButton onClick={() => navigate('/onboarding/add-review')}>Neste</SubmitButton>

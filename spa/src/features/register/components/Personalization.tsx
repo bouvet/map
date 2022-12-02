@@ -35,7 +35,7 @@ export const Personalization: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <Section style={{ flex: '1 1 auto', justifyContent: 'space-between' }}>
+        <Section>
             <div>
                 <PageSubtitle>Velg dine favoritter:</PageSubtitle>
                 <FlexRowContainer style={{ zIndex: '2', gap: '10px', padding: '5px 5px', overflowX: 'scroll' }}>

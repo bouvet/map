@@ -64,7 +64,7 @@ export const Password: React.FC = () => {
     }, []);
 
     return (
-        <Section style={{ flex: '1 1 auto' }}>
+        <Section>
             <Form onSubmit={onSubmitHandler} style={{ marginTop: '1rem' }}>
                 <StyledInput
                     label="Passord*"

@@ -24,7 +24,7 @@ export const TipsAndTricks: React.FC = () => {
     };
 
     return (
-        <Section style={{ flex: '1 1 auto', justifyContent: 'space-between' }}>
+        <Section>
             <div>Tips og triks</div>
             <div>
                 <SubmitButton onClick={() => navigate('/onboarding/add-location')}>Neste</SubmitButton>

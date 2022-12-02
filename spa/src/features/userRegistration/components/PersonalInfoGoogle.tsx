@@ -93,7 +93,7 @@ export const PersonalInfoGoogle: FC = () => {
     return (
         <Main>
             <DialogButton />
-            <Section style={{ height: '100%' }}>
+            <Section>
                 <PageTitle>Personlig informasjon</PageTitle>
                 <PageSubtitle style={{ marginTop: '1rem' }}>
                     Her kan du endre profilinformasjonen din. Fødselsdato er ikke synlig for andre og brukes kun til å vise alder i omtaler.

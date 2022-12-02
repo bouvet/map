@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 import { IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import { MyTheme } from '../../../styles/global';
-import { BackdropContainer } from './BackdropContainer';
+import { MyTheme } from '../../styles/global';
 
 interface Props {
     center?: boolean;
@@ -14,10 +13,10 @@ interface Props {
     children?: React.ReactNode;
 }
 
-export const ModalContainer: React.FC<Props> = ({ center, style, closeModalHandler, title, children }) => (
+export const Modal: React.FC<Props> = ({ center, style, closeModalHandler, title, children }) => (
     <Container style={{ justifyContent: center ? 'center' : '' }}>
-        <BackdropContainer backdropClickHandler={closeModalHandler} />
-        <Modal style={{ marginTop: center ? '' : '1rem', ...style }}>
+        <Backdrop onClick={closeModalHandler} />
+        <ModalContainer style={{ marginTop: center ? '' : '1rem', ...style }}>
             <ModalHeader>
                 <IconButton
                     color="inherit"
@@ -30,9 +29,17 @@ export const ModalContainer: React.FC<Props> = ({ center, style, closeModalHandl
                 <ModalTitle>{title}</ModalTitle>
             </ModalHeader>
             <ModalBody>{children}</ModalBody>
-        </Modal>
+        </ModalContainer>
     </Container>
 );
+
+const Backdrop = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+`;
 
 const Container = styled.div`
     position: absolute;
@@ -45,13 +52,14 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Modal = styled.div`
+const ModalContainer = styled.div`
     width: 85%;
     max-height: 90vh;
     background-color: white;
     border-radius: 3px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     z-index: 2000;
+    overflow: hidden;
 `;
 
 const ModalHeader = styled.div`
