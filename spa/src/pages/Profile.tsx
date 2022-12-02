@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import { FilePondFile } from 'filepond';
-import { Main } from '../components/Layout';
+import { Main, Section } from '../components/Layout';
 import { Header, Sidebar } from '../components/Navigation';
 import { useStateDispatch, useStateSelector } from '../hooks';
-import { ProfileImageSection, ImageModal } from '../features/profile';
+import { ProfileImageSection, ImageModal, ProfileInfo } from '../features/profile';
 import { userServices } from '../services';
+import { LinkButton } from '../components/Common';
 
 export const Profile: React.FC = () => {
     const [showImageModal, setShowImageModal] = useState(false);
@@ -30,6 +31,15 @@ export const Profile: React.FC = () => {
             <Header />
             <Main>
                 <ProfileImageSection user={user} showImageModalToggle={showImageModalToggle} />
+                <ProfileInfo user={user} />
+                <Section style={{ flex: 0, paddingTop: 0, paddingBottom: 0 }}>
+                    <LinkButton style={{ marginBottom: '0.5rem' }}>Rediger informasjon</LinkButton>
+                    <LinkButton style={{ marginBottom: '0.5rem' }}>Endre passord</LinkButton>
+                    <LinkButton style={{ marginBottom: '0.5rem' }}>Endre e-post</LinkButton>
+                    <LinkButton style={{ marginBottom: '0.5rem' }} color="error">
+                        Slett konto
+                    </LinkButton>
+                </Section>
             </Main>
             <Sidebar />
             {showImageModal && (
