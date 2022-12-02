@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using restapi.Data;
 using restapi.Entities;
+using restapi.Services.ImageStorages.Commands.Delete;
 using restapi.Services.ImageStorages.Commands.Upload;
 using restapi.Services.ImageStorages.Common;
 
@@ -59,6 +60,16 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Error
       if (uploadResult.IsError)
       {
         return Errors.ImageStorage.UploadFailed;
+      }
+
+      if (user.WebpProfileImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(user.WebpProfileImage.Id, "webp");
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
       }
 
       user.OriginalProfileImage = uploadResult.Value.OriginalImage;

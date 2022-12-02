@@ -1,4 +1,5 @@
 using restapi.Common.Services.Mappers.Categories;
+using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Roles;
 using restapi.Contracts.Authentication;
 using restapi.Services.Authentication.Commands.AuthWithCode;
@@ -12,11 +13,13 @@ public class AuthenticationMapper : IAuthenticationMapper
 {
   private readonly IRoleMapper roleMapper;
   private readonly ICategoryMapper categoryMapper;
+  private readonly IImageStorageMapper imageStorageMapper;
 
-  public AuthenticationMapper(IRoleMapper roleMapper, ICategoryMapper categoryMapper)
+  public AuthenticationMapper(IRoleMapper roleMapper, ICategoryMapper categoryMapper, IImageStorageMapper imageStorageMapper)
   {
     this.roleMapper = roleMapper;
     this.categoryMapper = categoryMapper;
+    this.imageStorageMapper = imageStorageMapper;
   }
 
   public LoginQuery MapLoginQueryToCommand(LoginRequest request)
@@ -55,6 +58,8 @@ public class AuthenticationMapper : IAuthenticationMapper
       result.User.Updated,
       roleMapper.MapDbListToResponseList(result.User.Roles),
       categoryMapper.MapDbListToResponseList(result.User.FavoriteCategories),
+      result.User.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.OriginalProfileImage) : null,
+      result.User.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.WebpProfileImage) : null,
       result.Token
     );
   }

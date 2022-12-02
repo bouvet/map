@@ -294,20 +294,20 @@ namespace restapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c147310b-2550-40d0-a00c-1db9fc0ea246"),
-                            Created = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997),
+                            Id = new Guid("63daf05f-ed32-4b44-9ca3-1f795d1a2571"),
+                            Created = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737),
                             Name = "Administrator"
                         },
                         new
                         {
-                            Id = new Guid("5e73d79e-c804-4877-a9aa-c428443bc35d"),
-                            Created = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997),
+                            Id = new Guid("405d7c65-b876-4479-b5d5-4d24c242fa91"),
+                            Created = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737),
                             Name = "Registering"
                         },
                         new
                         {
-                            Id = new Guid("e2f25b57-0a38-4ab4-bf7a-136303bfa34a"),
-                            Created = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997),
+                            Id = new Guid("5a827c84-f3fe-4344-baf6-27ed14c233c9"),
+                            Created = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737),
                             Name = "User"
                         });
                 });
@@ -379,30 +379,30 @@ namespace restapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("92253a51-8b2e-4286-82f9-56ac69eee68b"),
+                            Id = new Guid("f76ed3dd-da08-429d-afa6-3ac672c426d1"),
                             AccessToken = "Admin",
                             AuthenticationMethod = "Email",
-                            DOB = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997),
+                            DOB = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737),
                             Email = "verden.venter.app@gmail.com",
                             FirstName = "Verden",
                             LastName = "Venter",
-                            Password = "$2a$11$3WB7MZKZrUJhAhqukVQzD.KTCQHXOXN4nA3qsQSgpWUMEUvShRNW2",
+                            Password = "$2a$11$If1hyeBvrGafGNef22JxP.UrD9lS46JxGiSsvxak1MKUZtgvZvdhm",
                             PhoneNumber = 0,
                             PostalCode = 0,
-                            Registered = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997)
+                            Registered = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737)
                         },
                         new
                         {
-                            Id = new Guid("4fe87d69-4d72-4f09-a2e5-77093a79d034"),
+                            Id = new Guid("b07bfe24-0052-4c7c-bb3b-ed84081e0ce7"),
                             AuthenticationMethod = "Email",
-                            DOB = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997),
+                            DOB = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737),
                             Email = "jdoe@email.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "$2a$11$B8/ifZhsmK.R4S.wvQz3kuYbuQlOb61S/tEX.kfrjQH7jmDjn8rdO",
+                            Password = "$2a$11$jCTr1bMTch8nXTvBredBzu04BvQSSXLdOPFNCQ6c77swDEWfqzHt.",
                             PhoneNumber = 0,
                             PostalCode = 0,
-                            Registered = new DateTime(2022, 11, 16, 14, 8, 29, 345, DateTimeKind.Unspecified).AddTicks(6997)
+                            Registered = new DateTime(2022, 12, 2, 15, 50, 51, 967, DateTimeKind.Unspecified).AddTicks(1737)
                         });
                 });
 

@@ -63,18 +63,6 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
 
     if (request.Image is not null)
     {
-      if (request.Review.OriginalImage is not null)
-      {
-        var deleteImageCommand = new DeleteImageCommand(request.Review.OriginalImage.Id, "originals");
-
-        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
-
-        if (deleteImageResult.IsError)
-        {
-          return Errors.ImageStorage.DeleteFailed;
-        }
-      }
-
       if (request.Review.WebpImage is not null)
       {
         var deleteImageCommand = new DeleteImageCommand(request.Review.WebpImage.Id, "webp");

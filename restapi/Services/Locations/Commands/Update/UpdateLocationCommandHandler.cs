@@ -62,18 +62,6 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
 
     if (request.Image is not null)
     {
-      if (request.Location.OriginalImage is not null)
-      {
-        var deleteImageCommand = new DeleteImageCommand(request.Location.OriginalImage.Id, "originals");
-
-        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
-
-        if (deleteImageResult.IsError)
-        {
-          return Errors.ImageStorage.DeleteFailed;
-        }
-      }
-
       if (request.Location.WebpImage is not null)
       {
         var deleteImageCommand = new DeleteImageCommand(request.Location.WebpImage.Id, "webp");

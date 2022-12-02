@@ -22,6 +22,7 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr
   {
     var user = await dataContext
       .Users
+      .Include(user => user.WebpProfileImage)
       .Include(user => user.Roles)
       .ThenInclude(role => role.Creator)
       .Include(user => user.Roles)

@@ -33,12 +33,29 @@ public class DeleteImageCommandHandler : IRequestHandler<DeleteImageCommand, Err
 
     var image = await dataContext.Images.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
 
+    if (image?.OriginalImageId is not null)
+    {
+      CloudBlockBlob originalBlockBlob = imageBlobContainer.GetBlockBlobReference($"originals/{image?.OriginalImageId}");
+      var originalWasDeleted = await originalBlockBlob.DeleteIfExistsAsync();
+
+      if (!originalWasDeleted)
+      {
+        return Errors.ImageStorage.DeleteFailed;
+      }
+      var originalImage = await dataContext.Images.FindAsync(new object?[] { image?.OriginalImageId }, cancellationToken: cancellationToken);
+      if (originalImage is not null)
+      {
+        dataContext.Images.Remove(originalImage);
+      }
+    }
+
     if (image is null)
     {
       return Errors.ImageStorage.DeleteFailed;
     }
 
-    dataContext.Remove(image);
+    dataContext.Images.Remove(image);
+    await dataContext.SaveChangesAsync(cancellationToken);
 
     return Result.Deleted;
   }

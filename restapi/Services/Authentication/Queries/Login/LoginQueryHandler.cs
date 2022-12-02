@@ -27,6 +27,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
   {
     var user = await dataContext
       .Users
+      .Include(user => user.WebpProfileImage)
       .Include(user => user.Roles)
       .ThenInclude(role => role.Creator)
       .Include(user => user.Roles)
@@ -66,6 +67,16 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
       user.Updated = dateTimeProvider.CEST;
 
       await dataContext.SaveChangesAsync(cancellationToken);
+    }
+
+    if (user.Roles.Count < 1)
+    {
+      var userRole = await dataContext.Roles.SingleOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
+      if (userRole is not null)
+      {
+        user.Roles.Add(userRole);
+        await dataContext.SaveChangesAsync(cancellationToken);
+      }
     }
 
     var token = jwtGenerator.GenerateUserToken(user);
