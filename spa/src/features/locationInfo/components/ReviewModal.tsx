@@ -1,21 +1,18 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Box, Button, Modal, Rating, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Autorenew from '@mui/icons-material/Autorenew';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Button, Modal, Rating, Stack } from '@mui/material';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { reviewServices } from '../services/locationinfo.services';
+import { CloseButton, SubmitButton } from '../../../components/UI';
+import { useStateSelector } from '../../../hooks/useRedux';
+import { MyTheme } from '../../../styles/global';
 import { IReviewType } from '../../../utils/types.d';
 import { Img } from '../../locationRegistration/components/ImageUploader';
-import { CloseButton, SubmitButton } from '../../../components/UI';
-import { MyTheme } from '../../../styles/global';
 
 interface ReviewProps {
     open: boolean;
     close: Function;
-    success: Function;
-    error: Function;
 }
 
 const AddReview = {
@@ -52,7 +49,7 @@ const ButtonWrapper = styled.div`
     flex-direction: row;
 `;
 
-export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) => {
+export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
@@ -66,7 +63,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) =>
         setImage(undefined);
         setImageUrl('');
     };
-    const dispatch = useStateDispatch();
 
     const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
@@ -107,14 +103,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close, success, error }) =>
             if (image) {
                 payload.image = image;
             }
-            // @ts-ignore
-            const successStatus: boolean = await dispatch(reviewServices.postReview(payload));
 
-            if (successStatus) {
-                success();
-            } else {
-                error();
-            }
             handleCloseAddReview();
         }
     };

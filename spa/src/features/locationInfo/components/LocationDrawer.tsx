@@ -1,5 +1,6 @@
 import { Global } from '@emotion/react';
-import { Alert, Box, Button, CssBaseline, Snackbar, SwipeableDrawer } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Button, CssBaseline, IconButton, SwipeableDrawer } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { styled as materialStyled, StyledEngineProvider } from '@mui/material/styles';
 import moment from 'moment';
@@ -7,7 +8,7 @@ import 'moment/locale/nb';
 import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { StarRating } from '../../../components/StarRating/StarRating';
-import { LinkButton, SubmitButton } from '../../../components/UI';
+import { LinkButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store/state/map.state';
 import { MyTheme } from '../../../styles/global';
@@ -151,14 +152,6 @@ export const SwipeableEdgeDrawer: FC = () => {
     const handleOpenAddReview = () => setOpenAddReview(true);
     const handleCloseAddReview = () => setOpenAddReview(false);
 
-    const [openSuccessMessage, setOpenSuccessMessage] = useState(false);
-    const handleOpenSuccessMessage = () => setOpenSuccessMessage(true);
-    const handleCloseSuccessMessage = () => setOpenSuccessMessage(false);
-
-    const [openErrorMessage, setOpenErrorMessage] = useState(false);
-    const handleOpenErrorMessage = () => setOpenErrorMessage(true);
-    const handleCloseErrorMessage = () => setOpenErrorMessage(false);
-
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
@@ -224,23 +217,19 @@ export const SwipeableEdgeDrawer: FC = () => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
-                        <SubmitButton
-                            type="submit"
-                            variant="contained"
-                            style={{ height: 35, width: 100, marginTop: '2%' }}
-                            onClick={handleSessionModalOpen}
-                        >
+                        <Button variant="contained" style={{ height: 35, width: 100, marginTop: '2%' }} onClick={handleSessionModalOpen}>
                             Ny økt
-                        </SubmitButton>
+                        </Button>
                         <AddSessionModal open={openSessionModal} close={handleSessionModalClose} locationTitle={locationTitle} />
 
-                        <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10, marginBottom: -20 }}>
+                        <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                             <p>Antall økter: </p>
                             <span role="img" aria-label="flexed biceps">
                                 💪
                             </span>
                             <p>{currentSessions.length}</p>
                         </div>
+
                         <ImageContainer>{imageList && imageList}</ImageContainer>
                         <ContentContainer>{locationDescription}</ContentContainer>
                         <ContentContainer>
@@ -251,36 +240,15 @@ export const SwipeableEdgeDrawer: FC = () => {
                             Legg til omtale
                         </LinkButton>
 
-                        <ReviewModal
-                            open={openAddReview}
-                            close={handleCloseAddReview}
-                            success={handleOpenSuccessMessage}
-                            error={handleOpenErrorMessage}
-                        />
-                        <Snackbar
-                            open={openSuccessMessage}
-                            autoHideDuration={3000}
-                            onClose={handleCloseSuccessMessage}
-                            sx={{ display: 'inline' }}
-                        >
-                            <Alert severity="success">Innsending fullført!</Alert>
-                        </Snackbar>
-                        <Snackbar
-                            open={openErrorMessage}
-                            autoHideDuration={3000}
-                            onClose={handleCloseErrorMessage}
-                            sx={{ display: 'inline' }}
-                        >
-                            <Alert severity="error">Noe gikk galt</Alert>
-                        </Snackbar>
+                        <ReviewModal open={openAddReview} close={handleCloseAddReview} />
+                        {isAdmin ? (
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <IconButton onClick={handleOpenConfirmModal}>
+                                    <DeleteIcon color="warning" />
+                                </IconButton>
+                            </div>
+                        ) : null}
                     </ContentWrapper>
-                    {isAdmin ? (
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button variant="contained" style={{ backgroundColor: '#dc1111' }} onClick={handleOpenConfirmModal}>
-                                Slett lokasjon
-                            </Button>
-                        </div>
-                    ) : null}
                     <ConfirmDeleteModal open={confirmModal} close={handleCloseConfirmModal} locationTitle={locationTitle} />
                 </SwipeableDrawer>
             </Root>

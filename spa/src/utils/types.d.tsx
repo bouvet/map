@@ -75,7 +75,7 @@ export interface ILatLong {
 
 export interface ISession {
     id: string;
-    registered: string;
+    registered: Date;
     locationTitle: string;
     locationId: string;
     userId: string;
@@ -83,7 +83,7 @@ export interface ISession {
 
 export interface ISessionType {
     id: string;
-    registered?: string;
+    registered?: Date;
     locationTitle?: string;
     locationId: string;
     userId: string;
@@ -91,7 +91,7 @@ export interface ISessionType {
 
 export interface ISessionTypeGet {
     id: string;
-    registered?: string;
+    registered?: Date;
     locationTitle?: string;
     locationId: string;
     userId: string;

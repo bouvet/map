@@ -1,14 +1,15 @@
-import { Icon } from '@mui/material';
+import { ExpandMore } from '@mui/icons-material/';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, IconButton } from '@mui/material';
 import moment from 'moment';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { LeftFlex, RightFlex, SplitWrapper } from '../../../components/Form/Input';
 import { Button, Text } from '../../../components/UI';
 import { SessionBlockModal } from './SessionBlockModal';
 
 interface SessionBlockProps {
-    locationTitle: string;
-    registered: string;
+    locationTitle: any;
+    registered: any;
     deleteBlock: Function;
 }
 
@@ -23,66 +24,31 @@ export const SessionButton = styled(Button)`
     justify-content: flex-start;
 `;
 
-const SessionPageWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1rem;
-`;
-
-const SessionBlockWrapper = styled.div`
-    width: 100%;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-`;
-
-const SessionSplitWrapper = styled(SplitWrapper)`
-    grid-template-columns: 4fr 1fr;
-`;
-
-const SessionInformation = styled.div`
-    padding: 10px;
-`;
-
 const Title = styled(Text)`
     padding: 10px;
     overflow: hidden;
 `;
 
 export const SessionBlock: FC<SessionBlockProps> = ({ locationTitle, registered, deleteBlock }) => {
-    const [isActive, setIsActive] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    const handleBlockClick = () => setIsActive(!isActive);
-
     const handleModalOnClick = () => setModalIsOpen(!modalIsOpen);
-    const DateRegistered = moment(registered).format('LL');
+    const DateRegistered = moment(registered.toString()).format('LL');
 
     return (
-        <SessionPageWrapper>
-            <SessionBlockWrapper>
-                <SessionSplitWrapper onClick={handleBlockClick}>
-                    <LeftFlex>
-                        <Title style={{ fontStyle: 'italic', color: 'grey' }}>{DateRegistered}</Title>
-                    </LeftFlex>
-                    <RightFlex>
-                        <Icon style={{ textAlign: 'right', display: 'flex' }} className="material-symbols-outlined">
-                            {isActive ? 'expand_less' : 'expand_more'}
-                        </Icon>
-                    </RightFlex>
-                </SessionSplitWrapper>
-                {isActive && (
-                    <SessionInformation>
-                        <Text>{locationTitle}</Text>
-                    </SessionInformation>
-                )}
-            </SessionBlockWrapper>
-            <Button style={{ width: '0%' }} onClick={handleModalOnClick}>
-                <span style={{ color: 'red' }} className="material-symbols-outlined">
-                    delete
-                </span>
-            </Button>
+        <Accordion sx={{ marginBottom: '1rem' }}>
+            <AccordionSummary expandIcon={<ExpandMore />}>
+                <Title style={{ fontStyle: 'italic', color: 'grey' }}>{DateRegistered}</Title>
+            </AccordionSummary>
+            <Divider />
+            <AccordionDetails sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text>{locationTitle.toString()}</Text>
+                <IconButton onClick={handleModalOnClick} color="warning">
+                    <DeleteIcon />
+                </IconButton>
+            </AccordionDetails>
+
             <SessionBlockModal isOpen={modalIsOpen} handler={handleModalOnClick} deleteBlock={deleteBlock} />
-        </SessionPageWrapper>
+        </Accordion>
     );
 };

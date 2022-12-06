@@ -1,7 +1,8 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store/index';
 import { reviewActions } from '../../../store/state/review.state';
-import { IReviewTypeGet, IReviewType } from '../../../utils/types.d';
+import { snackbarActions } from '../../../store/state/snackbar.state';
+import { IReviewType, IReviewTypeGet } from '../../../utils/types.d';
 
 export const reviewServices = {
     postReview(payload: IReviewType) {
@@ -11,8 +12,10 @@ export const reviewServices = {
                 const requestUrl = `/Reviews?locationId=${data.locationId}`;
                 const reviews: IReviewTypeGet[] = await (await API.get(requestUrl)).data;
                 dispatch(reviewActions.setCurrentReviews(reviews));
+                dispatch(snackbarActions.setNotify({ message: 'Omtale registrert!', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
+                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
