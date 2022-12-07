@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./restapi
+    image: glensorbo.azurecr.io/verdenventer_backend:latest
+
+  frontend:
+    build: ./spa
+    image: glensorbo.azurecr.io/verdenventer_frontend:latest

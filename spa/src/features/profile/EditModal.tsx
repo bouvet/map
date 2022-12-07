@@ -12,11 +12,12 @@ import { useInput } from '../../hooks/useInput';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { Label } from '../../components/Form/Input';
 import { userActions } from '../../store/state/user.state';
-import { snackbarActions } from '../../store/state/snackbar.state';
-import { ICategory, IUserTypeEdit } from '../../utils/types.d';
+import { IUserTypeEdit } from '../../utils/types.d';
 import { RegisterButtonFavorites } from '../../components/Filter/FilterButtons';
 import { FilterMenuContent } from '../../components/Filter/FilterMenu';
 import { userServices } from '../userRegistration/services/user.services';
+import { ICategory } from '../../interfaces';
+import { uiActions } from '../../store';
 
 interface ModalProps {
     open: boolean;
@@ -80,7 +81,7 @@ export const EditModal: FC<ModalProps> = ({ open, close }) => {
         e.preventDefault();
 
         if (!dob) {
-            dispatch(snackbarActions.setNotify({ message: 'Fødselsdato mangler', severity: 'error', autohideDuration: null }));
+            dispatch(uiActions.setShowSnackbar({ message: 'Fødselsdato mangler', severity: 'error' }));
         } else {
             firstNameBlurHandler();
             lastNameBlurHandler();

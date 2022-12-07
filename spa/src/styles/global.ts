@@ -10,6 +10,7 @@ export const MyTheme = {
         grey: '#A7A7A7',
         alert: '#D32F2F',
         success: '#2E7D32',
+        warning: '#ffa726',
     },
     fontFamily: {
         body: 'Open Sans, sans-serif',

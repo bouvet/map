@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { App } from '../App';
-import { CreateCategory } from '../features/adminPanel';
+import { Category } from '../features/admin';
 import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
 import { ChangeEmail, DeleteAccount } from '../features/profile';
 import {
@@ -13,18 +13,7 @@ import {
     PersonalInfoGoogle,
     Personalization,
 } from '../features/userRegistration';
-import {
-    AdminPanel,
-    AuthenticationSpinner,
-    ChangePassword,
-    Home,
-    LocationRegistration,
-    Login,
-    MySessions,
-    ProfilePage,
-    Register,
-    ResetPassword,
-} from '../pages';
+import { AddLocation, Admin, Auth, ChangePassword, Home, Login, ProfilePage, Register, ResetPassword } from '../pages';
 
 export const AppRoutes: FC = () => (
     <Routes>
@@ -42,7 +31,7 @@ export const AppRoutes: FC = () => (
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="change-password" element={<ChangePassword />} />
 
-            <Route path="auth" element={<AuthenticationSpinner />} />
+            <Route path="auth" element={<Auth />} />
 
             <Route path="register" element={<Register />}>
                 <Route path="email" element={<EmailInput />} />
@@ -54,15 +43,8 @@ export const AppRoutes: FC = () => (
                 <Route path="onboarding" element={<Onboarding />} />
             </Route>
 
-            <Route path="location-registration">
-                <Route
-                    index
-                    element={
-                        <RequireAuth>
-                            <LocationRegistration />
-                        </RequireAuth>
-                    }
-                />
+            <Route path="add-location">
+                <Route index element={<AddLocation />} />
             </Route>
             <Route path="my-sessions">
                 <Route
@@ -102,23 +84,9 @@ export const AppRoutes: FC = () => (
                 />
             </Route>
 
-            <Route path="admin">
-                <Route
-                    index
-                    element={
-                        <RequireAdmin>
-                            <AdminPanel />
-                        </RequireAdmin>
-                    }
-                />
-                <Route
-                    path="create-category"
-                    element={
-                        <RequireAdmin>
-                            <CreateCategory />
-                        </RequireAdmin>
-                    }
-                />
+            <Route path="admin" element={<RequireAdmin />}>
+                <Route index element={<Admin />} />
+                <Route path="category" element={<Category />} />
             </Route>
             <Route path="*" element={<Home />} />
         </Route>

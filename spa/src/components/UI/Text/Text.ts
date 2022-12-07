@@ -6,4 +6,5 @@ export const Text = styled.p`
     font-size: ${MyTheme.fontSize.header};
     padding: 0px;
     margin: 0px;
+    width: 100%;
 `;

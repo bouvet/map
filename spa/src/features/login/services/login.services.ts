@@ -1,7 +1,6 @@
 import { API } from '../../../lib/api';
-import { AppDispatch } from '../../../store';
+import { AppDispatch, uiActions } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
-import { snackbarActions } from '../../../store/state/snackbar.state';
 import { sleep } from '../../../utils/sleep';
 
 export const loginServices = {
@@ -15,17 +14,17 @@ export const loginServices = {
 
                 await sleep(2000);
                 dispatch(authActions.userLogin(data));
-                dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Du er logget inn', severity: 'success' }));
             } catch (error: any) {
                 const invalidCreds = error.response.data.errors['Authentication.InvalidCredentials'][0];
 
                 if (invalidCreds) {
-                    dispatch(snackbarActions.setNotify({ message: 'Feil epost eller passord', severity: 'error', autohideDuration: null }));
+                    dispatch(uiActions.setShowSnackbar({ message: 'Feil epost eller passord', severity: 'error' }));
                     dispatch(authActions.setLoading(false));
                 } else {
                     console.error('error', error.response.data.errors['Authentication.InvalidCredentials'][0]);
 
-                    dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                    dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                     dispatch(authActions.setLoading(false));
                 }
             }
@@ -38,7 +37,7 @@ export const loginServices = {
 
                 await sleep(500);
                 dispatch(
-                    snackbarActions.setNotify({
+                    uiActions.setShowSnackbar({
                         message: `En link for å tilbakestille passordet er sendt til ${payload.email}`,
                         severity: 'success',
                     }),
@@ -47,7 +46,7 @@ export const loginServices = {
                 return true;
             } catch (error) {
                 console.error('error', error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                 return false;
             }
         };
@@ -60,7 +59,7 @@ export const loginServices = {
                 const { data } = await API.put('/users/password', payload);
                 console.log(data);
 
-                dispatch(snackbarActions.setNotify({ message: 'Passordet er endret', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Passordet er endret', severity: 'success' }));
                 await sleep(500);
                 dispatch(authActions.setLoading(false));
                 dispatch(authActions.setChangePasswordSuccess(true));
@@ -69,7 +68,7 @@ export const loginServices = {
             } catch (error) {
                 console.error('error', error);
                 await sleep(500);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                 dispatch(authActions.setLoading(false));
 
                 return false;

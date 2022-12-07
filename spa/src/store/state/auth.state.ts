@@ -42,10 +42,11 @@ const authState = createSlice({
             state.loading = false;
         },
         logOut(state) {
-            state.isAuthenticated = false;
-            state.user = null;
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            state.isAdmin = false;
+            state.isAuthenticated = false;
+            state.user = null;
             state.loading = false;
             state.isAdmin = false;
             state.emailIsValid = false;

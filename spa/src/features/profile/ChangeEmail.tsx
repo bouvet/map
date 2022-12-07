@@ -2,12 +2,13 @@ import { FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form';
 import { StyledInput } from '../../components/Form/StyledElements/StyledInput';
-import { PageContainer, PageTitle, SectionContainer, SubmitButton } from '../../components/UI';
+import { Main, Section } from '../../components/Layout';
+import { PageTitle, SubmitButton } from '../../components/UI';
 import { BackButton } from '../../components/UI/Buttons/NavigationButtons';
 import { useInput } from '../../hooks/useInput';
 import { useStateDispatch } from '../../hooks/useRedux';
-import { snackbarActions } from '../../store/state/snackbar.state';
-import { validateEmail } from '../../utils/emailValidator';
+import { uiActions } from '../../store';
+import { validateEmail } from '../../utils/email-validator';
 
 export const ChangeEmail: FC = () => {
     const dispatch = useStateDispatch();
@@ -32,15 +33,15 @@ export const ChangeEmail: FC = () => {
 
         // dispatch(userServices.editInfo({ email }));
 
-        dispatch(snackbarActions.setNotify({ message: 'E-posten er endret', severity: 'success' }));
+        dispatch(uiActions.setShowSnackbar({ message: 'E-posten er endret', severity: 'success' }));
         navigate('/profile');
         console.log('Email: ', email);
     };
 
     return (
-        <PageContainer>
+        <Main>
             <BackButton onClick={() => navigate('/profile')} />
-            <SectionContainer>
+            <Section>
                 <PageTitle>Endre e-post</PageTitle>
                 <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
                     <StyledInput
@@ -61,7 +62,7 @@ export const ChangeEmail: FC = () => {
                         Endre e-post
                     </SubmitButton>
                 </Form>
-            </SectionContainer>
-        </PageContainer>
+            </Section>
+        </Main>
     );
 };

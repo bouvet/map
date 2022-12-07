@@ -1,125 +1,80 @@
-import { useCallback, useEffect, useRef, useState, FC, Ref } from 'react';
-import { Map as ReactMap, MapRef } from 'react-map-gl';
-import { CustomMarker } from './CustomMarker';
+import React, { useRef, useState, Ref, useEffect } from 'react';
+import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { ILatLong, ILocation } from '../../../utils/types.d';
-import { mapActions } from '../../../store/state/map.state';
-import { registrationActions } from '../../../store/state/registration.state';
+import { mapActions } from '../../../store';
+import { mapboxBaseUri, mapboxStreets } from '../../../styles/map-styles';
 import { mapServices } from '../services/map.services';
+import { MapStyleMenu } from './MapStyleMenu';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-interface MapProp {
-    addingLocation?: boolean;
+interface Props {
+    children: React.ReactNode;
+    mapStyleMenuStyle?: React.CSSProperties;
 }
 
-export const ReactMapGL: FC<MapProp> = ({ addingLocation = false }) => {
-    const [viewState, setViewState] = useState({
-        longitude: 5.7063,
-        latitude: 58.9566,
-        zoom: 11,
-    });
+export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
+    const mapRef: Ref<MapRef> = useRef(null);
 
-    const { locations, filteredLocations, selectedFilterCategory, selectedMarker } = useStateSelector((state) => state.map);
+    const [mapLoaded, setMapLoaded] = useState(false);
 
-    const { currentMapCenter, currentUserLocation, hasUserLocation } = useStateSelector((state) => state.registration);
+    const [mapStyle, setMapStyle] = useState(`${mapboxStreets}`);
+
+    const { userLocation, closestLocation, mapMoved, viewState } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
 
-    const setViewStateCurrentMapCenter = useCallback(() => {
-        if (currentMapCenter.lat) {
-            setViewState((prevState) => ({ ...prevState, longitude: currentMapCenter.long, latitude: currentMapCenter.lat }));
-        }
-    }, [currentMapCenter.lat, currentMapCenter.long]);
-
-    useEffect(() => {
-        dispatch(mapServices.getLocations());
-        setViewStateCurrentMapCenter();
-    }, [dispatch, setViewStateCurrentMapCenter]);
-
-    useEffect(() => {
-        if (currentUserLocation.lat && hasUserLocation) {
-            setViewState((prevState) => ({ ...prevState, longitude: currentUserLocation.long, latitude: currentUserLocation.lat }));
-            const updateLocation: ILatLong = {
-                lat: currentUserLocation.lat,
-                long: currentUserLocation.long,
-            };
-            dispatch(registrationActions.setCurrentMapCenter(updateLocation));
-        }
-        return () => {
-            dispatch(registrationActions.setHasUserLocation(false));
-        };
-    }, [currentUserLocation, dispatch, hasUserLocation]);
-
-    const mapRef: Ref<MapRef> = useRef(null);
-
-    const onMapLoad = useCallback(
-        (e: any) => {
-            if (mapRef.current !== null) {
-                mapRef.current.on('move', () => {
-                    setViewState(e.viewState);
-                });
-
-                mapRef.current.on('moveend', () => {
-                    if (mapRef.current) {
-                        const currentCenter = mapRef.current.getCenter();
-                        const currentCenterObj: ILatLong = {
-                            long: currentCenter.lng,
-                            lat: currentCenter.lat,
-                        };
-                        dispatch(registrationActions.setCurrentMapCenter(currentCenterObj));
-                    }
-                });
-            }
-        },
-        [dispatch],
-    );
-
-    const onClickHandler = (location: ILocation) => {
-        if (selectedMarker === location.id) {
-            dispatch(mapActions.setSelectedMarker(''));
-            dispatch(mapActions.setPopupVisibility(false));
-        } else {
-            dispatch(mapActions.setSelectedMarker(location.id));
-            dispatch(mapActions.setPopupVisibility(true));
-            dispatch(mapActions.setCurrentlySelectedLocation(location));
+    const onMapMoveHandler = (event: ViewStateChangeEvent) => {
+        dispatch(mapActions.setViewState(event.viewState));
+        if (!mapMoved) {
+            dispatch(mapActions.setMapMoved(true));
         }
     };
 
+    const onMapLoadHandler = () => {
+        console.log('[onMapLoadHandler]: Map loaded');
+        dispatch(mapServices.getLocations());
+        setMapLoaded(true);
+    };
+
+    const setMapStyleHandler = (mapStyle: string) => {
+        setMapStyle(mapStyle);
+    };
+
+    useEffect(() => {
+        if (userLocation.shouldFlyTo) {
+            if (mapRef.current) {
+                mapRef.current.flyTo({ center: [userLocation.lng, userLocation.lat], essential: true, zoom: 16 });
+            }
+        }
+    }, [userLocation]);
+
+    useEffect(() => {
+        if (closestLocation) {
+            if (mapRef.current) {
+                mapRef.current.flyTo({
+                    center: [closestLocation.geometry.coordinates[0], closestLocation.geometry.coordinates[1]],
+                    essential: true,
+                    zoom: 16,
+                });
+            }
+        }
+    }, [closestLocation]);
+
     return (
-        <ReactMap
-            {...viewState}
-            ref={mapRef}
-            onLoad={onMapLoad}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            mapboxAccessToken={MAPBOX_TOKEN}
-        >
-            {!addingLocation &&
-                selectedFilterCategory &&
-                filteredLocations
-                    .filter((location) => location.properties.status === 'Approved')
-                    .map((location) => (
-                        <CustomMarker
-                            key={location.id}
-                            coordinates={location.geometry.coordinates}
-                            onClickHandler={onClickHandler}
-                            markerLocation={location}
-                            selectedMarker={selectedMarker}
-                        />
-                    ))}
-            {!addingLocation &&
-                !selectedFilterCategory &&
-                locations
-                    .filter((location) => location.properties.status === 'Approved')
-                    .map((location) => (
-                        <CustomMarker
-                            key={location.id}
-                            coordinates={location.geometry.coordinates}
-                            onClickHandler={onClickHandler}
-                            markerLocation={location}
-                            selectedMarker={selectedMarker}
-                        />
-                    ))}
-        </ReactMap>
+        <>
+            <ReactMap
+                {...viewState}
+                ref={mapRef}
+                onLoad={onMapLoadHandler}
+                onMove={onMapMoveHandler}
+                mapStyle={`${mapboxBaseUri}${mapStyle}`}
+                mapboxAccessToken={MAPBOX_TOKEN}
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            >
+                {mapLoaded && children}
+            </ReactMap>
+            <MapStyleMenu setMapStyleHandler={setMapStyleHandler} mapStyle={mapStyle} style={{ top: '4rem', ...mapStyleMenuStyle }} />
+        </>
     );
 };

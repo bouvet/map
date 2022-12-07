@@ -1,37 +1,17 @@
-import { snackbarActions } from '../store/state/snackbar.state';
-import { AppDispatch } from '../store';
+import { AppDispatch, uiActions } from '../store';
 import { authActions } from '../store/state/auth.state';
 import { API } from '../lib/api';
 import { userActions } from '../store/state/user.state';
 import { sleep } from '../utils/sleep';
-
-interface IAuthenticateWithCodeResponse {
-    id?: string;
-    emailId?: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    address?: string;
-    authenticationMethod: string;
-    postalArea?: string;
-    postalCode?: number;
-    phoneNumber?: number;
-    dob: Date;
-    registered?: Date;
-    updated?: Date;
-    roles?: [];
-    favoriteCategories?: [];
-    isLoggingIn: boolean;
-    isRegistering: boolean;
-    emailIsVerified: boolean;
-    token: string;
-}
+import { IAuthenticateWithCodeResponse } from '../interfaces';
 
 export const googleAuthServices = {
     authenticate(code: string) {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data: user }: { data: IAuthenticateWithCodeResponse } = await API.post('/auth/code', { code });
+
+                await sleep(2000);
 
                 if (user.isRegistering && user.emailIsVerified) {
                     dispatch(userActions.setEmail(user.email));
@@ -50,12 +30,12 @@ export const googleAuthServices = {
                 }
 
                 dispatch(authActions.userLogin(user));
-                await sleep(2000);
-                dispatch(snackbarActions.setNotify({ message: 'Du er logget inn', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Du er logget inn', severity: 'success' }));
             } catch (error: any) {
-                console.log(error);
-                dispatch(snackbarActions.setNotify({ message: 'Noe gikk galt', severity: 'error', autohideDuration: null }));
-                dispatch(authActions.setLoading(false)); // redirect back to login-page?
+                await sleep(2000);
+                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt, vennligst prøv igjen', severity: 'error' }));
+                dispatch(authActions.setLoading(false));
+                dispatch(uiActions.setShouldNavigate(true));
             }
         };
     },

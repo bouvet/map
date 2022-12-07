@@ -5,12 +5,13 @@ import { Box, Button, Modal, Rating, Stack } from '@mui/material';
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CloseButton, SubmitButton } from '../../../components/UI';
-import { useStateSelector } from '../../../hooks/useRedux';
+import { ILocation } from '../../../interfaces';
 import { MyTheme } from '../../../styles/global';
 import { IReviewType } from '../../../utils/types.d';
-import { Img } from '../../locationRegistration/components/ImageUploader';
+import { Img } from '../../add-location/components/AddLocationImage';
 
 interface ReviewProps {
+    selectedLocation: ILocation;
     open: boolean;
     close: Function;
 }
@@ -49,7 +50,7 @@ const ButtonWrapper = styled.div`
     flex-direction: row;
 `;
 
-export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
+export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
@@ -63,8 +64,6 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
         setImage(undefined);
         setImageUrl('');
     };
-
-    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -98,7 +97,7 @@ export const ReviewModal: FC<ReviewProps> = ({ open, close }) => {
             const payload: IReviewType = {
                 rating: value,
                 text: review,
-                locationId: currentlySelectedLocation.id,
+                locationId: selectedLocation.id,
             };
             if (image) {
                 payload.image = image;

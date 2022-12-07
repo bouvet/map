@@ -2,16 +2,14 @@ import { FC, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { sessionServices } from '../../features/session/services/session.services';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
-import { mapActions } from '../../store/state/map.state';
+import { ILocation } from '../../interfaces';
+import { uiActions } from '../../store/state/ui.state';
 import { MyTheme } from '../../styles/global';
 import { StarRating } from '../StarRating/StarRating';
 import { Fab } from '../UI';
 
-interface PopupContentProps {
-    name: string;
-    description: string;
-    rating: number;
-    image?: string;
+interface Props {
+    location: ILocation;
 }
 
 interface PopUpImageProp {
@@ -74,7 +72,7 @@ const PopupContent = styled.div`
     overflow: hidden;
 `;
 
-const Parkname = styled.p`
+const ParkName = styled.p`
     font-weight: bolder;
     padding-right: 50px;
     margin: 0px;
@@ -83,7 +81,7 @@ const Parkname = styled.p`
     hyphens: auto;
 `;
 
-const Bodytext = styled.div`
+const BodyText = styled.div`
     justify-content: left;
     margin: 5px 0px;
     font-size: ${MyTheme.fontSize.body};
@@ -95,25 +93,30 @@ const ReadMoreLink = styled.a`
     white-space: nowrap;
 `;
 
-export const Popup: FC<PopupContentProps> = ({ name, description, rating, image }) => {
+export const Popup: FC<Props> = ({ location }) => {
+    const {
+        properties: { description, webpImage, rating, title },
+    } = location;
+
     const dispatch = useStateDispatch();
 
-    const { popUpIsVisible } = useStateSelector((state) => state.map);
+    // const { popUpIsVisible } = useStateSelector((state) => state.map);
     const { currentSessions } = useStateSelector((state) => state.session);
-    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
-    const { id } = currentlySelectedLocation;
+    // const { currentlySelectedLocation } = useStateSelector((state) => state.map);
+    // const { id } = currentlySelectedLocation;
 
     useEffect(() => {
-        dispatch(sessionServices.getSessions(id));
-    }, [dispatch, id]);
+        dispatch(sessionServices.getSessions(location.id));
+    }, [dispatch, location.id]);
 
     const handleClickClose = () => {
-        dispatch(mapActions.setPopupVisibility(!popUpIsVisible));
-        dispatch(mapActions.setSelectedMarker(''));
+        dispatch(uiActions.setShowLocationPopup(false));
+        // dispatch(mapActions.setPopupVisibility(!popUpIsVisible));
+        // dispatch(mapActions.setSelectedMarker(''));
     };
 
     const handleClickShowLocationPage = () => {
-        dispatch(mapActions.setHomeMarkerFocus(true));
+        dispatch(uiActions.setShowLocationDrawer(true));
     };
 
     const displayedDescription = useMemo(() => {
@@ -123,7 +126,7 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
 
     return (
         <PopupWrapper>
-            <PopupImage imageURL={image}>
+            <PopupImage imageURL={webpImage?.cdnUri}>
                 <CloseBtn onClick={handleClickClose}>
                     <span className="material-symbols-outlined">close</span>
                 </CloseBtn>
@@ -132,12 +135,12 @@ export const Popup: FC<PopupContentProps> = ({ name, description, rating, image 
                 <ExpandBtn onClick={handleClickShowLocationPage}>
                     <ExpandLink />
                 </ExpandBtn>
-                <Parkname>{name}</Parkname>
+                <ParkName>{title}</ParkName>
                 <StarRating rating={rating} color={MyTheme.colors.darkBase} sizePx={MyTheme.fontSize.icon} />
-                <Bodytext>
+                <BodyText>
                     {displayedDescription}
                     <ReadMoreLink onClick={handleClickShowLocationPage}>{description.length >= 50 && 'les mer'}</ReadMoreLink>
-                </Bodytext>
+                </BodyText>
                 <span style={{ float: 'left' }} role="img" aria-label="flexed biceps">
                     💪
                 </span>

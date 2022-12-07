@@ -10,7 +10,8 @@ import styled from 'styled-components';
 import { StarRating } from '../../../components/StarRating/StarRating';
 import { LinkButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { mapActions } from '../../../store/state/map.state';
+import { ILocation } from '../../../interfaces';
+import { uiActions } from '../../../store/state/ui.state';
 import { MyTheme } from '../../../styles/global';
 import { IReviewTypeGet } from '../../../utils/types.d';
 import { sessionServices } from '../../session/services/session.services';
@@ -84,18 +85,31 @@ const ImageWrapper = styled.div<ImageProp>`
     white-space: nowrap;
 `;
 
-export const SwipeableEdgeDrawer: FC = () => {
+interface Props {
+    selectedLocation: ILocation;
+}
+
+export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
     const [open, setOpen] = useState(true);
 
     const [reviewList, setReviewList] = useState<ReactElement[]>([]);
     const [imageList, setImageList] = useState<ReactElement[]>([]);
-    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
+
     const { currentReviews } = useStateSelector((state) => state.review);
+
+    const Dato = new Date();
+    const [sessions, setSessions] = useState([
+        {
+            title: selectedLocation.properties.title,
+            category: selectedLocation.properties.category[0].name,
+            date: Dato.toDateString(),
+        },
+    ]);
     const { currentSessions } = useStateSelector((state) => state.session);
-    const locationTitle = currentlySelectedLocation.properties.title;
-    const locationDescription = currentlySelectedLocation.properties.description;
-    const locationRating = currentlySelectedLocation.properties.rating;
-    const { id } = currentlySelectedLocation;
+    const locationTitle = selectedLocation.properties.title;
+    const locationDescription = selectedLocation.properties.description;
+    const locationRating = selectedLocation.properties.rating;
+    const { id } = selectedLocation;
 
     const dispatch = useStateDispatch();
 
@@ -134,14 +148,12 @@ export const SwipeableEdgeDrawer: FC = () => {
                 .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
                 .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
-            if (currentlySelectedLocation.properties.webpImage) {
-                const mainImg = (
-                    <ImageWrapper key={Math.random() * 1000} backgroundImage={currentlySelectedLocation.properties.webpImage.cdnUri} />
-                );
+            if (selectedLocation.properties.webpImage) {
+                const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={selectedLocation.properties.webpImage.cdnUri} />;
                 setImageList((imageList) => [mainImg, ...imageList]);
             }
         }
-    }, [currentReviews, currentlySelectedLocation.properties.webpImage]);
+    }, [currentReviews, selectedLocation.properties.webpImage]);
 
     useEffect(() => {
         updateCurrentReviewsCallback();
@@ -157,18 +169,21 @@ export const SwipeableEdgeDrawer: FC = () => {
     };
 
     const handleCloseDrawer = () => {
-        dispatch(mapActions.setHomeMarkerFocus(false));
-        dispatch(mapActions.setPopupVisibility(false));
-        dispatch(mapActions.setSelectedMarker(''));
+        dispatch(uiActions.setShowLocationDrawer(false));
     };
 
     const [openSessionModal, setOpenSessionModal] = useState(false);
     const handleSessionModalOpen = () => setOpenSessionModal(true);
     const handleSessionModalClose = () => setOpenSessionModal(false);
-
     const [confirmModal, setConfirmModal] = useState(false);
     const handleOpenConfirmModal = () => setConfirmModal(true);
     const handleCloseConfirmModal = () => setConfirmModal(false);
+    const [addedNewSession, SetAddedNewSession] = useState(false);
+    const handleSuccessMessageOpen = () => {
+        SetAddedNewSession(true);
+        dispatch(uiActions.setShowSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+    };
+    // const handleSuccessMessageClose = () => SetAddedNewSession(false);
 
     const { isAdmin } = useStateSelector((state) => state.auth);
     return (
@@ -240,7 +255,7 @@ export const SwipeableEdgeDrawer: FC = () => {
                             Legg til omtale
                         </LinkButton>
 
-                        <ReviewModal open={openAddReview} close={handleCloseAddReview} />
+                        <ReviewModal selectedLocation={selectedLocation} open={openAddReview} close={handleCloseAddReview} />
                         {isAdmin ? (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <IconButton onClick={handleOpenConfirmModal}>
