@@ -48,7 +48,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     {
       Name = request.Name,
       Emoji = request.Emoji,
-      Created = dateTimeProvider.CEST
+      Created = dateTimeProvider.UtcNow
     };
 
     if (request.UserId is not null)

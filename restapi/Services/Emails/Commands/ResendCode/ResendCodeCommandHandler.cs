@@ -57,7 +57,7 @@ public class ResendCodeCommandHandler : IRequestHandler<ResendCodeCommand, Error
 
     email.ConfirmationCode = randomNumber;
     email.CodeValidTo = dateTimeProvider.UtcNow.AddHours(48);
-    email.Updated = dateTimeProvider.CEST;
+    email.Updated = dateTimeProvider.UtcNow;
 
     var token = jwtGenerator.GenerateRegistrationToken(email);
 
@@ -66,6 +66,7 @@ public class ResendCodeCommandHandler : IRequestHandler<ResendCodeCommand, Error
     return new CreateEmailResult(
       email.Id,
       email.Address,
+      email.Confirmed,
       token
     );
   }

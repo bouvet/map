@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from '@mui/material';
 
 import { Main, Section } from '../../../components/Layout';
-import { Header, Sidebar } from '../../../components/Navigation';
+import { Header } from '../../../components/Navigation';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { MyTheme } from '../../../styles/global';
 import { categoryServices } from '../services';
@@ -35,7 +35,7 @@ export const CategoryList = () => {
         <>
             <Header>Behandle Kategorier</Header>
             <Main>
-                <Section style={{ height: '10rem' }}>
+                <Section style={{ height: '10rem', flex: 0 }}>
                     <form onSubmit={onSubmitHandler} style={{ width: '100%' }}>
                         <div style={{ display: 'flex', marginBottom: '1rem' }}>
                             <Input
@@ -69,16 +69,15 @@ export const CategoryList = () => {
                         </Button>
                     </form>
                 </Section>
-                <Section style={{ paddingTop: 0 }}>
+                <Section style={{ paddingTop: 0, flex: 0 }}>
                     <p style={{ width: '100%', textAlign: 'left', marginBottom: '1rem', fontWeight: 600 }}>Kategorier i bruk</p>
-                    <ul style={{ width: '100%', maxHeight: '60vh', overflow: 'scroll' }}>
+                    <ul style={{ width: '100%', maxHeight: '58vh', overflow: 'scroll' }}>
                         {categories.map((category) => (
                             <CategoryListItem key={category.id} category={category} />
                         ))}
                     </ul>
                 </Section>
             </Main>
-            <Sidebar />
         </>
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { StyledLabel } from './StyledLabel';
-import { MyTheme } from '../../../styles/global';
+import { MyTheme } from '../../styles/global';
 
 const Input = styled.input`
     border: 1px solid rgb(193, 193, 193);

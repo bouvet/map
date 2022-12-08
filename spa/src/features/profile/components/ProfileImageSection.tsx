@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -9,10 +10,11 @@ import { createColorHashFromString } from '../../../utils';
 
 interface Props {
     user: IUser;
-    showImageModalToggle: () => void;
 }
 
-export const ProfileImageSection: React.FC<Props> = ({ user, showImageModalToggle }) => {
+export const ProfileImageSection: React.FC<Props> = ({ user }) => {
+    const navigate = useNavigate();
+
     const styles: SxProps = {
         bgcolor: createColorHashFromString(`${user.firstName} ${user.lastName}`),
         height: 150,
@@ -25,7 +27,7 @@ export const ProfileImageSection: React.FC<Props> = ({ user, showImageModalToggl
         <ProfileImage>
             <Badge
                 badgeContent={
-                    <ChangeImageButton onClick={showImageModalToggle} className="material-symbols-outlined">
+                    <ChangeImageButton onClick={() => navigate('/profile/edit/image')} className="material-symbols-outlined">
                         add
                     </ChangeImageButton>
                 }

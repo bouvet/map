@@ -103,9 +103,13 @@ button {
 }
 
 .filepond--drop-label {
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.filepond--drop-label {
+    background-color: #e8e8e8;
 }
 
 .filepond--drop-label:hover {
-    background-color: #e8e8e8;
+    background-color: #d6d6d6;
 }

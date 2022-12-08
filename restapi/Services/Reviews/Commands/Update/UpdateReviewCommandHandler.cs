@@ -93,7 +93,7 @@ public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, E
       request.Review.WebpImage = uploadResult.Value.WebpImage;
     }
 
-    request.Review.Updated = dateTimeProvider.CEST;
+    request.Review.Updated = dateTimeProvider.UtcNow;
 
     await UpdateLocationRating(request.Review.LocationId);
     await dataContext.SaveChangesAsync(cancellationToken);

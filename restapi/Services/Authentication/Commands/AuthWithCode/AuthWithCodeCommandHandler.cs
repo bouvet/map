@@ -56,6 +56,13 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
 
     if (user is not null)
     {
+      var userEmail = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address == user.Email.ToLower(), cancellationToken: cancellationToken);
+
+      if (userEmail?.Confirmed != true)
+      {
+        return Errors.EmailService.EmailNotConfirmed;
+      }
+
       var userToken = jwtGenerator.GenerateUserToken(user);
 
       if (user.AccessToken == "Admin")
@@ -75,7 +82,7 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       user.AccessToken = authResponse.Value.Access_token;
       user.RefreshToken = authResponse.Value.Refresh_token;
       user.AuthenticationMethod = "Google";
-      user.Updated = dateTimeProvider.CEST;
+      user.Updated = dateTimeProvider.UtcNow;
 
       await dataContext.SaveChangesAsync(cancellationToken);
 
@@ -159,7 +166,7 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       Address = userInfoResponse.Value.Email.ToLower(),
       ConfirmationCode = randomNumber,
       Confirmed = true,
-      Created = dateTimeProvider.CEST,
+      Created = dateTimeProvider.UtcNow,
       CodeValidTo = dateTimeProvider.UtcNow.AddHours(48)
     };
 

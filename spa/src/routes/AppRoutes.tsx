@@ -3,15 +3,16 @@ import { Route, Routes } from 'react-router-dom';
 import { App } from '../App';
 import { FullPageSpinner } from '../components/UI';
 import { CategoryList } from '../features/admin';
-import { CheckAuthState, RequireAdmin, RequireAuth } from '../features/auth';
+import { CheckAuthState, RequireAuth } from '../features/auth';
 import { HowToAddLocation, HowToAddReview, TipsAndTricks } from '../features/onboarding';
-import { ChangeEmail, DeleteAccount } from '../features/profile';
+import { ChangeEmail, ChangePassword, DeleteAccount, EditProfile, ProfileImage, ProfileInfo } from '../features/profile';
 import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from '../features/register';
-import { PersonalInfoGoogle } from '../features/userRegistration';
 import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
-import { Auth, ChangePassword, Home, AddLocation, Login, Profile, Register, ResetPassword, Onboarding } from '../pages';
 import { RegisterWorkout } from '../pages/RegisterWorkout';
 
+import { Auth, Home, AddLocation, Login, Profile, Register, ResetPassword, Onboarding, ConfirmEmail } from '../pages';
+
+const RequireAdmin = lazy(() => import('../features/auth/components/RequireAdmin'));
 const Admin = lazy(() => import('../pages/Admin'));
 
 export const AppRoutes: FC = () => (
@@ -26,10 +27,12 @@ export const AppRoutes: FC = () => (
                 }
             >
                 <Route index element={<Home />} />
+
                 <Route path="login" element={<Login />} />
 
                 <Route path="reset-password" element={<ResetPassword />} />
-                <Route path="change-password" element={<ChangePassword />} />
+
+                <Route path="confirm-email" element={<ConfirmEmail />} />
 
                 <Route path="auth" element={<Auth />} />
 
@@ -37,7 +40,7 @@ export const AppRoutes: FC = () => (
                     <Route path="email" element={<Email />} />
                     <Route path="confirm-code" element={<ConfirmCode />} />
                     <Route path="personal-info" element={<PersonalInfo />} />
-                    <Route path="personal-info-google" element={<PersonalInfoGoogle />} />
+                    {/* <Route path="personal-info-google" element={<PersonalInfoGoogle />} /> */}
                     <Route path="password" element={<Password />} />
                     <Route path="personalization" element={<Personalization />} />
                 </Route>
@@ -74,31 +77,15 @@ export const AppRoutes: FC = () => (
                     />
                 </Route>
 
-                <Route path="profile">
-                    <Route
-                        index
-                        element={
-                            <RequireAuth>
-                                <Profile />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="change-email"
-                        element={
-                            <RequireAuth>
-                                <ChangeEmail />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="delete-account"
-                        element={
-                            <RequireAuth>
-                                <DeleteAccount />
-                            </RequireAuth>
-                        }
-                    />
+                <Route path="profile" element={<Profile />}>
+                    <Route index element={<ProfileInfo />} />
+                    <Route path="edit">
+                        <Route index element={<EditProfile />} />
+                        <Route path="image" element={<ProfileImage />} />
+                        <Route path="email" element={<ChangeEmail />} />
+                        <Route path="password" element={<ChangePassword />} />
+                        <Route path="delete" element={<DeleteAccount />} />
+                    </Route>
                 </Route>
 
                 <Route path="admin" element={<RequireAdmin />}>

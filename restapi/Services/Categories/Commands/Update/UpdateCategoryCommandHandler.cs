@@ -45,7 +45,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
     category.Name = request.Name;
     category.Emoji = request.Emoji;
-    category.Updated = dateTimeProvider.CEST;
+    category.Updated = dateTimeProvider.UtcNow;
 
     if (request.UserId is not null)
     {

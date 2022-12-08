@@ -39,12 +39,19 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
       return Errors.Authentication.InvalidCredentials;
     }
 
-    if (string.IsNullOrEmpty(user.Password))
+    var email = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address == user.Email, cancellationToken: cancellationToken);
+
+    if (email?.Confirmed != true)
+    {
+      return Errors.EmailService.EmailNotConfirmed;
+    }
+
+    if (string.IsNullOrEmpty(request.Password))
     {
       return Errors.Authentication.InvalidCredentials;
     }
 
-    bool passwordIsValid = passwordProvider.VerifyPassword(request.Password, user.Password);
+    bool passwordIsValid = passwordProvider.VerifyPassword(request.Password, user.Password!);
 
     if (!passwordIsValid)
     {
@@ -64,7 +71,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
         user.Roles.Add(userRole);
       }
       user.AccessToken = "";
-      user.Updated = dateTimeProvider.CEST;
+      user.Updated = dateTimeProvider.UtcNow;
 
       await dataContext.SaveChangesAsync(cancellationToken);
     }

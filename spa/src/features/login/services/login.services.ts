@@ -7,6 +7,8 @@ export const loginServices = {
     login(payload: ILoginPayload) {
         return async (dispatch: AppDispatch) => {
             try {
+                dispatch(authActions.setLoading(true));
+
                 const { data } = await API.post('/auth/login', payload);
 
                 localStorage.setItem('token', data.token);
@@ -16,17 +18,8 @@ export const loginServices = {
                 dispatch(authActions.userLogin(data));
                 dispatch(uiActions.setShowSnackbar({ message: 'Du er logget inn', severity: 'success' }));
             } catch (error: any) {
-                const invalidCreds = error.response.data.errors['Authentication.InvalidCredentials'][0];
-
-                if (invalidCreds) {
-                    dispatch(uiActions.setShowSnackbar({ message: 'Feil epost eller passord', severity: 'error' }));
-                    dispatch(authActions.setLoading(false));
-                } else {
-                    console.error('error', error.response.data.errors['Authentication.InvalidCredentials'][0]);
-
-                    dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
-                    dispatch(authActions.setLoading(false));
-                }
+                dispatch(uiActions.setShowSnackbar({ message: 'Feil epost eller passord', severity: 'error' }));
+                dispatch(authActions.setLoading(false));
             }
         };
     },
@@ -58,7 +51,6 @@ export const loginServices = {
 
                 const { data } = await API.put('/users/password', payload);
                 console.log(data);
-
                 dispatch(uiActions.setShowSnackbar({ message: 'Passordet er endret', severity: 'success' }));
                 await sleep(500);
                 dispatch(authActions.setLoading(false));

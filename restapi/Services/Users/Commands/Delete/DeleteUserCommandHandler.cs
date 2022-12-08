@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using restapi.Common.Providers;
 using restapi.Data;
 
 namespace restapi.Services.Users.Commands.Delete;

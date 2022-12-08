@@ -43,7 +43,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
     {
       Id = Guid.NewGuid(),
       Rating = request.Rating,
-      Created = dateTimeProvider.CEST
+      Created = dateTimeProvider.UtcNow
     };
 
     if (request.UserId is not null)

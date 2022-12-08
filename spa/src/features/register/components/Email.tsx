@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CircularProgress } from '@mui/material';
 import { Form } from '../../../components/Form/Form';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { StyledInput } from '../../../components/Form/StyledInput';
 import { Section } from '../../../components/Layout';
 import { SubmitButton, Text, PageSubtitle, LinkButton } from '../../../components/UI';
 import { useInput, useStateDispatch, useStateSelector } from '../../../hooks';
@@ -34,10 +34,12 @@ export const Email: React.FC = () => {
 
         if (!enteredEmailIsValid) return;
 
-        dispatch(userActions.setLoading(true));
-
         dispatch(
-            registerServices.getCode(enteredEmail, () => {
+            registerServices.getCode(enteredEmail, (emailIsConfirmed) => {
+                if (emailIsConfirmed) {
+                    navigate('/register/personal-info');
+                    return;
+                }
                 navigate('/register/confirm-code');
             }),
         );

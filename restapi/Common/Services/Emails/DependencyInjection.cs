@@ -25,6 +25,11 @@ public static class DependencyInjection
       sendGridSettings.FromName = Environment.GetEnvironmentVariable("SGFromName")!;
     }
 
+    if (string.IsNullOrEmpty(sendGridSettings.FrontendUri))
+    {
+      sendGridSettings.FromName = Environment.GetEnvironmentVariable("SGFrontendUri")!;
+    }
+
     services.AddScoped<IEmailService, EmailService>();
 
     return services;

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../utils/types.d';
+import { IUser } from '../../interfaces';
 
 const initialState = {
     loading: true,
@@ -48,8 +48,8 @@ const authState = createSlice({
             state.user = initialState.user;
             state.loading = false;
         },
-        setUserProfileImage(state, action: PayloadAction<Partial<IUser>>) {
-            state.user.webpProfileImage = action.payload.webpProfileImage;
+        updateUser(state, action: PayloadAction<Partial<IUser>>) {
+            state.user = { ...state.user, ...action.payload };
         },
     },
 });

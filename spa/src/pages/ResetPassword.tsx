@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Form } from '../components/Form/Form';
-import { StyledInput } from '../components/Form/StyledElements/StyledInput';
+import { StyledInput } from '../components/Form/StyledInput';
 import { Main, Section } from '../components/Layout';
 import { PageTitle, SubmitButton } from '../components/UI';
 import { CloseButton } from '../components/UI/Buttons/NavigationButtons';

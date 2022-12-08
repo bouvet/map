@@ -2,17 +2,16 @@ import { FC, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { authActions } from '../../../store/state/auth.state';
-import { loginServices } from '../services/login.services';
 import { useInput } from '../../../hooks/useInput';
 import { Checkbox } from '../../../components/Form/Input';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { StyledInput } from '../../../components/Form/StyledInput';
 import { Form } from '../../../components/Form/Form';
 import { validateEmail } from '../../../utils/email-validator';
 import { LinkButton, SubmitButton } from '../../../components/UI/Buttons';
 import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
 import { Text } from '../../../components/UI';
 import { userActions } from '../../../store/state/user.state';
+import { userServices } from '../../../services';
 
 export const LoginForm: FC = () => {
     const [inputType, setInputType] = useState('password');
@@ -60,14 +59,7 @@ export const LoginForm: FC = () => {
 
         if (!enteredEmailIsValid || !enteredPasswordIsValid) return;
 
-        dispatch(authActions.setLoading(true));
-
-        dispatch(
-            loginServices.login({
-                email: enteredEmail,
-                password: enteredPassword,
-            }),
-        );
+        dispatch(userServices.login(enteredEmail, enteredPassword));
         dispatch(userActions.setEmail(enteredEmail));
     };
 

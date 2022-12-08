@@ -29,7 +29,7 @@ public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Error
       return Errors.Role.AlreadyExists;
     }
 
-    var role = new Role { Name = request.Name, Created = dateTimeProvider.CEST };
+    var role = new Role { Name = request.Name, Created = dateTimeProvider.UtcNow };
 
     if (request.UserId is not null)
     {

@@ -38,7 +38,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, E
     }
 
     email.Confirmed = true;
-    email.Updated = dateTimeProvider.CEST;
+    email.Updated = dateTimeProvider.UtcNow;
 
     await dataContext.SaveChangesAsync(cancellationToken);
 

@@ -17,7 +17,6 @@ export const TipsAndTricks: React.FC = () => {
         dispatch(
             registerServices.register(user, () => {
                 dispatch(userActions.resetState());
-                localStorage.clear();
                 navigate('/');
             }),
         );

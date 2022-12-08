@@ -16,7 +16,11 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
   private readonly IDateTimeProvider dateTimeProvider;
   private readonly IJwtGenerator jwtGenerator;
 
-  public CreateEmailCommandHandler(IEmailService emailService, DataContext dataContext, IDateTimeProvider dateTimeProvider, IJwtGenerator jwtGenerator)
+  public CreateEmailCommandHandler(
+    IEmailService emailService,
+    DataContext dataContext,
+    IDateTimeProvider dateTimeProvider,
+    IJwtGenerator jwtGenerator)
   {
     this.emailService = emailService;
     this.dataContext = dataContext;
@@ -37,18 +41,25 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       return new CreateEmailResult(
         emailInDb.Id,
         emailInDb.Address,
+        emailInDb.Confirmed,
         newToken
       );
-    }
-
-    if (emailInDb is not null)
-    {
-      return Errors.EmailService.AlreadyRegistered;
     }
 
     if (userExists)
     {
       return Errors.Authentication.InvalidCredentials;
+    }
+
+    if (emailInDb?.Confirmed == true)
+    {
+      var newToken = jwtGenerator.GenerateRegistrationToken(emailInDb);
+      return new CreateEmailResult(
+        emailInDb.Id,
+        emailInDb.Address,
+        emailInDb.Confirmed,
+        newToken
+      );
     }
 
     var randomNumberGenerator = new Random();
@@ -91,6 +102,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
     return new CreateEmailResult(
       email.Id,
       email.Address,
+      email.Confirmed,
       token
     );
   }

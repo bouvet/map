@@ -1,5 +1,7 @@
+using restapi.Common.Services.Mappers.Categories;
 using restapi.Common.Services.Mappers.ImageStorage;
 using restapi.Common.Services.Mappers.Roles;
+using restapi.Contracts.Categories;
 using restapi.Contracts.Users;
 using restapi.Entities;
 using restapi.Services.Users.Commands.AddUserRole;
@@ -24,6 +26,20 @@ public class UserMapper : IUserMapper
 
   public UserResponse MapUserToUserResponse(User user)
   {
+    var favoriteCategories = new List<CategoryResponse>();
+
+    foreach (var category in user.FavoriteCategories)
+    {
+      favoriteCategories.Add(new CategoryResponse(
+        category.Id,
+        category.Name,
+        category.Emoji,
+        category.Created,
+        category.Updated,
+        null,
+        null));
+    }
+
     return new UserResponse(
         user.Id,
         user.Email,
@@ -35,6 +51,7 @@ public class UserMapper : IUserMapper
         user.PhoneNumber,
         user.DOB,
         roleMapper.MapDbListToResponseList(user.Roles),
+        favoriteCategories,
         user.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.OriginalProfileImage) : null,
         user.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(user.WebpProfileImage) : null,
         null
@@ -43,6 +60,20 @@ public class UserMapper : IUserMapper
 
   public UserResponse MapResultToResponse(UserResult result)
   {
+    var favoriteCategories = new List<CategoryResponse>();
+
+    foreach (var category in result.User.FavoriteCategories)
+    {
+      favoriteCategories.Add(new CategoryResponse(
+        category.Id,
+        category.Name,
+        category.Emoji,
+        category.Created,
+        category.Updated,
+        null,
+        null));
+    }
+
     return new UserResponse(
       result.User.Id,
       result.User.Email,
@@ -54,6 +85,7 @@ public class UserMapper : IUserMapper
       result.User.PhoneNumber,
       result.User.DOB,
       roleMapper.MapDbListToResponseList(result.User.Roles),
+      favoriteCategories,
       result.User.OriginalProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.OriginalProfileImage) : null,
       result.User.WebpProfileImage is not null ? imageStorageMapper.MapDbResultToResponse(result.User.WebpProfileImage) : null,
       result.Token
@@ -92,6 +124,7 @@ public class UserMapper : IUserMapper
       request.PostalArea,
       request.PostalCode,
       request.PhoneNumber,
+      request.DeleteProfileImage,
       request.DOB,
       request.FavoriteCategoryIds,
       request.ProfileImage

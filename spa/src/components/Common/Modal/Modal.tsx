@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import { MyTheme } from '../../styles/global';
+import { MyTheme } from '../../../styles/global';
 
 interface Props {
     center?: boolean;
@@ -38,7 +38,7 @@ const Backdrop = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1999;
+    z-index: 100;
 `;
 
 const Container = styled.div`
@@ -46,7 +46,9 @@ const Container = styled.div`
     top: 0;
     left: 0;
     min-width: 100vw;
+    max-width: 100vw;
     min-height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +60,7 @@ const ModalContainer = styled.div`
     background-color: white;
     border-radius: 3px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-    z-index: 2000;
+    z-index: 101;
     overflow: hidden;
 `;
 

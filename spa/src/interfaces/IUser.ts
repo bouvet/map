@@ -1,3 +1,5 @@
+import { ICategory } from './ICategory';
+
 export interface IUser {
     id: string;
     email: string;
@@ -29,28 +31,7 @@ export interface IUser {
             };
         },
     ];
-    favoriteCategories?: [
-        {
-            id: string;
-            name: string;
-            emoji: string;
-            created: string;
-            updated?: string;
-            creator?: {
-                id: string;
-                email: string;
-                firstName: string;
-                lastName: string;
-            };
-            editor?: {
-                id: string;
-                email: string;
-                firstName: string;
-                lastName: string;
-            };
-        },
-    ];
-    // in database?
+    favoriteCategories: ICategory[];
     originalProfileImage?: {
         id: string;
         originalFileName: string;

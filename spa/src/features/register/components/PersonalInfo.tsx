@@ -10,12 +10,12 @@ import moment from 'moment';
 import { Form } from '../../../components/Form/Form';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { userActions } from '../../../store/state/user.state';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { StyledInput } from '../../../components/Form/StyledInput';
 import { useInput } from '../../../hooks/useInput';
 import { PageSubtitle, SubmitButton } from '../../../components/UI';
 import { Section } from '../../../components/Layout';
 import { uiActions } from '../../../store';
-import { StyledLabel } from '../../../components/Form/StyledElements/StyledLabel';
+import { StyledLabel } from '../../../components/Form/StyledLabel';
 
 export const PersonalInfo: React.FC = () => {
     const { firstName, lastName, dob } = useStateSelector((state) => state.user);
@@ -36,7 +36,7 @@ export const PersonalInfo: React.FC = () => {
         inputBlurHandler: firstNameBlurHandler,
         valueChangeHandler: firstNameChangeHandler,
         setInitialValue: setInitialFirstName,
-    } = useInput((value) => value.trim().length >= 1);
+    } = useInput((value: string) => value.trim().length >= 1);
 
     const {
         value: enteredLastName,
@@ -45,7 +45,7 @@ export const PersonalInfo: React.FC = () => {
         inputBlurHandler: lastNameBlurHandler,
         valueChangeHandler: lastNameChangeHandler,
         setInitialValue: setInitialLastName,
-    } = useInput((value) => value.trim().length >= 1);
+    } = useInput((value: string) => value.trim().length >= 1);
 
     const onFirstNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         firstNameChangeHandler(e);

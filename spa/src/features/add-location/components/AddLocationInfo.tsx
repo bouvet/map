@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { StyledInput } from '../../../components/Form/StyledInput';
 import { Section } from '../../../components/Layout';
 import { FlexRowContainer, SubmitButton, Text } from '../../../components/UI';
 import { useInput } from '../../../hooks/useInput';

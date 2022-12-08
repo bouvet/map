@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useStateSelector } from '../../../hooks/useRedux';
-import { EmailConfirmation } from '../../userRegistration';
+import { ConfirmCode } from '../../register';
 
 // eslint-disable-next-line no-undef
 export const CheckAuthState = ({ children }: { children: JSX.Element }) => {
@@ -10,7 +10,7 @@ export const CheckAuthState = ({ children }: { children: JSX.Element }) => {
 
     if (!isAuthenticated && !emailIsValid && isRegistering) {
         console.log('[CheckAuth] - Navigate to confirm-code');
-        return <EmailConfirmation />;
+        return <ConfirmCode />;
     }
 
     if (!isAuthenticated && emailIsValid && isRegistering && location.pathname === '/auth') {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { Form } from '../../../components/Form/Form';
 import { userActions } from '../../../store/state/user.state';
-import { StyledInput } from '../../../components/Form/StyledElements/StyledInput';
+import { StyledInput } from '../../../components/Form/StyledInput';
 import { useInput } from '../../../hooks/useInput';
 import { SubmitButton } from '../../../components/UI';
 import { Section } from '../../../components/Layout';

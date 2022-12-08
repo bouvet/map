@@ -11,6 +11,7 @@ public record UpdateUserCommand(
   string? PostalArea,
   int PostalCode,
   int PhoneNumber,
+  bool? DeleteProfileImage,
   DateTime? DOB,
   List<Guid>? FavoriteCategoryIds,
   IFormFile? ProfileImage
