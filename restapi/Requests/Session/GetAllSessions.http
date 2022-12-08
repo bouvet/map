@@ -1,0 +1,3 @@
+@userId=04c5a3bc-7a8c-4fd7-b57d-ac83c9b5c8c5
+GET {{host}}/api/sessions/mysessions
+Authorization: Bearer {{adminToken}}

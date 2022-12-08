@@ -1,8 +1,8 @@
-import { mapActions } from '../../../store/state/map.state';
-import { AppDispatch } from '../../../store/index';
-import { API } from '../../../lib/api';
-import { locationStatus } from '../../../types';
 import { ICategory } from '../../../interfaces';
+import { API } from '../../../lib/api';
+import { AppDispatch } from '../../../store/index';
+import { mapActions } from '../../../store/state/map.state';
+import { locationStatus } from '../../../types';
 
 export const mapServices = {
     getLocations(filter: locationStatus = 'Approved') {

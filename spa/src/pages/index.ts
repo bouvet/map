@@ -6,6 +6,7 @@ export * from './Home';
 export * from './Loading';
 export * from './LocationInfo';
 export * from './Login';
+export * from './MySessions';
 export * from './ProfilePage';
-export * from './ResetPassword';
 export * from './Register';
+export * from './ResetPassword';

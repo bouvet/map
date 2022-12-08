@@ -1,0 +1,4 @@
+@id=120bacdf-e190-4b52-83a8-d0ddd9d2707e
+
+GET {{host}}/api/sessions/{{id}}
+Authorization: Bearer {{adminToken}}

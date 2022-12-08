@@ -13,9 +13,7 @@ import {
     PersonalInfoGoogle,
     Personalization,
 } from '../features/userRegistration';
-import { CreateWorkout } from '../features/workoutRegistration/Components/CreateWorkout';
-import { Admin, Auth, ChangePassword, Home, AddLocation, Login, ProfilePage, Register, ResetPassword } from '../pages';
-import { RegisterWorkout } from '../pages/RegisterWorkout';
+import { AddLocation, Admin, Auth, ChangePassword, Home, Login, MySessions, ProfilePage, Register, ResetPassword } from '../pages';
 
 export const AppRoutes: FC = () => (
     <Routes>
@@ -48,24 +46,12 @@ export const AppRoutes: FC = () => (
             <Route path="add-location">
                 <Route index element={<AddLocation />} />
             </Route>
-
-            <Route path="register-workout">
+            <Route path="my-sessions">
                 <Route
                     index
                     element={
                         <RequireAuth>
-                            <RegisterWorkout />
-                        </RequireAuth>
-                    }
-                />
-            </Route>
-
-            <Route path="create-workout">
-                <Route
-                    index
-                    element={
-                        <RequireAuth>
-                            <CreateWorkout />
+                            <MySessions />
                         </RequireAuth>
                     }
                 />

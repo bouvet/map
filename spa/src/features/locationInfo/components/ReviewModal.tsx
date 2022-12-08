@@ -1,23 +1,19 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Box, Button, Modal, Rating, Stack } from '@mui/material';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Autorenew from '@mui/icons-material/Autorenew';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Button, Modal, Rating, Stack } from '@mui/material';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useStateDispatch } from '../../../hooks/useRedux';
-import { reviewServices } from '../services/locationinfo.services';
+import { CloseButton, SubmitButton } from '../../../components/UI';
+import { ILocation } from '../../../interfaces';
+import { MyTheme } from '../../../styles/global';
 import { IReviewType } from '../../../utils/types.d';
 import { Img } from '../../add-location/components/AddLocationImage';
-import { CloseButton, SubmitButton } from '../../../components/UI';
-import { MyTheme } from '../../../styles/global';
-import { ILocation } from '../../../interfaces';
 
 interface ReviewProps {
     selectedLocation: ILocation;
     open: boolean;
     close: Function;
-    success: Function;
-    error: Function;
 }
 
 const AddReview = {
@@ -54,7 +50,7 @@ const ButtonWrapper = styled.div`
     flex-direction: row;
 `;
 
-export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, success, error }) => {
+export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close }) => {
     const [value, setValue] = useState<number | null>(null);
     const [review, setReview] = useState('');
 
@@ -68,7 +64,6 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, su
         setImage(undefined);
         setImageUrl('');
     };
-    const dispatch = useStateDispatch();
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -107,14 +102,7 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, su
             if (image) {
                 payload.image = image;
             }
-            // @ts-ignore
-            const successStatus: boolean = await dispatch(reviewServices.postReview(payload));
 
-            if (successStatus) {
-                success();
-            } else {
-                error();
-            }
             handleCloseAddReview();
         }
     };

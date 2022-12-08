@@ -1,5 +1,7 @@
-@id=7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba
+@id=04c5a3bc-7a8c-4fd7-b57d-ac83c9b5c8c5
 
 GET {{host}}/api/users/{{id}}
-# Authorization: Bearer {{admintoken}}
-Authorization: Bearer {{usertoken}}
+Authorization: Bearer {{adminToken}}
+
+
+# Authorization: Bearer {{userToken}}
