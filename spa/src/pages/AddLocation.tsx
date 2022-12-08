@@ -1,6 +1,6 @@
+import { FilePondFile } from 'filepond';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FilePondFile } from 'filepond';
 
 import { Main } from '../components/Layout';
 

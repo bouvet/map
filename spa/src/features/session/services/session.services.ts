@@ -1,7 +1,8 @@
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { sessionActions } from '../../../store/state/session.state';
-import { snackbarActions } from '../../../store/state/snackbar.state';
+import { uiActions } from '../../../store/state/ui.state';
+// import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ISessionTypeGet } from '../../../utils/types.d';
 
 export const sessionServices = {
@@ -9,8 +10,7 @@ export const sessionServices = {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.post('/sessions', payload);
-                // dispatch(sessionActions.createSession(payload));
-                dispatch(snackbarActions.setNotify({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
             }
@@ -43,7 +43,7 @@ export const sessionServices = {
             try {
                 await API.delete(`/Sessions/${sessionId}`);
                 dispatch(sessionActions.removeSession(sessionId));
-                dispatch(snackbarActions.setNotify({ message: 'Treningsøkt slettet', severity: 'success' }));
+                dispatch(uiActions.setShowSnackbar({ message: 'Treningsøkt slettet', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
             }

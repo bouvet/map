@@ -2,7 +2,7 @@ import moment from 'moment';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton, PageContainer, SectionContainer } from '../components/UI';
+import { BackButton } from '../components/UI';
 import { SessionBlock } from '../features/session/components/SessionBlock';
 import { sessionServices } from '../features/session/services/session.services';
 
@@ -67,58 +67,48 @@ export const MySessions: FC = () => {
         return singleDate;
     });
 
-    const getSessionsByYear = getYearFromDates.map((year: number) => (
-        <SessionPageContainer key={Math.round(Math.random() * 1000)}>
-            <SessionSubHeader key={`${year} - ${new Date().getMilliseconds()}`}>{moment(year.toString()).format('YYYY')}</SessionSubHeader>
-
-            {getMonthFromDates.map((month: number) =>
-                getISOFromSessions.some(
-                    (sessionDate: Date) => sessionDate.getMonth() + 1 === month && sessionDate.getFullYear() === year,
-                ) ? (
-                    <>
-                        <SessionSubHeader key={`${month} - ${new Date().getMilliseconds()}`}>
-                            {moment(month.toString()).format('MMMM')}
+    return (
+        <SessionPageContainer style={{ backgroundColor: '#fafafa' }}>
+            <BackButton onClick={() => navigate('/')} />
+            <SessionPageContainer>
+                <SessionHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</SessionHeader>
+                {getYearFromDates.map((year: number) => (
+                    <SessionPageContainer key={Math.round(Math.random() * 1000)}>
+                        <SessionSubHeader key={`${year} - ${new Date().getMilliseconds()}`}>
+                            {moment(year.toString()).format('YYYY')}
                         </SessionSubHeader>
 
-                        {sessionsSortedByDate.map((session: any) =>
+                        {getMonthFromDates.map((month: number) =>
                             getISOFromSessions.some(
-                                (sessionDate: Date) =>
-                                    sessionDate.toISOString() === new Date(session.registered).toISOString() &&
-                                    sessionDate.getMonth() + 1 === month &&
-                                    sessionDate.getFullYear() === year,
+                                (sessionDate: Date) => sessionDate.getMonth() + 1 === month && sessionDate.getFullYear() === year,
                             ) ? (
-                                <SessionBlock
-                                    key={session.id}
-                                    locationTitle={session.locationTitle}
-                                    registered={session.registered}
-                                    deleteBlock={() => HandleSessionBlockDelete(session.id)}
-                                />
+                                <>
+                                    <SessionSubHeader key={`${month} - ${new Date().getMilliseconds()}`}>
+                                        {moment(month.toString()).format('MMMM')}
+                                    </SessionSubHeader>
+
+                                    {sessionsSortedByDate.map((session: any) =>
+                                        getISOFromSessions.some(
+                                            (sessionDate: Date) =>
+                                                sessionDate.toISOString() === new Date(session.registered).toISOString() &&
+                                                sessionDate.getMonth() + 1 === month &&
+                                                sessionDate.getFullYear() === year,
+                                        ) ? (
+                                            <SessionBlock
+                                                key={session.id}
+                                                locationTitle={session.locationTitle}
+                                                registered={session.registered}
+                                                deleteBlock={() => HandleSessionBlockDelete(session.id)}
+                                            />
+                                        ) : null,
+                                    )}
+                                </>
                             ) : null,
                         )}
-                    </>
-                ) : null,
-            )}
+                    </SessionPageContainer>
+                ))}
+                ;
+            </SessionPageContainer>
         </SessionPageContainer>
-    ));
-
-    const checkDates = () => {
-        console.log(getISOFromSessions.map((sessionDate: Date) => sessionDate));
-        console.log(sessionsSortedByDate.map((session: any) => new Date(session.registered)));
-        sessionsSortedByDate.map((session: any) =>
-            console.log(
-                getISOFromSessions.some((sessionDate: Date) => sessionDate.toISOString() === new Date(session.registered).toISOString()),
-            ),
-        );
-    };
-
-    return (
-        <PageContainer style={{ backgroundColor: '#fafafa' }}>
-            <BackButton onClick={() => navigate('/')} />
-            <SectionContainer>
-                <SessionHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</SessionHeader>
-
-                {getSessionsByYear}
-            </SectionContainer>
-        </PageContainer>
     );
 };

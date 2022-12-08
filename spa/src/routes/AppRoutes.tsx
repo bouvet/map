@@ -13,7 +13,7 @@ import {
     PersonalInfoGoogle,
     Personalization,
 } from '../features/userRegistration';
-import { AddLocation, Admin, Auth, ChangePassword, Home, Login, ProfilePage, Register, ResetPassword } from '../pages';
+import { AddLocation, Admin, Auth, ChangePassword, Home, Login, MySessions, ProfilePage, Register, ResetPassword } from '../pages';
 
 export const AppRoutes: FC = () => (
     <Routes>

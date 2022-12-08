@@ -2,6 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiFab from '@mui/material/Fab';
 import { styled, SxProps } from '@mui/material/styles';
+import { FC, MouseEvent } from 'react';
 import { MyTheme } from '../../../styles/global';
 
 interface ActionProps {

@@ -95,16 +95,20 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
     const [reviewList, setReviewList] = useState<ReactElement[]>([]);
     const [imageList, setImageList] = useState<ReactElement[]>([]);
 
+    const [openSessionModal, setOpenSessionModal] = useState(false);
+    const handleSessionModalOpen = () => setOpenSessionModal(true);
+    const handleSessionModalClose = () => setOpenSessionModal(false);
+
+    const [confirmModalDelete, setConfirmModalDelete] = useState(false);
+    const handleOpenConfirmModalDelete = () => setConfirmModalDelete(true);
+    const handleCloseConfirmModalDelete = () => setConfirmModalDelete(false);
+
+    const [openAddReview, setOpenAddReview] = useState(false);
+    const handleOpenAddReview = () => setOpenAddReview(true);
+    const handleCloseAddReview = () => setOpenAddReview(false);
+
     const { currentReviews } = useStateSelector((state) => state.review);
 
-    const Dato = new Date();
-    const [sessions, setSessions] = useState([
-        {
-            title: selectedLocation.properties.title,
-            category: selectedLocation.properties.category[0].name,
-            date: Dato.toDateString(),
-        },
-    ]);
     const { currentSessions } = useStateSelector((state) => state.session);
     const locationTitle = selectedLocation.properties.title;
     const locationDescription = selectedLocation.properties.description;
@@ -160,10 +164,6 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
         updateCurrentImageCallback();
     }, [updateCurrentReviewsCallback, updateCurrentImageCallback]);
 
-    const [openAddReview, setOpenAddReview] = useState(false);
-    const handleOpenAddReview = () => setOpenAddReview(true);
-    const handleCloseAddReview = () => setOpenAddReview(false);
-
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
@@ -171,19 +171,6 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
     const handleCloseDrawer = () => {
         dispatch(uiActions.setShowLocationDrawer(false));
     };
-
-    const [openSessionModal, setOpenSessionModal] = useState(false);
-    const handleSessionModalOpen = () => setOpenSessionModal(true);
-    const handleSessionModalClose = () => setOpenSessionModal(false);
-    const [confirmModal, setConfirmModal] = useState(false);
-    const handleOpenConfirmModal = () => setConfirmModal(true);
-    const handleCloseConfirmModal = () => setConfirmModal(false);
-    const [addedNewSession, SetAddedNewSession] = useState(false);
-    const handleSuccessMessageOpen = () => {
-        SetAddedNewSession(true);
-        dispatch(uiActions.setShowSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
-    };
-    // const handleSuccessMessageClose = () => SetAddedNewSession(false);
 
     const { isAdmin } = useStateSelector((state) => state.auth);
     return (
@@ -235,7 +222,12 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                         <Button variant="contained" style={{ height: 35, width: 100, marginTop: '2%' }} onClick={handleSessionModalOpen}>
                             Ny økt
                         </Button>
-                        <AddSessionModal open={openSessionModal} close={handleSessionModalClose} locationTitle={locationTitle} />
+                        <AddSessionModal
+                            locationId={id}
+                            open={openSessionModal}
+                            close={handleSessionModalClose}
+                            locationTitle={locationTitle}
+                        />
 
                         <div style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                             <p>Antall økter: </p>
@@ -258,13 +250,13 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                         <ReviewModal selectedLocation={selectedLocation} open={openAddReview} close={handleCloseAddReview} />
                         {isAdmin ? (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <IconButton onClick={handleOpenConfirmModal}>
+                                <IconButton onClick={handleOpenConfirmModalDelete}>
                                     <DeleteIcon color="warning" />
                                 </IconButton>
                             </div>
                         ) : null}
                     </ContentWrapper>
-                    <ConfirmDeleteModal open={confirmModal} close={handleCloseConfirmModal} locationTitle={locationTitle} />
+                    <ConfirmDeleteModal open={confirmModalDelete} close={handleCloseConfirmModalDelete} locationTitle={locationTitle} />
                 </SwipeableDrawer>
             </Root>
         </StyledEngineProvider>

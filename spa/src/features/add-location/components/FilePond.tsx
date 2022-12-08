@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { FilePond as Pond, registerPlugin } from 'react-filepond';
 import { FilePondFile, FilePondInitialFile, setOptions } from 'filepond';
+import { FilePond as Pond, registerPlugin } from 'react-filepond';
 
-import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
 
-// @ts-ignore
-import locale from 'filepond/locale/no_nb';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+// @ts-ignore
+import locale from 'filepond/locale/no_nb';
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginImageResize);
 setOptions(locale);

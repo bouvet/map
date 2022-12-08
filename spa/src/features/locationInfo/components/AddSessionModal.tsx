@@ -2,7 +2,7 @@ import { Box, Button, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components/UI';
-import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { useStateDispatch } from '../../../hooks/useRedux';
 import { sessionServices } from '../../session/services/session.services';
 
 const Backdrop = styled.div`
@@ -12,6 +12,7 @@ const Backdrop = styled.div`
 `;
 
 interface sessionModalProps {
+    locationId: string;
     open: boolean;
     close: Function;
     locationTitle: any;
@@ -31,13 +32,11 @@ const AddSession = {
     pt: 5,
 };
 
-export const AddSessionModal: FC<sessionModalProps> = ({ open, close, locationTitle }) => {
+export const AddSessionModal: FC<sessionModalProps> = ({ locationId, open, close, locationTitle }) => {
     const dispatch = useStateDispatch();
-    const { currentlySelectedLocation } = useStateSelector((state) => state.map);
-    const { id } = currentlySelectedLocation;
 
     const handleNewSessionRegister = () => {
-        dispatch(sessionServices.postSession({ LocationId: id, Registered: new Date().toISOString() }));
+        dispatch(sessionServices.postSession({ LocationId: locationId, Registered: new Date().toISOString() }));
         close();
     };
     const handleCloseSessionModal = () => {

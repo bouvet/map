@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import styled from 'styled-components';
 import { Collapse, Fab } from '@mui/material';
+import styled from 'styled-components';
 
 interface Props {
     visible: boolean;
