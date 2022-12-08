@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
+import { PrimaryButton, Text } from '../../../components/Common';
 import { StyledInput } from '../../../components/Form/StyledInput';
-import { Section } from '../../../components/Layout';
-import { FlexRowContainer, SubmitButton, Text } from '../../../components/UI';
+import { FlexRowContainer, Section } from '../../../components/Layout';
+
 import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../interfaces';
@@ -94,13 +95,13 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
                     <span style={{ color: description.length < 20 ? 'red' : 'inherit' }}>{description.length} </span>/ 200
                 </Text>
 
-                <SubmitButton
+                <PrimaryButton
                     sx={{ marginTop: '1rem' }}
                     onClick={() => setPageIndex(2)}
                     disabled={locationTitle.trim().length < 5 || description.trim().length < 20 || selectedCategories.length < 1}
                 >
                     Gå videre
-                </SubmitButton>
+                </PrimaryButton>
             </div>
         </Section>
     );

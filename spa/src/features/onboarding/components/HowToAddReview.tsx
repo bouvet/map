@@ -1,6 +1,6 @@
 import React from 'react';
+import { PrimaryButton } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
-import { SubmitButton } from '../../../components/UI';
 import { useStateSelector } from '../../../hooks';
 
 export const HowToAddReview: React.FC = () => {
@@ -14,7 +14,7 @@ export const HowToAddReview: React.FC = () => {
         <Section>
             <div>Hvordan legge til omtale</div>
 
-            <SubmitButton onClick={onFinishedHandler}>Fullfør</SubmitButton>
+            <PrimaryButton onClick={onFinishedHandler}>Fullfør</PrimaryButton>
         </Section>
     );
 };

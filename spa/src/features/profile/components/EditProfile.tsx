@@ -8,18 +8,17 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
-import { PrimaryButton, SecondaryButton } from '../../../components/Common';
+import { PillButton, PrimaryButton, SecondaryButton } from '../../../components/Common';
 import { Form, StyledInput } from '../../../components/Form';
 import { useInput, useStateDispatch, useStateSelector } from '../../../hooks';
 import { ICategory } from '../../../interfaces';
 import { userServices } from '../../../services';
-import { FlexRowContainer, PillButton } from '../../../components/UI';
-import { authActions } from '../../../store';
-import { Main, Section } from '../../../components/Layout';
+import { userActions } from '../../../store';
+import { FlexRowContainer, Main, Section } from '../../../components/Layout';
 import { Header } from '../../../components/Navigation';
 
 export const EditProfile = () => {
-    const { user, loading } = useStateSelector((state) => state.auth);
+    const { user, loading } = useStateSelector((state) => state.user);
     const { categories } = useStateSelector((state) => state.map);
 
     const [dateOfBirth, setDateOfBirth] = useState(user.dob);
@@ -87,13 +86,13 @@ export const EditProfile = () => {
     const selectCategoryHandler = (selectedCategory: ICategory) => {
         if (user.favoriteCategories.find((category) => category.id === selectedCategory.id)) {
             dispatch(
-                authActions.updateUser({
+                userActions.updateUser({
                     favoriteCategories: user.favoriteCategories.filter((category) => category.id !== selectedCategory.id),
                 }),
             );
             return;
         }
-        dispatch(authActions.updateUser({ favoriteCategories: [...user.favoriteCategories, selectedCategory] }));
+        dispatch(userActions.updateUser({ favoriteCategories: [...user.favoriteCategories, selectedCategory] }));
     };
 
     useEffect(() => {

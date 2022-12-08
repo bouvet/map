@@ -1,11 +1,13 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { useStateSelector } from '../hooks/useRedux';
+import { useStateSelector } from '../../../hooks/useRedux';
 
-import { Main, Section } from '../components/Layout';
-import { Header, Sidebar } from '../components/Navigation';
-import { DivideLine, GoogleLoginLink, LoginForm } from '../features/login';
+import { Main, Section } from '../../../components/Layout';
+import { Header } from '../../../components/Navigation';
+import { GoogleLoginLink } from './GoogleLoginLink';
+import { DivideLine } from './DivideLine';
+import { LoginForm } from './LoginForm';
 
 export const Login: React.FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
@@ -25,8 +27,6 @@ export const Login: React.FC = () => {
                     <LoginForm />
                 </Section>
             </Main>
-
-            <Sidebar />
         </>
     );
 };

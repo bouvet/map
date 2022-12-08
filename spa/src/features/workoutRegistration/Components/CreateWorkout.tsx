@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FABBackButton, PageSubtitle, PageTitle, PrimaryButton } from '../../../components/Common';
 import { RegisterButtonFavorites } from '../../../components/Filter/FilterButtons';
 import { Form } from '../../../components/Form/Form';
 import { Main, Section } from '../../../components/Layout';
-import { BackButton, PageSubtitle, PageTitle, SubmitButton } from '../../../components/UI';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory } from '../../../interfaces';
@@ -40,7 +40,7 @@ export const CreateWorkout: FC = () => {
 
     return (
         <Main>
-            <BackButton onClick={() => navigate(-1)} />
+            <FABBackButton onClick={() => navigate(-1)} />
             <Section>
                 <PageTitle>Legg til treningsøkt</PageTitle>
                 <Form style={{ marginTop: '3rem' }}>
@@ -48,9 +48,9 @@ export const CreateWorkout: FC = () => {
                     {/* <FilterMenuContent style={{ padding: '2px 2px 2px 2px' }}>{mappedFilter}</FilterMenuContent> */}
                     <SelectWorkout />
                     <input type="text" value={notes} placeholder="Skriv dine notater her" onChange={(e) => setNotes(e.target.value)} />
-                    <SubmitButton type="submit" variant="contained" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
+                    <PrimaryButton type="submit" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
                         Legg til
-                    </SubmitButton>
+                    </PrimaryButton>
                 </Form>
             </Section>
         </Main>

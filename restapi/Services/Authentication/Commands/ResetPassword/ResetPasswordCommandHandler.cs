@@ -40,12 +40,12 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
     var token = jwtGenerator.GenerateResetPasswordToken(user);
 
     var sendEmailRequest = new SendEmailRequest(
-      "Reset passord",
+      "Tilbakestill passord",
       user.Email,
       $"{user.FirstName} {user.LastName}",
       $"{sendGridSettings.FrontendUri}/reset-password?token={token}",
       $@"
-        <h2>Reset passord link</h2>
+        <h2>Tilbakestill passord link</h2>
         <p>Trykk på lenken under for å sette nytt passord</p>
         <a href=""{sendGridSettings.FrontendUri}/reset-password?token={token}"">
           Sett nytt passord

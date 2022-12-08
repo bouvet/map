@@ -13,10 +13,10 @@ export const approvalServices = {
                 await API.put(`/locations/${locationId}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
-                dispatch(uiActions.setShowSnackbar({ message: 'Status er oppdatert', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Status er oppdatert', severity: 'success' }));
             } catch (error) {
                 console.error(error);
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -24,10 +24,10 @@ export const approvalServices = {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.delete(`/locations/${locationId}`);
-                dispatch(uiActions.setShowSnackbar({ message: 'Lokasjonen er slettet', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Lokasjonen er slettet', severity: 'success' }));
             } catch (error) {
                 console.error(error);
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },

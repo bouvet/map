@@ -11,7 +11,7 @@ export const Register = () => {
 
     useEffect(() => {
         switch (pathname) {
-            case '/register/email':
+            case '/register':
                 setPageIndex(1);
                 break;
             case '/register/confirm-code':

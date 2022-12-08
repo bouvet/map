@@ -4,8 +4,9 @@ import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } fr
 import { ExpandMore } from '@mui/icons-material/';
 
 import { ILocation } from '../../../interfaces';
-import { Button, FlexRowContainer, PillButton } from '../../../components/UI';
 import { useLocationStatus } from '../../../hooks';
+import { PillButton, PrimaryButton } from '../../../components/Common';
+import { FlexRowContainer } from '../../../components/Layout';
 
 interface Props {
     location: ILocation;
@@ -70,13 +71,12 @@ export const LocationCard: React.FC<Props> = ({ location, onClickHandler }) => {
                             <p style={{ fontSize: '0.9rem', fontWeight: 600, color: `${color}` }}>{status}</p>
                         </div>
                     </div>
-                    <Button
-                        variant="contained"
+                    <PrimaryButton
                         sx={{ width: '100%', marginTop: '1rem', textTransform: 'none' }}
                         onClick={() => onClickHandler(location)}
                     >
                         Se mer
-                    </Button>
+                    </PrimaryButton>
                 </AccordionDetails>
             </Accordion>
         </li>

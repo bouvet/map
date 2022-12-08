@@ -4,7 +4,8 @@ import { approvalServices } from '../services/approval.services';
 import { ILocation, LocationStatus } from '../../../interfaces';
 import { useStateDispatch, useLocationStatus } from '../../../hooks';
 
-import { Button, CloseButton, FlexRowContainer, ModalContainer, PillButton } from '../../../components/UI';
+import { Modal, PillButton, PrimaryButton } from '../../../components/Common';
+import { FlexRowContainer } from '../../../components/Layout';
 
 interface Props {
     location: ILocation | null;
@@ -12,7 +13,7 @@ interface Props {
     removeLocationFromList: Function;
 }
 
-export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLocationFromList }) => {
+export const LocationModal: React.FC<Props> = ({ location, closeModalHandler, removeLocationFromList }) => {
     const dispatch = useStateDispatch();
 
     const { status, color } = useLocationStatus(location?.properties.status);
@@ -34,10 +35,9 @@ export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLoca
     };
 
     return (
-        <ModalContainer closeModalHandler={closeModalHandler}>
+        <Modal closeModalHandler={closeModalHandler} title={location?.properties.title}>
             {location && (
                 <div style={{ position: 'relative' }}>
-                    <CloseButton onClick={closeModalHandler} sx={{ top: 0, left: 0 }} />
                     {location?.properties.webpImage?.cdnUri && (
                         <img
                             src={location?.properties.webpImage?.cdnUri}
@@ -72,49 +72,43 @@ export const Modal: React.FC<Props> = ({ location, closeModalHandler, removeLoca
                         ))}
                     </FlexRowContainer>
                     <FlexRowContainer spacing="space-between" style={{ padding: '1.5rem 0' }}>
-                        {status !== 'Approved' && status !== 'Rejected' && (
-                            <Button variant="contained" sx={{ width: '45%' }} onClick={() => updateLocationHandler('Approved')}>
+                        {status !== 'Godkjent' && status !== 'Avslått' && (
+                            <PrimaryButton sx={{ width: '45%' }} onClick={() => updateLocationHandler('Approved')}>
                                 Godkjenn
-                            </Button>
+                            </PrimaryButton>
                         )}
-                        {status === 'Approved' && (
-                            <Button
-                                variant="contained"
-                                color="warning"
-                                sx={{ width: '45%' }}
+                        {status === 'Godkjent' && (
+                            <PrimaryButton
+                                sx={{ width: '45%', backgroundColor: '#ffa726' }}
                                 onClick={() => updateLocationHandler('Under Review')}
                             >
                                 Behandle
-                            </Button>
+                            </PrimaryButton>
                         )}
-                        {status === 'Rejected' && (
-                            <Button
-                                variant="contained"
-                                color="warning"
-                                sx={{ width: '45%' }}
+                        {status === 'Avslått' && (
+                            <PrimaryButton
+                                sx={{ width: '45%', backgroundColor: '#ffa726' }}
                                 onClick={() => updateLocationHandler('Under Review')}
                             >
                                 Behandle
-                            </Button>
+                            </PrimaryButton>
                         )}
-                        {status !== 'Rejected' && (
-                            <Button
-                                variant="contained"
-                                color="error"
-                                sx={{ width: '45%' }}
+                        {status !== 'Avslått' && (
+                            <PrimaryButton
+                                sx={{ width: '45%', backgroundColor: '#f44336' }}
                                 onClick={() => updateLocationHandler('Rejected')}
                             >
                                 Avslå
-                            </Button>
+                            </PrimaryButton>
                         )}
-                        {status === 'Rejected' && (
-                            <Button variant="contained" color="error" sx={{ width: '45%' }} onClick={deleteLocationHandler}>
+                        {status === 'Avslått' && (
+                            <PrimaryButton sx={{ width: '45%', backgroundColor: '#f44336' }} onClick={deleteLocationHandler}>
                                 Slett
-                            </Button>
+                            </PrimaryButton>
                         )}
                     </FlexRowContainer>
                 </div>
             )}
-        </ModalContainer>
+        </Modal>
     );
 };

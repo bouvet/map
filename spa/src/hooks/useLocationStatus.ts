@@ -1,6 +1,8 @@
 import { MyTheme } from '../styles/global';
 
-export const useLocationStatus = (status?: string) => {
+type Status = 'Godkjent' | 'Avslått' | 'Rapportert' | 'Under Behandling';
+
+export const useLocationStatus = (status?: string): { color: string; status: Status } => {
     switch (status) {
         case 'Approved':
             return {

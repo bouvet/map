@@ -1,9 +1,10 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { FabSubMenuButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { userActions } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
+import { FabSubMenuButton } from './FabSubMenuButton';
 
 interface Props {
     showMenu: boolean;
@@ -16,6 +17,7 @@ export const HomeMenu: React.FC<Props> = ({ showMenu }) => {
 
     const logoutHandler = () => {
         dispatch(authActions.logOut());
+        dispatch(userActions.resetState());
     };
 
     return (
@@ -26,7 +28,7 @@ export const HomeMenu: React.FC<Props> = ({ showMenu }) => {
                 <FabSubMenuButton endpoint="/add-location" icon="add_location_alt" visible={showMenu} />
                 {isAuthenticated && <FabSubMenuButton endpoint="/register-workout" icon="fitness_center" visible={showMenu} />}
                 {isAuthenticated && <FabSubMenuButton icon="logout" visible={showMenu} onClickHandler={logoutHandler} />}
-                {!isAuthenticated && <FabSubMenuButton endpoint="/login" icon="login" visible={showMenu} />}
+                {!isAuthenticated && <FabSubMenuButton endpoint="/auth/login" icon="login" visible={showMenu} />}
             </ul>
         </Menu>
     );

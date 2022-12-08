@@ -5,9 +5,9 @@ import { Form } from '../../../components/Form/Form';
 import { userActions } from '../../../store/state/user.state';
 import { StyledInput } from '../../../components/Form/StyledInput';
 import { useInput } from '../../../hooks/useInput';
-import { SubmitButton } from '../../../components/UI';
 import { Section } from '../../../components/Layout';
 import { uiActions } from '../../../store';
+import { PrimaryButton } from '../../../components/Common';
 
 export const Password: React.FC = () => {
     const { password: storedPassword } = useStateSelector((state) => state.user);
@@ -43,7 +43,7 @@ export const Password: React.FC = () => {
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            dispatch(uiActions.setShowSnackbar({ message: 'Passord må være like', severity: 'error' }));
+            dispatch(uiActions.showSnackbar({ message: 'Passord må være like', severity: 'error' }));
             return;
         }
         passwordBlurHandler();
@@ -88,14 +88,13 @@ export const Password: React.FC = () => {
                     toggleShowPassword={() => setShowConfirmPassword((showPassword) => !showPassword)}
                     showPassword={showConfirmPassword}
                 />
-                <SubmitButton
+                <PrimaryButton
                     type="submit"
-                    variant="contained"
                     sx={{ marginTop: 'auto' }}
                     disabled={passwordInputHasError || confirmPasswordInputHasError || password !== confirmPassword}
                 >
                     Gå videre
-                </SubmitButton>
+                </PrimaryButton>
             </Form>
         </Section>
     );

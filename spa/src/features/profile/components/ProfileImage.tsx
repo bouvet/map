@@ -13,7 +13,7 @@ export const ProfileImage = () => {
     const [files, setFiles] = useState<any>([]);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-    const { user, loading } = useStateSelector((state) => state.auth);
+    const { user, loading } = useStateSelector((state) => state.user);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();

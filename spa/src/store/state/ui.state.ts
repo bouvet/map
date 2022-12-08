@@ -28,7 +28,7 @@ const uiState = createSlice({
         setShowLocationDrawer(state, action: PayloadAction<boolean>) {
             state.showLocationInfoDrawer = action.payload;
         },
-        setShowSnackbar(state, action: PayloadAction<ISnackbar>) {
+        showSnackbar(state, action: PayloadAction<ISnackbar>) {
             const { message, severity, visibleDuration } = action.payload;
 
             state.snackbar.visible = true;

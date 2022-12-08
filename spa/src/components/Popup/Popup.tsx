@@ -1,3 +1,4 @@
+import { Fab } from '@mui/material';
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import { useStateDispatch } from '../../hooks/useRedux';
@@ -5,7 +6,6 @@ import { ILocation } from '../../interfaces';
 import { uiActions } from '../../store/state/ui.state';
 import { MyTheme } from '../../styles/global';
 import { StarRating } from '../StarRating/StarRating';
-import { Fab } from '../UI';
 
 interface Props {
     location: ILocation;

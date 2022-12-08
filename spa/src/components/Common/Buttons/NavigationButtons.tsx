@@ -10,7 +10,7 @@ interface ActionProps {
     sx?: SxProps;
 }
 
-export const Fab = styled(MuiFab)(() => ({
+const Fab = styled(MuiFab)(() => ({
     position: 'absolute',
     height: 50,
     width: 50,
@@ -19,13 +19,13 @@ export const Fab = styled(MuiFab)(() => ({
     zIndex: 1000,
 }));
 
-export const BackButton: FC<ActionProps> = ({ onClick, sx }) => (
+export const FABBackButton: FC<ActionProps> = ({ onClick, sx }) => (
     <Fab sx={{ top: 10, left: 10, ...sx }} onClick={onClick}>
         <ArrowBackIcon />
     </Fab>
 );
 
-export const CloseButton: FC<ActionProps> = ({ onClick, sx }) => (
+export const FABCloseButton: FC<ActionProps> = ({ onClick, sx }) => (
     <Fab sx={{ top: 10, left: 10, ...sx }} onClick={onClick}>
         <CloseIcon />
     </Fab>

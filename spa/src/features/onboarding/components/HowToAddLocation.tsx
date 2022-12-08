@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PrimaryButton } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
-import { SubmitButton } from '../../../components/UI';
 
 export const HowToAddLocation: React.FC = () => {
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ export const HowToAddLocation: React.FC = () => {
         <Section>
             <div>Hvordan legge til lokasjon</div>
 
-            <SubmitButton onClick={() => navigate('/onboarding/add-review')}>Neste</SubmitButton>
+            <PrimaryButton onClick={() => navigate('/onboarding/add-review')}>Neste</PrimaryButton>
         </Section>
     );
 };

@@ -1,8 +1,7 @@
-import { Icon } from '@mui/material';
+import { Button, Icon } from '@mui/material';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { LeftFlex, RightFlex, SplitWrapper } from '../../../components/Form/Input';
-import { Button, Text } from '../../../components/UI';
 
 interface workoutProps {
     date: string;
@@ -35,7 +34,7 @@ const SessionInformation = styled.div`
     padding: 10px;
 `;
 
-const Title = styled(Text)`
+const Title = styled.p`
     padding: 10px;
     overflow: hidden;
 `;
@@ -57,7 +56,7 @@ export const WorkoutBlock: FC<workoutProps> = ({ date, dateTitle, dateCategory }
             </SessionSplitWrapper>
             {isActive && (
                 <SessionInformation>
-                    <Text>{dateTitle}</Text>
+                    <p>{dateTitle}</p>
                     {dateCategory}
                 </SessionInformation>
             )}

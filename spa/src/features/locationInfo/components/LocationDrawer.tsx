@@ -6,8 +6,8 @@ import moment from 'moment';
 import 'moment/locale/nb';
 import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { LinkButton, PrimaryButton } from '../../../components/Common';
 import { StarRating } from '../../../components/StarRating/StarRating';
-import { LinkButton, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ILocation } from '../../../interfaces';
 import { uiActions } from '../../../store/state/ui.state';
@@ -209,7 +209,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
     const [addedNewSession, SetAddedNewSession] = useState(false);
     const handleSuccessMessageOpen = () => {
         SetAddedNewSession(true);
-        dispatch(uiActions.setShowSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+        dispatch(uiActions.showSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
     };
     // const handleSuccessMessageClose = () => SetAddedNewSession(false);
 
@@ -259,16 +259,15 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
-                        <SubmitButton
+                        <PrimaryButton
                             type="submit"
-                            variant="contained"
                             style={{ height: 35, width: 100, marginTop: '2%' }}
                             onClick={() => {
                                 handleSessionModalOpen();
                             }}
                         >
                             Ny økt
-                        </SubmitButton>
+                        </PrimaryButton>
                         <AddSessionModal
                             open={openSessionModal}
                             close={handleSessionModalClose}

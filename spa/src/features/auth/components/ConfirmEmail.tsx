@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FullPageSpinner } from '../components/UI';
-import { useStateDispatch } from '../hooks';
-import { userServices } from '../services';
+import { FullPageSpinner } from '../../../components/Common';
+import { useStateDispatch } from '../../../hooks';
+import { userServices } from '../../../services';
 
 export const ConfirmEmail = () => {
     const dispatch = useStateDispatch();
@@ -18,7 +18,7 @@ export const ConfirmEmail = () => {
             localStorage.setItem('token', token);
             dispatch(
                 userServices.confirmEmail(() => {
-                    navigate('/login');
+                    navigate('/auth/login');
                 }),
             );
         }

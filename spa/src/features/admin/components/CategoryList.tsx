@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Button } from '@mui/material';
-
 import { Main, Section } from '../../../components/Layout';
 import { Header } from '../../../components/Navigation';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { MyTheme } from '../../../styles/global';
 import { categoryServices } from '../services';
 import { CategoryListItem } from './CategoryListItem';
+import { PrimaryButton } from '../../../components/Common';
 
 export const CategoryList = () => {
     const [emoji, setEmoji] = useState('');
@@ -58,15 +57,14 @@ export const CategoryList = () => {
                                 }}
                             />
                         </div>
-                        <Button
+                        <PrimaryButton
                             type="submit"
-                            variant="contained"
                             color="success"
                             sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
                             disabled={emoji.trim().length < 1 || name.trim().length < 1}
                         >
                             Legg til kategori
-                        </Button>
+                        </PrimaryButton>
                     </form>
                 </Section>
                 <Section style={{ paddingTop: 0, flex: 0 }}>
@@ -81,6 +79,8 @@ export const CategoryList = () => {
         </>
     );
 };
+
+export default CategoryList;
 
 const Input = styled.input`
     padding: 0.3rem;

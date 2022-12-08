@@ -2,8 +2,8 @@ import { Button } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { FABBackButton } from '../components/Common';
 import { Main, Section } from '../components/Layout';
-import { BackButton } from '../components/UI';
 import { WorkoutBlock } from '../features/workoutRegistration/Components/Workout';
 
 export const WorkoutHeader = styled.div`
@@ -70,7 +70,7 @@ export const RegisterWorkout: FC = () => {
 
     return (
         <Main>
-            <BackButton onClick={() => navigate(-1)} />
+            <FABBackButton onClick={() => navigate(-1)} />
             <Section>
                 <WorkoutHeader style={{ fontWeight: 700 }}>Dine treningsøkter</WorkoutHeader>
                 {september ? (

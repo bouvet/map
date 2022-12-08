@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { googleAuthServices } from '../services/googleAuth.services';
+import { useStateDispatch } from '../hooks/useRedux';
 import { Main } from '../components/Layout';
+import { authServices } from '../services';
 
 const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
-export const Auth: React.FC = () => {
-    const { shouldNavigate } = useStateSelector((state) => state.ui);
-
+export const Auth = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -22,15 +20,15 @@ export const Auth: React.FC = () => {
         const code = params.get('code');
 
         if (googleState === stateFromQuery && code) {
-            dispatch(googleAuthServices.authenticate(code));
+            dispatch(
+                authServices.authenticateWithGoogle(code, (navigationUri) => {
+                    navigate(navigationUri);
+                }),
+            );
+        } else {
+            navigate('/auth/login');
         }
-    }, [location, dispatch]);
-
-    useEffect(() => {
-        if (shouldNavigate) {
-            navigate('/');
-        }
-    }, [shouldNavigate, navigate]);
+    }, [location, dispatch, navigate]);
 
     return (
         <Main style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

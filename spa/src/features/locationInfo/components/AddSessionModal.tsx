@@ -1,7 +1,7 @@
-import { Box, Button, Modal, Stack } from '@mui/material';
+import { Box, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Text } from '../../../components/UI';
+import { PrimaryButton, Text } from '../../../components/Common';
 
 const Backdrop = styled.div`
     height: 100vh;
@@ -47,8 +47,7 @@ export const AddSessionModal: FC<sessionProps> = ({ open, close, locationTitle, 
                             <Text>Vil du legge til en ny treningsøkt på:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Button
-                                    variant="contained"
+                                <PrimaryButton
                                     style={{ marginRight: 15 }}
                                     onClick={() => {
                                         handleNewSession();
@@ -58,11 +57,11 @@ export const AddSessionModal: FC<sessionProps> = ({ open, close, locationTitle, 
                                     }}
                                 >
                                     Legg til
-                                </Button>
+                                </PrimaryButton>
 
-                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleCloseSessionModal}>
+                                <PrimaryButton style={{ backgroundColor: 'grey' }} onClick={handleCloseSessionModal}>
                                     Avbryt
-                                </Button>
+                                </PrimaryButton>
                             </div>
                         </Box>
                     </Stack>

@@ -4,12 +4,13 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { Button, Drawer } from '@mui/material';
+import { Drawer } from '@mui/material';
 
 import { MyTheme, deviceWidth } from '../../styles/global';
 
 import { useStateDispatch, useStateSelector } from '../../hooks';
-import { authActions, uiActions } from '../../store';
+import { authActions, uiActions, userActions } from '../../store';
+import { PrimaryButton } from '../Common';
 
 export const Sidebar: React.FC = () => {
     const { showSidebar } = useStateSelector((state) => state.ui);
@@ -26,9 +27,10 @@ export const Sidebar: React.FC = () => {
 
     const logoutHandler = () => {
         dispatch(authActions.logOut());
+        dispatch(userActions.resetState());
         dispatch(uiActions.toggleShowSidebar());
         navigate('/');
-        dispatch(uiActions.setShowSnackbar({ message: 'Du er logget ut', severity: 'success' }));
+        dispatch(uiActions.showSnackbar({ message: 'Du er logget ut', severity: 'success' }));
     };
 
     return (
@@ -80,8 +82,8 @@ export const Sidebar: React.FC = () => {
                     {!isAuthenticated && (
                         <li>
                             <NavLink
-                                to="/login"
-                                className={pathname === '/login' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                to="/auth/login"
+                                className={pathname === '/auth/login' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
                                 onClick={closeSidebarHandler}
                             >
                                 Logg inn
@@ -96,13 +98,13 @@ export const Sidebar: React.FC = () => {
                     </li>
                     {isAuthenticated && (
                         <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
-                            <Button
+                            <PrimaryButton
                                 className="sidebar-link sidebar-link--btn"
                                 onClick={logoutHandler}
                                 sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}
                             >
                                 Logg ut
-                            </Button>
+                            </PrimaryButton>
                         </li>
                     )}
                 </ul>

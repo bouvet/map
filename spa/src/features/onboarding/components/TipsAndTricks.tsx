@@ -1,13 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LinkButton, PrimaryButton } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
-import { LinkButton, SubmitButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks';
 import { userActions } from '../../../store';
 import { registerServices } from '../../register/services/register.services';
 
 export const TipsAndTricks: React.FC = () => {
-    const { user } = useStateSelector((state) => state);
+    const {
+        user: { dob, email, firstName, lastName },
+        password,
+        favoriteCategoryIds,
+    } = useStateSelector((state) => state.user);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -15,7 +19,7 @@ export const TipsAndTricks: React.FC = () => {
     const onSkipHandler = () => {
         dispatch(userActions.setLoading(true));
         dispatch(
-            registerServices.register(user, () => {
+            registerServices.register({ dob, email, firstName, lastName, password, favoriteCategoryIds }, () => {
                 dispatch(userActions.resetState());
                 navigate('/');
             }),
@@ -25,9 +29,12 @@ export const TipsAndTricks: React.FC = () => {
     return (
         <Section>
             <div>Tips og triks</div>
+            <div>Her kommer det tips og triks for applikasjonen</div>
             <div>
-                <SubmitButton onClick={() => navigate('/onboarding/add-location')}>Neste</SubmitButton>
-                <LinkButton onClick={onSkipHandler}>Hopp over</LinkButton>
+                <PrimaryButton onClick={() => navigate('/onboarding/add-location')}>Neste</PrimaryButton>
+                <LinkButton sx={{ marginTop: '0.5rem' }} onClick={onSkipHandler}>
+                    Hopp over
+                </LinkButton>
             </div>
         </Section>
     );

@@ -1,3 +1,5 @@
+import { IProfileImage } from './IProfileImage';
+import { IRole } from './IRole';
 import { ICategory } from './ICategory';
 
 export interface IUser {
@@ -9,46 +11,12 @@ export interface IUser {
     postalArea?: string;
     postalCode?: number;
     phoneNumber?: number;
+    updated?: string;
     dob: string;
     registered: string;
-    roles: [
-        {
-            id: string;
-            name: string;
-            created: string;
-            updated: string;
-            creator?: {
-                id: string;
-                email: string;
-                firstName: string;
-                lastName: string;
-            };
-            editor?: {
-                id: string;
-                email: string;
-                firstName: string;
-                lastName: string;
-            };
-        },
-    ];
+    roles: IRole[];
     favoriteCategories: ICategory[];
-    originalProfileImage?: {
-        id: string;
-        originalFileName: string;
-        blobUri: string;
-        cdnUri: string;
-        contentType: string;
-        uploaded: string;
-        originalImageId: null;
-    };
-    webpProfileImage?: {
-        id: string;
-        originalFileName: string;
-        blobUri: string;
-        cdnUri: string;
-        contentType: string;
-        uploaded: string;
-        originalImageId: string;
-    };
+    originalProfileImage?: IProfileImage;
+    webpProfileImage?: IProfileImage;
     token: string;
 }

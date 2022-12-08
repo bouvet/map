@@ -11,7 +11,7 @@ import { userServices } from '../../../services';
 import { validateEmail } from '../../../utils/email-validator';
 
 export const ChangeEmail = () => {
-    const { loading } = useStateSelector((state) => state.auth);
+    const { loading } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 

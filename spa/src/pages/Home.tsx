@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Main, Section } from '../components/Layout';
 
-import { BackButton } from '../components/UI/Buttons/NavigationButtons';
+import { FABBackButton } from '../components/Common/Buttons/NavigationButtons';
 import { HomeHeader, HomeMap, LocationInfoPopup } from '../features/home';
 import { SwipeableEdgeDrawer } from '../features/locationInfo/components/LocationDrawer';
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
@@ -55,7 +55,7 @@ export const Home: React.FC = () => {
             )}
             <Main>
                 <Section style={{ position: 'absolute', height: '100%', width: '100%', padding: 0, maxWidth: '100%' }}>
-                    {showLocationInfoPopup && <BackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
+                    {showLocationInfoPopup && <FABBackButton onClick={() => dispatch(uiActions.setShowLocationPopup(false))} />}
 
                     <HomeMap
                         selectedLocation={selectedLocation}

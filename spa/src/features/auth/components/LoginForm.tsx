@@ -1,20 +1,17 @@
-import { FC, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { useInput } from '../../../hooks/useInput';
 import { Checkbox } from '../../../components/Form/Input';
 import { StyledInput } from '../../../components/Form/StyledInput';
 import { Form } from '../../../components/Form/Form';
-import { validateEmail } from '../../../utils/email-validator';
-import { LinkButton, SubmitButton } from '../../../components/UI/Buttons';
-import { FlexRowContainer } from '../../../components/UI/Containers/FlexRowContainer';
-import { Text } from '../../../components/UI';
-import { userActions } from '../../../store/state/user.state';
-import { userServices } from '../../../services';
+import { validateEmail } from '../../../utils';
+import { FlexRowContainer } from '../../../components/Layout';
 
-export const LoginForm: FC = () => {
-    const [inputType, setInputType] = useState('password');
+import { authServices } from '../../../services';
+import { LinkButton, PrimaryButton, Text } from '../../../components/Common';
+
+export const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const [rememberMe, setRememberMe] = useState(false);
@@ -39,18 +36,6 @@ export const LoginForm: FC = () => {
         inputBlurHandler: passwordBlurHandler,
     } = useInput((value: string) => value.trim().length >= 8);
 
-    const togglePasswordHandler = () => {
-        if (inputType === 'password') {
-            setInputType('text');
-            setShowPassword(true);
-        }
-
-        if (inputType === 'text') {
-            setInputType('password');
-            setShowPassword(false);
-        }
-    };
-
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -59,8 +44,7 @@ export const LoginForm: FC = () => {
 
         if (!enteredEmailIsValid || !enteredPasswordIsValid) return;
 
-        dispatch(userServices.login(enteredEmail, enteredPassword));
-        dispatch(userActions.setEmail(enteredEmail));
+        dispatch(authServices.login(enteredEmail, enteredPassword));
     };
 
     return (
@@ -76,13 +60,13 @@ export const LoginForm: FC = () => {
             />
             <StyledInput
                 label="Passord"
-                type={inputType}
+                type={showPassword ? 'text' : 'password'}
                 errorMessage="Passord må bestå av minst 8 tegn"
                 value={enteredPassword}
                 onChange={passwordChangeHandler}
                 onBlur={passwordBlurHandler}
                 inputHasError={passwordInputHasError}
-                toggleShowPassword={togglePasswordHandler}
+                toggleShowPassword={() => setShowPassword((show) => !show)}
                 showPassword={showPassword}
             />
             <FlexRowContainer spacing="space-between">
@@ -90,15 +74,16 @@ export const LoginForm: FC = () => {
                     <Checkbox type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
                     <Text style={{ whiteSpace: 'nowrap' }}>Husk meg</Text>
                 </FlexRowContainer>
-                <LinkButton onClick={() => navigate('/change-password', { state: { enteredEmail } })}>Glemt passord</LinkButton>
+                <LinkButton onClick={() => navigate('/auth/reset-password', { state: { enteredEmail } })}>Glemt passord</LinkButton>
             </FlexRowContainer>
 
-            <SubmitButton type="submit" variant="contained" disabled={!enteredEmailIsValid || !enteredPasswordIsValid}>
-                {!loading ? 'Logg inn' : <CircularProgress color="inherit" size={22} />}
-            </SubmitButton>
+            <PrimaryButton type="submit" disabled={!enteredEmailIsValid || !enteredPasswordIsValid} loading={loading}>
+                Logg inn
+            </PrimaryButton>
+
             <FlexRowContainer spacing="space-between">
                 <Text>Ikke registrert?</Text>
-                <LinkButton onClick={() => navigate('/register/email')}>Registrer deg</LinkButton>
+                <LinkButton onClick={() => navigate('/register')}>Registrer deg</LinkButton>
             </FlexRowContainer>
         </Form>
     );

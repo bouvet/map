@@ -15,30 +15,32 @@ export const registerServices = {
                 localStorage.setItem('email', data.address);
                 localStorage.setItem('token', data.token);
 
+                await sleep(500);
+
                 if (data.confirmed) {
                     dispatch(userActions.setLoading(false));
+                    dispatch(userActions.updateUser({ email: data.address }));
                     if (typeof callback === 'function') {
                         callback(true);
                     }
                     return;
                 }
 
-                dispatch(uiActions.setShowSnackbar({ message: 'Kode er sendt', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Kode er sendt', severity: 'success' }));
                 dispatch(userActions.setAuthMethod('email'));
 
-                await sleep(500);
                 dispatch(userActions.setLoading(false));
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error: any) {
                 if (error.response?.data?.title === 'Email has already been registered') {
-                    dispatch(uiActions.setShowSnackbar({ message: 'E-posten er allerede registrert', severity: 'error' }));
+                    dispatch(uiActions.showSnackbar({ message: 'E-posten er allerede registrert', severity: 'error' }));
                     dispatch(userActions.setLoading(false));
                     return;
                 }
                 dispatch(userActions.setLoading(false));
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -48,7 +50,7 @@ export const registerServices = {
                 const { data }: { data: IConfirmCodeResponse } = await API.post('/email/confirm', { email, confirmationCode });
 
                 dispatch(userActions.setEmailVerified(data.confirmed));
-                dispatch(uiActions.setShowSnackbar({ message: 'Kode er bekreftet', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Kode er bekreftet', severity: 'success' }));
 
                 localStorage.setItem('emailVerified', JSON.stringify(data.confirmed));
 
@@ -57,7 +59,7 @@ export const registerServices = {
                     callback();
                 }
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -70,7 +72,7 @@ export const registerServices = {
                 localStorage.clear();
 
                 dispatch(authActions.userLogin(data));
-                dispatch(uiActions.setShowSnackbar({ message: 'Bruker er opprettet', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Bruker er opprettet', severity: 'success' }));
 
                 await sleep(500);
                 if (typeof callback === 'function') {
@@ -78,7 +80,7 @@ export const registerServices = {
                 }
             } catch (error) {
                 console.error('error', error);
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -87,7 +89,7 @@ export const registerServices = {
             try {
                 const id = localStorage.getItem('id');
                 if (!id) {
-                    dispatch(uiActions.setShowSnackbar({ message: 'Vi kunne ikke sende ny kode', severity: 'error' }));
+                    dispatch(uiActions.showSnackbar({ message: 'Vi kunne ikke sende ny kode', severity: 'error' }));
                 }
 
                 const { data } = await API.post(`/email/resend-code/${id}`);
@@ -96,9 +98,9 @@ export const registerServices = {
                 localStorage.setItem('id', data.id);
 
                 await sleep(500);
-                dispatch(uiActions.setShowSnackbar({ message: 'Ny kode er sendt', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Ny kode er sendt', severity: 'success' }));
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },

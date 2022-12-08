@@ -1,4 +1,4 @@
-export * from './IAuthenticateWithCodeResponse';
+export * from './IAuthWithGoogleResponse';
 export * from './ICategory';
 export * from './IConfirmCodeResponse';
 export * from './ICreateEmailResponse';

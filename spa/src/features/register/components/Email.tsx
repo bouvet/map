@@ -1,30 +1,29 @@
-import React, { useEffect, FormEvent, useState } from 'react';
+import { useEffect, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CircularProgress } from '@mui/material';
 import { Form } from '../../../components/Form/Form';
 import { StyledInput } from '../../../components/Form/StyledInput';
 import { Section } from '../../../components/Layout';
-import { SubmitButton, Text, PageSubtitle, LinkButton } from '../../../components/UI';
 import { useInput, useStateDispatch, useStateSelector } from '../../../hooks';
-import { userActions } from '../../../store';
 import { validateEmail } from '../../../utils';
 import { registerServices } from '../services/register.services';
+import { PrimaryButton, Text, PageSubtitle } from '../../../components/Common';
 
-export const Email: React.FC = () => {
+export const Email = () => {
     const [storedEmail, setStoredEmail] = useState('');
 
-    const { loading, email } = useStateSelector((state) => state.user);
+    const { loading } = useStateSelector((state) => state.user);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
     const {
-        value: enteredEmail,
-        isValid: enteredEmailIsValid,
+        value: email,
+        isValid: emailIsValid,
         hasError: emailInputHasError,
         valueChangeHandler: emailChangeHandler,
         inputBlurHandler: emailBlurHandler,
+        setInitialValue: setInitialEmail,
     } = useInput((value) => validateEmail(value));
 
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -32,10 +31,12 @@ export const Email: React.FC = () => {
 
         emailBlurHandler();
 
-        if (!enteredEmailIsValid) return;
+        if (!emailIsValid) return;
+
+        localStorage.setItem('email', email);
 
         dispatch(
-            registerServices.getCode(enteredEmail, (emailIsConfirmed) => {
+            registerServices.getCode(email, (emailIsConfirmed) => {
                 if (emailIsConfirmed) {
                     navigate('/register/personal-info');
                     return;
@@ -45,19 +46,13 @@ export const Email: React.FC = () => {
         );
     };
 
-    const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        emailChangeHandler(e);
-        dispatch(userActions.setEmail(e.target.value));
-    };
-
     useEffect(() => {
-        const email = localStorage.getItem('email');
-
-        if (email) {
-            setStoredEmail(email);
-            dispatch(userActions.setEmail(email));
+        const localStoredEmail = localStorage.getItem('email');
+        if (localStoredEmail) {
+            setInitialEmail(localStoredEmail);
+            setStoredEmail(localStoredEmail);
         }
-    }, [dispatch]);
+    }, [setInitialEmail]);
 
     return (
         <Section>
@@ -75,19 +70,22 @@ export const Email: React.FC = () => {
                     label="E-post*"
                     type="email"
                     errorMessage="Vennligst oppgi en gyldig e-post"
-                    value={enteredEmail.trim().length > 0 ? enteredEmail : email}
-                    onChange={onEmailChange}
+                    value={email}
+                    onChange={emailChangeHandler}
                     onBlur={emailBlurHandler}
                     inputHasError={emailInputHasError}
                 />
-                <SubmitButton type="submit" variant="contained" sx={{ marginTop: '1rem' }} disabled={!enteredEmailIsValid}>
-                    {!loading ? 'Send kode' : <CircularProgress color="inherit" size={22} />}
-                </SubmitButton>
-                {storedEmail && (
-                    <LinkButton sx={{ marginTop: '0.5rem' }} onClick={() => navigate('/register/confirm-code')}>
-                        Jeg har kode
-                    </LinkButton>
-                )}
+                <div style={{ marginTop: 'auto' }}>
+                    <PrimaryButton type="submit" disabled={!emailIsValid} loading={loading}>
+                        Send kode
+                    </PrimaryButton>
+
+                    {storedEmail && (
+                        <PrimaryButton sx={{ marginTop: '0.5rem' }} onClick={() => navigate('/register/confirm-code')}>
+                            Jeg har kode
+                        </PrimaryButton>
+                    )}
+                </div>
             </Form>
         </Section>
     );

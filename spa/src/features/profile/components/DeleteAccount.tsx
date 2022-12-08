@@ -13,7 +13,7 @@ export const DeleteAccount = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-    const { user } = useStateSelector((state) => state.auth);
+    const { user, loading } = useStateSelector((state) => state.user);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -85,6 +85,7 @@ export const DeleteAccount = () => {
                             acceptButtonText="Slett konto"
                             onAcceptHandler={onSubmitHandler}
                             onCancelHandler={() => setShowConfirmModal(false)}
+                            loading={loading}
                         />
                     )}
                 </Section>

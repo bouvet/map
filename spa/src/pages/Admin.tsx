@@ -8,9 +8,9 @@ import { mapServices } from '../features/map';
 import { ILocation } from '../interfaces';
 import { locationStatus } from '../types';
 
-import { LocationCard, Modal, StatusSelector } from '../features/admin';
+import { LocationCard, LocationModal, StatusSelector } from '../features/admin';
 import { Section } from '../components/Layout';
-import { Header, Sidebar } from '../components/Navigation';
+import { Header } from '../components/Navigation';
 
 export const Admin: React.FC = () => {
     const [location, setLocation] = useState<ILocation | null>(null);
@@ -64,11 +64,13 @@ export const Admin: React.FC = () => {
                 {locations.length === 0 && <div style={{ marginTop: '2rem' }}>Hurra 🎉 - ingenting å gjøre her 👍</div>}
 
                 {location && (
-                    <Modal location={location} closeModalHandler={closeModalHandler} removeLocationFromList={removeLocationFromList} />
+                    <LocationModal
+                        location={location}
+                        closeModalHandler={closeModalHandler}
+                        removeLocationFromList={removeLocationFromList}
+                    />
                 )}
             </Section>
-
-            <Sidebar />
         </>
     );
 };

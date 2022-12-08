@@ -3,21 +3,21 @@ import { useNavigate } from 'react-router-dom';
 
 import { TextField } from '@mui/material';
 import { Section } from '../../../components/Layout';
-import { LinkButton, PageSubtitle, Text } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks';
 import { registerServices } from '../services/register.services';
+import { LinkButton, Text, PageSubtitle } from '../../../components/Common';
 
 export const ConfirmCode: React.FC = () => {
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
-    const { email, emailVerified } = useStateSelector((state) => state.user);
+    const { user, emailVerified } = useStateSelector((state) => state.user);
 
     const [confirmationCode, setConfirmationCode] = useState<string[]>(new Array(6).fill(''));
 
     const onSubmitHandler = (confirmationCode: string) => {
         dispatch(
-            registerServices.confirmCode(email, confirmationCode, () => {
+            registerServices.confirmCode(user.email, confirmationCode, () => {
                 navigate('/register/personal-info');
             }),
         );
@@ -48,7 +48,7 @@ export const ConfirmCode: React.FC = () => {
         <Section>
             <div>
                 <PageSubtitle>Skriv inn koden for å bekrefte din e-postadresse</PageSubtitle>
-                <Text style={{ fontWeight: 600 }}>{email}</Text>
+                <Text style={{ fontWeight: 600 }}>{user.email}</Text>
             </div>
             <form style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0.5rem', marginBottom: '2rem' }}>
                 {confirmationCode.map((_data, index) => (
@@ -70,7 +70,7 @@ export const ConfirmCode: React.FC = () => {
                     <LinkButton sx={{ width: '100%' }} onClick={resendCode}>
                         Send ny kode
                     </LinkButton>
-                    <LinkButton sx={{ marginTop: '1rem', width: '100%' }} onClick={() => navigate('/register/email')}>
+                    <LinkButton sx={{ marginTop: '1rem', width: '100%' }} onClick={() => navigate('/register')}>
                         Endre e-post
                     </LinkButton>
                 </div>

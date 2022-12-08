@@ -1,15 +1,12 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { Box, Button, Modal, Rating, Stack } from '@mui/material';
-import AddAPhoto from '@mui/icons-material/AddAPhoto';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Autorenew from '@mui/icons-material/Autorenew';
+import { Box, Modal, Rating, Stack } from '@mui/material';
 import styled from 'styled-components';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { reviewServices } from '../services/locationinfo.services';
 import { IReviewType } from '../../../utils/types.d';
-import { CloseButton, SubmitButton } from '../../../components/UI';
 import { MyTheme } from '../../../styles/global';
 import { ILocation } from '../../../interfaces';
+import { FABCloseButton, PrimaryButton } from '../../../components/Common';
 
 interface ReviewProps {
     selectedLocation: ILocation;
@@ -159,23 +156,12 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, su
                             {review.length} / 120
                             {image ? (
                                 <>
-                                    <Img src={imageUrl} alt="blobb" />
+                                    <Img src={imageUrl} alt="blob" />
                                     <ButtonWrapper>
-                                        <Button
-                                            sx={{ textTransform: 'none', color: 'red' }}
-                                            size="large"
-                                            onClick={removeImage}
-                                            startIcon={<DeleteIcon style={{ color: 'red' }} />}
-                                        >
+                                        <PrimaryButton sx={{ textTransform: 'none', color: 'red' }} onClick={removeImage}>
                                             Slett
-                                        </Button>
-                                        <Button
-                                            sx={{ textTransform: 'none' }}
-                                            style={{ color: `${MyTheme.colors.accent}` }}
-                                            size="large"
-                                            component="label"
-                                            startIcon={<Autorenew />}
-                                        >
+                                        </PrimaryButton>
+                                        <PrimaryButton sx={{ textTransform: 'none' }} style={{ color: `${MyTheme.colors.accent}` }}>
                                             <input
                                                 hidden
                                                 accept="image/png, image/webp, image/jpg, image/jpeg"
@@ -183,16 +169,11 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, su
                                                 onChange={(e) => handleImageChange(e)}
                                             />
                                             Bytt
-                                        </Button>
+                                        </PrimaryButton>
                                     </ButtonWrapper>
                                 </>
                             ) : (
-                                <Button
-                                    sx={{ padding: 2, textTransform: 'none' }}
-                                    style={{ color: `${MyTheme.colors.accent}` }}
-                                    component="label"
-                                    startIcon={<AddAPhoto />}
-                                >
+                                <PrimaryButton sx={{ padding: 2, textTransform: 'none' }} style={{ color: `${MyTheme.colors.accent}` }}>
                                     <input
                                         hidden
                                         accept="image/png, image/webp, image/jpg, image/jpeg"
@@ -200,19 +181,19 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close, su
                                         onChange={(e) => handleImageChange(e)}
                                     />
                                     Last opp
-                                </Button>
+                                </PrimaryButton>
                             )}
                             {!value ? (
-                                <SubmitButton disabled variant="contained" sx={{ width: 230 }}>
+                                <PrimaryButton disabled sx={{ width: 230 }}>
                                     Send inn
-                                </SubmitButton>
+                                </PrimaryButton>
                             ) : (
-                                <SubmitButton type="submit" variant="contained" sx={{ width: 230 }}>
+                                <PrimaryButton type="submit" sx={{ width: 230 }}>
                                     Send inn
-                                </SubmitButton>
+                                </PrimaryButton>
                             )}
                         </Stack>
-                        <CloseButton onClick={handleCloseAddReview} />
+                        <FABCloseButton onClick={handleCloseAddReview} />
                     </Box>
                 </form>
             </>

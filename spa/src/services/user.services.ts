@@ -1,55 +1,32 @@
 import { FilePondFile } from 'filepond';
 import { IUpdatePasswordRequest, IUser } from '../interfaces';
 import { API } from '../lib/api';
-import { AppDispatch, authActions, uiActions } from '../store';
+import { AppDispatch, authActions, uiActions, userActions } from '../store';
 import { sleep } from '../utils/sleep';
 
 export const userServices = {
-    login(email: string, password: string, callback?: () => void) {
-        return async (dispatch: AppDispatch) => {
-            try {
-                dispatch(authActions.setLoading(true));
-
-                const { data } = await API.post('/auth/login', { email, password });
-
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data));
-
-                await sleep(2000);
-                dispatch(authActions.setLoading(false));
-                dispatch(authActions.userLogin(data));
-                dispatch(uiActions.setShowSnackbar({ message: 'Du er logget inn', severity: 'success' }));
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            } catch (error: any) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Feil epost eller passord', severity: 'error' }));
-                dispatch(authActions.setLoading(false));
-            }
-        };
-    },
     validatePassword(email: string, password: string, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
 
                 await API.post('/auth/login', { email, password });
 
                 await sleep(2000);
-                dispatch(authActions.setLoading(false));
+                dispatch(userActions.setLoading(false));
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error: any) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt, vennligst prøv igjen', severity: 'error' }));
-                dispatch(authActions.setLoading(false));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt, vennligst prøv igjen', severity: 'error' }));
+                dispatch(userActions.setLoading(false));
             }
         };
     },
     updateProfileImage(userId: string, image: FilePondFile, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
 
                 const formData = new FormData();
 
@@ -63,23 +40,23 @@ export const userServices = {
 
                 await sleep(500);
 
-                dispatch(authActions.setLoading(false));
-                dispatch(authActions.updateUser(user));
+                dispatch(userActions.updateUser(user));
 
-                dispatch(uiActions.setShowSnackbar({ message: 'Opplasting av bilde vellykket', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Opplasting av bilde vellykket', severity: 'success' }));
 
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Opplasting av bilde feilet, prøv igjen', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Opplasting av bilde feilet, prøv igjen', severity: 'error' }));
+                dispatch(userActions.setLoading(false));
             }
         };
     },
     deleteProfileImage(userId: string, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
 
                 const formData = new FormData();
 
@@ -91,25 +68,26 @@ export const userServices = {
 
                 await sleep(500);
 
-                dispatch(authActions.setLoading(false));
-                dispatch(authActions.updateUser({ webpProfileImage: undefined }));
+                dispatch(userActions.updateUser({ webpProfileImage: undefined }));
 
-                dispatch(uiActions.setShowSnackbar({ message: 'Sletting av bilde vellykket', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Sletting av bilde vellykket', severity: 'success' }));
 
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Opplasting av bilde feilet, prøv igjen', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Opplasting av bilde feilet, prøv igjen', severity: 'error' }));
+                dispatch(userActions.setLoading(false));
             }
         };
     },
     getInfo(userId: string) {
         return async (dispatch: AppDispatch) => {
             try {
-                const { data } = await API.get(`/users/${userId}`);
+                const { data: user } = await API.get(`/users/${userId}`);
 
-                dispatch(authActions.userLogin(data));
+                dispatch(authActions.userLogin(user));
+                dispatch(userActions.updateUser(user));
             } catch (error) {
                 dispatch(authActions.logOut());
             }
@@ -118,7 +96,7 @@ export const userServices = {
     updateProfile(userId: string, formData: FormData, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
 
                 await API.put(`/users/${userId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 
@@ -126,37 +104,36 @@ export const userServices = {
 
                 await sleep(500);
 
-                dispatch(authActions.setLoading(false));
-                dispatch(authActions.updateUser(user));
+                dispatch(userActions.updateUser(user));
 
-                dispatch(uiActions.setShowSnackbar({ message: 'Profilen er oppdatert', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Profilen er oppdatert', severity: 'success' }));
 
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error) {
                 console.error('error', error);
-                dispatch(authActions.setLoading(false));
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(userActions.setLoading(false));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
     updatePassword(request: IUpdatePasswordRequest, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
                 await API.put('/users/password', request);
 
                 await sleep(500);
-                dispatch(authActions.setLoading(false));
-                dispatch(uiActions.setShowSnackbar({ message: 'Passord er oppdatert 🎉', severity: 'success' }));
+                dispatch(userActions.setLoading(false));
+                dispatch(uiActions.showSnackbar({ message: 'Passord er oppdatert 🎉', severity: 'success' }));
 
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error) {
-                dispatch(authActions.setLoading(false));
-                dispatch(uiActions.setShowSnackbar({ message: 'Oppdatering av passord feilet, vennligst prøv igjen', severity: 'error' }));
+                dispatch(userActions.setLoading(false));
+                dispatch(uiActions.showSnackbar({ message: 'Oppdatering av passord feilet, vennligst prøv igjen', severity: 'error' }));
             }
         };
     },
@@ -167,13 +144,13 @@ export const userServices = {
 
                 await sleep(500);
                 dispatch(authActions.logOut());
-                dispatch(uiActions.setShowSnackbar({ message: 'Konto er slettet', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Konto er slettet', severity: 'success' }));
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error) {
                 dispatch(
-                    uiActions.setShowSnackbar({
+                    uiActions.showSnackbar({
                         message: 'Noe gikk galt med slettingen, beklager det. Vennligst prøv igjen og sjekk at passordet er korrekt',
                         severity: 'error',
                     }),
@@ -184,13 +161,13 @@ export const userServices = {
     changeEmail(email: string, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
                 await API.put('/users/change-email', { email });
 
                 await sleep(500);
-                dispatch(authActions.setLoading(false));
+                dispatch(userActions.setLoading(false));
                 dispatch(
-                    uiActions.setShowSnackbar({
+                    uiActions.showSnackbar({
                         message: 'Epost sendt. Bruk lenken i e-posten for å bekrefte din nye e-post',
                         severity: 'success',
                     }),
@@ -202,7 +179,8 @@ export const userServices = {
                     callback();
                 }
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Sending av epost feilet, vennligst prøv igjen', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Sending av epost feilet, vennligst prøv igjen', severity: 'error' }));
+                dispatch(userActions.setLoading(false));
             }
         };
     },
@@ -214,7 +192,7 @@ export const userServices = {
 
                 await sleep(500);
                 dispatch(
-                    uiActions.setShowSnackbar({
+                    uiActions.showSnackbar({
                         message: 'E-posten er bekreftet, du kan nå logge inn',
                         severity: 'success',
                     }),
@@ -225,11 +203,28 @@ export const userServices = {
                     callback();
                 }
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Bekreftelse av epost feilet, vennligst prøv igjen', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Bekreftelse av epost feilet, vennligst prøv igjen', severity: 'error' }));
                 if (typeof callback === 'function') {
                     await sleep(500);
                     callback();
                 }
+            }
+        };
+    },
+    changePassword(password: string, confirmPassword: string) {
+        return async (dispatch: AppDispatch) => {
+            try {
+                dispatch(authActions.setLoading(true));
+
+                const { data } = await API.put('/users/password', { password, confirmPassword });
+                console.log(data);
+                dispatch(uiActions.showSnackbar({ message: 'Passordet er endret', severity: 'success' }));
+                await sleep(500);
+            } catch (error) {
+                console.error('error', error);
+                await sleep(500);
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(authActions.setLoading(false));
             }
         };
     },
