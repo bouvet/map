@@ -4,7 +4,7 @@ import { Main } from '../components/Layout';
 
 import { Progress, ProgressBarContainer, ProgressHeader } from '../components/Navigation';
 
-export const Register = () => {
+const Register = () => {
     const [pageIndex, setPageIndex] = useState(1);
 
     const { pathname } = useLocation();
@@ -55,3 +55,5 @@ export const Register = () => {
         </>
     );
 };
+
+export default Register;

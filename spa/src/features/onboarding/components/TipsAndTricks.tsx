@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { LinkButton, PrimaryButton } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { useStateDispatch, useStateSelector } from '../../../hooks';
+import { registerServices } from '../../../services';
 import { userActions } from '../../../store';
-import { registerServices } from '../../register/services/register.services';
 
-export const TipsAndTricks: React.FC = () => {
+const TipsAndTricks: React.FC = () => {
     const {
         user: { dob, email, firstName, lastName },
         password,
@@ -17,10 +17,9 @@ export const TipsAndTricks: React.FC = () => {
     const navigate = useNavigate();
 
     const onSkipHandler = () => {
-        dispatch(userActions.setLoading(true));
         dispatch(
             registerServices.register({ dob, email, firstName, lastName, password, favoriteCategoryIds }, () => {
-                dispatch(userActions.resetState());
+                dispatch(userActions.setPassword(''));
                 navigate('/');
             }),
         );
@@ -39,3 +38,5 @@ export const TipsAndTricks: React.FC = () => {
         </Section>
     );
 };
+
+export default TipsAndTricks;

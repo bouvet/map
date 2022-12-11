@@ -7,7 +7,7 @@ import { authServices } from '../services';
 
 const googleState = process.env.REACT_APP_GOOGLE_STATE;
 
-export const Auth = () => {
+const Auth = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -36,3 +36,5 @@ export const Auth = () => {
         </Main>
     );
 };
+
+export default Auth;

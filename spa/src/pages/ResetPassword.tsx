@@ -8,7 +8,7 @@ import { useInput, useStateDispatch, useStateSelector } from '../hooks';
 import { authServices } from '../services';
 import { validateEmail } from '../utils';
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
     const { loading } = useStateSelector((state) => state.auth);
 
     const dispatch = useStateDispatch();
@@ -58,3 +58,5 @@ export const ResetPassword = () => {
         </>
     );
 };
+
+export default ResetPassword;

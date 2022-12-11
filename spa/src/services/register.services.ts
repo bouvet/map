@@ -1,7 +1,7 @@
-import { IConfirmCodeResponse, ICrateEmailResponse, IRegisterRequest } from '../../../interfaces';
-import { API } from '../../../lib/api';
-import { AppDispatch, authActions, uiActions, userActions } from '../../../store';
-import { sleep } from '../../../utils/sleep';
+import { IConfirmCodeResponse, ICrateEmailResponse, IRegisterRequest } from '../interfaces';
+import { API } from '../lib/api';
+import { AppDispatch, authActions, uiActions, userActions } from '../store';
+import { sleep } from '../utils/sleep';
 
 export const registerServices = {
     getCode(email: string, callback?: (emailIsConfirmed?: boolean) => void) {
@@ -66,20 +66,21 @@ export const registerServices = {
     register(user: IRegisterRequest, callback?: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
-                dispatch(authActions.setLoading(true));
+                dispatch(userActions.setLoading(true));
                 const { data } = await API.post('/auth/register', user);
 
                 localStorage.clear();
 
                 dispatch(authActions.userLogin(data));
+                dispatch(userActions.updateUser(data));
                 dispatch(uiActions.showSnackbar({ message: 'Bruker er opprettet', severity: 'success' }));
 
-                await sleep(500);
+                await sleep(1000);
                 if (typeof callback === 'function') {
                     callback();
                 }
             } catch (error) {
-                console.error('error', error);
+                dispatch(userActions.setLoading(false));
                 dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };

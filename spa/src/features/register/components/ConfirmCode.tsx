@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import { Section } from '../../../components/Layout';
 import { useStateDispatch, useStateSelector } from '../../../hooks';
-import { registerServices } from '../services/register.services';
+import { registerServices } from '../../../services/register.services';
 import { LinkButton, Text, PageSubtitle } from '../../../components/Common';
 
 export const ConfirmCode: React.FC = () => {

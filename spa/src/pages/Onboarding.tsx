@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Main } from '../components/Layout';
 import { Progress, ProgressBarContainer, ProgressHeader } from '../components/Navigation';
-import { HowToAddLocation, HowToAddReview, TipsAndTricks } from '../features/onboarding';
+import HowToAddLocation from '../features/onboarding/components/HowToAddLocation';
+import HowToAddReview from '../features/onboarding/components/HowToAddReview';
+import TipsAndTricks from '../features/onboarding/components/TipsAndTricks';
 
-export const Onboarding = () => {
+const Onboarding = () => {
     const [pageIndex, setPageIndex] = useState(1);
 
     const { pathname } = useLocation();
@@ -48,3 +50,5 @@ export const Onboarding = () => {
         </>
     );
 };
+
+export default Onboarding;

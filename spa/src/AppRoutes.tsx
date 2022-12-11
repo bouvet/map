@@ -1,19 +1,29 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import { App } from './App';
+import { RequireAuth } from './features/auth';
 import { FullPageSpinner } from './components/Common';
-import { ConfirmEmail, Login, RequireAuth } from './features/auth';
-import { HowToAddLocation, HowToAddReview, TipsAndTricks } from './features/onboarding';
+import { RegisterWorkout } from './pages/RegisterWorkout';
+import { CreateWorkout } from './features/workoutRegistration/Components/CreateWorkout';
 import { ChangeEmail, ChangePassword, DeleteAccount, EditProfile, ProfileImage } from './features/profile';
 import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from './features/register';
-import { CreateWorkout } from './features/workoutRegistration/Components/CreateWorkout';
-import { RegisterWorkout } from './pages/RegisterWorkout';
 
-import { Auth, Home, AddLocation, Profile, Register, Onboarding, ResetPassword } from './pages';
+import { Home, Profile } from './pages';
 
-const RequireAdmin = lazy(() => import('./features/auth/components/RequireAdmin'));
+const Auth = lazy(() => import('./pages/Auth'));
 const Admin = lazy(() => import('./pages/Admin'));
+const Register = lazy(() => import('./pages/Register'));
+const Onboarding = lazy(() => import('./pages/Onboarding'));
+const AddLocation = lazy(() => import('./pages/AddLocation'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const Login = lazy(() => import('./features/auth/components/Login'));
+const RequireAdmin = lazy(() => import('./features/auth/components/RequireAdmin'));
+const ConfirmEmail = lazy(() => import('./features/auth/components/ConfirmEmail'));
 const CategoryList = lazy(() => import('./features/admin/components/CategoryList'));
+const TipsAndTricks = lazy(() => import('./features/onboarding/components/TipsAndTricks'));
+const HowToAddReview = lazy(() => import('./features/onboarding/components/HowToAddReview'));
+const HowToAddLocation = lazy(() => import('./features/onboarding/components/HowToAddLocation'));
 
 export const AppRoutes = () => (
     <Suspense fallback={<FullPageSpinner />}>

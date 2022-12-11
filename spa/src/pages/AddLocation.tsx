@@ -9,7 +9,7 @@ import { locationServices } from '../features/add-location/services/location.ser
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { addLocationActions } from '../store';
 
-export const AddLocation: React.FC = () => {
+const AddLocation: React.FC = () => {
     const [pageIndex, setPageIndex] = useState(0);
 
     const { title, description, lat, lng, selectedCategories } = useStateSelector((state) => state.addLocation);
@@ -63,3 +63,5 @@ export const AddLocation: React.FC = () => {
         </>
     );
 };
+
+export default AddLocation;

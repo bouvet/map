@@ -6,7 +6,7 @@ import { StyledInput } from '../../../components/Form/StyledInput';
 import { Section } from '../../../components/Layout';
 import { useInput, useStateDispatch, useStateSelector } from '../../../hooks';
 import { validateEmail } from '../../../utils';
-import { registerServices } from '../services/register.services';
+import { registerServices } from '../../../services/register.services';
 import { PrimaryButton, Text, PageSubtitle } from '../../../components/Common';
 
 export const Email = () => {

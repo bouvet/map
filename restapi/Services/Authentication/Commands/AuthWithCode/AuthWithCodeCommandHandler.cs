@@ -111,7 +111,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
           Id = Guid.NewGuid(),
           Email = emailFromGoogle,
           FirstName = userInfoResponse.Value.Given_name,
-          LastName = userInfoResponse.Value.Family_name
+          LastName = userInfoResponse.Value.Family_name,
+          DOB = new DateTime(2000, 1, 1)
         };
 
         return new AuthWithCodeResult(emailNotVerifiedUser, createEmailResult.Value.Id, createEmailResult.Value.Token, false, true, false);
@@ -133,7 +134,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
           Id = Guid.NewGuid(),
           Email = emailFromGoogle,
           FirstName = userInfoResponse.Value.Given_name,
-          LastName = userInfoResponse.Value.Family_name
+          LastName = userInfoResponse.Value.Family_name,
+          DOB = new DateTime(2000, 1, 1)
         };
 
         return new AuthWithCodeResult(emailVerifiedUser, resendCodeResult.Value.Id, resendCodeResult.Value.Token, false, true, false);
@@ -148,7 +150,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       Email = emailFromGoogle,
       FirstName = userInfoResponse.Value.Given_name,
       LastName = userInfoResponse.Value.Family_name,
-      AuthenticationMethod = "Google"
+      AuthenticationMethod = "Google",
+      DOB = new DateTime(2000, 1, 1)
     };
 
     if (email is not null)

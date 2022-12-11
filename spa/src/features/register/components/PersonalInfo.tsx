@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -15,6 +15,8 @@ import { uiActions } from '../../../store';
 import { PageSubtitle, PrimaryButton } from '../../../components/Common';
 
 export const PersonalInfo: React.FC = () => {
+    const [dateOfBirth, setDateOfBirth] = useState('');
+
     const { user } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -22,6 +24,7 @@ export const PersonalInfo: React.FC = () => {
     const dobChangeHandler = (date: Date | null) => {
         if (date !== null) {
             const dob = moment(date).format('YYYY-MM-DD');
+            setDateOfBirth(new Date(dob).toISOString());
             dispatch(userActions.updateUser({ dob: new Date(dob).toISOString() }));
         }
     };
@@ -111,7 +114,7 @@ export const PersonalInfo: React.FC = () => {
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                     <MobileDatePicker
                         label="Fødselsdato*"
-                        value={user.dob || null}
+                        value={dateOfBirth}
                         onChange={(value: Date | null) => {
                             dobChangeHandler(value);
                         }}

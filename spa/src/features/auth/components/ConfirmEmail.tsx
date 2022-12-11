@@ -26,3 +26,5 @@ export const ConfirmEmail = () => {
 
     return <FullPageSpinner />;
 };
+
+export default ConfirmEmail;

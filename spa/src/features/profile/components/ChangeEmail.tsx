@@ -8,10 +8,11 @@ import { Header } from '../../../components/Navigation';
 import { useInput } from '../../../hooks/useInput';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { userServices } from '../../../services';
+import { uiActions } from '../../../store';
 import { validateEmail } from '../../../utils/email-validator';
 
 export const ChangeEmail = () => {
-    const { loading } = useStateSelector((state) => state.user);
+    const { loading, user } = useStateSelector((state) => state.user);
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
 
@@ -30,8 +31,13 @@ export const ChangeEmail = () => {
 
         if (!emailIsValid) return;
 
+        if (email.toLowerCase() === user.email.toLowerCase()) {
+            dispatch(uiActions.showSnackbar({ message: `${email} er din e-post allerede, du trenger ikke å bytte`, severity: 'warning' }));
+            return;
+        }
+
         dispatch(
-            userServices.changeEmail(email, () => {
+            userServices.changeEmail(email.toLowerCase(), () => {
                 navigate('/');
             }),
         );

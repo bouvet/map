@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 
-export const HowToAddLocation: React.FC = () => {
+const HowToAddLocation: React.FC = () => {
     const navigate = useNavigate();
 
     return (
@@ -14,3 +14,5 @@ export const HowToAddLocation: React.FC = () => {
         </Section>
     );
 };
+
+export default HowToAddLocation;

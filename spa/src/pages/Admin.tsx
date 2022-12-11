@@ -12,7 +12,7 @@ import { LocationCard, LocationModal, StatusSelector } from '../features/admin';
 import { Section } from '../components/Layout';
 import { Header } from '../components/Navigation';
 
-export const Admin: React.FC = () => {
+const Admin: React.FC = () => {
     const [location, setLocation] = useState<ILocation | null>(null);
 
     const { locations } = useStateSelector((state) => state.map);
