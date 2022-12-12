@@ -56,6 +56,13 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
 
     if (user is not null)
     {
+      var userEmail = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address == user.Email.ToLower(), cancellationToken: cancellationToken);
+
+      if (userEmail?.Confirmed != true)
+      {
+        return Errors.EmailService.EmailNotConfirmed;
+      }
+
       var userToken = jwtGenerator.GenerateUserToken(user);
 
       if (user.AccessToken == "Admin")
@@ -75,7 +82,7 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       user.AccessToken = authResponse.Value.Access_token;
       user.RefreshToken = authResponse.Value.Refresh_token;
       user.AuthenticationMethod = "Google";
-      user.Updated = dateTimeProvider.CEST;
+      user.Updated = dateTimeProvider.UtcNow;
 
       await dataContext.SaveChangesAsync(cancellationToken);
 
@@ -104,7 +111,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
           Id = Guid.NewGuid(),
           Email = emailFromGoogle,
           FirstName = userInfoResponse.Value.Given_name,
-          LastName = userInfoResponse.Value.Family_name
+          LastName = userInfoResponse.Value.Family_name,
+          DOB = new DateTime(2000, 1, 1)
         };
 
         return new AuthWithCodeResult(emailNotVerifiedUser, createEmailResult.Value.Id, createEmailResult.Value.Token, false, true, false);
@@ -126,7 +134,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
           Id = Guid.NewGuid(),
           Email = emailFromGoogle,
           FirstName = userInfoResponse.Value.Given_name,
-          LastName = userInfoResponse.Value.Family_name
+          LastName = userInfoResponse.Value.Family_name,
+          DOB = new DateTime(2000, 1, 1)
         };
 
         return new AuthWithCodeResult(emailVerifiedUser, resendCodeResult.Value.Id, resendCodeResult.Value.Token, false, true, false);
@@ -141,7 +150,8 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       Email = emailFromGoogle,
       FirstName = userInfoResponse.Value.Given_name,
       LastName = userInfoResponse.Value.Family_name,
-      AuthenticationMethod = "Google"
+      AuthenticationMethod = "Google",
+      DOB = new DateTime(2000, 1, 1)
     };
 
     if (email is not null)
@@ -159,7 +169,7 @@ public class AuthWithCodeCommandHandler : IRequestHandler<AuthWithCodeCommand, E
       Address = userInfoResponse.Value.Email.ToLower(),
       ConfirmationCode = randomNumber,
       Confirmed = true,
-      Created = dateTimeProvider.CEST,
+      Created = dateTimeProvider.UtcNow,
       CodeValidTo = dateTimeProvider.UtcNow.AddHours(48)
     };
 

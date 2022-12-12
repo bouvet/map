@@ -1,7 +1,9 @@
 using ErrorOr;
 using MediatR;
+using restapi.Common.Providers;
 using restapi.Data;
 using restapi.Entities;
+using restapi.Services.ImageStorages.Commands.Delete;
 using restapi.Services.ImageStorages.Commands.Upload;
 using restapi.Services.ImageStorages.Common;
 
@@ -11,11 +13,13 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Error
 {
   private readonly DataContext dataContext;
   private readonly ISender mediator;
+  private readonly IDateTimeProvider dateTimeProvider;
 
-  public UpdateUserCommandHandler(DataContext dataContext, ISender mediator)
+  public UpdateUserCommandHandler(DataContext dataContext, ISender mediator, IDateTimeProvider dateTimeProvider)
   {
     this.dataContext = dataContext;
     this.mediator = mediator;
+    this.dateTimeProvider = dateTimeProvider;
   }
 
   public async Task<ErrorOr<Updated>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -61,9 +65,37 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Error
         return Errors.ImageStorage.UploadFailed;
       }
 
+      if (user.WebpProfileImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(user.WebpProfileImage.Id, "webp");
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
+      }
+
       user.OriginalProfileImage = uploadResult.Value.OriginalImage;
       user.WebpProfileImage = uploadResult.Value.WebpImage;
     }
+
+    if (request.DeleteProfileImage is true)
+    {
+      if (user.WebpProfileImage is not null)
+      {
+        var deleteImageCommand = new DeleteImageCommand(user.WebpProfileImage.Id, "webp");
+        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
+        if (deleteImageResult.IsError)
+        {
+          return Errors.ImageStorage.DeleteFailed;
+        }
+      }
+
+      user.OriginalProfileImage = null;
+      user.WebpProfileImage = null;
+    }
+
+    user.Updated = dateTimeProvider.UtcNow;
 
     await dataContext.SaveChangesAsync(cancellationToken);
 

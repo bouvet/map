@@ -7,8 +7,8 @@ import moment from 'moment';
 import 'moment/locale/nb';
 import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { LinkButton, PrimaryButton } from '../../../components/Common';
 import { StarRating } from '../../../components/StarRating/StarRating';
-import { LinkButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ILocation } from '../../../interfaces';
 import { uiActions } from '../../../store/state/ui.state';
@@ -219,9 +219,15 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                         </GridWrapper>
                     </StyledBox>
                     <ContentWrapper>
-                        <Button variant="contained" style={{ height: 35, width: 100, marginTop: '2%' }} onClick={handleSessionModalOpen}>
+                        <PrimaryButton
+                            type="submit"
+                            style={{ height: 35, width: 100, marginTop: '2%' }}
+                            onClick={() => {
+                                handleSessionModalOpen();
+                            }}
+                        >
                             Ny økt
-                        </Button>
+                        </PrimaryButton>
                         <AddSessionModal
                             locationId={id}
                             open={openSessionModal}

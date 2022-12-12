@@ -16,7 +16,11 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
   private readonly IDateTimeProvider dateTimeProvider;
   private readonly IJwtGenerator jwtGenerator;
 
-  public CreateEmailCommandHandler(IEmailService emailService, DataContext dataContext, IDateTimeProvider dateTimeProvider, IJwtGenerator jwtGenerator)
+  public CreateEmailCommandHandler(
+    IEmailService emailService,
+    DataContext dataContext,
+    IDateTimeProvider dateTimeProvider,
+    IJwtGenerator jwtGenerator)
   {
     this.emailService = emailService;
     this.dataContext = dataContext;
@@ -29,19 +33,33 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
     var emailInDb = await dataContext.Emails.SingleOrDefaultAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
     var userExists = await dataContext.Users.AnyAsync(user => user.Email.ToLower() == request.Email, cancellationToken);
 
-    if (emailInDb is not null && emailInDb.Confirmed)
+    if (emailInDb?.Confirmed == false && emailInDb.CodeValidTo > dateTimeProvider.UtcNow)
     {
-      // TODO: return something
-    }
-
-    if (emailInDb is not null)
-    {
-      return Errors.EmailService.AlreadyRegistered;
+      var newToken = jwtGenerator.GenerateRegistrationToken(emailInDb);
+      emailInDb.CodeValidTo = dateTimeProvider.UtcNow.AddHours(48);
+      await dataContext.SaveChangesAsync(cancellationToken);
+      return new CreateEmailResult(
+        emailInDb.Id,
+        emailInDb.Address,
+        emailInDb.Confirmed,
+        newToken
+      );
     }
 
     if (userExists)
     {
       return Errors.Authentication.InvalidCredentials;
+    }
+
+    if (emailInDb?.Confirmed == true)
+    {
+      var newToken = jwtGenerator.GenerateRegistrationToken(emailInDb);
+      return new CreateEmailResult(
+        emailInDb.Id,
+        emailInDb.Address,
+        emailInDb.Confirmed,
+        newToken
+      );
     }
 
     var randomNumberGenerator = new Random();
@@ -72,7 +90,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
       Address = request.Email.ToLower(),
       ConfirmationCode = randomNumber,
       Confirmed = false,
-      Created = dateTimeProvider.CEST,
+      Created = dateTimeProvider.UtcNow,
       CodeValidTo = dateTimeProvider.UtcNow.AddHours(48)
     };
 
@@ -84,6 +102,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
     return new CreateEmailResult(
       email.Id,
       email.Address,
+      email.Confirmed,
       token
     );
   }

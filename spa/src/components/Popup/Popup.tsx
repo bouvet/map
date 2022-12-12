@@ -6,7 +6,6 @@ import { ILocation } from '../../interfaces';
 import { uiActions } from '../../store/state/ui.state';
 import { MyTheme } from '../../styles/global';
 import { StarRating } from '../StarRating/StarRating';
-import { Fab } from '../UI';
 
 interface Props {
     location: ILocation;
@@ -36,7 +35,7 @@ const PopupWrapper = styled.div`
 
 const PopupImage = styled.div<PopUpImageProp>`
     background: url(${(props) => props.imageURL});
-    background-color: ${MyTheme.colors.grey};
+    background-color: ${MyTheme.colors.gray};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

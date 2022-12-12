@@ -1,8 +1,10 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using restapi.Common.Services.Auth;
 using restapi.Common.Services.Emails;
+using restapi.Common.Settings;
 using restapi.Data;
 
 namespace restapi.Services.Authentication.Commands.ResetPassword;
@@ -12,12 +14,18 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
   private readonly DataContext dataContext;
   private readonly IEmailService emailService;
   private readonly IJwtGenerator jwtGenerator;
+  private readonly SendGridSettings sendGridSettings;
 
-  public ResetPasswordCommandHandler(DataContext dataContext, IEmailService emailService, IJwtGenerator jwtGenerator)
+  public ResetPasswordCommandHandler(
+    DataContext dataContext,
+    IEmailService emailService,
+    IJwtGenerator jwtGenerator,
+    IOptions<SendGridSettings> sendGridOptions)
   {
     this.dataContext = dataContext;
     this.emailService = emailService;
     this.jwtGenerator = jwtGenerator;
+    sendGridSettings = sendGridOptions.Value;
   }
 
   public async Task<ErrorOr<Success>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
@@ -32,14 +40,14 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
     var token = jwtGenerator.GenerateResetPasswordToken(user);
 
     var sendEmailRequest = new SendEmailRequest(
-      "Reset passord",
+      "Tilbakestill passord",
       user.Email,
       $"{user.FirstName} {user.LastName}",
-      $"https://optimus-verden-venter.azurewebsites.net/reset-password?token={token}",
+      $"{sendGridSettings.FrontendUri}/reset-password?token={token}",
       $@"
-        <h2>Reset passord link</h2>
+        <h2>Tilbakestill passord link</h2>
         <p>Trykk på lenken under for å sette nytt passord</p>
-        <a href=""https://optimus-verden-venter.azurewebsites.net/reset-password?token={token}"">
+        <a href=""{sendGridSettings.FrontendUri}/reset-password?token={token}"">
           Sett nytt passord
         </a>
         <br>

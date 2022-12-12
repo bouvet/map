@@ -16,6 +16,7 @@ public class DataContext : DbContext
         modelBuilder.Entity<User>().HasOne(user => user.WebpProfileImage);
         modelBuilder.Entity<User>().Navigation(user => user.FavoriteCategories).AutoInclude();
         modelBuilder.Entity<User>().Navigation(user => user.Roles).AutoInclude();
+        modelBuilder.Entity<User>().Navigation(user => user.WebpProfileImage).AutoInclude();
         modelBuilder.Entity<User>().HasMany(user => user.Sessions);
 
         modelBuilder.Entity<Role>().HasOne(role => role.Creator);

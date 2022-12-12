@@ -11,7 +11,7 @@ import reportWebVitals from './reportWebVitals';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { store } from './store';
-import { AppRoutes } from './routes';
+import { AppRoutes } from './AppRoutes';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

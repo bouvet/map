@@ -2,12 +2,15 @@ import React from 'react';
 
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
-import { Button, Drawer } from '@mui/material';
+import styled from 'styled-components';
 
-import { MyTheme } from '../../styles/global';
+import { Drawer } from '@mui/material';
 
-import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
-import { authActions, uiActions } from '../../store';
+import { MyTheme, deviceWidth } from '../../styles/global';
+
+import { useStateDispatch, useStateSelector } from '../../hooks';
+import { authActions, uiActions, userActions } from '../../store';
+import { PrimaryButton } from '../Common';
 
 export const Sidebar: React.FC = () => {
     const { showSidebar } = useStateSelector((state) => state.ui);
@@ -24,25 +27,36 @@ export const Sidebar: React.FC = () => {
 
     const logoutHandler = () => {
         dispatch(authActions.logOut());
+        dispatch(userActions.resetState());
         dispatch(uiActions.toggleShowSidebar());
         navigate('/');
-        dispatch(uiActions.setShowSnackbar({ message: 'Du er logget ut', severity: 'success' }));
+        dispatch(uiActions.showSnackbar({ message: 'Du er logget ut', severity: 'success' }));
     };
 
     return (
         <Drawer anchor="right" open={showSidebar} onClose={closeSidebarHandler}>
-            <div
-                style={{
-                    width: '75vw',
-                    height: '3rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    backgroundColor: `${MyTheme.colors.accent}`,
-                }}
-            />
-
-            <nav style={{ marginTop: '1rem', height: '100%' }}>
-                <ul style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            <nav style={{ height: '100%' }}>
+                <SidebarHeader />
+                <ul
+                    style={{
+                        height: `calc(100% - ${MyTheme.size.header.height.mobileS})`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.3rem',
+                        paddingTop: '1rem',
+                    }}
+                >
+                    {isAuthenticated && (
+                        <li>
+                            <NavLink
+                                to="/profile"
+                                className={pathname === '/profile' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                onClick={closeSidebarHandler}
+                            >
+                                Profil
+                            </NavLink>
+                        </li>
+                    )}
                     {isAdmin && (
                         <li>
                             <NavLink
@@ -68,8 +82,8 @@ export const Sidebar: React.FC = () => {
                     {!isAuthenticated && (
                         <li>
                             <NavLink
-                                to="/login"
-                                className={pathname === '/login' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                to="/auth/login"
+                                className={pathname === '/auth/login' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
                                 onClick={closeSidebarHandler}
                             >
                                 Logg inn
@@ -83,14 +97,14 @@ export const Sidebar: React.FC = () => {
                         </NavLink>
                     </li>
                     {isAuthenticated && (
-                        <li style={{ marginBottom: '1.5rem', marginTop: 'auto' }}>
-                            <Button
+                        <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
+                            <PrimaryButton
                                 className="sidebar-link sidebar-link--btn"
                                 onClick={logoutHandler}
                                 sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}
                             >
                                 Logg ut
-                            </Button>
+                            </PrimaryButton>
                         </li>
                     )}
                 </ul>
@@ -99,10 +113,9 @@ export const Sidebar: React.FC = () => {
     );
 };
 
-// {/* {links.map((link) => (
-//                         <li style={{ marginBottom: '0.5rem' }} key={link.label}>
-//                             <Link to={link.to} onClick={() => dispatch(uiActions.toggleShowSidebar())}>
-//                                 <LinkButton sx={{ justifyContent: 'left', paddingLeft: '3rem' }}>{link.label}</LinkButton>
-//                             </Link>
-//                         </li>
-//                     ))} */}
+const SidebarHeader = styled.div`
+    width: 75vw;
+    height: ${MyTheme.size.header.height.mobileS};
+    background-color: ${MyTheme.colors.accent};
+    max-width: ${deviceWidth.mobileS};
+`;

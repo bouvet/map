@@ -10,12 +10,12 @@ export const locationServices = {
                 });
 
                 dispatch(addLocationActions.setLoading(false));
-                dispatch(uiActions.setShowSnackbar({ message: 'Lokasjon er lagt til behandling', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Lokasjon er lagt til behandling', severity: 'success' }));
                 dispatch(uiActions.setShouldNavigate(true));
             } catch (error) {
                 console.error('error', error);
                 dispatch(
-                    uiActions.setShowSnackbar({
+                    uiActions.showSnackbar({
                         message: 'Lagring av lokasjon feilet, vennligst prøv igjen',
                         severity: 'error',
                         visibleDuration: 5000,

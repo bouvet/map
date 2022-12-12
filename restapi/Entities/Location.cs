@@ -10,10 +10,6 @@ public class Location
   public const int MaxTitleLength = 30;
   public const int MinDescriptionLength = 20;
   public const int MaxDescriptionLength = 200;
-  public const int MinLongitudeValue = 5;
-  public const int MaxLongitudeValue = 6;
-  public const int MinLatitudeValue = 58;
-  public const int MaxLatitudeValue = 59;
 
   [Key]
   public Guid Id { get; set; } = new Guid();

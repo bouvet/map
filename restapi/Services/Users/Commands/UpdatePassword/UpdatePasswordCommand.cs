@@ -4,7 +4,8 @@ using MediatR;
 namespace restapi.Services.Users.Commands.UpdatePassword;
 
 public record UpdatePasswordCommand(
-  string UserId,
+  Guid? UserId,
+  string? CurrentPassword,
   string Password,
   string ConfirmPassword
 ) : IRequest<ErrorOr<Updated>>;

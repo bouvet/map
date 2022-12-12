@@ -57,7 +57,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
       BlobUri = originalImageBlob.Uri,
       CdnUri = azureProvider.GetCdnUri(originalImageBlob.Uri),
       ContentType = request.Image.ContentType,
-      Uploaded = dateTimeProvider.CEST,
+      Uploaded = dateTimeProvider.UtcNow,
       Uploader = request.Uploader,
       LocationId = request.LocationId,
       ReviewId = request.ReviewId
@@ -69,7 +69,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Err
       BlobUri = webpImageBlob.Uri,
       CdnUri = azureProvider.GetCdnUri(webpImageBlob.Uri),
       ContentType = "image/webp",
-      Uploaded = dateTimeProvider.CEST,
+      Uploaded = dateTimeProvider.UtcNow,
       Uploader = request.Uploader,
       LocationId = request.LocationId,
       ReviewId = request.ReviewId,

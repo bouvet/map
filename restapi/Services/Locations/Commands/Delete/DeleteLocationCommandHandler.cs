@@ -27,16 +27,6 @@ public class DeleteLocationCommandHandler : IRequestHandler<DeleteLocationComman
     {
       foreach (var review in request.Location.Reviews)
       {
-        if (review.OriginalImage is not null)
-        {
-          var deleteImageCommand = new DeleteImageCommand(review.OriginalImage.Id, "originals");
-          ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
-          if (deleteImageResult.IsError)
-          {
-            return Errors.ImageStorage.DeleteFailed;
-          }
-        }
-
         if (review.WebpImage is not null)
         {
           var deleteImageCommand = new DeleteImageCommand(review.WebpImage.Id, "webp");
@@ -46,16 +36,6 @@ public class DeleteLocationCommandHandler : IRequestHandler<DeleteLocationComman
             return Errors.ImageStorage.DeleteFailed;
           }
         }
-      }
-    }
-
-    if (request.Location.OriginalImage is not null)
-    {
-      var deleteImageCommand = new DeleteImageCommand(request.Location.OriginalImage.Id, "originals");
-      ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
-      if (deleteImageResult.IsError)
-      {
-        return Errors.ImageStorage.DeleteFailed;
       }
     }
 

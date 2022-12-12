@@ -1,4 +1,3 @@
-using System.Net;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using restapi.Common.Providers.Authorization;
 using restapi.Common.Services.Mappers.Users;
 using restapi.Contracts.Users;
+using restapi.Services.Users.Commands.ChangeEmail;
+using restapi.Services.Users.Commands.ConfirmEmail;
+using restapi.Services.Users.Commands.Delete;
 using restapi.Services.Users.Commands.UpdatePassword;
 using restapi.Services.Users.Common;
 
@@ -81,7 +83,7 @@ public class UsersController : ApiController
     );
   }
 
-  // [Authorize(Roles = "Administrator")]
+  [Authorize(Roles = "Administrator")]
   [HttpPost("role")]
   public async Task<IActionResult> AddUserRole(AddUserRoleRequest request)
   {
@@ -95,11 +97,18 @@ public class UsersController : ApiController
     );
   }
 
-  [Authorize(Roles = "Administrator")]
+  [Authorize(Roles = "User, Administrator")]
   [HttpDelete("{id:guid}")]
   public async Task<IActionResult> DeleteUser(Guid id)
   {
-    var deleteUserCommand = userMapper.MapDeleteToCommand(id);
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, id);
+
+    if (!authResult.IsAuthorized)
+    {
+      return Forbid();
+    }
+
+    var deleteUserCommand = new DeleteUserCommand(id);
 
     ErrorOr<Deleted> deleteUserResult = await mediator.Send(deleteUserCommand);
 
@@ -109,14 +118,15 @@ public class UsersController : ApiController
     );
   }
 
-  [Authorize(Roles = "ResettingPassword")]
+  [Authorize(Roles = "User, ResettingPassword")]
   [HttpPut("password")]
   public async Task<IActionResult> UpdatePassword(UpdatePasswordRequest request)
   {
-    var userId = HttpContext.User.FindFirst("userId")?.Value;
+    var authorizationResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
 
     var updatePasswordCommand = new UpdatePasswordCommand(
-      userId ?? "",
+      authorizationResult.UserId,
+      request.CurrentPassword,
       request.Password,
       request.ConfirmPassword
     );
@@ -125,6 +135,37 @@ public class UsersController : ApiController
 
     return updatePasswordResult.Match(
       _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [HttpPut("change-email")]
+  public async Task<IActionResult> ChangeEmail(ChangeEmailRequest request)
+  {
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
+
+    var updateEmailCommand = new ChangeEmailCommand(request.Email, authResult.UserId);
+
+    ErrorOr<Updated> updateEmailResult = await mediator.Send(updateEmailCommand);
+
+    return updateEmailResult.Match(
+      _ => NoContent(),
+      errors => Problem(errors)
+    );
+  }
+
+  [Authorize(Roles = "ChangingEmail")]
+  [HttpPut("confirm-email")]
+  public async Task<IActionResult> ConfirmEmail()
+  {
+    var authResult = authorizationProvider.CheckAuthorization(HttpContext.User, null);
+
+    var confirmEmailCommand = new ConfirmEmailCommand(authResult.UserId);
+
+    ErrorOr<string> confirmEmailResult = await mediator.Send(confirmEmailCommand);
+
+    return confirmEmailResult.Match(
+      result => Ok(result),
       errors => Problem(errors)
     );
   }

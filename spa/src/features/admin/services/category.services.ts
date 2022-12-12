@@ -10,7 +10,7 @@ export const categoryServices = {
                 const { data: categories }: { data: ICategory[] } = await API.get('/categories');
                 dispatch(mapActions.loadCategories(categories));
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Lasting av kategorier feilet', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Lasting av kategorier feilet', severity: 'error' }));
             }
         };
     },
@@ -19,13 +19,13 @@ export const categoryServices = {
             try {
                 const { data: category }: { data: ICategory } = await API.post('/categories', { emoji, name });
                 dispatch(mapActions.addCategory(category));
-                dispatch(uiActions.setShowSnackbar({ message: 'Kategori er lagt til', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Kategori er lagt til', severity: 'success' }));
             } catch (error: any) {
                 if (error.response.status === 409) {
-                    dispatch(uiActions.setShowSnackbar({ message: 'Kategori finnes allerede', severity: 'error' }));
+                    dispatch(uiActions.showSnackbar({ message: 'Kategori finnes allerede', severity: 'error' }));
                     return;
                 }
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -38,9 +38,9 @@ export const categoryServices = {
 
                 dispatch(mapActions.loadCategories(data));
 
-                dispatch(uiActions.setShowSnackbar({ message: 'Kategori er endret', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Kategori er endret', severity: 'success' }));
             } catch (error) {
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },
@@ -53,13 +53,13 @@ export const categoryServices = {
 
                 dispatch(mapActions.loadCategories(data));
 
-                dispatch(uiActions.setShowSnackbar({ message: 'Kategori er slettet', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Kategori er slettet', severity: 'success' }));
             } catch (error: any) {
                 if (error.response.status === 409) {
-                    dispatch(uiActions.setShowSnackbar({ message: 'Kategori er i bruk, kan ikke slette', severity: 'error' }));
+                    dispatch(uiActions.showSnackbar({ message: 'Kategori er i bruk, kan ikke slette', severity: 'error' }));
                     return;
                 }
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },

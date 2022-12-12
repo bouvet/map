@@ -15,7 +15,7 @@ export const AddLocationHeader: React.FC<Props> = ({ pageIndex, setPageIndex }) 
 
     const handleBackClick = () => {
         if (pageIndex === 0) {
-            navigate('..');
+            navigate(-1);
         }
         if (pageIndex > 0) {
             setPageIndex(pageIndex - 1);

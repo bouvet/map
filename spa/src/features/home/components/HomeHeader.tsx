@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexRowContainer } from '../../../components/UI';
+import { FlexRowContainer } from '../../../components/Layout';
 import { ICategory } from '../../../interfaces';
 import { CategoryButton } from './CategoryButton';
 

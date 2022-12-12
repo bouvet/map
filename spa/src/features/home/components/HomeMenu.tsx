@@ -1,10 +1,10 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { FabSubMenuButton } from '../../../components/UI/Buttons/FabSubMenuButton';
-
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
+import { userActions } from '../../../store';
 import { authActions } from '../../../store/state/auth.state';
+import { FabSubMenuButton } from './FabSubMenuButton';
 
 interface Props {
     showMenu: boolean;
@@ -17,6 +17,7 @@ export const HomeMenu: React.FC<Props> = ({ showMenu }) => {
 
     const logoutHandler = () => {
         dispatch(authActions.logOut());
+        dispatch(userActions.resetState());
     };
 
     return (
@@ -27,7 +28,7 @@ export const HomeMenu: React.FC<Props> = ({ showMenu }) => {
                 <FabSubMenuButton endpoint="/add-location" icon="add_location_alt" visible={showMenu} />
                 {isAuthenticated && <FabSubMenuButton endpoint="/my-sessions" icon="fitness_center" visible={showMenu} />}
                 {isAuthenticated && <FabSubMenuButton icon="logout" visible={showMenu} onClickHandler={logoutHandler} />}
-                {!isAuthenticated && <FabSubMenuButton endpoint="/login" icon="login" visible={showMenu} />}
+                {!isAuthenticated && <FabSubMenuButton endpoint="/auth/login" icon="login" visible={showMenu} />}
             </ul>
         </Menu>
     );
@@ -37,5 +38,5 @@ const Menu = styled.nav`
     position: absolute;
     bottom: 5.7rem;
     right: 0;
-    width: 5.1rem;
+    width: 56px;
 `;

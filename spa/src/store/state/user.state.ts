@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../interfaces';
 
 const initialState = {
-    email: '',
+    loading: false,
+    user: {} as IUser,
     password: '',
-    firstName: '',
-    lastName: '',
-    dob: '',
     authMethod: '',
+    emailVerified: false,
     favoriteCategoryIds: [] as string[],
 };
 
@@ -14,26 +14,32 @@ const userState = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setEmail(state, action: PayloadAction<string>) {
-            state.email = action.payload;
+        setLoading(state, action: PayloadAction<boolean>) {
+            state.loading = action.payload;
+        },
+        updateUser(state, action: PayloadAction<Partial<IUser>>) {
+            state.user = { ...state.user, ...action.payload };
+            state.loading = false;
         },
         setPassword(state, action: PayloadAction<string>) {
             state.password = action.payload;
         },
-        setFirstName(state, action: PayloadAction<string>) {
-            state.firstName = action.payload;
-        },
-        setLastName(state, action: PayloadAction<string>) {
-            state.lastName = action.payload;
-        },
-        setDob(state, action: PayloadAction<string>) {
-            state.dob = action.payload;
-        },
         setAuthMethod(state, action: PayloadAction<string>) {
             state.authMethod = action.payload;
         },
+        setEmailVerified(state, action: PayloadAction<boolean>) {
+            state.emailVerified = action.payload;
+        },
         setFavoriteCategoryIds(state, action: PayloadAction<string[]>) {
             state.favoriteCategoryIds = action.payload;
+        },
+        resetState(state) {
+            state.loading = false;
+            state.user = {} as IUser;
+            state.password = '';
+            state.authMethod = '';
+            state.emailVerified = false;
+            state.favoriteCategoryIds = [] as string[];
         },
     },
 });

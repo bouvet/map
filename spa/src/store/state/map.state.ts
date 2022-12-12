@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ViewState } from 'react-map-gl';
+
 import { ICategory, ILocation } from '../../interfaces';
+import { mapboxStreets } from '../../styles/map-styles';
 
 const initialState = {
     loading: false,
@@ -10,6 +12,7 @@ const initialState = {
         latitude: 58.9566,
         zoom: 11,
     } as ViewState,
+    mapStyle: `${mapboxStreets}`,
     locations: [] as ILocation[],
     filteredLocations: [] as ILocation[],
     categories: [] as ICategory[],
@@ -33,6 +36,9 @@ const mapState = createSlice({
         },
         setViewState(state, action: PayloadAction<ViewState>) {
             state.viewState = action.payload;
+        },
+        setMapStyle(state, action: PayloadAction<string>) {
+            state.mapStyle = action.payload;
         },
         loadLocations(state, action: PayloadAction<ILocation[]>) {
             state.locations = action.payload;
