@@ -72,6 +72,22 @@ public class JwtGenerator : IJwtGenerator
     return new JwtSecurityTokenHandler().WriteToken(securityToken);
   }
 
+  public string GenerateChangeEmailToken(User user, string email)
+  {
+    var claims = new List<Claim>
+    {
+      new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+      new Claim(JwtRegisteredClaimNames.Email, email),
+      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+      new Claim("userId", user.Id.ToString()),
+      new Claim("roles", "ChangingEmail")
+    };
+
+    var securityToken = GetSecurityToken(2880, claims);
+
+    return new JwtSecurityTokenHandler().WriteToken(securityToken);
+  }
+
   private JwtSecurityToken GetSecurityToken(int expiryMinutes, List<Claim> claims)
   {
     var signingCredentials = new SigningCredentials(
@@ -82,8 +98,8 @@ public class JwtGenerator : IJwtGenerator
     return new JwtSecurityToken(
       issuer: jwtSettings.Issuer,
       audience: jwtSettings.Audience,
-      expires: dateTimeProvider.UtcNow.AddMinutes(expiryMinutes),
       claims: claims,
+      expires: dateTimeProvider.UtcNow.AddMinutes(expiryMinutes),
       signingCredentials: signingCredentials
     );
   }

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 
 import { Marker } from 'react-map-gl';
+import { PillButton } from '../../../components/Common';
 import { Footer, Section } from '../../../components/Layout';
-import { MyLocationButton, PillButton } from '../../../components/UI';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store';
 import { getUserLocation } from '../../../utils';
 import { Map } from '../../map';
+import { MyLocationButton } from './MyLocationButton';
 
 interface Props {
     pageIndex: number;
@@ -40,7 +41,7 @@ export const AddLocationMap: React.FC<Props> = ({ pageIndex, chooseLocationHandl
     return (
         <Section
             // style={{ height: 'calc(100vh - 7.7rem)', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
-            style={{ height: '100%', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none' }}
+            style={{ height: '100%', padding: 0, position: 'relative', display: pageIndex === 0 ? 'flex' : 'none', maxWidth: '100%' }}
         >
             <Map mapStyleMenuStyle={{ top: 0 }}>
                 <Marker longitude={viewState.longitude} latitude={viewState.latitude} anchor="bottom">

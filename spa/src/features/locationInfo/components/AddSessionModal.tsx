@@ -1,8 +1,8 @@
-import { Box, Button, Modal, Stack } from '@mui/material';
+import { Box, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Text } from '../../../components/UI';
-import { useStateDispatch } from '../../../hooks/useRedux';
+import { PrimaryButton, Text } from '../../../components/Common';
+import { useStateDispatch } from '../../../hooks';
 import { sessionServices } from '../../session/services/session.services';
 
 const Backdrop = styled.div`
@@ -53,13 +53,13 @@ export const AddSessionModal: FC<sessionModalProps> = ({ locationId, open, close
                             <Text style={{ textAlign: 'center' }}>Vil du legge til en ny treningsøkt på:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Button variant="contained" style={{ marginRight: 15 }} onClick={handleNewSessionRegister}>
+                                <PrimaryButton style={{ marginRight: 15 }} onClick={() => handleNewSessionRegister}>
                                     Legg til
-                                </Button>
+                                </PrimaryButton>
 
-                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleCloseSessionModal}>
+                                <PrimaryButton style={{ backgroundColor: 'grey' }} onClick={handleCloseSessionModal}>
                                     Avbryt
-                                </Button>
+                                </PrimaryButton>
                             </div>
                         </Box>
                     </Stack>

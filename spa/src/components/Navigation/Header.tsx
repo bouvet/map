@@ -10,13 +10,13 @@ import { uiActions } from '../../store';
 import { MyTheme } from '../../styles/global';
 
 interface Props {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     style?: React.CSSProperties;
 }
 
 const StyledHeader = styled.header`
     width: 100%;
-    height: 3rem;
+    height: ${MyTheme.size.header.height.mobileS};
     padding: 0 0.5rem;
     display: flex;
     align-items: center;
@@ -35,7 +35,7 @@ export const Header: React.FC<Props> = ({ children, style }) => {
             <IconButton
                 color="inherit"
                 aria-label="Navigate back"
-                onClick={() => navigate('..')}
+                onClick={() => navigate(-1)}
                 sx={{
                     alignItems: 'center',
                 }}

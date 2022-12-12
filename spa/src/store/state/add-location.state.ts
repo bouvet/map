@@ -8,7 +8,6 @@ const initialState = {
     description: '',
     lat: 0,
     lng: 0,
-    image: '',
 };
 
 const addLocationState = createSlice({
@@ -30,9 +29,6 @@ const addLocationState = createSlice({
         },
         setDescription(state, action: PayloadAction<string>) {
             state.description = action.payload;
-        },
-        setImage(state, action: PayloadAction<string>) {
-            state.image = action.payload;
         },
     },
 });

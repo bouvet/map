@@ -62,18 +62,6 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
 
     if (request.Image is not null)
     {
-      if (request.Location.OriginalImage is not null)
-      {
-        var deleteImageCommand = new DeleteImageCommand(request.Location.OriginalImage.Id, "originals");
-
-        ErrorOr<Deleted> deleteImageResult = await mediator.Send(deleteImageCommand, cancellationToken);
-
-        if (deleteImageResult.IsError)
-        {
-          return Errors.ImageStorage.DeleteFailed;
-        }
-      }
-
       if (request.Location.WebpImage is not null)
       {
         var deleteImageCommand = new DeleteImageCommand(request.Location.WebpImage.Id, "webp");
@@ -121,16 +109,6 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
     if (request.Description?.Length is < Location.MinDescriptionLength or > Location.MaxDescriptionLength)
     {
       errors.Add(Errors.Location.InvalidDescription);
-    }
-
-    if (request.Longitude is > 0 && request.Longitude is < Location.MinLongitudeValue or > Location.MaxLongitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLongitude);
-    }
-
-    if (request.Latitude is > 0 && request.Latitude is < Location.MinLatitudeValue or > Location.MaxLatitudeValue)
-    {
-      errors.Add(Errors.Location.InvalidLatitude);
     }
 
     if (errors.Count > 0)

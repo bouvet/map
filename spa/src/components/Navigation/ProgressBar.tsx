@@ -39,7 +39,7 @@ const Container = styled.div`
 `;
 
 const ProgressIcon = styled.span<{ completed: boolean }>`
-    color: ${(props) => (props.completed ? MyTheme.colors.darkBase : MyTheme.colors.grey)};
+    color: ${(props) => (props.completed ? MyTheme.colors.darkBase : MyTheme.colors.gray)};
     font-weight: 400;
     margin-bottom: 0.5rem;
 `;
@@ -47,5 +47,5 @@ const ProgressIcon = styled.span<{ completed: boolean }>`
 const ProgressStatusLine = styled.div<{ completed: boolean }>`
     width: 100%;
     height: 10px;
-    background-color: ${(props) => (props.completed ? MyTheme.colors.accent : MyTheme.colors.grey)};
+    background-color: ${(props) => (props.completed ? MyTheme.colors.accent : MyTheme.colors.gray)};
 `;

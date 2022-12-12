@@ -53,5 +53,26 @@ public static class ModelBuilderExtensions
         DOB = currentTime
       }
     );
+
+    modelBuilder.Entity<Email>().HasData(
+      new Email
+      {
+        Id = Guid.NewGuid(),
+        Address = "verden.venter.app@gmail.com",
+        CodeValidTo = currentTime.AddHours(48),
+        ConfirmationCode = 123123,
+        Confirmed = true,
+        Created = currentTime
+      },
+      new Email
+      {
+        Id = Guid.NewGuid(),
+        Address = "jdoe@email.com",
+        CodeValidTo = currentTime.AddHours(48),
+        ConfirmationCode = 123123,
+        Confirmed = true,
+        Created = currentTime
+      }
+    );
   }
 }

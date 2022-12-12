@@ -10,3 +10,5 @@ export const RequireAdmin = () => {
 
     return <Outlet />;
 };
+
+export default RequireAdmin;

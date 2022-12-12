@@ -7,9 +7,9 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-content: center;
-    row-gap: 0.8rem;
+    row-gap: 1rem;
 
     @media ${device.mobileM} {
-        row-gap: 1rem;
+        row-gap: 1.3rem;
     }
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { PillButton } from '../../../components/Common';
 
-import { PillButton } from '../../../components/UI';
 import { ICategory } from '../../../interfaces';
 
 interface Props {

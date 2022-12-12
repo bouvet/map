@@ -17,7 +17,7 @@ export const AdminHeader: React.FC<Props> = ({ toggleDrawerHandler }) => {
             <IconButton
                 color="inherit"
                 aria-label="Navigate back"
-                onClick={() => navigate('..')}
+                onClick={() => navigate(-1)}
                 sx={{
                     mr: 'auto',
                     alignItems: 'center',

@@ -9,7 +9,7 @@ export const sessionServices = {
         return async (dispatch: AppDispatch) => {
             try {
                 await API.post('/sessions', payload);
-                dispatch(uiActions.setShowSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
             }
@@ -42,7 +42,7 @@ export const sessionServices = {
             try {
                 await API.delete(`/Sessions/${sessionId}`);
                 dispatch(sessionActions.removeSession(sessionId));
-                dispatch(uiActions.setShowSnackbar({ message: 'Treningsøkt slettet', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Treningsøkt slettet', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
             }

@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Text } from '../../../components/UI';
+import { Text } from '../../../components/Common';
 
 const Backdrop = styled.div`
     height: 100vh;

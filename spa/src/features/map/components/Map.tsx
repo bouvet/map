@@ -2,7 +2,7 @@ import React, { useRef, useState, Ref, useEffect } from 'react';
 import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store';
-import { mapboxBaseUri, mapboxStreets } from '../../../styles/map-styles';
+import { mapboxBaseUri } from '../../../styles/map-styles';
 import { mapServices } from '../services/map.services';
 import { MapStyleMenu } from './MapStyleMenu';
 
@@ -18,9 +18,7 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
 
     const [mapLoaded, setMapLoaded] = useState(false);
 
-    const [mapStyle, setMapStyle] = useState(`${mapboxStreets}`);
-
-    const { userLocation, closestLocation, mapMoved, viewState } = useStateSelector((state) => state.map);
+    const { userLocation, closestLocation, mapMoved, viewState, mapStyle } = useStateSelector((state) => state.map);
 
     const dispatch = useStateDispatch();
 
@@ -33,12 +31,13 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
 
     const onMapLoadHandler = () => {
         console.log('[onMapLoadHandler]: Map loaded');
+        dispatch(mapServices.getCategories());
         dispatch(mapServices.getLocations());
         setMapLoaded(true);
     };
 
     const setMapStyleHandler = (mapStyle: string) => {
-        setMapStyle(mapStyle);
+        dispatch(mapActions.setMapStyle(mapStyle));
     };
 
     useEffect(() => {

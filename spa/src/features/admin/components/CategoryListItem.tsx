@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
 import { ExpandMore, Done, Close, Edit, Delete } from '@mui/icons-material/';
 
 import { ICategory } from '../../../interfaces';
@@ -10,6 +10,7 @@ import { ICategory } from '../../../interfaces';
 import { MyTheme } from '../../../styles/global';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { categoryServices } from '../services';
+import { PrimaryButton } from '../../../components/Common';
 
 interface Props {
     category: ICategory;
@@ -44,25 +45,16 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
                         {category.emoji} {category.name}
                     </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Divider />
+                <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginTop: '1rem' }}>
                     {!isEditing && (
                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                            <Button
-                                variant="contained"
-                                color="error"
-                                sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
-                                onClick={onDeleteHandler}
-                            >
+                            <PrimaryButton color="error" sx={{ textTransform: 'none', marginBottom: '0.5rem' }} onClick={onDeleteHandler}>
                                 <Delete />
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="warning"
-                                sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
-                                onClick={onEditHandler}
-                            >
+                            </PrimaryButton>
+                            <PrimaryButton color="warning" sx={{ textTransform: 'none', marginBottom: '0.5rem' }} onClick={onEditHandler}>
                                 <Edit />
-                            </Button>
+                            </PrimaryButton>
                         </div>
                     )}
 
@@ -88,22 +80,20 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
                                 />
                             </form>
                             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button
-                                    variant="contained"
+                                <PrimaryButton
                                     color="error"
                                     sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
                                     onClick={() => setIsEditing(false)}
                                 >
                                     <Close />
-                                </Button>
-                                <Button
-                                    variant="contained"
+                                </PrimaryButton>
+                                <PrimaryButton
                                     color="success"
                                     sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
                                     onClick={onSubmitHandler}
                                 >
                                     <Done />
-                                </Button>
+                                </PrimaryButton>
                             </div>
                         </>
                     )}

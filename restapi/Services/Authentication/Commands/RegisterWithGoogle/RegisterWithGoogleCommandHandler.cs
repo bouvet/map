@@ -38,14 +38,14 @@ public class RegisterWithGoogleCommandHandler : IRequestHandler<RegisterWithGoog
       FirstName = request.FirstName,
       LastName = request.LastName,
       DOB = request.DOB,
-      Registered = dateTimeProvider.CEST
+      Registered = dateTimeProvider.UtcNow
     };
 
     var userRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
 
     if (userRole is null)
     {
-      userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.CEST };
+      userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.UtcNow };
       dataContext.Roles.Add(userRole);
     }
 

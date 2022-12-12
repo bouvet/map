@@ -1,2 +1,1 @@
-export * from './DeleteAccount';
-export * from './ChangeEmail';
+export * from './components';

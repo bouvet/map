@@ -1,3 +1,4 @@
+using restapi.Contracts.Categories;
 using restapi.Contracts.ImageStorage;
 using restapi.Contracts.Roles;
 
@@ -14,6 +15,7 @@ public record UserResponse(
   int? PhoneNumber,
   DateTime? DOB,
   List<RoleResponse> Roles,
+  List<CategoryResponse> FavoriteCategories,
   ImageStorageResponse? OriginalProfileImage,
   ImageStorageResponse? WebpProfileImage,
   string? Token

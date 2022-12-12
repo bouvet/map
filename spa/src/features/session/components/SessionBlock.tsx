@@ -4,8 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Divider, IconButton } fr
 import moment from 'moment';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Section } from '../../../components/Layout';
-import { Text } from '../../../components/UI';
+import { Text } from '../../../components/Common';
 import { SessionBlockModal } from './SessionBlockModal';
 
 interface SessionBlockProps {
@@ -14,7 +13,7 @@ interface SessionBlockProps {
     deleteBlock: Function;
 }
 
-const Title = styled(Text)`
+const Title = styled.h1`
     // padding: 10px;
     overflow: hidden;
 `;

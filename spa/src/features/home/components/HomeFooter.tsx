@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Fab } from '@mui/material';
 
-import { FabMenuButton, PillButton } from '../../../components/UI';
 import { Footer } from '../../../components/Layout';
 import { MyTheme } from '../../../styles/global';
+import { HomeMenu } from './HomeMenu';
+import { PillButton } from '../../../components/Common';
 
 interface Props {
     getUserLocationHandler: () => void;
@@ -20,13 +21,25 @@ export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuTo
             style={{
                 padding: '1.2rem 0.8rem',
                 marginTop: '0.7rem',
-                backgroundColor: loadingUserLocation ? `${MyTheme.colors.grey}` : `${MyTheme.colors.lightBase}`,
+                backgroundColor: loadingUserLocation ? `${MyTheme.colors.gray}` : `${MyTheme.colors.lightBase}`,
                 color: loadingUserLocation ? `${MyTheme.colors.lightBase}` : `${MyTheme.colors.darkColor}`,
             }}
             disabled={loadingUserLocation}
         >
             {!loadingUserLocation ? '🔍' : <CircularProgress color="inherit" size={17} sx={{ marginRight: '0.6rem' }} />} Nærmeste lokasjon
         </PillButton>
-        <FabMenuButton showMenu={showMenu} showMenuToggler={showMenuToggler} />
+        <Fab
+            onClick={showMenuToggler}
+            sx={{
+                backgroundColor: `${MyTheme.colors.accent}`,
+                color: 'white',
+                '&:hover': {
+                    backgroundColor: `${MyTheme.colors.accent}`,
+                },
+            }}
+        >
+            <span className="material-symbols-outlined">{showMenu ? 'close' : 'menu'}</span>
+        </Fab>
+        <HomeMenu showMenu={showMenu} />
     </Footer>
 );

@@ -46,7 +46,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
     var email = await dataContext.Emails.FirstOrDefaultAsync(email => email.Address.ToLower() == request.Email, cancellationToken: cancellationToken);
 
-    if (email is null || !email.Confirmed)
+    if (email?.Confirmed != true)
     {
       return Errors.EmailService.EmailNotConfirmed;
     }
@@ -61,14 +61,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
       FirstName = request.FirstName,
       LastName = request.LastName,
       DOB = request.DOB,
-      Registered = dateTimeProvider.CEST
+      Registered = dateTimeProvider.UtcNow
     };
 
     var userRole = await dataContext.Roles.FirstOrDefaultAsync(role => role.Name == "User", cancellationToken: cancellationToken);
 
     if (userRole is null)
     {
-      userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.CEST };
+      userRole = new Role { Id = Guid.NewGuid(), Name = "User", Created = dateTimeProvider.UtcNow };
       dataContext.Roles.Add(userRole);
     }
 
