@@ -48,7 +48,7 @@ export const ChangeEmail = () => {
             <Header>Bytt e-post</Header>
             <Main>
                 <Section>
-                    <p style={{ marginBottom: '2rem' }}>
+                    <p style={{ marginBottom: '2rem', lineHeight: '1.5rem' }}>
                         Skriv inn din nye e-post så sender vi deg en e-post for å bekrefte din nye epost. Du vil bli logget ut og ny epost
                         må bekreftes før du kan logge inn igjen.
                     </p>
