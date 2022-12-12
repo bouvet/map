@@ -115,6 +115,26 @@ namespace restapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Emails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("af78a0ee-2aff-40b0-9b28-a2a912f20b15"),
+                            Address = "verden.venter.app@gmail.com",
+                            CodeValidTo = new DateTime(2022, 12, 14, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            ConfirmationCode = 123123,
+                            Confirmed = true,
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
+                        },
+                        new
+                        {
+                            Id = new Guid("b46d52fc-3655-4160-b7c7-c116a5183f16"),
+                            Address = "jdoe@email.com",
+                            CodeValidTo = new DateTime(2022, 12, 14, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            ConfirmationCode = 123123,
+                            Confirmed = true,
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
+                        });
                 });
 
             modelBuilder.Entity("restapi.Entities.Image", b =>
@@ -294,20 +314,20 @@ namespace restapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1dd08cac-a07c-47a0-a7f0-195bb29f8902"),
-                            Created = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280),
+                            Id = new Guid("ab2a6dbe-bb6e-4d43-a0cb-0f321fc0aaf7"),
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
                             Name = "Administrator"
                         },
                         new
                         {
-                            Id = new Guid("c7409c44-172c-4714-ae6a-09687d0b9ea8"),
-                            Created = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280),
+                            Id = new Guid("93904a05-b9b6-4806-864c-a9b05962a9c4"),
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
                             Name = "Registering"
                         },
                         new
                         {
-                            Id = new Guid("88878e30-c37d-4f3f-91fd-eb379c683031"),
-                            Created = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280),
+                            Id = new Guid("1623aa90-8ac1-4ff9-b776-38f0c625e1a4"),
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
                             Name = "User"
                         });
                 });
@@ -403,30 +423,30 @@ namespace restapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f44695f3-5672-49c8-820a-ee995e2ae874"),
+                            Id = new Guid("d5434215-a945-4995-bf6d-05f11e5fb3aa"),
                             AccessToken = "Admin",
                             AuthenticationMethod = "Email",
-                            DOB = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280),
+                            DOB = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
                             Email = "verden.venter.app@gmail.com",
                             FirstName = "Verden",
                             LastName = "Venter",
-                            Password = "$2a$11$zyHuqn77lZ2GNrJ6.5vkLum65kFirM8P5MG4fY0G.PRKx5zMeZu9.",
+                            Password = "$2a$11$zfLPdT/LaocWrkxR5ffyOeaxk.d/We23chE2FRS11AXJtbIgBL4Q6",
                             PhoneNumber = 0,
                             PostalCode = 0,
-                            Registered = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280)
+                            Registered = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
                         },
                         new
                         {
-                            Id = new Guid("9fe0bc64-57cc-4edb-a7c9-acf48a220ed7"),
+                            Id = new Guid("2c074178-2ffc-48d7-b583-c4166cba35d8"),
                             AuthenticationMethod = "Email",
-                            DOB = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280),
+                            DOB = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
                             Email = "jdoe@email.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "$2a$11$3ki5/AFDevoxydvuXNE6jus8cdX5EYJlSbh9vwFrf.cjXxL09G5Fa",
+                            Password = "$2a$11$jUotOS6xEoJ4PtjA/KLv3OEBNjH0dZVc11z7pZuUVMWy.6F8A8HmG",
                             PhoneNumber = 0,
                             PostalCode = 0,
-                            Registered = new DateTime(2022, 11, 25, 11, 43, 24, 622, DateTimeKind.Unspecified).AddTicks(9280)
+                            Registered = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
                         });
                 });
 

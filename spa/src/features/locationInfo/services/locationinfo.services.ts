@@ -12,10 +12,10 @@ export const reviewServices = {
                 const requestUrl = `/Reviews?locationId=${data.locationId}`;
                 const reviews: IReviewTypeGet[] = await (await API.get(requestUrl)).data;
                 dispatch(reviewActions.setCurrentReviews(reviews));
-                dispatch(uiActions.setShowSnackbar({ message: 'Omtale registrert!', severity: 'success' }));
+                dispatch(uiActions.showSnackbar({ message: 'Omtale registrert!', severity: 'success' }));
             } catch (error) {
                 console.error('error', error);
-                dispatch(uiActions.setShowSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
+                dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };
     },

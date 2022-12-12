@@ -4,12 +4,11 @@ import { Route, Routes } from 'react-router-dom';
 import { App } from './App';
 import { RequireAuth } from './features/auth';
 import { FullPageSpinner } from './components/Common';
-import { RegisterWorkout } from './pages/RegisterWorkout';
-import { CreateWorkout } from './features/workoutRegistration/Components/CreateWorkout';
 import { ChangeEmail, ChangePassword, DeleteAccount, EditProfile, ProfileImage } from './features/profile';
 import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from './features/register';
 
 import { Home, Profile } from './pages';
+import { MySessions } from './pages/MySessions';
 
 const Auth = lazy(() => import('./pages/Auth'));
 const Admin = lazy(() => import('./pages/Admin'));
@@ -70,12 +69,8 @@ export const AppRoutes = () => (
                     <Route path="category" element={<CategoryList />} />
                 </Route>
 
-                <Route path="register-workout" element={<RequireAuth />}>
-                    <Route index element={<RegisterWorkout />} />
-                </Route>
-
-                <Route path="create-workout" element={<RequireAuth />}>
-                    <Route index element={<CreateWorkout />} />
+                <Route path="my-sessions" element={<RequireAuth />}>
+                    <Route index element={<MySessions />} />
                 </Route>
 
                 <Route path="*" element={<Home />} />
