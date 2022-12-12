@@ -1,8 +1,8 @@
-import { FC, MouseEvent } from 'react';
-import MuiFab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
+import MuiFab from '@mui/material/Fab';
 import { styled, SxProps } from '@mui/material/styles';
+import { FC, MouseEvent } from 'react';
 import { MyTheme } from '../../../styles/global';
 
 interface ActionProps {
@@ -12,8 +12,8 @@ interface ActionProps {
 
 const Fab = styled(MuiFab)(() => ({
     position: 'absolute',
-    height: 50,
-    width: 50,
+    height: 35,
+    width: 35,
     backgroundColor: `${MyTheme.colors.opaque}`,
     color: `${MyTheme.colors.lightBase}`,
     zIndex: 1000,

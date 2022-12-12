@@ -28,6 +28,8 @@ const authState = createSlice({
             state.isAdmin = false;
             state.isAuthenticated = false;
             state.loading = false;
+            state.isAdmin = false;
+            state.emailIsValid = false;
         },
     },
 });

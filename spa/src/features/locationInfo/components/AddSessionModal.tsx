@@ -2,6 +2,8 @@ import { Box, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { PrimaryButton, Text } from '../../../components/Common';
+import { useStateDispatch } from '../../../hooks';
+import { sessionServices } from '../../session/services/session.services';
 
 const Backdrop = styled.div`
     height: 100vh;
@@ -9,13 +11,11 @@ const Backdrop = styled.div`
     z-index: 0;
 `;
 
-interface sessionProps {
+interface sessionModalProps {
+    locationId: string;
     open: boolean;
     close: Function;
     locationTitle: any;
-    handleNewSession: any;
-    sessions: any;
-    success: Function;
 }
 
 const AddSession = {
@@ -32,7 +32,13 @@ const AddSession = {
     pt: 5,
 };
 
-export const AddSessionModal: FC<sessionProps> = ({ open, close, locationTitle, handleNewSession, sessions, success }) => {
+export const AddSessionModal: FC<sessionModalProps> = ({ locationId, open, close, locationTitle }) => {
+    const dispatch = useStateDispatch();
+
+    const handleNewSessionRegister = () => {
+        dispatch(sessionServices.postSession({ LocationId: locationId, Registered: new Date().toISOString() }));
+        close();
+    };
     const handleCloseSessionModal = () => {
         close();
     };
@@ -47,15 +53,7 @@ export const AddSessionModal: FC<sessionProps> = ({ open, close, locationTitle, 
                             <Text>Vil du legge til en ny treningsøkt på:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <PrimaryButton
-                                    style={{ marginRight: 15 }}
-                                    onClick={() => {
-                                        handleNewSession();
-                                        console.log(sessions);
-                                        handleCloseSessionModal();
-                                        success();
-                                    }}
-                                >
+                                <PrimaryButton style={{ marginRight: 15 }} onClick={() => handleNewSessionRegister}>
                                     Legg til
                                 </PrimaryButton>
 

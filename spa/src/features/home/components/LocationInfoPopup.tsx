@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Slide } from '@mui/material';
-import { ILocation } from '../../../interfaces';
 import { Popup, PopupCard } from '../../../components/Popup/Popup';
+import { ILocation } from '../../../interfaces';
 
 interface Props {
     selectedLocation: ILocation;

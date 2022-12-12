@@ -3,9 +3,9 @@ import { addLocationReducer } from './state/add-location.state';
 import { authReducer } from './state/auth.state';
 import { mapReducer } from './state/map.state';
 import { reviewReducer } from './state/review.state';
+import { sessionReducer } from './state/session.state';
 import { uiReducer } from './state/ui.state';
 import { userReducer } from './state/user.state';
-import { workoutReducer } from './state/workout.state';
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +15,7 @@ export const store = configureStore({
         review: reviewReducer,
         user: userReducer,
         ui: uiReducer,
-        workout: workoutReducer,
+        session: sessionReducer,
     },
 });
 

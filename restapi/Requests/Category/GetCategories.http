@@ -1,2 +1,2 @@
 GET {{host}}/api/categories
-Authorization: Bearer {{admintoken}}
+Authorization:  Bearer {{adminToken}}
