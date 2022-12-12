@@ -2,7 +2,6 @@ import moment from 'moment';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton } from '../components/UI';
 import { SessionBlock } from '../features/session/components/SessionBlock';
 import { sessionServices } from '../features/session/services/session.services';
 
@@ -69,7 +68,7 @@ export const MySessions: FC = () => {
 
     return (
         <SessionPageContainer style={{ backgroundColor: '#fafafa' }}>
-            <BackButton onClick={() => navigate('/')} />
+            {/* <BackButton onClick={() => navigate('/')} /> */}
             <SessionPageContainer>
                 <SessionHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</SessionHeader>
                 {getYearFromDates.map((year: number) => (

@@ -1,10 +1,10 @@
 import { ExpandMore } from '@mui/icons-material/';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Accordion, AccordionDetails, AccordionSummary, Divider, IconButton } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Divider, IconButton } from '@mui/material';
 import moment from 'moment';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Button, Text } from '../../../components/UI';
+import { Text } from '../../../components/Common';
 import { SessionBlockModal } from './SessionBlockModal';
 
 interface SessionBlockProps {
@@ -24,7 +24,7 @@ export const SessionButton = styled(Button)`
     justify-content: flex-start;
 `;
 
-const Title = styled(Text)`
+const Title = styled.h1`
     padding: 10px;
     overflow: hidden;
 `;

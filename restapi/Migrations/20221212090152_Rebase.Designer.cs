@@ -12,8 +12,8 @@ using restapi.Data;
 namespace restapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221010121816_RestartEverything")]
-    partial class RestartEverything
+    [Migration("20221212090152_Rebase")]
+    partial class Rebase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,7 @@ namespace restapi.Migrations
                     b.ToTable("CategoryUser");
                 });
 
-            modelBuilder.Entity("restapi.Models.Category", b =>
+            modelBuilder.Entity("restapi.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +89,57 @@ namespace restapi.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("restapi.Models.Image", b =>
+            modelBuilder.Entity("restapi.Entities.Email", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CodeValidTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ConfirmationCode")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Confirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("af78a0ee-2aff-40b0-9b28-a2a912f20b15"),
+                            Address = "verden.venter.app@gmail.com",
+                            CodeValidTo = new DateTime(2022, 12, 14, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            ConfirmationCode = 123123,
+                            Confirmed = true,
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
+                        },
+                        new
+                        {
+                            Id = new Guid("b46d52fc-3655-4160-b7c7-c116a5183f16"),
+                            Address = "jdoe@email.com",
+                            CodeValidTo = new DateTime(2022, 12, 14, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            ConfirmationCode = 123123,
+                            Confirmed = true,
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
+                        });
+                });
+
+            modelBuilder.Entity("restapi.Entities.Image", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,10 +160,6 @@ namespace restapi.Migrations
                     b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("OriginalFileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("OriginalImageId")
                         .HasColumnType("uniqueidentifier");
 
@@ -133,7 +179,7 @@ namespace restapi.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,10 +194,6 @@ namespace restapi.Migrations
 
                     b.Property<Guid?>("EditorId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
@@ -189,7 +231,7 @@ namespace restapi.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("restapi.Models.Review", b =>
+            modelBuilder.Entity("restapi.Entities.Review", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -241,7 +283,7 @@ namespace restapi.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("restapi.Models.Role", b =>
+            modelBuilder.Entity("restapi.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -270,18 +312,69 @@ namespace restapi.Migrations
                     b.HasIndex("EditorId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ab2a6dbe-bb6e-4d43-a0cb-0f321fc0aaf7"),
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            Name = "Administrator"
+                        },
+                        new
+                        {
+                            Id = new Guid("93904a05-b9b6-4806-864c-a9b05962a9c4"),
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            Name = "Registering"
+                        },
+                        new
+                        {
+                            Id = new Guid("1623aa90-8ac1-4ff9-b776-38f0c625e1a4"),
+                            Created = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            Name = "User"
+                        });
                 });
 
-            modelBuilder.Entity("restapi.Models.User", b =>
+            modelBuilder.Entity("restapi.Entities.Session", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Registered")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Sessions");
+                });
+
+            modelBuilder.Entity("restapi.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DOB")
+                    b.Property<string>("AuthenticationMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -294,8 +387,10 @@ namespace restapi.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OriginalImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PhoneNumber")
@@ -307,12 +402,54 @@ namespace restapi.Migrations
                     b.Property<int>("PostalCode")
                         .HasColumnType("int");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Registered")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("WebpImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("OriginalImageId");
+
+                    b.HasIndex("WebpImageId");
+
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d5434215-a945-4995-bf6d-05f11e5fb3aa"),
+                            AccessToken = "Admin",
+                            AuthenticationMethod = "Email",
+                            DOB = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            Email = "verden.venter.app@gmail.com",
+                            FirstName = "Verden",
+                            LastName = "Venter",
+                            Password = "$2a$11$zfLPdT/LaocWrkxR5ffyOeaxk.d/We23chE2FRS11AXJtbIgBL4Q6",
+                            PhoneNumber = 0,
+                            PostalCode = 0,
+                            Registered = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
+                        },
+                        new
+                        {
+                            Id = new Guid("2c074178-2ffc-48d7-b583-c4166cba35d8"),
+                            AuthenticationMethod = "Email",
+                            DOB = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244),
+                            Email = "jdoe@email.com",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Password = "$2a$11$jUotOS6xEoJ4PtjA/KLv3OEBNjH0dZVc11z7pZuUVMWy.6F8A8HmG",
+                            PhoneNumber = 0,
+                            PostalCode = 0,
+                            Registered = new DateTime(2022, 12, 12, 10, 1, 52, 335, DateTimeKind.Unspecified).AddTicks(1244)
+                        });
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -332,13 +469,13 @@ namespace restapi.Migrations
 
             modelBuilder.Entity("CategoryLocation", b =>
                 {
-                    b.HasOne("restapi.Models.Category", null)
+                    b.HasOne("restapi.Entities.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.Location", null)
+                    b.HasOne("restapi.Entities.Location", null)
                         .WithMany()
                         .HasForeignKey("LocationsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,26 +484,26 @@ namespace restapi.Migrations
 
             modelBuilder.Entity("CategoryUser", b =>
                 {
-                    b.HasOne("restapi.Models.Category", null)
+                    b.HasOne("restapi.Entities.Category", null)
                         .WithMany()
                         .HasForeignKey("FavoriteCategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.User", null)
+                    b.HasOne("restapi.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("restapi.Models.Category", b =>
+            modelBuilder.Entity("restapi.Entities.Category", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
@@ -375,30 +512,30 @@ namespace restapi.Migrations
                     b.Navigation("Editor");
                 });
 
-            modelBuilder.Entity("restapi.Models.Image", b =>
+            modelBuilder.Entity("restapi.Entities.Image", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Uploader")
+                    b.HasOne("restapi.Entities.User", "Uploader")
                         .WithMany()
                         .HasForeignKey("UploaderId");
 
                     b.Navigation("Uploader");
                 });
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
-                    b.HasOne("restapi.Models.Image", "OriginalImage")
+                    b.HasOne("restapi.Entities.Image", "OriginalImage")
                         .WithMany()
                         .HasForeignKey("OriginalImageId");
 
-                    b.HasOne("restapi.Models.Image", "WebpImage")
+                    b.HasOne("restapi.Entities.Image", "WebpImage")
                         .WithMany()
                         .HasForeignKey("WebpImageId");
 
@@ -411,27 +548,27 @@ namespace restapi.Migrations
                     b.Navigation("WebpImage");
                 });
 
-            modelBuilder.Entity("restapi.Models.Review", b =>
+            modelBuilder.Entity("restapi.Entities.Review", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
-                    b.HasOne("restapi.Models.Location", "Location")
+                    b.HasOne("restapi.Entities.Location", "Location")
                         .WithMany("Reviews")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.Image", "OriginalImage")
+                    b.HasOne("restapi.Entities.Image", "OriginalImage")
                         .WithMany()
                         .HasForeignKey("OriginalImageId");
 
-                    b.HasOne("restapi.Models.Image", "WebpImage")
+                    b.HasOne("restapi.Entities.Image", "WebpImage")
                         .WithMany()
                         .HasForeignKey("WebpImageId");
 
@@ -446,13 +583,13 @@ namespace restapi.Migrations
                     b.Navigation("WebpImage");
                 });
 
-            modelBuilder.Entity("restapi.Models.Role", b =>
+            modelBuilder.Entity("restapi.Entities.Role", b =>
                 {
-                    b.HasOne("restapi.Models.User", "Creator")
+                    b.HasOne("restapi.Entities.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("restapi.Models.User", "Editor")
+                    b.HasOne("restapi.Entities.User", "Editor")
                         .WithMany()
                         .HasForeignKey("EditorId");
 
@@ -461,24 +598,63 @@ namespace restapi.Migrations
                     b.Navigation("Editor");
                 });
 
+            modelBuilder.Entity("restapi.Entities.Session", b =>
+                {
+                    b.HasOne("restapi.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("restapi.Entities.User", "User")
+                        .WithMany("Sessions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("restapi.Entities.User", b =>
+                {
+                    b.HasOne("restapi.Entities.Image", "OriginalProfileImage")
+                        .WithMany()
+                        .HasForeignKey("OriginalImageId");
+
+                    b.HasOne("restapi.Entities.Image", "WebpProfileImage")
+                        .WithMany()
+                        .HasForeignKey("WebpImageId");
+
+                    b.Navigation("OriginalProfileImage");
+
+                    b.Navigation("WebpProfileImage");
+                });
+
             modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.HasOne("restapi.Models.Role", null)
+                    b.HasOne("restapi.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("restapi.Models.User", null)
+                    b.HasOne("restapi.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("restapi.Models.Location", b =>
+            modelBuilder.Entity("restapi.Entities.Location", b =>
                 {
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("restapi.Entities.User", b =>
+                {
+                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,13 +1,10 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { Box, Modal, Rating, Stack } from '@mui/material';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CloseButton, SubmitButton } from '../../../components/UI';
+import { FABCloseButton, PrimaryButton } from '../../../components/Common';
 import { ILocation } from '../../../interfaces';
 import { MyTheme } from '../../../styles/global';
 import { IReviewType } from '../../../utils/types.d';
-import { MyTheme } from '../../../styles/global';
-import { ILocation } from '../../../interfaces';
-import { FABCloseButton, PrimaryButton } from '../../../components/Common';
 
 interface ReviewProps {
     selectedLocation: ILocation;
@@ -142,7 +139,7 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close }) 
                             {review.length} / 120
                             {image ? (
                                 <>
-                                    <Img src={imageUrl} alt="blob" />
+                                    {/* <Img src={imageUrl} alt="blob" /> */}
                                     <ButtonWrapper>
                                         <PrimaryButton sx={{ textTransform: 'none', color: 'red' }} onClick={removeImage}>
                                             Slett

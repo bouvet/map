@@ -1,3 +1,4 @@
+import { Fab } from '@mui/material';
 import { FC, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { sessionServices } from '../../features/session/services/session.services';
