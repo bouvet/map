@@ -109,7 +109,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
 
     const { currentReviews } = useStateSelector((state) => state.review);
 
-    const { currentSessions } = useStateSelector((state) => state.session);
+    const { userSessions } = useStateSelector((state) => state.session);
     const locationTitle = selectedLocation.properties.title;
     const locationDescription = selectedLocation.properties.description;
     const locationRating = selectedLocation.properties.rating;
@@ -119,7 +119,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
 
     useEffect(() => {
         dispatch(reviewServices.getReviews(id));
-        dispatch(sessionServices.getSessions(id));
+        dispatch(sessionServices.getSessionsAtLocation(id));
     }, [dispatch, id]);
 
     moment.locale('nb');
@@ -234,7 +234,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                             <span role="img" aria-label="flexed biceps">
                                 💪
                             </span>
-                            <p>{currentSessions.length}</p>
+                            <p>{userSessions.length}</p>
                         </div>
 
                         <ImageContainer>{imageList && imageList}</ImageContainer>

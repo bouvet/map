@@ -2,7 +2,6 @@ import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { sessionActions } from '../../../store/state/session.state';
 import { uiActions } from '../../../store/state/ui.state';
-// import { snackbarActions } from '../../../store/state/snackbar.state';
 import { ISessionTypeGet } from '../../../utils/types.d';
 
 export const sessionServices = {
@@ -21,18 +20,18 @@ export const sessionServices = {
             try {
                 const requestUrl = '/Sessions/mysessions';
                 const sessions: ISessionTypeGet[] = await (await API.get(requestUrl)).data;
-                dispatch(sessionActions.setCurrentSessions(sessions));
+                dispatch(sessionActions.setUserSessions(sessions));
             } catch (error) {
                 console.error('error', error);
             }
         };
     },
-    getSessions(payload: string) {
+    getSessionsAtLocation(payload: string) {
         return async (dispatch: AppDispatch) => {
             try {
                 const requestUrl = `/Sessions?locationId=${payload}`;
                 const sessions: ISessionTypeGet[] = await (await API.get(requestUrl)).data;
-                dispatch(sessionActions.setCurrentSessions(sessions));
+                dispatch(sessionActions.setUserSessions(sessions));
             } catch (error) {
                 console.error('error', error);
             }

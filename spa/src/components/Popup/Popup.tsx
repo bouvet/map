@@ -101,12 +101,12 @@ export const Popup: FC<Props> = ({ location }) => {
     const dispatch = useStateDispatch();
 
     // const { popUpIsVisible } = useStateSelector((state) => state.map);
-    const { currentSessions } = useStateSelector((state) => state.session);
+    const { userSessions } = useStateSelector((state) => state.session);
     // const { currentlySelectedLocation } = useStateSelector((state) => state.map);
     // const { id } = currentlySelectedLocation;
 
     useEffect(() => {
-        dispatch(sessionServices.getSessions(location.id));
+        dispatch(sessionServices.getSessionsAtLocation(location.id));
     }, [dispatch, location.id]);
 
     const handleClickClose = () => {
@@ -144,7 +144,7 @@ export const Popup: FC<Props> = ({ location }) => {
                 <span style={{ float: 'left' }} role="img" aria-label="flexed biceps">
                     💪
                 </span>
-                <p style={{ float: 'left', fontSize: 12 }}>{currentSessions.length}</p>
+                <p style={{ float: 'left', fontSize: 12 }}>{userSessions.length}</p>
             </PopupContent>
         </PopupWrapper>
     );

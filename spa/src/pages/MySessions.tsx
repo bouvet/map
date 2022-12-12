@@ -1,26 +1,19 @@
 import moment from 'moment';
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { BackButton } from '../components/UI';
+import { Main } from '../components/Layout';
 import { SessionBlock } from '../features/session/components/SessionBlock';
+import { SessionHeader } from '../features/session/components/SessionHeader';
 import { sessionServices } from '../features/session/services/session.services';
 
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { ISessionTypeGet } from '../utils/types.d';
 
-export const SessionHeader = styled.div`
-    width: 100%;
-    height: 2rem;
-    padding: 1rem;
-    text-align: center;
-`;
-
 const SessionSubHeader = styled.p`
     font-weight: 600;
     display: flex;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
 `;
 
 const SessionPageContainer = styled.div`
@@ -28,10 +21,13 @@ const SessionPageContainer = styled.div`
     margin-bottom: 0.5rem;
 `;
 
+const SessionPageSubContainer = styled.div`
+    width: 100%;
+`;
+
 export const MySessions: FC = () => {
-    const navigate = useNavigate();
     const dispatch = useStateDispatch();
-    const { currentSessions } = useStateSelector((state) => state.session);
+    const { userSessions } = useStateSelector((state) => state.session);
 
     moment.locale('nb');
 
@@ -43,8 +39,7 @@ export const MySessions: FC = () => {
         dispatch(sessionServices.deleteSession(deleteId));
     };
 
-    // if (currentSessions.length > 0) {
-    const sessionsSortedByDate: ISessionTypeGet[] = [...currentSessions].sort((a: any, b: any) => {
+    const sessionsSortedByDate: ISessionTypeGet[] = [...userSessions].sort((a: any, b: any) => {
         if (a.registered < b.registered) {
             return 1;
         }
@@ -68,13 +63,13 @@ export const MySessions: FC = () => {
     });
 
     return (
-        <SessionPageContainer style={{ backgroundColor: '#fafafa' }}>
-            <BackButton onClick={() => navigate('/')} />
-            <SessionPageContainer>
-                <SessionHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</SessionHeader>
+        <Main>
+            <SessionPageContainer style={{ backgroundColor: '#fafafa' }}>
+                <SessionHeader />
+
                 {getYearFromDates.map((year: number) => (
-                    <SessionPageContainer key={Math.round(Math.random() * 1000)}>
-                        <SessionSubHeader key={`${year} - ${new Date().getMilliseconds()}`}>
+                    <SessionPageSubContainer key={Math.round(Math.random() * 1000)}>
+                        <SessionSubHeader style={{ fontSize: 18 }} key={`${year} - ${new Date().getMilliseconds()}`}>
                             {moment(year.toString()).format('YYYY')}
                         </SessionSubHeader>
 
@@ -105,10 +100,9 @@ export const MySessions: FC = () => {
                                 </>
                             ) : null,
                         )}
-                    </SessionPageContainer>
+                    </SessionPageSubContainer>
                 ))}
-                ;
             </SessionPageContainer>
-        </SessionPageContainer>
+        </Main>
     );
 };

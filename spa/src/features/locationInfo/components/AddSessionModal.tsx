@@ -50,7 +50,7 @@ export const AddSessionModal: FC<sessionModalProps> = ({ locationId, open, close
                 <form>
                     <Stack>
                         <Box sx={AddSession}>
-                            <Text>Vil du legge til en ny treningsøkt på:</Text>
+                            <Text style={{ textAlign: 'center' }}>Vil du legge til en ny treningsøkt på:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <Button variant="contained" style={{ marginRight: 15 }} onClick={handleNewSessionRegister}>
