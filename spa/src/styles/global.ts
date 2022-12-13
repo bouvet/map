@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { header } from './header';
-
 export const MyTheme = {
     colors: {
         accent: '#007BC0',
@@ -23,9 +21,6 @@ export const MyTheme = {
         icon: '16px',
         header: '16px',
         largeIcon: '24px',
-    },
-    size: {
-        header,
     },
 };
 

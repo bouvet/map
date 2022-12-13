@@ -8,18 +8,20 @@ import { ChangeEmail, ChangePassword, DeleteAccount, EditProfile, ProfileImage }
 import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from './features/register';
 
 import { Home, Profile } from './pages';
+
 import { MySessions } from './pages/MySessions';
+// const Sessions = lazy(() => import('./pages/Sessions'));
 
 const Auth = lazy(() => import('./pages/Auth'));
 const Admin = lazy(() => import('./pages/Admin'));
 const Register = lazy(() => import('./pages/Register'));
 const Onboarding = lazy(() => import('./pages/Onboarding'));
 const AddLocation = lazy(() => import('./pages/AddLocation'));
-const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const Login = lazy(() => import('./features/auth/components/Login'));
 const RequireAdmin = lazy(() => import('./features/auth/components/RequireAdmin'));
 const ConfirmEmail = lazy(() => import('./features/auth/components/ConfirmEmail'));
 const CategoryList = lazy(() => import('./features/admin/components/CategoryList'));
+const ResetPassword = lazy(() => import('./features/auth/components/ResetPassword'));
 const TipsAndTricks = lazy(() => import('./features/onboarding/components/TipsAndTricks'));
 const HowToAddReview = lazy(() => import('./features/onboarding/components/HowToAddReview'));
 const HowToAddLocation = lazy(() => import('./features/onboarding/components/HowToAddLocation'));
@@ -71,6 +73,7 @@ export const AppRoutes = () => (
 
                 <Route path="my-sessions" element={<RequireAuth />}>
                     <Route index element={<MySessions />} />
+                    {/* <Route index element={<Sessions />} /> */}
                 </Route>
 
                 <Route path="*" element={<Home />} />

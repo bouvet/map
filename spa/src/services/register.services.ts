@@ -1,7 +1,7 @@
 import { IConfirmCodeResponse, ICrateEmailResponse, IRegisterRequest } from '../interfaces';
 import { API } from '../lib/api';
 import { AppDispatch, authActions, uiActions, userActions } from '../store';
-import { sleep } from '../utils/sleep';
+import { sleep } from '../utils';
 
 export const registerServices = {
     getCode(email: string, callback?: (emailIsConfirmed?: boolean) => void) {
@@ -34,12 +34,15 @@ export const registerServices = {
                     callback();
                 }
             } catch (error: any) {
-                if (error.response?.data?.title === 'Email has already been registered') {
-                    dispatch(uiActions.showSnackbar({ message: 'E-posten er allerede registrert', severity: 'error' }));
-                    dispatch(userActions.setLoading(false));
+                dispatch(userActions.setLoading(false));
+                if (error.response?.data?.title === 'User already exists') {
+                    dispatch(uiActions.showSnackbar({ message: 'Bruker med denne e-posten finnes allerede', severity: 'error' }));
                     return;
                 }
-                dispatch(userActions.setLoading(false));
+                if (error.response?.data?.title === 'Email has already been registered') {
+                    dispatch(uiActions.showSnackbar({ message: 'E-posten er allerede registrert', severity: 'error' }));
+                    return;
+                }
                 dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
             }
         };

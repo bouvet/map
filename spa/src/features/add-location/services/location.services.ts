@@ -2,16 +2,21 @@ import { API } from '../../../lib/api';
 import { addLocationActions, AppDispatch, uiActions } from '../../../store';
 
 export const locationServices = {
-    addLocation(formData: FormData) {
+    addLocation(formData: FormData, callback: () => void) {
         return async (dispatch: AppDispatch) => {
             try {
+                dispatch(addLocationActions.setLoading(true));
+
                 await API.post('/locations', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
 
                 dispatch(addLocationActions.setLoading(false));
                 dispatch(uiActions.showSnackbar({ message: 'Lokasjon er lagt til behandling', severity: 'success' }));
-                dispatch(uiActions.setShouldNavigate(true));
+
+                dispatch(addLocationActions.reset());
+
+                callback();
             } catch (error) {
                 console.error('error', error);
                 dispatch(

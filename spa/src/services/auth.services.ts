@@ -2,7 +2,7 @@ import { AppDispatch, uiActions } from '../store';
 import { authActions } from '../store/state/auth.state';
 import { API } from '../lib/api';
 import { userActions } from '../store/state/user.state';
-import { sleep } from '../utils/sleep';
+import { sleep } from '../utils';
 import { IAuthWithGoogleResponse } from '../interfaces';
 
 export const authServices = {

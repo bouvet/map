@@ -42,10 +42,12 @@ const ProgressIcon = styled.span<{ completed: boolean }>`
     color: ${(props) => (props.completed ? MyTheme.colors.darkBase : MyTheme.colors.gray)};
     font-weight: 400;
     margin-bottom: 0.5rem;
+    transition: 500ms ease-in-out all;
 `;
 
 const ProgressStatusLine = styled.div<{ completed: boolean }>`
     width: 100%;
     height: 10px;
     background-color: ${(props) => (props.completed ? MyTheme.colors.accent : MyTheme.colors.gray)};
+    transition: 500ms ease-in-out all;
 `;

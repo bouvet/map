@@ -2,7 +2,6 @@ import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { sessionActions } from '../../../store/state/session.state';
 import { uiActions } from '../../../store/state/ui.state';
-import { ISessionTypeGet } from '../../../utils/types.d';
 
 export const sessionServices = {
     postSession(payload: Object) {
@@ -18,9 +17,9 @@ export const sessionServices = {
     getAllSessions() {
         return async (dispatch: AppDispatch) => {
             try {
-                const requestUrl = '/Sessions/mysessions';
-                const sessions: ISessionTypeGet[] = await (await API.get(requestUrl)).data;
-                dispatch(sessionActions.setCurrentSessions(sessions));
+                const requestUrl = '/Sessions/mySessions';
+                const { data } = await API.get(requestUrl);
+                dispatch(sessionActions.setCurrentSessions(data));
             } catch (error) {
                 console.error('error', error);
             }
@@ -30,8 +29,8 @@ export const sessionServices = {
         return async (dispatch: AppDispatch) => {
             try {
                 const requestUrl = `/Sessions?locationId=${payload}`;
-                const sessions: ISessionTypeGet[] = await (await API.get(requestUrl)).data;
-                dispatch(sessionActions.setCurrentSessions(sessions));
+                const { data } = await API.get(requestUrl);
+                dispatch(sessionActions.setCurrentSessions(data));
             } catch (error) {
                 console.error('error', error);
             }

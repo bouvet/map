@@ -30,7 +30,6 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
     };
 
     const onMapLoadHandler = () => {
-        console.log('[onMapLoadHandler]: Map loaded');
         dispatch(mapServices.getCategories());
         dispatch(mapServices.getLocations());
         setMapLoaded(true);

@@ -1,4 +1,4 @@
-export interface IProfileImage {
+export interface IImage {
     id: string;
     originalFileName: string;
     blobUri: string;

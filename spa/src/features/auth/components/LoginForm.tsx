@@ -1,8 +1,8 @@
+import styled from 'styled-components';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { useInput } from '../../../hooks/useInput';
-import { Checkbox } from '../../../components/Form/Input';
 import { StyledInput } from '../../../components/Form/StyledInput';
 import { Form } from '../../../components/Form/Form';
 import { validateEmail } from '../../../utils';
@@ -88,3 +88,7 @@ export const LoginForm = () => {
         </Form>
     );
 };
+
+const Checkbox = styled.input`
+    margin-right: 7px;
+`;

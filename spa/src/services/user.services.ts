@@ -2,7 +2,7 @@ import { FilePondFile } from 'filepond';
 import { IUpdatePasswordRequest, IUser } from '../interfaces';
 import { API } from '../lib/api';
 import { AppDispatch, authActions, uiActions, userActions } from '../store';
-import { sleep } from '../utils/sleep';
+import { sleep } from '../utils';
 
 export const userServices = {
     validatePassword(email: string, password: string, callback?: () => void) {
@@ -225,6 +225,17 @@ export const userServices = {
                 await sleep(500);
                 dispatch(uiActions.showSnackbar({ message: 'Noe gikk galt', severity: 'error' }));
                 dispatch(authActions.setLoading(false));
+            }
+        };
+    },
+    loadSessions() {
+        return async (dispatch: AppDispatch) => {
+            try {
+                const { data } = await API.get('/Sessions/mySessions');
+
+                dispatch(userActions.loadSessions(data));
+            } catch (error) {
+                console.error('error', error);
             }
         };
     },

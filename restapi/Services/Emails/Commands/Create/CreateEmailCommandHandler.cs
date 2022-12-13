@@ -48,7 +48,7 @@ public class CreateEmailCommandHandler : IRequestHandler<CreateEmailCommand, Err
 
     if (userExists)
     {
-      return Errors.Authentication.InvalidCredentials;
+      return Errors.User.AlreadyExists;
     }
 
     if (emailInDb?.Confirmed == true)

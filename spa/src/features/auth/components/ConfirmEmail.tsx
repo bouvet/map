@@ -4,7 +4,7 @@ import { FullPageSpinner } from '../../../components/Common';
 import { useStateDispatch } from '../../../hooks';
 import { userServices } from '../../../services';
 
-export const ConfirmEmail = () => {
+const ConfirmEmail = () => {
     const dispatch = useStateDispatch();
     const location = useLocation();
     const navigate = useNavigate();

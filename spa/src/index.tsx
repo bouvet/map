@@ -18,10 +18,7 @@ root.render(
     <BrowserRouter>
         <Provider store={store}>
             <StyledEngineProvider injectFirst>
-                {/* <AppInsightsErrorBoundary 
-                    onError={() => console.log('AppInsights: Something went wrong')} 
-                    appInsights={reactPlugin}
-                > */}
+                {/* <AppInsightsErrorBoundary onError={() => <h1>Noe gikk galt</h1>} appInsights={reactPlugin}> */}
                 <AppRoutes />
                 {/* </AppInsightsErrorBoundary> */}
             </StyledEngineProvider>

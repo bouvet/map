@@ -1,11 +1,12 @@
-import { FC } from 'react';
+import React from 'react';
 import Select, { ActionMeta, SingleValue } from 'react-select';
-import { locationStatus } from '../../../types';
+
+import { LocationStatus } from '../../../interfaces';
 
 interface StatusSelectorProps {
     onChangeHandler: (
         newValue: SingleValue<{
-            value: locationStatus;
+            value: LocationStatus;
             label: string;
         }>,
         actionMeta: ActionMeta<{
@@ -16,11 +17,11 @@ interface StatusSelectorProps {
 }
 
 interface IOptions {
-    value: locationStatus;
+    value: LocationStatus;
     label: string;
 }
 
-export const StatusSelector: FC<StatusSelectorProps> = ({ onChangeHandler }) => {
+export const StatusSelector: React.FC<StatusSelectorProps> = ({ onChangeHandler }) => {
     const options: IOptions[] = [
         { value: 'Under Review', label: 'Under Behandling' },
         { value: 'Approved', label: 'Godkjent' },

@@ -6,7 +6,7 @@ import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { ILocation } from '../../interfaces';
 import { uiActions } from '../../store/state/ui.state';
 import { MyTheme } from '../../styles/global';
-import { StarRating } from '../StarRating/StarRating';
+import { StarRating } from '../Common';
 
 interface Props {
     location: ILocation;

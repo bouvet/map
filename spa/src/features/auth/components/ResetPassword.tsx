@@ -1,121 +1,62 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Form } from '../../../components/Form/Form';
-import { StyledInput } from '../../../components/Form/StyledInput';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PageSubtitle, PrimaryButton } from '../../../components/Common';
+import { Form, StyledInput } from '../../../components/Form';
 import { Main, Section } from '../../../components/Layout';
-import { FABCloseButton } from '../../../components/Common/Buttons/NavigationButtons';
-import { useInput } from '../../../hooks/useInput';
-import { useStateDispatch } from '../../../hooks/useRedux';
-import { uiActions } from '../../../store';
-import { userServices } from '../../../services';
-import { PageTitle, PrimaryButton } from '../../../components/Common';
+import { Header } from '../../../components/Navigation';
+import { useInput, useStateDispatch, useStateSelector } from '../../../hooks';
+import { authServices } from '../../../services';
+import { validateEmail } from '../../../utils';
 
-export const ResetPassword: FC = () => {
+const ResetPassword = () => {
+    const { loading } = useStateSelector((state) => state.auth);
+
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
-
-    const [showNewPassword, setShowNewPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [inputTypeNew, setInputTypeNew] = useState('password');
-    const [inputTypeConfirm, setInputTypeConfirm] = useState('password');
 
     const {
-        value: newPassword,
-        isValid: newPasswordIsValid,
-        hasError: newPasswordInputHasError,
-        valueChangeHandler: newPasswordChangeHandler,
-        inputBlurHandler: newPasswordBlurHandler,
-    } = useInput((value) => value.trim().length >= 8);
+        value: email,
+        isValid: emailIsValid,
+        hasError: emailInputHasError,
+        valueChangeHandler: emailChangeHandler,
+        inputBlurHandler: emailBlurHandler,
+    } = useInput((email) => validateEmail(email));
 
-    const {
-        value: confirmPassword,
-        isValid: confirmPasswordIsValid,
-        hasError: confirmPasswordInputHasError,
-        valueChangeHandler: confirmPasswordChangeHandler,
-        inputBlurHandler: confirmPasswordBlurHandler,
-    } = useInput((value) => value.trim().length >= 8);
-
-    const toggleNewPasswordHandler = () => {
-        if (inputTypeNew === 'password') {
-            setInputTypeNew('text');
-            setShowNewPassword(true);
-        }
-
-        if (inputTypeNew === 'text') {
-            setInputTypeNew('password');
-            setShowNewPassword(false);
-        }
-    };
-
-    const toggleConfirmPasswordHandler = () => {
-        if (inputTypeConfirm === 'password') {
-            setInputTypeConfirm('text');
-            setShowConfirmPassword(true);
-        }
-
-        if (inputTypeConfirm === 'text') {
-            setInputTypeConfirm('password');
-            setShowConfirmPassword(false);
-        }
-    };
-
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const token = queryParams.get('token');
-        if (token) {
-            localStorage.setItem('token', token);
-        }
-    }, [location.search]);
-
-    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (newPassword !== confirmPassword) {
-            dispatch(uiActions.showSnackbar({ message: 'Passordene er ikke like', severity: 'error' }));
-        } else {
-            newPasswordBlurHandler();
-            confirmPasswordBlurHandler();
 
-            if (!newPasswordIsValid || !confirmPasswordIsValid) return;
+        if (!emailIsValid) return;
 
-            dispatch(userServices.changePassword(newPassword, confirmPassword));
-        }
+        dispatch(
+            authServices.resetPassword(email, () => {
+                navigate('/auth/login');
+            }),
+        );
     };
 
     return (
-        <Main>
-            <FABCloseButton onClick={() => navigate('/auth/login')} />
-            <Section>
-                <PageTitle>Tilbakestill passord</PageTitle>
-                <Form onSubmit={onSubmitHandler} style={{ marginTop: '3rem' }}>
-                    <StyledInput
-                        label="Passord*"
-                        type={inputTypeNew}
-                        errorMessage="Passord må bestå av minst 8 tegn"
-                        value={newPassword}
-                        onChange={newPasswordChangeHandler}
-                        onBlur={newPasswordBlurHandler}
-                        inputHasError={newPasswordInputHasError}
-                        toggleShowPassword={toggleNewPasswordHandler}
-                        showPassword={showNewPassword}
-                    />
-                    <StyledInput
-                        label="Gjenta passord*"
-                        type={inputTypeConfirm}
-                        errorMessage="Passord må bestå av minst 8 tegn"
-                        value={confirmPassword}
-                        onChange={confirmPasswordChangeHandler}
-                        onBlur={confirmPasswordBlurHandler}
-                        inputHasError={confirmPasswordInputHasError}
-                        toggleShowPassword={toggleConfirmPasswordHandler}
-                        showPassword={showConfirmPassword}
-                    />
-                    {/* add button disabled */}
-                    <PrimaryButton type="submit" sx={{ marginTop: 'auto', marginBottom: '-3.5vh' }}>
-                        Endre passord
-                    </PrimaryButton>
-                </Form>
-            </Section>
-        </Main>
+        <>
+            <Header>Tilbakestill passord</Header>
+            <Main>
+                <Section>
+                    <PageSubtitle>Skriv inn e-posten din så sender vi en e-post med lenke for tilbakestilling av passord</PageSubtitle>
+                    <Form onSubmit={onSubmitHandler} style={{ paddingTop: '1rem' }}>
+                        <StyledInput
+                            label="E-post*"
+                            value={email}
+                            onChange={emailChangeHandler}
+                            onBlur={emailBlurHandler}
+                            errorMessage="Gyldig e-post kreves"
+                            inputHasError={emailInputHasError}
+                        />
+                        <PrimaryButton type="submit" sx={{ marginTop: 'auto' }} loading={loading}>
+                            Tilbakestill
+                        </PrimaryButton>
+                    </Form>
+                </Section>
+            </Main>
+        </>
     );
 };
+
+export default ResetPassword;
