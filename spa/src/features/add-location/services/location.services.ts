@@ -1,5 +1,6 @@
 import { API } from '../../../lib/api';
 import { addLocationActions, AppDispatch, uiActions } from '../../../store';
+import { sleep } from '../../../utils';
 
 export const locationServices = {
     addLocation(formData: FormData, callback: () => void) {
@@ -11,6 +12,8 @@ export const locationServices = {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
 
+                await sleep(500);
+
                 dispatch(addLocationActions.setLoading(false));
                 dispatch(uiActions.showSnackbar({ message: 'Lokasjon er lagt til behandling', severity: 'success' }));
 
@@ -18,7 +21,6 @@ export const locationServices = {
 
                 callback();
             } catch (error) {
-                console.error('error', error);
                 dispatch(
                     uiActions.showSnackbar({
                         message: 'Lagring av lokasjon feilet, vennligst prøv igjen',

@@ -43,9 +43,7 @@ const mapState = createSlice({
         loadLocations(state, action: PayloadAction<ILocation[]>) {
             state.locations = action.payload;
 
-            if (state.filteredLocations.length < 1) {
-                state.filteredLocations = action.payload;
-            }
+            state.filteredLocations = action.payload;
         },
         filterLocations(state, action: PayloadAction<string | null>) {
             if (!action.payload) {

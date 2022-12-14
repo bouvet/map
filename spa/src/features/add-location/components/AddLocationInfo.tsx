@@ -70,6 +70,7 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
                             selectCategoryHandler={selectCategoryHandler}
                         />
                     ))}
+                    {categories.length < 1 && <p>Det finnes ingen kategorier i systemet</p>}
                 </FlexRowContainer>
 
                 <Text style={{ marginBottom: '1rem', fontWeight: '600' }}>Beskriv stedet*</Text>
