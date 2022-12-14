@@ -1,0 +1,51 @@
+{
+  "id": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+  "email": "verden.venter.app@gmail.com",
+  "firstName": "Verden",
+  "lastName": "Venter",
+  "address": null,
+  "postalArea": null,
+  "postalCode": 0,
+  "phoneNumber": 0,
+  "dob": "2022-12-12T10:01:52.3351244",
+  "registered": "2022-12-12T10:01:52.3351244",
+  "updated": "2022-12-13T09:35:51.0431761",
+  "roles": [
+    {
+      "id": "ab2a6dbe-bb6e-4d43-a0cb-0f321fc0aaf7",
+      "name": "Administrator",
+      "created": "2022-12-12T10:01:52.3351244",
+      "updated": null,
+      "creator": null,
+      "editor": null
+    },
+    {
+      "id": "1623aa90-8ac1-4ff9-b776-38f0c625e1a4",
+      "name": "User",
+      "created": "2022-12-12T10:01:52.3351244",
+      "updated": null,
+      "creator": null,
+      "editor": null
+    }
+  ],
+  "favoriteCategories": [],
+  "originalProfileImage": null,
+  "webpProfileImage": {
+    "id": "44a050b8-172a-4843-a5ef-c82e1bffe5e1",
+    "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/44a050b8-172a-4843-a5ef-c82e1bffe5e1",
+    "cdnUri": "https://optimusblobs.azureedge.net/images/webp/44a050b8-172a-4843-a5ef-c82e1bffe5e1",
+    "contentType": "image/webp",
+    "uploaded": "2022-12-13T09:35:50.4539793",
+    "uploader": {
+      "id": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+      "email": "verden.venter.app@gmail.com",
+      "firstName": "Verden",
+      "lastName": "Venter",
+      "dob": "2022-12-12T10:01:52.3351244"
+    },
+    "originalImageId": "060cd061-5d40-4b14-be6b-a08fdce4106e",
+    "locationId": null,
+    "reviewId": null
+  },
+  "token": ""
+}

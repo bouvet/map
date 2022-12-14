@@ -29,12 +29,12 @@ export const categoryServices = {
             }
         };
     },
-    edit(category: ICategory) {
+    edit(categoryId: string, name: string, emoji: string) {
         return async (dispatch: AppDispatch) => {
             try {
-                await API.put(`/categories/${category.id}`, { name: category.name, emoji: category.emoji });
+                await API.put(`/categories/${categoryId}`, { name, emoji });
 
-                const { data } = await API.get('/categories');
+                const { data }: { data: ICategory[] } = await API.get('/categories');
 
                 dispatch(mapActions.loadCategories(data));
 

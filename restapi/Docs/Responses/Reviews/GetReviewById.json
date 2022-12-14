@@ -1,0 +1,33 @@
+{
+  "id": "6b041783-efba-4dce-952b-4bf5fcc69db4",
+  "status": "Under Review",
+  "text": "Kjekk park",
+  "rating": 4,
+  "originalImage": {
+    "id": "12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "cdnUri": "https://optimusblobs.azureedge.net/images/originals/12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "contentType": "image/png",
+    "uploaded": "2022-12-14T09:46:34.6214106",
+    "uploader": null,
+    "originalImageId": null,
+    "locationId": "f4ff6a93-f714-4f1d-9abc-99a0d0b88225",
+    "reviewId": "6b041783-efba-4dce-952b-4bf5fcc69db4"
+  },
+  "webpImage": {
+    "id": "eddd340c-8a97-40ea-8dc0-0350bdd55b30",
+    "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/eddd340c-8a97-40ea-8dc0-0350bdd55b30",
+    "cdnUri": "https://optimusblobs.azureedge.net/images/webp/eddd340c-8a97-40ea-8dc0-0350bdd55b30",
+    "contentType": "image/webp",
+    "uploaded": "2022-12-14T09:46:34.6214119",
+    "uploader": null,
+    "originalImageId": "12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "locationId": "f4ff6a93-f714-4f1d-9abc-99a0d0b88225",
+    "reviewId": "6b041783-efba-4dce-952b-4bf5fcc69db4"
+  },
+  "created": "2022-12-14T09:46:33.9815629",
+  "updated": null,
+  "creator": null,
+  "editor": null,
+  "locationId": "f4ff6a93-f714-4f1d-9abc-99a0d0b88225"
+}

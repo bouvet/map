@@ -1,51 +1,33 @@
 {
-  "id": "edd248eb-b52a-4dc6-8658-f5b96d737a23",
+  "id": "6b041783-efba-4dce-952b-4bf5fcc69db4",
   "status": "Under Review",
   "text": "Kjekk park",
   "rating": 4,
   "originalImage": {
-    "id": "e243f133-dfcb-4131-af01-bd935f1097ca",
-    "blobUri": "https://optimusblobs.blob.core.windows.net:443/images/originals/e243f133-dfcb-4131-af01-bd935f1097ca",
-    "cdnUri": "https://optimusblobs.azureedge.net/images/originals/e243f133-dfcb-4131-af01-bd935f1097ca",
+    "id": "12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "blobUri": "https://optimusblobs.blob.core.windows.net:443/images/originals/12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "cdnUri": "https://optimusblobs.azureedge.net/images/originals/12dc1e45-f213-40d3-91b1-770b1e782d5c",
     "contentType": "image/png",
-    "uploaded": "2022-10-14T15:18:24.5812493",
-    "uploader": {
-      "id": "6320774a-624c-402a-8f13-de24f6db9a3b",
-      "email": "regtest@test.no",
-      "firstName": "Registrering",
-      "lastName": "Test",
-      "dob": "2022-10-11T00:00:00"
-    },
+    "uploaded": "2022-12-14T09:46:34.6214106Z",
+    "uploader": null,
     "originalImageId": null,
-    "locationId": "3cf1360d-9c4c-4c8d-b1b3-e3bf8c0280b0",
-    "reviewId": "edd248eb-b52a-4dc6-8658-f5b96d737a23"
+    "locationId": "f4ff6a93-f714-4f1d-9abc-99a0d0b88225",
+    "reviewId": "6b041783-efba-4dce-952b-4bf5fcc69db4"
   },
   "webpImage": {
-    "id": "c5b0fc09-f0d7-4733-859f-f7cac1aa6209",
-    "blobUri": "https://optimusblobs.blob.core.windows.net:443/images/webp/c5b0fc09-f0d7-4733-859f-f7cac1aa6209",
-    "cdnUri": "https://optimusblobs.azureedge.net/images/webp/c5b0fc09-f0d7-4733-859f-f7cac1aa6209",
+    "id": "eddd340c-8a97-40ea-8dc0-0350bdd55b30",
+    "blobUri": "https://optimusblobs.blob.core.windows.net:443/images/webp/eddd340c-8a97-40ea-8dc0-0350bdd55b30",
+    "cdnUri": "https://optimusblobs.azureedge.net/images/webp/eddd340c-8a97-40ea-8dc0-0350bdd55b30",
     "contentType": "image/webp",
-    "uploaded": "2022-10-14T15:18:24.5812546",
-    "uploader": {
-      "id": "6320774a-624c-402a-8f13-de24f6db9a3b",
-      "email": "regtest@test.no",
-      "firstName": "Registrering",
-      "lastName": "Test",
-      "dob": "2022-10-11T00:00:00"
-    },
-    "originalImageId": "e243f133-dfcb-4131-af01-bd935f1097ca",
-    "locationId": "3cf1360d-9c4c-4c8d-b1b3-e3bf8c0280b0",
-    "reviewId": "edd248eb-b52a-4dc6-8658-f5b96d737a23"
+    "uploaded": "2022-12-14T09:46:34.6214119Z",
+    "uploader": null,
+    "originalImageId": "12dc1e45-f213-40d3-91b1-770b1e782d5c",
+    "locationId": "f4ff6a93-f714-4f1d-9abc-99a0d0b88225",
+    "reviewId": "6b041783-efba-4dce-952b-4bf5fcc69db4"
   },
-  "created": "2022-10-14T15:18:24.1521815",
+  "created": "2022-12-14T09:46:33.9815629Z",
   "updated": null,
-  "creator": {
-    "id": "6320774a-624c-402a-8f13-de24f6db9a3b",
-    "email": "regtest@test.no",
-    "firstName": "Registrering",
-    "lastName": "Test",
-    "dob": "2022-10-11T00:00:00"
-  },
+  "creator": null,
   "editor": null,
-  "locationId": "3cf1360d-9c4c-4c8d-b1b3-e3bf8c0280b0"
+  "locationId": "f4ff6a93-f714-4f1d-9abc-99a0d0b88225"
 }

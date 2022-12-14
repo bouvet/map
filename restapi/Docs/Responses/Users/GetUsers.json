@@ -1,0 +1,70 @@
+[
+  {
+    "id": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+    "email": "verden.venter.app@gmail.com",
+    "firstName": "Verden",
+    "lastName": "Venter",
+    "address": null,
+    "postalArea": null,
+    "postalCode": 0,
+    "phoneNumber": 0,
+    "dob": "2022-12-12T10:01:52.3351244",
+    "roles": [
+      {
+        "id": "ab2a6dbe-bb6e-4d43-a0cb-0f321fc0aaf7",
+        "name": "Administrator",
+        "created": "2022-12-12T10:01:52.3351244",
+        "updated": null,
+        "creator": null,
+        "editor": null
+      },
+      {
+        "id": "1623aa90-8ac1-4ff9-b776-38f0c625e1a4",
+        "name": "User",
+        "created": "2022-12-12T10:01:52.3351244",
+        "updated": null,
+        "creator": null,
+        "editor": null
+      }
+    ],
+    "favoriteCategories": [],
+    "originalProfileImage": null,
+    "webpProfileImage": null,
+    "token": null
+  },
+  {
+    "id": "0cd2fde1-dab6-4076-a786-4eb38bce5fad",
+    "email": "jdoe@email.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": null,
+    "postalArea": null,
+    "postalCode": 0,
+    "phoneNumber": 0,
+    "dob": "2000-02-27T00:00:00",
+    "roles": [
+      {
+        "id": "1623aa90-8ac1-4ff9-b776-38f0c625e1a4",
+        "name": "User",
+        "created": "2022-12-12T10:01:52.3351244",
+        "updated": null,
+        "creator": null,
+        "editor": null
+      }
+    ],
+    "favoriteCategories": [
+      {
+        "id": "f7e9d7ff-7091-43ca-4b4c-08daddb21d12",
+        "name": "Fotball",
+        "emoji": "⚽",
+        "created": "2022-12-14T09:03:48.6759788",
+        "updated": "2022-12-14T09:25:06.3144784",
+        "creator": null,
+        "editor": null
+      }
+    ],
+    "originalProfileImage": null,
+    "webpProfileImage": null,
+    "token": null
+  }
+]

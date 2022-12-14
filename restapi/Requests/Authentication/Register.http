@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "email": "admin@email.com",
-  "password": "12345qwerty",
+  "password": "123123123",
   "firstname": "Admin",
   "lastname": "Adminson",
   "DOB": "2000-01-29",
@@ -16,24 +16,10 @@ POST {{host}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "user3@email.com",
-  "password": "12345qwerty",
-  "firstname": "User",
-  "lastname": "Userdottir",
+  "email": "jdoe@email.com",
+  "password": "123123123",
+  "firstname": "John",
+  "lastname": "Doe",
   "DOB": "2000-02-27",
-  "favoritecategoryIds": []
-}
-
-###
-
-POST {{host}}/api/auth/register
-Content-Type: application/json
-
-{
-  "email": "glensorbo@gmail.com",
-  "password": "12345qwerty",
-  "firstname": "Glen",
-  "lastname": "Sørbø",
-  "DOB": "1987-04-25",
-  "favoritecategoryIds": ["9a6415fa-57dd-4698-dabf-08daaabaac26"]
+  "favoritecategoryIds": ["f7e9d7ff-7091-43ca-4b4c-08daddb21d12"]
 }

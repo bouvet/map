@@ -23,7 +23,7 @@ Content-Disposition: form-data; name="latitude"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-429b41f2-fa6d-447c-e53b-08daa6a9cd73
+f7e9d7ff-7091-43ca-4b4c-08daddb21d12
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### Create Location With Image
@@ -51,7 +51,7 @@ Content-Disposition: form-data; name="latitude"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="category"
 
-9a6415fa-57dd-4698-dabf-08daaabaac26
+f7e9d7ff-7091-43ca-4b4c-08daddb21d12
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="image"; filename="notpng.jpeg"
 Content-Type: image/jpeg

@@ -1,0 +1,38 @@
+{
+  "id": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+  "emailId": null,
+  "email": "verden.venter.app@gmail.com",
+  "firstName": "Verden",
+  "lastName": "Venter",
+  "address": null,
+  "authenticationMethod": "Google",
+  "postalArea": null,
+  "postalCode": 0,
+  "phoneNumber": 0,
+  "dob": "2022-12-12T10:01:52.3351244",
+  "registered": "2022-12-12T10:01:52.3351244",
+  "updated": "2022-12-14T08:47:19.6381031Z",
+  "roles": [
+    {
+      "id": "ab2a6dbe-bb6e-4d43-a0cb-0f321fc0aaf7",
+      "name": "Administrator",
+      "created": "2022-12-12T10:01:52.3351244",
+      "updated": null,
+      "creator": null,
+      "editor": null
+    },
+    {
+      "id": "1623aa90-8ac1-4ff9-b776-38f0c625e1a4",
+      "name": "User",
+      "created": "2022-12-12T10:01:52.3351244",
+      "updated": null,
+      "creator": null,
+      "editor": null
+    }
+  ],
+  "favoriteCategories": [],
+  "isLoggingIn": true,
+  "isRegistering": false,
+  "emailIsVerified": true,
+  "token": ""
+}

@@ -30,7 +30,7 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
     };
 
     const onSubmitHandler = () => {
-        dispatch(categoryServices.edit({ id: category.id, name, emoji }));
+        dispatch(categoryServices.edit(category.id, name, emoji));
     };
 
     const onDeleteHandler = () => {

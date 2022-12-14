@@ -1,332 +1,48 @@
 [
   {
-    "id": "ac27b501-bd7f-419e-9d2f-68dca1cea2d0",
+    "id": "8b76584a-ac09-4ca0-88a2-a3cffc2abbae",
     "type": "Feature",
-    "creator": {
-      "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-      "email": "user@email.com",
-      "firstName": "User",
-      "lastName": "Userdottir",
-      "dob": "2000-02-27T00:00:00"
-    },
-    "editor": {
-      "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-      "email": "admin@email.com",
-      "firstName": "Admin",
-      "lastName": "Adminson",
-      "dob": "2000-01-29T00:00:00"
-    },
+    "creator": null,
+    "editor": null,
     "properties": {
-      "title": "testing Jpeg",
-      "description": "Helt OK skatepark med betong elementer.",
+      "title": "testing updating something",
+      "description": "A description that's longer than 20 chars!",
       "originalImage": {
-        "id": "0361d623-8ce4-4f5a-8adb-295f2ae689e2",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/0361d623-8ce4-4f5a-8adb-295f2ae689e2",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/originals/0361d623-8ce4-4f5a-8adb-295f2ae689e2",
+        "id": "1b73a4e7-d0b5-48c1-8b7d-604b14ef43de",
+        "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/1b73a4e7-d0b5-48c1-8b7d-604b14ef43de",
+        "cdnUri": "https://optimusblobs.azureedge.net/images/originals/1b73a4e7-d0b5-48c1-8b7d-604b14ef43de",
         "contentType": "image/jpeg",
-        "uploaded": "2022-10-13T10:59:37.6524966",
-        "uploader": {
-          "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-          "email": "user@email.com",
-          "firstName": "User",
-          "lastName": "Userdottir",
-          "dob": "2000-02-27T00:00:00"
-        },
+        "uploaded": "2022-12-14T09:39:48.9827126",
+        "uploader": null,
         "originalImageId": null,
-        "locationId": "ac27b501-bd7f-419e-9d2f-68dca1cea2d0",
+        "locationId": "8b76584a-ac09-4ca0-88a2-a3cffc2abbae",
         "reviewId": null
       },
       "webpImage": {
-        "id": "1ea40883-6a2c-48bb-884a-3e58261a9a74",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/1ea40883-6a2c-48bb-884a-3e58261a9a74",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/webp/1ea40883-6a2c-48bb-884a-3e58261a9a74",
+        "id": "dc3775ba-b9b8-4293-ac1a-fbb56cd14286",
+        "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/dc3775ba-b9b8-4293-ac1a-fbb56cd14286",
+        "cdnUri": "https://optimusblobs.azureedge.net/images/webp/dc3775ba-b9b8-4293-ac1a-fbb56cd14286",
         "contentType": "image/webp",
-        "uploaded": "2022-10-13T10:59:37.6533727",
-        "uploader": {
-          "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-          "email": "user@email.com",
-          "firstName": "User",
-          "lastName": "Userdottir",
-          "dob": "2000-02-27T00:00:00"
-        },
-        "originalImageId": "0361d623-8ce4-4f5a-8adb-295f2ae689e2",
-        "locationId": "ac27b501-bd7f-419e-9d2f-68dca1cea2d0",
-        "reviewId": null
-      },
-      "status": "Rejected",
-      "rating": 0,
-      "category": [
-        {
-          "id": "9a6415fa-57dd-4698-dabf-08daaabaac26",
-          "name": "Skatepark",
-          "emoji": "\uD83D\uDEF9",
-          "created": "2022-10-10T14:26:35.3659488",
-          "updated": null,
-          "creator": {
-            "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-            "email": "admin@email.com",
-            "firstName": "Admin",
-            "lastName": "Adminson",
-            "dob": "2000-01-29T00:00:00"
-          },
-          "editor": null
-        }
-      ]
-    },
-    "geometry": { "coordinates": [5.12345, 58.12345] }
-  },
-  {
-    "id": "9f9317b4-c094-43e2-bc1e-752be906175d",
-    "type": "Feature",
-    "creator": {
-      "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-      "email": "user@email.com",
-      "firstName": "User",
-      "lastName": "Userdottir",
-      "dob": "2000-02-27T00:00:00"
-    },
-    "editor": {
-      "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-      "email": "admin@email.com",
-      "firstName": "Admin",
-      "lastName": "Adminson",
-      "dob": "2000-01-29T00:00:00"
-    },
-    "properties": {
-      "title": "testing Jpeg again...",
-      "description": "Helt OK skatepark med betong elementer.",
-      "originalImage": {
-        "id": "fcc362b0-16e1-450e-b2d3-f339a3e57df4",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/fcc362b0-16e1-450e-b2d3-f339a3e57df4",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/originals/fcc362b0-16e1-450e-b2d3-f339a3e57df4",
-        "contentType": "image/jpeg",
-        "uploaded": "2022-10-13T11:10:07.9247502",
-        "uploader": {
-          "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-          "email": "user@email.com",
-          "firstName": "User",
-          "lastName": "Userdottir",
-          "dob": "2000-02-27T00:00:00"
-        },
-        "originalImageId": null,
-        "locationId": "9f9317b4-c094-43e2-bc1e-752be906175d",
-        "reviewId": null
-      },
-      "webpImage": {
-        "id": "1f8461ca-2e5e-4c0f-a2da-a90a4def38da",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/1f8461ca-2e5e-4c0f-a2da-a90a4def38da",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/webp/1f8461ca-2e5e-4c0f-a2da-a90a4def38da",
-        "contentType": "image/webp",
-        "uploaded": "2022-10-13T11:10:07.9288969",
-        "uploader": {
-          "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-          "email": "user@email.com",
-          "firstName": "User",
-          "lastName": "Userdottir",
-          "dob": "2000-02-27T00:00:00"
-        },
-        "originalImageId": "fcc362b0-16e1-450e-b2d3-f339a3e57df4",
-        "locationId": "9f9317b4-c094-43e2-bc1e-752be906175d",
-        "reviewId": null
-      },
-      "status": "Rejected",
-      "rating": 0,
-      "category": [
-        {
-          "id": "9a6415fa-57dd-4698-dabf-08daaabaac26",
-          "name": "Skatepark",
-          "emoji": "\uD83D\uDEF9",
-          "created": "2022-10-10T14:26:35.3659488",
-          "updated": null,
-          "creator": {
-            "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-            "email": "admin@email.com",
-            "firstName": "Admin",
-            "lastName": "Adminson",
-            "dob": "2000-01-29T00:00:00"
-          },
-          "editor": null
-        }
-      ]
-    },
-    "geometry": { "coordinates": [5.12345, 58.12345] }
-  },
-  {
-    "id": "8e322b1a-5193-47e6-8527-7dd01d61d777",
-    "type": "Feature",
-    "creator": {
-      "id": "78867074-8e2b-4945-ade2-302302902828",
-      "email": "verden.venter.app@gmail.com",
-      "firstName": "Test",
-      "lastName": "Test",
-      "dob": "1988-10-13T00:00:00"
-    },
-    "editor": {
-      "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-      "email": "admin@email.com",
-      "firstName": "Admin",
-      "lastName": "Adminson",
-      "dob": "2000-01-29T00:00:00"
-    },
-    "properties": {
-      "title": "testttt",
-      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type a",
-      "originalImage": null,
-      "webpImage": null,
-      "status": "Rejected",
-      "rating": 4,
-      "category": [
-        {
-          "id": "9a6415fa-57dd-4698-dabf-08daaabaac26",
-          "name": "Skatepark",
-          "emoji": "\uD83D\uDEF9",
-          "created": "2022-10-10T14:26:35.3659488",
-          "updated": null,
-          "creator": {
-            "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-            "email": "admin@email.com",
-            "firstName": "Admin",
-            "lastName": "Adminson",
-            "dob": "2000-01-29T00:00:00"
-          },
-          "editor": null
-        }
-      ]
-    },
-    "geometry": { "coordinates": [5.7241040922258435, 58.88707613625206] }
-  },
-  {
-    "id": "254127e7-f68c-4b32-a50e-b4ef45e87fe4",
-    "type": "Feature",
-    "creator": {
-      "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-      "email": "user@email.com",
-      "firstName": "User",
-      "lastName": "Userdottir",
-      "dob": "2000-02-27T00:00:00"
-    },
-    "editor": {
-      "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-      "email": "admin@email.com",
-      "firstName": "Admin",
-      "lastName": "Adminson",
-      "dob": "2000-01-29T00:00:00"
-    },
-    "properties": {
-      "title": "Lura Skatepark",
-      "description": "Helt OK skatepark med betong elementer.",
-      "originalImage": {
-        "id": "90ded438-d19f-4187-bba4-9d293a4dcf67",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/90ded438-d19f-4187-bba4-9d293a4dcf67",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/originals/90ded438-d19f-4187-bba4-9d293a4dcf67",
-        "contentType": "image/png",
-        "uploaded": "2022-10-10T14:30:37.7276026",
-        "uploader": {
-          "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-          "email": "user@email.com",
-          "firstName": "User",
-          "lastName": "Userdottir",
-          "dob": "2000-02-27T00:00:00"
-        },
-        "originalImageId": null,
-        "locationId": "254127e7-f68c-4b32-a50e-b4ef45e87fe4",
-        "reviewId": null
-      },
-      "webpImage": {
-        "id": "28a2b05b-68c9-47d0-a9ce-65419eba6af9",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/28a2b05b-68c9-47d0-a9ce-65419eba6af9",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/webp/28a2b05b-68c9-47d0-a9ce-65419eba6af9",
-        "contentType": "image/webp",
-        "uploaded": "2022-10-10T14:30:37.7281408",
-        "uploader": {
-          "id": "7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba",
-          "email": "user@email.com",
-          "firstName": "User",
-          "lastName": "Userdottir",
-          "dob": "2000-02-27T00:00:00"
-        },
-        "originalImageId": "90ded438-d19f-4187-bba4-9d293a4dcf67",
-        "locationId": "254127e7-f68c-4b32-a50e-b4ef45e87fe4",
+        "uploaded": "2022-12-14T09:39:48.9830236",
+        "uploader": null,
+        "originalImageId": "1b73a4e7-d0b5-48c1-8b7d-604b14ef43de",
+        "locationId": "8b76584a-ac09-4ca0-88a2-a3cffc2abbae",
         "reviewId": null
       },
       "status": "Approved",
-      "rating": 4,
-      "category": [
-        {
-          "id": "9a6415fa-57dd-4698-dabf-08daaabaac26",
-          "name": "Skatepark",
-          "emoji": "\uD83D\uDEF9",
-          "created": "2022-10-10T14:26:35.3659488",
-          "updated": null,
-          "creator": {
-            "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-            "email": "admin@email.com",
-            "firstName": "Admin",
-            "lastName": "Adminson",
-            "dob": "2000-01-29T00:00:00"
-          },
-          "editor": null
-        }
-      ]
-    },
-    "geometry": { "coordinates": [5.7379152, 58.8812732] }
-  },
-  {
-    "id": "49d64ba1-a6f3-4c91-b8c7-cba324f78aef",
-    "type": "Feature",
-    "creator": null,
-    "editor": {
-      "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-      "email": "admin@email.com",
-      "firstName": "Admin",
-      "lastName": "Adminson",
-      "dob": "2000-01-29T00:00:00"
-    },
-    "properties": {
-      "title": "er32423rw",
-      "description": "ewdf23r2523t423t34t43t43t",
-      "originalImage": {
-        "id": "a953b23a-66a5-4dce-8667-4b56bebc5fcc",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/originals/a953b23a-66a5-4dce-8667-4b56bebc5fcc",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/originals/a953b23a-66a5-4dce-8667-4b56bebc5fcc",
-        "contentType": "image/jpeg",
-        "uploaded": "2022-10-13T11:36:56.4246369",
-        "uploader": null,
-        "originalImageId": null,
-        "locationId": "49d64ba1-a6f3-4c91-b8c7-cba324f78aef",
-        "reviewId": null
-      },
-      "webpImage": {
-        "id": "e9c633ad-67fb-4698-a33e-13ed1be4d1aa",
-        "blobUri": "https://optimusblobs.blob.core.windows.net/images/webp/e9c633ad-67fb-4698-a33e-13ed1be4d1aa",
-        "cdnUri": "https://optimusblobs.azureedge.net/images/webp/e9c633ad-67fb-4698-a33e-13ed1be4d1aa",
-        "contentType": "image/webp",
-        "uploaded": "2022-10-13T11:36:56.7328056",
-        "uploader": null,
-        "originalImageId": "a953b23a-66a5-4dce-8667-4b56bebc5fcc",
-        "locationId": "49d64ba1-a6f3-4c91-b8c7-cba324f78aef",
-        "reviewId": null
-      },
-      "status": "Rejected",
       "rating": 0,
       "category": [
         {
-          "id": "9a6415fa-57dd-4698-dabf-08daaabaac26",
-          "name": "Skatepark",
-          "emoji": "\uD83D\uDEF9",
-          "created": "2022-10-10T14:26:35.3659488",
-          "updated": null,
-          "creator": {
-            "id": "97f8cc6a-530a-48ed-8de1-412eb7bdd09f",
-            "email": "admin@email.com",
-            "firstName": "Admin",
-            "lastName": "Adminson",
-            "dob": "2000-01-29T00:00:00"
-          },
+          "id": "f7e9d7ff-7091-43ca-4b4c-08daddb21d12",
+          "name": "Fotball",
+          "emoji": "⚽",
+          "created": "2022-12-14T09:03:48.6759788",
+          "updated": "2022-12-14T09:25:06.3144784",
+          "creator": null,
           "editor": null
         }
       ]
     },
-    "geometry": { "coordinates": [5.696980998738809, 58.909025958350156] }
+    "geometry": { "coordinates": [5.12345, 58.12345] }
   }
 ]
