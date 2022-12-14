@@ -1,115 +1,28 @@
 # Locations
 
 - [Locations](#locations)
-  - [Get Locations](#get-locations)
-    - [Get Locations Request](#get-locations-request)
-    - [Get Locations Response](#get-locations-response)
-  - [Create Location](#create-location)
-    - [Create Location Request](#create-location-request)
-    - [Create Location Response](#create-location-response)
-  - [Get Location By Proximity](#get-location-by-proximity)
-    - [Get Location By Proximity Request](#get-location-by-proximity-request)
-    - [Get Location By Proximity Response](#get-location-by-proximity-response)
-  - [Get Location By Id](#get-location-by-id)
-    - [Get Location By Id Request](#get-location-by-id-request)
-    - [Get Location By Id Response](#get-location-by-id-response)
-  - [Update Location](#update-location)
-    - [Update Location Request](#update-location-request)
-    - [Update Location Response](#update-location-response)
-  - [🔒Delete Location](#delete-location)
-    - [Delete Location Request](#delete-location-request)
-    - [Delete Location Response](#delete-location-response)
+  - [Get Locations Request](#get-locations-request)
+  - [Create Location Request](#create-location-request)
+  - [Get Location By Proximity Request](#get-location-by-proximity-request)
+  - [Get Location By Id Request](#get-location-by-id-request)
+  - [Update Location Request](#update-location-request)
+  - [🔒Delete Location Request](#delete-location-request)
 
-## Get Locations
-
-### Get Locations Request
+## Get Locations Request
 
 ```js
-GET {{host}}/api/locations
+GET {{host}}/api/locations/{status}
 ```
 
-### Get Locations Response
-
-```js
-200 Ok
+```yml
+Available statuses:
+  - Approved
+  - Under Review
+  - Rejected
+  - Reported
 ```
 
-```json
-[
-  {
-    "id": "",
-    "type": "",
-    "creator": {
-      "id": "",
-      "email": "",
-      "firstName": "",
-      "lastName": ""
-    },
-    "editor": null,
-    "properties": {
-      "title": "",
-      "description": "",
-      "originalImage": {
-        "id": "",
-
-        "blobUri": "",
-        "cdnUri": "",
-        "contentType": "",
-        "uploaded": "",
-        "uploader": {
-          "id": "",
-          "email": "",
-          "firstName": "",
-          "lastName": ""
-        },
-        "originalImageId": null,
-        "locationId": "",
-        "reviewId": null
-      },
-      "webpImage": {
-        "id": "",
-
-        "blobUri": "",
-        "cdnUri": "",
-        "contentType": "",
-        "uploaded": "",
-        "uploader": {
-          "id": "",
-          "email": "",
-          "firstName": "",
-          "lastName": ""
-        },
-        "originalImageId": "",
-        "locationId": "",
-        "reviewId": null
-      },
-      "status": "",
-      "rating": 0,
-      "category": [
-        {
-          "id": "",
-          "name": "",
-          "emoji": "",
-          "created": "",
-          "updated": "",
-          "creator": null,
-          "editor": null
-        }
-      ]
-    },
-    "geometry": {
-      "coordinates": [
-        5.7379152,
-        58.8812732
-      ]
-    }
-  }
-]
-```
-
-## Create Location
-
-### Create Location Request
+## Create Location Request
 
 ```js
 POST {{host}}/api/locations
@@ -128,93 +41,12 @@ Required fields:
 title = ""
 description = ""
 image = file
-category = "60c951f3-d233-442b-7883-08da9ad92895"
+category = ""
 longitude = 5.1234
 latitude = 58.1234
 ```
 
-### Create Location Response
-
-```js
-201 Created
-```
-
-```yml
-Location: {{host}}/api/Locations/{{id}}
-```
-
-```json
-{
-  "id": "",
-  "type": "",
-  "creator": {
-    "id": "",
-    "email": "",
-    "firstName": "",
-    "lastName": ""
-  },
-  "editor": null,
-  "properties": {
-    "title": "",
-    "description": "",
-    "originalImage": {
-      "id": "",
-      "blobUri": "",
-      "cdnUri": "",
-      "contentType": "",
-      "uploaded": "",
-      "uploader": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "originalImageId": null,
-      "locationId": "",
-      "reviewId": null
-    },
-    "webpImage": {
-      "id": "",
-      "blobUri": "",
-      "cdnUri": "",
-      "contentType": "",
-      "uploaded": "",
-      "uploader": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "originalImageId": "",
-      "locationId": "",
-      "reviewId": null
-    },
-    "status": "",
-    "rating": 0,
-    "category": [
-      {
-        "id": "",
-        "name": "",
-        "emoji": "",
-        "created": "",
-        "updated": "",
-        "creator": null,
-        "editor": null
-      }
-    ]
-  },
-  "geometry": {
-    "coordinates": [
-      5.7379152,
-      58.8812732
-    ]
-  }
-}
-```
-
-## Get Location By Proximity
-
-### Get Location By Proximity Request
+## Get Location By Proximity Request
 
 ```yml
 Required fields:
@@ -225,179 +57,24 @@ Required fields:
 ```
 
 ```js
-GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category
-GET {{host}}/api/locations/{{latitude}}&{{longitude}}/category?category={{category}}
+GET {{host}}/api/locations/{{latitude}}&{{longitude}}
+GET {{host}}/api/locations/{{latitude}}&{{longitude}}?category={{category}}
 ```
 
-### Get Location By Proximity Response
-
-```js
-200 Ok
-```
-
-```json
-{
-  "id": "",
-  "type": "",
-  "creator": {
-    "id": "",
-    "email": "",
-    "firstName": "",
-    "lastName": ""
-  },
-  "editor": null,
-  "properties": {
-    "title": "",
-    "description": "",
-    "originalImage": {
-      "id": "",
-      "blobUri": "",
-      "cdnUri": "",
-      "contentType": "",
-      "uploaded": "",
-      "uploader": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "originalImageId": null,
-      "locationId": "",
-      "reviewId": null
-    },
-    "webpImage": {
-      "id": "",
-      "blobUri": "",
-      "cdnUri": "",
-      "contentType": "",
-      "uploaded": "",
-      "uploader": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "originalImageId": "",
-      "locationId": "",
-      "reviewId": null
-    },
-    "status": "",
-    "rating": 0,
-    "category": [
-      {
-        "id": "",
-        "name": "",
-        "emoji": "",
-        "created": "",
-        "updated": "",
-        "creator": null,
-        "editor": null
-      }
-    ]
-  },
-  "geometry": {
-    "coordinates": [
-      5.7379152,
-      58.8812732
-    ]
-  }
-}
-```
-
-## Get Location By Id
-
-### Get Location By Id Request
+## Get Location By Id Request
 
 ```js
 GET {{host}}/api/locations/{{id}}
 ```
 
-### Get Location By Id Response
+## Update Location Request
 
 ```js
-200 Ok
-```
-
-```json
-{
-  "id": "",
-  "type": "",
-  "creator": {
-    "id": "",
-    "email": "",
-    "firstName": "",
-    "lastName": ""
-  },
-  "editor": null,
-  "properties": {
-    "title": "",
-    "description": "",
-    "originalImage": {
-      "id": "",
-      "blobUri": "",
-      "cdnUri": "",
-      "contentType": "",
-      "uploaded": "",
-      "uploader": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "originalImageId": null,
-      "locationId": "",
-      "reviewId": null
-    },
-    "webpImage": {
-      "id": "",
-      "blobUri": "",
-      "cdnUri": "",
-      "contentType": "",
-      "uploaded": "",
-      "uploader": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "originalImageId": "",
-      "locationId": "",
-      "reviewId": null
-    },
-    "status": "",
-    "rating": 0,
-    "category": [
-      {
-        "id": "",
-        "name": "",
-        "emoji": "",
-        "created": "",
-        "updated": "",
-        "creator": null,
-        "editor": null
-      }
-    ]
-  },
-  "geometry": {
-    "coordinates": [
-      5.7379152,
-      58.8812732
-    ]
-  }
-}
-```
-
-## Update Location
-
-### Update Location Request
-
-```js
-PUT {{host}}/api/locations
+PUT {{host}}/api/locations/{{id}}
 Content-Type: multipart/form-data
 ```
 
 ```multipart/form-data
-id = ""
 title = ""
 description = ""
 Img = file
@@ -407,23 +84,9 @@ longitude = <number> (5.xxxx)
 latitude = <number> (58.xxxx)
 ```
 
-### Update Location Response
-
-```js
-204 No Content
-```
-
-## 🔒Delete Location
-
-### Delete Location Request
+## 🔒Delete Location Request
 
 ```js
 DELETE {{host}}/api/locations/{{id}}
 Authorization: Bearer {{token}}
-```
-
-### Delete Location Response
-
-```js
-204 No Content
 ```

@@ -8,7 +8,7 @@ using restapi.Services.Roles.Common;
 
 namespace restapi.Controllers;
 
-// [Authorize(Roles = "Administrator")]
+[Authorize(Roles = "Administrator")]
 public class RolesController : ApiController
 {
   private readonly ISender mediator;
