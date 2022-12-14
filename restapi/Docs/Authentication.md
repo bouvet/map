@@ -3,10 +3,8 @@
 - [Authentication](#authentication)
   - [Register](#register)
     - [Register Request](#register-request)
-    - [Register Response](#register-response)
   - [Login](#login)
     - [Login Request](#login-request)
-    - [Login Response](#login-response)
 
 ## Register
 
@@ -37,53 +35,6 @@ Required fields:
 }
 ```
 
-### Register Response
-
-```js
-200 Ok
-```
-
-```json
-{
-  "id": "",
-  "email": "",
-  "firstName": "",
-  "lastName": "",
-  "address": null,
-  "postalArea": null,
-  "postalCode": 0,
-  "phoneNumber": 0,
-  "dob": "",
-  "roles": [
-    {
-      "id": "",
-      "name": "",
-      "created": "",
-      "updated": null,
-      "creator": null,
-      "editor": null
-    }
-  ],
-  "favoriteCategories": [
-    {
-      "id": "",
-      "name": "",
-      "emoji": "",
-      "creator": null,
-      "editor": null
-    },
-    {
-      "id": "",
-      "name": "",
-      "emoji": "",
-      "creator": null,
-      "editor": null
-    }
-  ],
-  "token": ""
-}
-```
-
 ## Login
 
 ### Login Request
@@ -103,38 +54,5 @@ Required fields:
 {
   "email": "",
   "password": ""
-}
-```
-
-### Login Response
-
-```js
-200 OK
-```
-
-```json
-{
-  "id": "",
-  "email": "",
-  "firstName": "",
-  "lastName": "",
-  "address": "",
-  "postalArea": "",
-  "postalCode": 0,
-  "phoneNumber": 0,
-  "dob": "",
-  "registered": "",
-  "roles": [
-    {
-      "id": "",
-      "name": "",
-      "created": "",
-      "updated": null,
-      "creator": null,
-      "editor": null
-    }
-  ],
-  "favoriteCategories": [],
-  "token": ""
 }
 ```
