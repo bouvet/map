@@ -6,9 +6,10 @@ import { ButtonBase } from './ButtonBase';
 import { MyTheme } from '../../../styles/global';
 
 const DeleteButtonStyle = styled(ButtonBase)({
-    color: `${MyTheme.colors.alert}`,
+    color: `${MyTheme.colors.lightBase}`,
+    backgroundColor: `${MyTheme.colors.alert}`,
     ':hover': {
-        backgroundColor: `${MyTheme.colors.alert}`,
+        backgroundColor: `${MyTheme.colors.alertLight}`,
         color: `${MyTheme.colors.lightBase}`,
     },
 });
