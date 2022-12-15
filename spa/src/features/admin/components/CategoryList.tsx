@@ -7,11 +7,14 @@ import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { MyTheme } from '../../../styles/global';
 import { categoryServices } from '../services';
 import { CategoryListItem } from './CategoryListItem';
-import { PrimaryButton } from '../../../components/Common';
+import { ConfirmationModal, PrimaryButton } from '../../../components/Common';
+import { ICategory } from '../../../interfaces';
 
 export const CategoryList = () => {
     const [emoji, setEmoji] = useState('');
     const [name, setName] = useState('');
+
+    const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
 
     const { categories } = useStateSelector((state) => state.map);
 
@@ -28,6 +31,17 @@ export const CategoryList = () => {
         dispatch(categoryServices.create(emoji, name));
         setEmoji('');
         setName('');
+    };
+
+    const selectCategoryHandler = (category: ICategory) => {
+        setSelectedCategory(category);
+    };
+
+    const onDeleteCategoryHandler = () => {
+        if (selectedCategory) {
+            dispatch(categoryServices.delete(selectedCategory.id));
+            setSelectedCategory(null);
+        }
     };
 
     return (
@@ -71,10 +85,19 @@ export const CategoryList = () => {
                     <p style={{ width: '100%', textAlign: 'left', marginBottom: '1rem', fontWeight: 600 }}>Kategorier i bruk</p>
                     <ul style={{ width: '100%', maxHeight: '58vh', overflow: 'scroll' }}>
                         {categories.map((category) => (
-                            <CategoryListItem key={category.id} category={category} />
+                            <CategoryListItem key={category.id} category={category} selectCategoryHandler={selectCategoryHandler} />
                         ))}
                     </ul>
                 </Section>
+                {selectedCategory && (
+                    <ConfirmationModal
+                        acceptButtonText="Slett"
+                        modalTitle="Slett kategori"
+                        modalText={`Du er i ferd med å slette ${selectedCategory.emoji} ${selectedCategory.name}`}
+                        onAcceptHandler={onDeleteCategoryHandler}
+                        onCancelHandler={() => setSelectedCategory(null)}
+                    />
+                )}
             </Main>
         </>
     );

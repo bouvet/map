@@ -14,9 +14,10 @@ import { DeleteButton, PrimaryButton } from '../../../components/Common';
 
 interface Props {
     category: ICategory;
+    selectCategoryHandler: (category: ICategory) => void;
 }
 
-export const CategoryListItem: React.FC<Props> = ({ category }) => {
+export const CategoryListItem: React.FC<Props> = ({ category, selectCategoryHandler }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [emoji, setEmoji] = useState('');
     const [name, setName] = useState('');
@@ -31,10 +32,6 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
 
     const onSubmitHandler = () => {
         dispatch(categoryServices.edit(category.id, name, emoji));
-    };
-
-    const onDeleteHandler = () => {
-        dispatch(categoryServices.delete(category.id));
     };
 
     return (
@@ -52,7 +49,7 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
                             <DeleteButton
                                 color="error"
                                 sx={{ textTransform: 'none', marginBottom: '0.5rem', width: '40%' }}
-                                onClick={onDeleteHandler}
+                                onClick={() => selectCategoryHandler(category)}
                             >
                                 <Delete />
                             </DeleteButton>

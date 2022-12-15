@@ -49,7 +49,7 @@ export const categoryServices = {
             try {
                 await API.delete(`/categories/${id}`);
 
-                const { data } = await API.get('/categories');
+                const { data }: { data: ICategory[] } = await API.get('/categories');
 
                 dispatch(mapActions.loadCategories(data));
 

@@ -36,7 +36,7 @@ export const Sidebar: React.FC = () => {
     return (
         <Drawer anchor="right" open={showSidebar}>
             <nav style={{ height: '100%' }}>
-                <SidebarHeader />
+                <SidebarHeader>Verden Venter</SidebarHeader>
                 <ul
                     style={{
                         height: `calc(100% - 3rem)`,
@@ -143,5 +143,9 @@ const SidebarHeader = styled.div`
     width: 75vw;
     height: 3rem;
     background-color: ${MyTheme.colors.accent};
+    color: ${MyTheme.colors.lightBase};
     max-width: ${deviceWidth.mobileS};
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
 `;
