@@ -1,6 +1,6 @@
 import { Global } from '@emotion/react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, CssBaseline, IconButton, SwipeableDrawer } from '@mui/material';
+import { Box, CssBaseline, IconButton, SwipeableDrawer } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { styled as materialStyled, StyledEngineProvider } from '@mui/material/styles';
 import moment from 'moment';
