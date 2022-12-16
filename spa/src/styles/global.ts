@@ -10,7 +10,8 @@ export const MyTheme = {
         gray: '#A7A7A7',
         alert: '#d32f2f',
         alertLight: '#f44336',
-        success: '#2E7D32',
+        success: '#388e3c',
+        successLight: '#66bb6a',
         warning: '#ffa726',
     },
     fontFamily: {

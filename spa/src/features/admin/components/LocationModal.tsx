@@ -4,7 +4,7 @@ import { approvalServices } from '../services/approval.services';
 import { ILocation, LocationStatus } from '../../../interfaces';
 import { useStateDispatch, useLocationStatus } from '../../../hooks';
 
-import { Modal, PillButton, PrimaryButton } from '../../../components/Common';
+import { AcceptButton, DeleteButton, Modal, PillButton, PrimaryButton } from '../../../components/Common';
 import { FlexRowContainer } from '../../../components/Layout';
 
 interface Props {
@@ -73,9 +73,9 @@ export const LocationModal: React.FC<Props> = ({ location, closeModalHandler, re
                     </FlexRowContainer>
                     <FlexRowContainer spacing="space-between" style={{ padding: '1.5rem 0' }}>
                         {status !== 'Godkjent' && status !== 'Avslått' && (
-                            <PrimaryButton sx={{ width: '45%' }} onClick={() => updateLocationHandler('Approved')}>
+                            <AcceptButton sx={{ width: '45%' }} onClick={() => updateLocationHandler('Approved')}>
                                 Godkjenn
-                            </PrimaryButton>
+                            </AcceptButton>
                         )}
                         {status === 'Godkjent' && (
                             <PrimaryButton
@@ -94,17 +94,14 @@ export const LocationModal: React.FC<Props> = ({ location, closeModalHandler, re
                             </PrimaryButton>
                         )}
                         {status !== 'Avslått' && (
-                            <PrimaryButton
-                                sx={{ width: '45%', backgroundColor: '#f44336' }}
-                                onClick={() => updateLocationHandler('Rejected')}
-                            >
+                            <DeleteButton sx={{ width: '45%' }} onClick={() => updateLocationHandler('Rejected')}>
                                 Avslå
-                            </PrimaryButton>
+                            </DeleteButton>
                         )}
                         {status === 'Avslått' && (
-                            <PrimaryButton sx={{ width: '45%', backgroundColor: '#f44336' }} onClick={deleteLocationHandler}>
+                            <DeleteButton sx={{ width: '45%' }} onClick={deleteLocationHandler}>
                                 Slett
-                            </PrimaryButton>
+                            </DeleteButton>
                         )}
                     </FlexRowContainer>
                 </div>

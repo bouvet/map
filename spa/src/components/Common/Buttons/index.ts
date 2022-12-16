@@ -1,3 +1,4 @@
+export * from './AcceptButton';
 export * from './CloseButton';
 export * from './DeleteButton';
 export * from './LinkButton';
