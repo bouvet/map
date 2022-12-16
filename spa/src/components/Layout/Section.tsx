@@ -12,5 +12,6 @@ export const Section = styled.section`
 
     @media ${device.tablet} {
         max-width: ${deviceWidth.tablet};
+        padding: 3rem 1.5rem;
     }
 `;

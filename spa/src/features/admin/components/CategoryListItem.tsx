@@ -10,7 +10,7 @@ import { ICategory } from '../../../interfaces';
 import { MyTheme } from '../../../styles/global';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { categoryServices } from '../services';
-import { DeleteButton, PrimaryButton } from '../../../components/Common';
+import { AcceptButton, DeleteButton, PrimaryButton } from '../../../components/Common';
 
 interface Props {
     category: ICategory;
@@ -92,13 +92,13 @@ export const CategoryListItem: React.FC<Props> = ({ category, selectCategoryHand
                                 >
                                     <Close />
                                 </DeleteButton>
-                                <PrimaryButton
+                                <AcceptButton
                                     color="success"
                                     sx={{ textTransform: 'none', marginBottom: '0.5rem', width: '40%' }}
                                     onClick={onSubmitHandler}
                                 >
                                     <Done />
-                                </PrimaryButton>
+                                </AcceptButton>
                             </div>
                         </>
                     )}

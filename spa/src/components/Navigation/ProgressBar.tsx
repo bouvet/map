@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { MyTheme } from '../../styles/global';
+import { device, MyTheme } from '../../styles/global';
 
 interface Props {
     elements: number;
@@ -36,6 +36,9 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @media ${device.tablet} {
+        height: 7rem;
+    }
 `;
 
 const ProgressIcon = styled.span<{ completed: boolean }>`
@@ -43,6 +46,10 @@ const ProgressIcon = styled.span<{ completed: boolean }>`
     font-weight: 400;
     margin-bottom: 0.5rem;
     transition: 500ms ease-in-out all;
+    @media ${device.tablet} {
+        margin-bottom: 1rem;
+        font-size: 1.7rem;
+    }
 `;
 
 const ProgressStatusLine = styled.div<{ completed: boolean }>`

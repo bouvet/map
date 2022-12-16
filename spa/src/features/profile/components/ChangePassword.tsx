@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton, SecondaryButton } from '../../../components/Common';
+import { AcceptButton, SecondaryButton } from '../../../components/Common';
 import { Form, StyledInput } from '../../../components/Form';
 import { Main, Section } from '../../../components/Layout';
 import { Header } from '../../../components/Navigation';
@@ -98,15 +98,15 @@ export const ChangePassword = () => {
                             onBlur={confirmPasswordBlurHandler}
                             inputHasError={confirmPasswordInputHasError}
                         />
-                        <PrimaryButton
+                        <AcceptButton
                             type="submit"
                             disabled={!currentPasswordIsValid || !newPasswordIsValid || !confirmPasswordIsValid}
                             loading={loading}
                             sx={{ marginTop: 'auto' }}
                         >
                             Lagre
-                        </PrimaryButton>
-                        <SecondaryButton onClick={() => {}}>Gå tilbake</SecondaryButton>
+                        </AcceptButton>
+                        <SecondaryButton onClick={() => navigate('/profile')}>Gå tilbake</SecondaryButton>
                     </Form>
                 </Section>
             </Main>
