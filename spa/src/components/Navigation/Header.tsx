@@ -58,7 +58,7 @@ export const Header: React.FC<Props> = ({ children, style }) => {
                 onClick={() => dispatch(uiActions.setShowSidebar(!showSidebar))}
                 sx={{
                     alignItems: 'center',
-                    zIndex: 3000,
+                    zIndex: 1300,
                 }}
             >
                 <span style={{ color: 'white' }} className="material-symbols-outlined">

@@ -38,7 +38,7 @@ const Backdrop = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100;
+    z-index: 1500;
 `;
 
 const Container = styled.div`
@@ -60,7 +60,7 @@ const ModalContainer = styled.div`
     background-color: white;
     border-radius: 3px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-    z-index: 101;
+    z-index: 1600;
     overflow: hidden;
 `;
 
