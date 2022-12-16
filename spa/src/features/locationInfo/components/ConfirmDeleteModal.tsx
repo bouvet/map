@@ -15,7 +15,7 @@ interface IConfirmDelete {
     locationTitle: any;
 }
 
-const AddSession = {
+const DeleteModal = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
@@ -30,17 +30,17 @@ const AddSession = {
 };
 
 export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTitle }) => {
-    const handleCloseSessionModal = () => {
+    const handleModalOnClick = () => {
         close();
     };
 
     return (
         <Modal open={open}>
             <>
-                <Backdrop onClick={handleCloseSessionModal} />
+                <Backdrop onClick={handleModalOnClick} />
                 <form>
                     <Stack>
-                        <Box sx={AddSession}>
+                        <Box sx={DeleteModal}>
                             <Text style={{ textAlign: 'center' }}>Vil du virkelig slette lokasjonen:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -49,13 +49,13 @@ export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTi
                                     style={{ backgroundColor: 'rgb(220 17 17)' }}
                                     onClick={() => {
                                         console.log('lokasjon slettet');
-                                        handleCloseSessionModal();
+                                        handleModalOnClick();
                                     }}
                                 >
                                     Slett
                                 </Button>
 
-                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleCloseSessionModal}>
+                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleModalOnClick}>
                                     Avbryt
                                 </Button>
                             </div>

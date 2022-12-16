@@ -2,7 +2,7 @@ import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { sessionActions } from '../../../store/state/session.state';
 import { uiActions } from '../../../store/state/ui.state';
-import { ISessionTypeGet } from '../../../utils/types.d';
+import { ISession } from '../../../utils/types.d';
 
 export const sessionServices = {
     postSession(payload: Object) {
@@ -10,6 +10,8 @@ export const sessionServices = {
             try {
                 await API.post('/sessions', payload);
                 dispatch(uiActions.showSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+
+                dispatch(sessionActions.createSession(payload));
             } catch (error) {
                 console.error('error', error);
             }
@@ -19,7 +21,7 @@ export const sessionServices = {
         return async (dispatch: AppDispatch) => {
             try {
                 const requestUrl = '/Sessions/mysessions';
-                const sessions: ISessionTypeGet[] = await (await API.get(requestUrl)).data;
+                const sessions: ISession[] = await (await API.get(requestUrl)).data;
                 dispatch(sessionActions.setUserSessions(sessions));
             } catch (error) {
                 console.error('error', error);
@@ -30,7 +32,7 @@ export const sessionServices = {
         return async (dispatch: AppDispatch) => {
             try {
                 const requestUrl = `/Sessions?locationId=${payload}`;
-                const sessions: ISessionTypeGet[] = await (await API.get(requestUrl)).data;
+                const sessions: ISession[] = await (await API.get(requestUrl)).data;
                 dispatch(sessionActions.setUserSessions(sessions));
             } catch (error) {
                 console.error('error', error);

@@ -5,6 +5,7 @@ import moment from 'moment';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components/Common';
+import { Section } from '../../../components/Layout';
 import { SessionBlockModal } from './SessionBlockModal';
 
 interface SessionBlockProps {
@@ -13,8 +14,7 @@ interface SessionBlockProps {
     deleteBlock: Function;
 }
 
-const Title = styled.h1`
-    // padding: 10px;
+const Title = styled.p`
     overflow: hidden;
 `;
 
@@ -23,17 +23,19 @@ export const SessionBlock: FC<SessionBlockProps> = ({ locationTitle, registered,
 
     const handleModalOnClick = () => setModalIsOpen(!modalIsOpen);
     const DateRegistered = moment(registered.toString()).format('LL');
+    const TimeRegistered = moment(registered.toString()).format('LT');
 
     return (
-        <Section style={{ paddingTop: 0, paddingBottom: 0.5, overflow: 'scroll' }}>
+        <Section style={{ paddingTop: 0, paddingBottom: 0.5 }}>
             <ul style={{ width: '100%', marginBottom: '0.5rem' }}>
                 <Accordion>
                     <AccordionSummary expandIcon={<ExpandMore />}>
-                        <Title style={{ fontStyle: 'italic' }}>{DateRegistered}</Title>
+                        <Title>{locationTitle}</Title>
+                        <Title style={{ fontStyle: 'italic', fontSize: 12 }}>{DateRegistered}</Title>
                     </AccordionSummary>
                     <Divider />
                     <AccordionDetails sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text>{locationTitle}</Text>
+                        <Text>Klokken: {TimeRegistered}</Text>
                         <IconButton onClick={handleModalOnClick} color="warning">
                             <DeleteIcon />
                         </IconButton>

@@ -4,11 +4,11 @@ import Moment from 'react-moment';
 import styled from 'styled-components';
 
 import { Divider } from '@mui/material';
-import { FlexRowContainer, Main, Section } from '../components/Layout';
 import { DeleteButton, LinkButton, PillButton } from '../components/Common';
-import { useStateSelector } from '../hooks';
-import { ProfileImageSection } from '../features/profile/components/ProfileImageSection';
+import { FlexRowContainer, Main, Section } from '../components/Layout';
 import { Header } from '../components/Navigation';
+import { ProfileImageSection } from '../features/profile/components/ProfileImageSection';
+import { useStateSelector } from '../hooks';
 
 export const Profile = () => {
     const { user } = useStateSelector((state) => state.user);
