@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './components/Navigation';
 import { CustomizedSnackbars } from './components/Common';
-import { useStateDispatch, useStateSelector } from './hooks/useRedux';
+import { useStateDispatch } from './hooks/useRedux';
 import { userServices } from './services';
 import { authActions } from './store/state/auth.state';
 
@@ -11,8 +11,6 @@ Moment.globalLocale = 'no';
 Moment.globalFormat = 'DD.MM.YYYY';
 
 export const App = () => {
-    const { showSidebar } = useStateSelector((state) => state.ui);
-
     const dispatch = useStateDispatch();
 
     useEffect(() => {
@@ -37,7 +35,7 @@ export const App = () => {
     return (
         <>
             <Outlet />
-            {showSidebar && <Sidebar />}
+            <Sidebar />
             <CustomizedSnackbars />
         </>
     );

@@ -70,7 +70,7 @@ export const Profile = () => {
                     <LinkButton sx={{ marginBottom: '0.5rem' }} onClick={() => navigate('/profile/edit/email')}>
                         Bytt e-post
                     </LinkButton>
-                    <DeleteButton sx={{ marginBottom: '1rem' }} onClick={() => navigate('/profile/edit/delete')}>
+                    <DeleteButton sx={{ marginBottom: '1rem' }} asLink onClick={() => navigate('/profile/edit/delete')}>
                         Slett konto
                     </DeleteButton>
                 </Section>

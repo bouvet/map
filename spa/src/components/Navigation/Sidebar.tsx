@@ -11,6 +11,7 @@ import { MyTheme, deviceWidth } from '../../styles/global';
 import { useStateDispatch, useStateSelector } from '../../hooks';
 import { authActions, uiActions, userActions } from '../../store';
 import { PrimaryButton } from '../Common';
+import { sleep } from '../../utils';
 
 export const Sidebar: React.FC = () => {
     const { showSidebar } = useStateSelector((state) => state.ui);
@@ -21,7 +22,8 @@ export const Sidebar: React.FC = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
-    const closeSidebarHandler = () => {
+    const closeSidebarHandler = async () => {
+        await sleep(100);
         dispatch(uiActions.setShowSidebar(false));
     };
 
@@ -46,98 +48,85 @@ export const Sidebar: React.FC = () => {
                         paddingTop: '1rem',
                     }}
                 >
-                    {isAuthenticated && <ProfileLink pathname={pathname} closeSidebarHandler={closeSidebarHandler} />}
+                    {isAuthenticated && (
+                        <li>
+                            <NavLink
+                                to="/profile"
+                                className={pathname === '/profile' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                onClick={closeSidebarHandler}
+                            >
+                                Profil
+                            </NavLink>
+                        </li>
+                    )}
 
-                    <AddLocationLink pathname={pathname} closeSidebarHandler={closeSidebarHandler} />
+                    <li>
+                        <NavLink
+                            to="/add-location"
+                            className={pathname === '/add-location' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                            onClick={closeSidebarHandler}
+                        >
+                            Legg til lokasjon
+                        </NavLink>
+                    </li>
 
-                    {isAdmin && <AdminLinks pathname={pathname} closeSidebarHandler={closeSidebarHandler} />}
+                    {isAdmin && (
+                        <>
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    className={pathname === '/admin' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                    onClick={closeSidebarHandler}
+                                >
+                                    Behandle lokasjoner
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/admin/category"
+                                    className={pathname === '/admin/category' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                    onClick={closeSidebarHandler}
+                                >
+                                    Behandle kategorier
+                                </NavLink>
+                            </li>
+                        </>
+                    )}
 
-                    <HomeLink closeSidebarHandler={closeSidebarHandler} />
+                    <li>
+                        <NavLink to="/" className="sidebar-link" onClick={closeSidebarHandler}>
+                            Hjem
+                        </NavLink>
+                    </li>
 
-                    {!isAuthenticated && <LoginButton closeSidebarHandler={closeSidebarHandler} />}
-                    {isAuthenticated && <LogoutButton logoutHandler={logoutHandler} />}
+                    {!isAuthenticated && (
+                        <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
+                            <NavLink to="/auth/login" onClick={closeSidebarHandler}>
+                                <PrimaryButton
+                                    className="sidebar-link sidebar-link--btn"
+                                    sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}
+                                >
+                                    Logg inn
+                                </PrimaryButton>
+                            </NavLink>
+                        </li>
+                    )}
+                    {isAuthenticated && (
+                        <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
+                            <PrimaryButton
+                                className="sidebar-link sidebar-link--btn"
+                                onClick={logoutHandler}
+                                sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}
+                            >
+                                Logg ut
+                            </PrimaryButton>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </Drawer>
     );
 };
-
-const ProfileLink = ({ closeSidebarHandler, pathname }: { pathname: string; closeSidebarHandler: () => void }) => (
-    <li>
-        <NavLink
-            to="/profile"
-            className={pathname === '/profile' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-            onClick={closeSidebarHandler}
-        >
-            Profil
-        </NavLink>
-    </li>
-);
-
-const AddLocationLink = ({ closeSidebarHandler, pathname }: { pathname: string; closeSidebarHandler: () => void }) => (
-    <li>
-        <NavLink
-            to="/add-location"
-            className={pathname === '/add-location' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-            onClick={closeSidebarHandler}
-        >
-            Legg til lokasjon
-        </NavLink>
-    </li>
-);
-
-const HomeLink = ({ closeSidebarHandler }: { closeSidebarHandler: () => void }) => (
-    <li>
-        <NavLink to="/" className="sidebar-link" onClick={closeSidebarHandler}>
-            Hjem
-        </NavLink>
-    </li>
-);
-
-const AdminLinks = ({ closeSidebarHandler, pathname }: { pathname: string; closeSidebarHandler: () => void }) => (
-    <>
-        <li>
-            <NavLink
-                to="/admin"
-                className={pathname === '/admin' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-                onClick={closeSidebarHandler}
-            >
-                Behandle lokasjoner
-            </NavLink>
-        </li>
-        <li>
-            <NavLink
-                to="/admin/category"
-                className={pathname === '/admin/category' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-                onClick={closeSidebarHandler}
-            >
-                Behandle kategorier
-            </NavLink>
-        </li>
-    </>
-);
-
-const LoginButton = ({ closeSidebarHandler }: { closeSidebarHandler: () => void }) => (
-    <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
-        <NavLink to="/auth/login" onClick={closeSidebarHandler}>
-            <PrimaryButton className="sidebar-link sidebar-link--btn" sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}>
-                Logg inn
-            </PrimaryButton>
-        </NavLink>
-    </li>
-);
-
-const LogoutButton = ({ logoutHandler }: { logoutHandler: () => void }) => (
-    <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
-        <PrimaryButton
-            className="sidebar-link sidebar-link--btn"
-            onClick={logoutHandler}
-            sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}
-        >
-            Logg ut
-        </PrimaryButton>
-    </li>
-);
 
 const SidebarHeader = styled.div`
     width: 75vw;
