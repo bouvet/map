@@ -11,6 +11,7 @@ import { ICategory } from '../../../interfaces';
 import { addLocationActions } from '../../../store';
 import { MyTheme } from '../../../styles/global';
 import { CategoryButton } from '../../home/components/CategoryButton';
+import { mapServices } from '../../map';
 
 interface Props {
     setPageIndex: (pageIndex: number) => void;
@@ -45,6 +46,10 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
             dispatch(addLocationActions.setTitle(title));
         }
     }, [dispatch, title]);
+
+    useEffect(() => {
+        dispatch(mapServices.getCategories());
+    }, [dispatch]);
 
     return (
         <Section style={{ paddingTop: '0.5rem' }}>

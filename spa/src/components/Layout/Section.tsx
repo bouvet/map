@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { deviceWidth } from '../../styles/global';
+import { device, deviceWidth } from '../../styles/global';
 
 export const Section = styled.section`
     width: 100%;
@@ -9,4 +9,8 @@ export const Section = styled.section`
     flex: 1 1 auto;
     justify-content: space-between;
     max-width: ${deviceWidth.mobileL};
+
+    @media ${device.tablet} {
+        max-width: ${deviceWidth.tablet};
+    }
 `;
