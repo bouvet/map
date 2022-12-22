@@ -15,7 +15,7 @@ interface sessionModalProps {
     locationId: string;
     open: boolean;
     close: Function;
-    locationTitle: any;
+    locationTitle: string;
 }
 
 const AddModal = {

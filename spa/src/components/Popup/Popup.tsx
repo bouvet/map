@@ -13,9 +13,10 @@ import { BodyText, ParkName, PopupContent, PopupImage, PopupWrapper, ReadMoreLin
 
 interface Props {
     location: ILocation;
+    popupHandler: Function;
 }
 
-export const Popup: FC<Props> = ({ location }) => {
+export const Popup: FC<Props> = ({ location, popupHandler }) => {
     const {
         properties: { description, webpImage, rating, title },
     } = location;
@@ -29,7 +30,7 @@ export const Popup: FC<Props> = ({ location }) => {
     }, [dispatch, location.id]);
 
     const handleClickClose = () => {
-        dispatch(uiActions.setShowLocationPopup(false));
+        popupHandler();
     };
 
     const handleClickShowLocationPage = () => {

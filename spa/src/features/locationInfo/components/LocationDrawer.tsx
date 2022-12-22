@@ -1,5 +1,5 @@
 import { Global } from '@emotion/react';
-import { SwipeableDrawer } from '@mui/material';
+import { ClickAwayListener, SwipeableDrawer } from '@mui/material';
 import 'moment/locale/nb';
 import { FC, useEffect, useState } from 'react';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
@@ -32,7 +32,11 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
-        dispatch(uiActions.setShowLocationDrawer(newOpen));
+        if (!open) {
+            dispatch(uiActions.setShowLocationDrawer(false));
+        } else {
+            dispatch(uiActions.setShowLocationDrawer(true));
+        }
     };
 
     useEffect(() => {
@@ -44,8 +48,6 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
     useEffect(() => {
         if (showLocationInfoDrawer) {
             setOpen(true);
-        } else {
-            setOpen(false);
         }
     }, [showLocationInfoDrawer]);
 
@@ -55,25 +57,27 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
                         height: `calc(70% - ${drawerBleeding}px)`,
-                        overflow: 'visible',
+                        overflow: open ? 'visible' : 'hidden',
                     },
                 }}
             />
-            <SwipeableDrawer
-                anchor="bottom"
-                open={open}
-                onOpen={toggleDrawer(true)}
-                onClose={toggleDrawer(false)}
-                swipeAreaWidth={drawerBleeding}
-                variant="temporary"
-                ModalProps={{
-                    keepMounted: true,
-                }}
-            >
-                <ReviewModal selectedLocation={selectedLocation} open={openAddReview} close={handleReviewModal} />
-                <DrawerEdge handleReviewModal={handleReviewModal} locationTitle={locationTitle} locationRating={locationRating} />
-                <DrawerContent handleReviewModal={handleReviewModal} selectedLocation={selectedLocation} />
-            </SwipeableDrawer>
+            <ClickAwayListener onClickAway={toggleDrawer(false)}>
+                <SwipeableDrawer
+                    anchor="bottom"
+                    open={open}
+                    onOpen={toggleDrawer(true)}
+                    onClose={toggleDrawer(false)}
+                    swipeAreaWidth={drawerBleeding}
+                    variant="temporary"
+                    ModalProps={{
+                        keepMounted: true,
+                    }}
+                >
+                    <ReviewModal selectedLocation={selectedLocation} open={openAddReview} close={handleReviewModal} />
+                    <DrawerEdge handleReviewModal={handleReviewModal} locationTitle={locationTitle} locationRating={locationRating} />
+                    <DrawerContent handleReviewModal={handleReviewModal} selectedLocation={selectedLocation} />
+                </SwipeableDrawer>
+            </ClickAwayListener>
         </>
     );
 };

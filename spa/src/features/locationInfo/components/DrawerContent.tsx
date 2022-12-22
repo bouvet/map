@@ -1,24 +1,37 @@
-import moment from 'moment';
-import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
+import styled from 'styled-components';
 import { LinkButton, PrimaryButton } from '../../../components/Common';
-import { Emoji } from '../../../components/Common/Text/Emoji';
+import { IconDeleteButton } from '../../../components/Common/Buttons/IconDeleteButton';
 import { useStateSelector } from '../../../hooks';
 import { ILocation } from '../../../interfaces';
-import { IReviewTypeGet } from '../../../utils/types.d';
 import { AddSessionModal } from './AddSessionModal';
 import { ConfirmDeleteModal } from './ConfirmDeleteModal';
-import { ContentContainer, ContentWrapper, ImageContainer, ImageWrapper, SessionCountWrapper } from './DrawerStyles';
-import { Review } from './Review';
+import { ReviewImageList } from './ReviewImageList';
+import { ReviewList } from './ReviewList';
 
 interface Props {
     selectedLocation: ILocation;
     handleReviewModal: Function;
 }
 
-export const DrawerContent: FC<Props> = ({ selectedLocation, handleReviewModal }) => {
-    const [reviewList, setReviewList] = useState<ReactElement[]>([]);
-    const [imageList, setImageList] = useState<ReactElement[]>([]);
+const SessionCountWrapper = styled.div`
+    display: flex;
+    margin-top: 2%;
+`;
 
+const ContentWrapper = styled.div`
+    width: 94%;
+    margin-left: 3%;
+    margin-right: 3%;
+    overflow-y: scroll;
+`;
+
+const ContentContainer = styled.div`
+    width: 100%;
+    padding: 10px 0px;
+`;
+
+export const DrawerContent: FC<Props> = ({ selectedLocation, handleReviewModal }) => {
     const [openSessionModal, setOpenSessionModal] = useState(false);
     const handleSessionModal = () => setOpenSessionModal(!openSessionModal);
 
@@ -28,52 +41,11 @@ export const DrawerContent: FC<Props> = ({ selectedLocation, handleReviewModal }
     const handleReviewLink = () => handleReviewModal();
 
     const { userSessions } = useStateSelector((state) => state.session);
-    const { currentReviews } = useStateSelector((state) => state.review);
+
+    const { isAdmin } = useStateSelector((state) => state.auth);
     const locationTitle = selectedLocation.properties.title;
     const locationDescription = selectedLocation.properties.description;
     const { id } = selectedLocation;
-
-    moment.locale('nb');
-
-    const updateCurrentReviewsCallback = useCallback(() => {
-        if (currentReviews) {
-            const temp = currentReviews
-                .filter((item) => item.text)
-                .sort((itemA, itemB) => (itemA.created > itemB.created ? -1 : 1))
-                .map((item: IReviewTypeGet) => (
-                    <Review
-                        key={item.id}
-                        date={moment(item.created).format('L')}
-                        // @ts-ignore
-                        name={item.creator?.firstName}
-                        age={moment(item.creator?.dob).fromNow(true)}
-                        rating={item.rating}
-                        review={item.text}
-                    />
-                ));
-            setReviewList(temp);
-        }
-    }, [currentReviews, setReviewList]);
-
-    const updateCurrentImageCallback = useCallback(() => {
-        if (currentReviews) {
-            const temp = currentReviews
-                .filter((item) => item.webpImage)
-                // @ts-ignore
-                .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
-                .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
-            setImageList(temp);
-            if (selectedLocation.properties.webpImage) {
-                const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={selectedLocation.properties.webpImage.cdnUri} />;
-                setImageList((imageList) => [mainImg, ...imageList]);
-            }
-        }
-    }, [currentReviews, selectedLocation.properties.webpImage]);
-
-    useEffect(() => {
-        updateCurrentReviewsCallback();
-        updateCurrentImageCallback();
-    }, [updateCurrentReviewsCallback, updateCurrentImageCallback]);
 
     return (
         <ContentWrapper style={{ marginTop: '1rem' }}>
@@ -81,31 +53,20 @@ export const DrawerContent: FC<Props> = ({ selectedLocation, handleReviewModal }
                 Ny treningsøkt
             </PrimaryButton>
             <AddSessionModal locationId={id} open={openSessionModal} close={handleSessionModal} locationTitle={locationTitle} />
-
             <SessionCountWrapper>
-                <p>Antall økter: </p>
-                <Emoji symbol="💪" />
-                <p style={{ marginLeft: '0.2rem' }}>{userSessions.length}</p>
+                <p>Antall økter: 💪{userSessions.length}</p>
             </SessionCountWrapper>
-
-            <ImageContainer>{imageList && imageList}</ImageContainer>
+            <ReviewImageList selectedLocation={selectedLocation} />
             <ContentContainer>{locationDescription}</ContentContainer>
             <ContentContainer>
                 <b>Omtaler</b>
             </ContentContainer>
-            {reviewList && reviewList}
+            <ReviewList />
             <LinkButton sx={{ width: 150 }} onClick={handleReviewLink}>
                 Legg til omtale
             </LinkButton>
-
-            {/* {isAdmin ? (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <IconButton onClick={handleDeleteModal}>
-                        <DeleteIcon color="warning" />
-                    </IconButton>
-                </div>
-            ) : null} */}
-            <ConfirmDeleteModal open={confirmModalDelete} close={handleDeleteModal} locationTitle={locationTitle} />
+            {isAdmin ? <IconDeleteButton onClick={handleDeleteModal} /> : null}
+            <ConfirmDeleteModal open={confirmModalDelete} close={handleDeleteModal} locationTitle={locationTitle} locationId={id} />
         </ContentWrapper>
     );
 };

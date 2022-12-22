@@ -2,6 +2,8 @@ import { Box, Button, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components/Common';
+import { useStateDispatch } from '../../../hooks';
+import { approvalServices } from '../../admin';
 
 const Backdrop = styled.div`
     height: 100vh;
@@ -10,9 +12,10 @@ const Backdrop = styled.div`
 `;
 
 interface IConfirmDelete {
-    open: any;
-    close: any;
-    locationTitle: any;
+    open: boolean;
+    close: Function;
+    locationTitle: string;
+    locationId: string;
 }
 
 const DeleteModal = {
@@ -29,8 +32,15 @@ const DeleteModal = {
     pt: 5,
 };
 
-export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTitle }) => {
+export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTitle, locationId }) => {
+    const dispatch = useStateDispatch();
+
     const handleModalOnClick = () => {
+        close();
+    };
+
+    const deleteLocationHandler = () => {
+        dispatch(approvalServices.deleteLocation(locationId));
         close();
     };
 
@@ -44,14 +54,7 @@ export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTi
                             <Text style={{ textAlign: 'center' }}>Vil du virkelig slette lokasjonen:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button
-                                    variant="contained"
-                                    style={{ backgroundColor: 'rgb(220 17 17)' }}
-                                    onClick={() => {
-                                        console.log('lokasjon slettet');
-                                        handleModalOnClick();
-                                    }}
-                                >
+                                <Button variant="contained" style={{ backgroundColor: 'rgb(220 17 17)' }} onClick={deleteLocationHandler}>
                                     Slett
                                 </Button>
 
