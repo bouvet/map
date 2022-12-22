@@ -2,7 +2,7 @@ import moment from 'moment';
 import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useStateSelector } from '../../../hooks';
-import { IReviewTypeGet } from '../../../utils/types.d';
+import { IReview } from '../../../interfaces';
 import { Review } from './Review';
 
 const ReviewContainer = styled.div`
@@ -21,7 +21,7 @@ export const ReviewList: FC = () => {
             const temp = currentReviews
                 .filter((item) => item.text)
                 .sort((itemA, itemB) => (itemA.created > itemB.created ? -1 : 1))
-                .map((item: IReviewTypeGet) => (
+                .map((item: IReview) => (
                     <Review
                         key={item.id}
                         date={moment(item.created).format('L')}

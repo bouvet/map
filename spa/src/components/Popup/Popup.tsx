@@ -5,10 +5,10 @@ import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { ILocation } from '../../interfaces';
 import { uiActions } from '../../store/state/ui.state';
 import { MyTheme } from '../../styles/global';
-import { CloseButton } from '../Common';
+import { CloseButton, StarRating } from '../Common';
 import { ExpandButton } from '../Common/Buttons/ExpandButton';
 import { Emoji } from '../Common/Text/Emoji';
-import { StarRating } from '../StarRating/StarRating';
+
 import { BodyText, ParkName, PopupContent, PopupImage, PopupWrapper, ReadMoreLink } from './PopupStyles';
 
 interface Props {

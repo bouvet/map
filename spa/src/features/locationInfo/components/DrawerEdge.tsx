@@ -3,7 +3,8 @@ import { grey } from '@mui/material/colors';
 import { styled as materialStyled } from '@mui/material/styles';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { StarRating } from '../../../components/StarRating/StarRating';
+import { StarRating } from '../../../components/Common';
+
 import { MyTheme } from '../../../styles/global';
 
 const DrawerEdgeWrapper = materialStyled(Box)(({ theme }) => ({

@@ -1,8 +1,7 @@
 import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useStateSelector } from '../../../hooks';
-import { ILocation } from '../../../interfaces';
-import { IReviewTypeGet } from '../../../utils/types.d';
+import { ILocation, IReview } from '../../../interfaces';
 
 interface Props {
     selectedLocation: ILocation;
@@ -43,7 +42,7 @@ export const ReviewImageList: FC<Props> = ({ selectedLocation }) => {
                 .filter((item) => item.webpImage)
                 // @ts-ignore
                 .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
-                .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
+                .map((item: IReview) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (selectedLocation.properties.webpImage) {
                 const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={selectedLocation.properties.webpImage.cdnUri} />;
