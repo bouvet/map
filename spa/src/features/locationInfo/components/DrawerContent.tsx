@@ -54,7 +54,7 @@ export const DrawerContent: FC<Props> = ({ selectedLocation, handleReviewModal }
             </PrimaryButton>
             <AddSessionModal locationId={id} open={openSessionModal} close={handleSessionModal} locationTitle={locationTitle} />
             <SessionCountWrapper>
-                <p>Antall økter: 💪{userSessions.length}</p>
+                <p>Antall økter: 💪 {userSessions.length}</p>
             </SessionCountWrapper>
             <ReviewImageList selectedLocation={selectedLocation} />
             <ContentContainer>{locationDescription}</ContentContainer>

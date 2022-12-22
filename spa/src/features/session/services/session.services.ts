@@ -1,8 +1,8 @@
+import { ISession } from '../../../interfaces';
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { sessionActions } from '../../../store/state/session.state';
 import { uiActions } from '../../../store/state/ui.state';
-import { ISession } from '../../../utils/types.d';
 
 export const sessionServices = {
     postSession(payload: Object) {

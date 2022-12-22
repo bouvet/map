@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ISession } from '../../utils/types.d';
+import { ISession } from '../../interfaces';
 
 const initialState = {
     userSessions: [] as ISession[],

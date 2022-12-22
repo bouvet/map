@@ -7,7 +7,7 @@ import { SessionHeader } from '../features/session/components/SessionHeader';
 import { sessionServices } from '../features/session/services/session.services';
 
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { ISession } from '../utils/types.d';
+import { ISession } from '../interfaces';
 
 const SessionSubHeader = styled.p`
     font-weight: 600;
