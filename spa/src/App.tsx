@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Moment from 'react-moment';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './components/Navigation';
-import { CustomizedSnackbars } from './components/Snackbar/Snackbar';
+import { CustomizedSnackbars } from './components/Common';
 import { useStateDispatch } from './hooks/useRedux';
 import { userServices } from './services';
 import { authActions } from './store/state/auth.state';

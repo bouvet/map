@@ -1,11 +1,11 @@
 import { ICategory } from './ICategory';
+import { IImage } from './IImage';
 
 export interface ILocation {
     id: string;
     type: 'Feature' /** mapbox type */;
     properties: IProperties;
     geometry: IGeometry;
-    pinColor?: string;
 }
 
 export type LocationStatus = 'Under Review' | 'Approved' | 'Rejected' | 'Reported';
@@ -13,38 +13,8 @@ export type LocationStatus = 'Under Review' | 'Approved' | 'Rejected' | 'Reporte
 interface IProperties {
     title: string;
     description: string;
-    originalImage?: {
-        id: string;
-        blobUri: string;
-        cdnUri: string;
-        contentType: string;
-        uploaded: Date;
-        uploader?: {
-            id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-        };
-        originalImageId: null;
-        locationId: string;
-        reviewId: string | null;
-    };
-    webpImage?: {
-        id: string;
-        blobUri: string;
-        cdnUri: string;
-        contentType: string;
-        uploaded: Date;
-        uploader?: {
-            id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-        };
-        originalImageId: string;
-        locationId: string;
-        reviewId: string | null;
-    };
+    originalImage?: IImage;
+    webpImage?: IImage;
     status: LocationStatus;
     rating: number;
     category: Array<ICategory>;

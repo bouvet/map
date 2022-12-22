@@ -1,0 +1,18 @@
+[
+  {
+    "id": "af78a0ee-2aff-40b0-9b28-a2a912f20b15",
+    "address": "verden.venter.app@gmail.com",
+    "confirmationCode": 123123,
+    "confirmed": true,
+    "created": "2022-12-12T10:01:52.3351244",
+    "updated": null
+  },
+  {
+    "id": "b46d52fc-3655-4160-b7c7-c116a5183f16",
+    "address": "jdoe@email.com",
+    "confirmationCode": 123123,
+    "confirmed": true,
+    "created": "2022-12-12T10:01:52.3351244",
+    "updated": null
+  }
+]

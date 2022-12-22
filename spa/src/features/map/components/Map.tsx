@@ -3,7 +3,6 @@ import { Map as ReactMap, MapRef, ViewStateChangeEvent } from 'react-map-gl';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { mapActions } from '../../../store';
 import { mapboxBaseUri } from '../../../styles/map-styles';
-import { mapServices } from '../services/map.services';
 import { MapStyleMenu } from './MapStyleMenu';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -30,9 +29,6 @@ export const Map: React.FC<Props> = ({ children, mapStyleMenuStyle }) => {
     };
 
     const onMapLoadHandler = () => {
-        console.log('[onMapLoadHandler]: Map loaded');
-        dispatch(mapServices.getCategories());
-        dispatch(mapServices.getLocations());
         setMapLoaded(true);
     };
 

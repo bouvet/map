@@ -1,4 +1,4 @@
-@id=7ee03ccb-89b1-411d-9b7c-a9e1ed8048ba
+@id=d5434215-a945-4995-bf6d-05f11e5fb3aa
 
 PUT {{host}}/api/users/{{id}}
 # Authorization: Bearer {{token}}
@@ -46,7 +46,7 @@ Content-Type: image/jpeg
 ###
 
 PUT {{host}}/api/users/{{id}}
-Authorization: Bearer {{usertoken}}
+Authorization: Bearer {{admintoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW

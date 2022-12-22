@@ -1,0 +1,15 @@
+{
+  "id": "f7e9d7ff-7091-43ca-4b4c-08daddb21d12",
+  "name": "Fotball",
+  "emoji": "⚽",
+  "created": "2022-12-14T09:03:48.6759788Z",
+  "updated": null,
+  "creator": {
+    "id": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+    "email": "verden.venter.app@gmail.com",
+    "firstName": "Verden",
+    "lastName": "Venter",
+    "dob": "2022-12-12T10:01:52.3351244"
+  },
+  "editor": null
+}

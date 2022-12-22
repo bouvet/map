@@ -4,6 +4,6 @@ Authorization: Bearer {{admintoken}}
 # Authorization: Bearer {{usertoken}}
 
 {
-  "name": "Skatepark",
-  "emoji": "🛹"
+  "name": "Fotball",
+  "emoji": "⚽"
 }

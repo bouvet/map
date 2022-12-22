@@ -1,6 +1,6 @@
-@email=verden.venter.app1@gmail.com
+@email=jdoe@email.com
 
 DELETE {{host}}/api/email/{{email}}
-# Authorization: Bearer {{registrationtoken}}
 Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{registrationtoken}}
 # Authorization: Bearer {{usertoken}}

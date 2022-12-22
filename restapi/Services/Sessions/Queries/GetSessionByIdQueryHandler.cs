@@ -8,23 +8,23 @@ namespace restapi.Services.Sessions.Queries.GetSessionById;
 
 public class GetSessionQueryHandler : IRequestHandler<GetSessionByIdQuery, ErrorOr<SessionResult>>
 {
-    private readonly DataContext dataContext;
+  private readonly DataContext dataContext;
 
-    public GetSessionQueryHandler(DataContext dataContext)
+  public GetSessionQueryHandler(DataContext dataContext)
+  {
+    this.dataContext = dataContext;
+  }
+
+  public async Task<ErrorOr<SessionResult>> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
+  {
+    var session = await dataContext
+        .Sessions.Where(s => s.Id == request.Id).Include(s => s.User)
+        .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+
+    if (session is null)
     {
-        this.dataContext = dataContext;
+      return Errors.Session.NotFound;
     }
-
-    public async Task<ErrorOr<SessionResult>> Handle(GetSessionByIdQuery request, CancellationToken cancellationToken)
-    {
-        var session = await dataContext
-            .Sessions.Where(s => s.Id == request.Id).Include(s => s.User)
-            .SingleOrDefaultAsync(cancellationToken: cancellationToken);
-
-        if (session is null)
-        {
-            return Errors.Session.NotFound;
-        }
-        return new SessionResult(session);
-    }
+    return new SessionResult(session);
+  }
 }

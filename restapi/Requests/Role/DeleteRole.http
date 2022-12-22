@@ -1,4 +1,4 @@
-@id=04571743-0a86-45f5-901a-08daa13f9828
+@id=eac0bcdf-f4ad-4739-af4c-08daddb8b3c2
 
 Delete {{host}}/api/roles/{{id}}
 Authorization: Bearer {{admintoken}}

@@ -1,5 +1,6 @@
+import React, { useState } from 'react';
+
 import { FilePondFile } from 'filepond';
-import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Main } from '../components/Layout';
@@ -13,7 +14,6 @@ const AddLocation: React.FC = () => {
     const [pageIndex, setPageIndex] = useState(0);
 
     const { title, description, lat, lng, selectedCategories } = useStateSelector((state) => state.addLocation);
-    const { shouldNavigate } = useStateSelector((state) => state.ui);
 
     const dispatch = useStateDispatch();
     const navigate = useNavigate();
@@ -24,7 +24,6 @@ const AddLocation: React.FC = () => {
     };
 
     const onSubmitHandler = (image?: FilePondFile) => {
-        dispatch(addLocationActions.setLoading(true));
         const formData = new FormData();
 
         formData.append('title', title.trim());
@@ -40,14 +39,12 @@ const AddLocation: React.FC = () => {
             formData.append('image', image.file);
         }
 
-        dispatch(locationServices.addLocation(formData));
+        dispatch(
+            locationServices.addLocation(formData, () => {
+                navigate('/');
+            }),
+        );
     };
-
-    useEffect(() => {
-        if (shouldNavigate) {
-            navigate('/');
-        }
-    }, [shouldNavigate, navigate]);
 
     return (
         <>

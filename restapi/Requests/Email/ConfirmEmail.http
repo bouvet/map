@@ -3,6 +3,6 @@ Content-Type: application/json
 Authorization: Bearer {{registrationtoken}}
 
 {
-  "email": "verden.venter.app@gmail.com",
-  "confirmationCode": 253366
+  "email": "jdoe@email.com",
+  "confirmationCode": 123456
 }

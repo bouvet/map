@@ -30,6 +30,13 @@ const addLocationState = createSlice({
         setDescription(state, action: PayloadAction<string>) {
             state.description = action.payload;
         },
+        reset(state) {
+            state.selectedCategories = [];
+            state.title = '';
+            state.description = '';
+            state.lat = 0;
+            state.lng = 0;
+        },
     },
 });
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CircularProgress } from '@mui/material';
 
-import { DeleteButton, PrimaryButton } from '../Buttons';
+import { AcceptButton, DeleteButton } from '../Buttons';
 import { Modal } from './Modal';
 
 interface Props {
@@ -25,9 +25,9 @@ export const ConfirmationModal: React.FC<Props> = ({
     <Modal closeModalHandler={onCancelHandler} center title={modalTitle}>
         <p style={{ lineHeight: '1.4rem' }}>{modalText}</p>
         <p style={{ padding: '1rem 0' }}>Er du sikker?</p>
-        <PrimaryButton sx={{ marginTop: '0.5rem', backgroundColor: 'green' }} onClick={onCancelHandler}>
+        <AcceptButton sx={{ marginTop: '0.5rem', backgroundColor: 'green' }} onClick={onCancelHandler}>
             Nei, ta meg tilbake
-        </PrimaryButton>
+        </AcceptButton>
         <DeleteButton sx={{ marginTop: '0.5rem' }} onClick={onAcceptHandler}>
             {!loading ? acceptButtonText : <CircularProgress color="inherit" size={20} />}
         </DeleteButton>

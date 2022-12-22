@@ -1,0 +1,14 @@
+{
+  "id": "eac0bcdf-f4ad-4739-af4c-08daddb8b3c2",
+  "name": "Superuser",
+  "created": "2022-12-14T09:50:58.5166117Z",
+  "updated": null,
+  "creator": {
+    "id": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+    "email": "verden.venter.app@gmail.com",
+    "firstName": "Verden",
+    "lastName": "Venter",
+    "dob": "2022-12-12T10:01:52.3351244"
+  },
+  "editor": null
+}

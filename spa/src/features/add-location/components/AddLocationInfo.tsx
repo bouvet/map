@@ -11,6 +11,7 @@ import { ICategory } from '../../../interfaces';
 import { addLocationActions } from '../../../store';
 import { MyTheme } from '../../../styles/global';
 import { CategoryButton } from '../../home/components/CategoryButton';
+import { mapServices } from '../../map';
 
 interface Props {
     setPageIndex: (pageIndex: number) => void;
@@ -46,6 +47,10 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
         }
     }, [dispatch, title]);
 
+    useEffect(() => {
+        dispatch(mapServices.getCategories());
+    }, [dispatch]);
+
     return (
         <Section style={{ paddingTop: '0.5rem' }}>
             <div>
@@ -70,6 +75,7 @@ export const AddLocationInfo: React.FC<Props> = ({ setPageIndex }) => {
                             selectCategoryHandler={selectCategoryHandler}
                         />
                     ))}
+                    {categories.length < 1 && <p>Det finnes ingen kategorier i systemet</p>}
                 </FlexRowContainer>
 
                 <Text style={{ marginBottom: '1rem', fontWeight: '600' }}>Beskriv stedet*</Text>

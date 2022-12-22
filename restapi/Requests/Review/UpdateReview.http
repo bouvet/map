@@ -1,11 +1,11 @@
-@id=f64dc21c-a812-4186-a596-0f0e19b6a52c
-@locationId=8e322b1a-5193-47e6-8527-7dd01d61d777
+@id=6b041783-efba-4dce-952b-4bf5fcc69db4
+@locationId=f4ff6a93-f714-4f1d-9abc-99a0d0b88225
 
 ### Update Review Without Image
 
 PUT {{host}}/api/reviews/{{id}}
-# Authorization: Bearer {{admintoken}}
-Authorization: Bearer {{usertoken}}
+Authorization: Bearer {{admintoken}}
+# Authorization: Bearer {{usertoken}}
 # Authorization: Bearer {{registrationtoken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 

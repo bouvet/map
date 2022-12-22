@@ -9,38 +9,38 @@ namespace restapi.Services.Sessions.Queries.GetSessions;
 
 public class GetSessionsQueryHandler : IRequestHandler<GetSessionsQuery, ErrorOr<List<SessionResult>>>
 {
-    private readonly DataContext dataContext;
+  private readonly DataContext dataContext;
 
-    public GetSessionsQueryHandler(DataContext dataContext)
+  public GetSessionsQueryHandler(DataContext dataContext)
+  {
+    this.dataContext = dataContext;
+  }
+
+  public async Task<ErrorOr<List<SessionResult>>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
+  {
+    if (request.UserId == Guid.Empty)
     {
-        this.dataContext = dataContext;
+      return Errors.User.NotFound;
+    }
+    List<Session> sessions;
+
+    if (request.LocationId == Guid.Empty)
+    {
+      sessions = await dataContext.Sessions.ToListAsync(cancellationToken: cancellationToken);
+    }
+    else
+    {
+      sessions = await dataContext.Sessions.Where(session => request.LocationId == session.Location.Id)
+      .Include(session => session.User).Where(session => session.User.Id == request.UserId).ToListAsync(cancellationToken: cancellationToken);
     }
 
-    public async Task<ErrorOr<List<SessionResult>>> Handle(GetSessionsQuery request, CancellationToken cancellationToken)
+    var sessionResultList = new List<SessionResult>();
+
+    foreach (Session session in sessions)
     {
-        if (request.UserId == Guid.Empty)
-        {
-            return Errors.User.NotFound;
-        }
-        List<Session> sessions;
-
-        if (request.LocationId == Guid.Empty)
-        {
-            sessions = await dataContext.Sessions.ToListAsync(cancellationToken: cancellationToken);
-        }
-        else
-        {
-            sessions = await dataContext.Sessions.Where(session => request.LocationId == session.Location.Id)
-            .Include(session => session.User).Where(session => session.User.Id == request.UserId).ToListAsync(cancellationToken: cancellationToken);
-        }
-
-        var sessionResultList = new List<SessionResult>();
-
-        foreach (Session session in sessions)
-        {
-            sessionResultList.Add(new SessionResult(session));
-        }
-
-        return sessionResultList;
+      sessionResultList.Add(new SessionResult(session));
     }
+
+    return sessionResultList;
+  }
 }

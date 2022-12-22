@@ -1,8 +1,8 @@
 POST {{host}}/api/users/role
 Content-Type: application/json
-Authorization: Bearer {{adminToken}}
+Authorization: Bearer {{admintoken}}
 
 {
-  "userId": "7cf5bb84-76b8-4b3c-980a-be4c95e2ff44",
-  "roleId": "05d6e54e-f862-4f6a-a062-9adcf5a7ac35"
+  "userId": "d5434215-a945-4995-bf6d-05f11e5fb3aa",
+  "roleId": "93904a05-b9b6-4806-864c-a9b05962a9c4"
 }

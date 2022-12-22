@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton } from '../../../components/Common';
+import { AcceptButton, SecondaryButton } from '../../../components/Common';
 import { Form } from '../../../components/Form/Form';
 import { StyledInput } from '../../../components/Form/StyledInput';
 import { Main, Section } from '../../../components/Layout';
@@ -62,14 +62,15 @@ export const ChangeEmail = () => {
                             onBlur={emailBlurHandler}
                             inputHasError={emailInputHasError}
                         />
-                        <PrimaryButton
+                        <AcceptButton
                             type="submit"
                             sx={{ marginTop: 'auto' }}
                             disabled={!emailIsValid || emailInputHasError}
                             loading={loading}
                         >
                             Endre e-post
-                        </PrimaryButton>
+                        </AcceptButton>
+                        <SecondaryButton onClick={() => navigate('/profile')}>Gå tilbake</SecondaryButton>
                     </Form>
                 </Section>
             </Main>
