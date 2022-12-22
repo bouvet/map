@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import 'moment/locale/nb';
-import { StarRating } from '../../../components/StarRating/StarRating';
+import { StarRating } from '../../../components/Common';
 import { MyTheme } from '../../../styles/global';
 
 interface ReviewProps {

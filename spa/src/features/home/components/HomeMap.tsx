@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
 import { ICategory, ILocation } from '../../../interfaces';
@@ -28,6 +28,11 @@ export const HomeMap: React.FC<Props> = ({ showMenu, showMenuToggler, selectedLo
             dispatch(mapServices.getClosestLocation(position, selectedCategory));
         });
     };
+
+    useEffect(() => {
+        dispatch(mapServices.getCategories());
+        dispatch(mapServices.getLocations());
+    }, [dispatch]);
 
     return (
         <>

@@ -7,22 +7,12 @@ Once all digits are entered a new request will be sent to the server confirming 
 name, date of birth and password.
 
 - [Registration Process](#registration-process)
-  - [Create Email](#create-email)
-    - [Create Email Request](#create-email-request)
-    - [Create Email Response](#create-email-response)
-  - [🔒Confirm Email](#confirm-email)
-    - [Confirm Email Request](#confirm-email-request)
-    - [Confirm Email Response](#confirm-email-response)
-  - [🔒Delete Email](#delete-email)
-    - [Delete Email Request](#delete-email-request)
-    - [Delete Email Response](#delete-email-response)
-  - [🔒Get Emails](#get-emails)
-    - [Get Emails Request](#get-emails-request)
-    - [Get Emails Response](#get-emails-response)
+  - [Create Email Request](#create-email-request)
+  - [🔒Confirm Email Request](#confirm-email-request)
+  - [🔒Delete Email Request](#delete-email-request)
+  - [🔒Get Emails Request](#get-emails-request)
 
-## Create Email
-
-### Create Email Request
+## Create Email Request
 
 ```js
 POST {{host}}/api/email
@@ -40,23 +30,7 @@ Required fields:
 }
 ```
 
-### Create Email Response
-
-```js
-200 Ok
-```
-
-```json
-{
-  "id": "",
-  "address": "",
-  "token": ""
-}
-```
-
-## 🔒Confirm Email
-
-### Confirm Email Request
+## 🔒Confirm Email Request
 
 ```js
 POST {{host}}/api/email/confirm
@@ -77,30 +51,11 @@ Required fields:
 }
 ```
 
-### Confirm Email Response
-
-```js
-200 Ok
-```
-
-```json
-{
-  "id": "",
-  "address": "",
-  "confirmationCode": 0,
-  "confirmed": true,
-  "created": "",
-  "updated": ""
-}
-```
-
 > If a user enters wrong email, they can go back.
 > This will result in deleting created email.
 > Only Admin or the user who tried to register can delete.
 
-## 🔒Delete Email
-
-### Delete Email Request
+## 🔒Delete Email Request
 
 ```js
 DELETE {{host}}/api/email/{{email}}
@@ -108,36 +63,9 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 ```
 
-### Delete Email Response
-
-```js
-204 No Content
-```
-
-## 🔒Get Emails
-
-### Get Emails Request
+## 🔒Get Emails Request
 
 ```js
 GET {{host}}/api/email
-Authorization: Bearer {{admintoken}}
-```
-
-### Get Emails Response
-
-```js
-200 Ok
-```
-
-```json
-[
-  {
-    "id": "",
-    "address": "",
-    "confirmationCode": 0,
-    "confirmed": false,
-    "created": "",
-    "updated": null or ""
-  }
-]
+Authorization: Bearer {{token}}
 ```

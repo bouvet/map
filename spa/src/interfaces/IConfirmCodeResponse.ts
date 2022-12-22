@@ -1,8 +1,8 @@
 export interface IConfirmCodeResponse {
     id: string;
     address: string;
-    confirmationCode: 0;
-    confirmed: true;
+    confirmationCode: number;
+    confirmed: boolean;
     created: string;
     updated: string;
 }

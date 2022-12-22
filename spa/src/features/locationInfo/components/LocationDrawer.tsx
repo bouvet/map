@@ -1,19 +1,17 @@
 import { Global } from '@emotion/react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, CssBaseline, IconButton, SwipeableDrawer } from '@mui/material';
+import { Box, CssBaseline, IconButton, SwipeableDrawer } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { styled as materialStyled, StyledEngineProvider } from '@mui/material/styles';
 import moment from 'moment';
 import 'moment/locale/nb';
 import { FC, ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { LinkButton, PrimaryButton } from '../../../components/Common';
-import { StarRating } from '../../../components/StarRating/StarRating';
+import { LinkButton, PrimaryButton, StarRating } from '../../../components/Common';
 import { useStateDispatch, useStateSelector } from '../../../hooks/useRedux';
-import { ILocation } from '../../../interfaces';
+import { ILocation, IReview } from '../../../interfaces';
 import { uiActions } from '../../../store/state/ui.state';
 import { MyTheme } from '../../../styles/global';
-import { IReviewTypeGet } from '../../../utils/types.d';
 import { sessionServices } from '../../session/services/session.services';
 import { reviewServices } from '../services/locationinfo.services';
 import { AddSessionModal } from './AddSessionModal';
@@ -129,7 +127,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
             const temp = currentReviews
                 .filter((item) => item.text)
                 .sort((itemA, itemB) => (itemA.created > itemB.created ? -1 : 1))
-                .map((item: IReviewTypeGet) => (
+                .map((item: IReview) => (
                     <Review
                         key={item.id}
                         date={moment(item.created).format('L')}
@@ -150,7 +148,7 @@ export const SwipeableEdgeDrawer: FC<Props> = ({ selectedLocation }) => {
                 .filter((item) => item.webpImage)
                 // @ts-ignore
                 .sort((itemA, itemB) => (itemA.webpImage?.uploaded > itemB.webpImage?.uploaded ? 1 : -1))
-                .map((item: IReviewTypeGet) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
+                .map((item: IReview) => <ImageWrapper key={item.id} backgroundImage={item.webpImage?.cdnUri} />);
             setImageList(temp);
             if (selectedLocation.properties.webpImage) {
                 const mainImg = <ImageWrapper key={Math.random() * 1000} backgroundImage={selectedLocation.properties.webpImage.cdnUri} />;

@@ -1,4 +1,4 @@
-import { IProfileImage } from './IProfileImage';
+import { IImage } from './IImage';
 import { IRole } from './IRole';
 import { ICategory } from './ICategory';
 
@@ -16,7 +16,7 @@ export interface IUser {
     registered: string;
     roles: IRole[];
     favoriteCategories: ICategory[];
-    originalProfileImage?: IProfileImage;
-    webpProfileImage?: IProfileImage;
+    originalProfileImage?: IImage;
+    webpProfileImage?: IImage;
     token: string;
 }

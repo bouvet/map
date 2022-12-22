@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ISnackbar } from '../../interfaces';
 
 const initialState = {
-    shouldNavigate: false,
     showLocationInfoPopup: false,
     showLocationInfoDrawer: false,
     snackbar: {
@@ -19,9 +18,6 @@ const uiState = createSlice({
     name: 'ui',
     initialState,
     reducers: {
-        setShouldNavigate(state, action: PayloadAction<boolean>) {
-            state.shouldNavigate = action.payload;
-        },
         setShowLocationPopup(state, action: PayloadAction<boolean>) {
             state.showLocationInfoPopup = action.payload;
         },
@@ -39,8 +35,8 @@ const uiState = createSlice({
         setCloseSnackbar(state) {
             state.snackbar = initialState.snackbar;
         },
-        toggleShowSidebar(state) {
-            state.showSidebar = !state.showSidebar;
+        setShowSidebar(state, action: PayloadAction<boolean>) {
+            state.showSidebar = action.payload;
         },
     },
 });

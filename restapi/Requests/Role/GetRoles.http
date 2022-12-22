@@ -1,2 +1,2 @@
 GET {{host}}/api/roles
-Authorization: Bearer {{adminToken}}
+Authorization: Bearer {{admintoken}}

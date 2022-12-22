@@ -4,6 +4,8 @@ export * from './IConfirmCodeResponse';
 export * from './ICreateEmailResponse';
 export * from './ILocation';
 export * from './IRegisterRequest';
+export * from './IReview';
+export * from './ISession';
 export * from './ISnackbar';
 export * from './IUpdatePasswordRequest';
 export * from './IUser';

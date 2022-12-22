@@ -10,13 +10,14 @@ import { ICategory } from '../../../interfaces';
 import { MyTheme } from '../../../styles/global';
 import { useStateDispatch } from '../../../hooks/useRedux';
 import { categoryServices } from '../services';
-import { PrimaryButton } from '../../../components/Common';
+import { AcceptButton, DeleteButton, PrimaryButton } from '../../../components/Common';
 
 interface Props {
     category: ICategory;
+    selectCategoryHandler: (category: ICategory) => void;
 }
 
-export const CategoryListItem: React.FC<Props> = ({ category }) => {
+export const CategoryListItem: React.FC<Props> = ({ category, selectCategoryHandler }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [emoji, setEmoji] = useState('');
     const [name, setName] = useState('');
@@ -30,11 +31,7 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
     };
 
     const onSubmitHandler = () => {
-        dispatch(categoryServices.edit({ id: category.id, name, emoji }));
-    };
-
-    const onDeleteHandler = () => {
-        dispatch(categoryServices.delete(category.id));
+        dispatch(categoryServices.edit(category.id, name, emoji));
     };
 
     return (
@@ -49,10 +46,18 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
                 <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginTop: '1rem' }}>
                     {!isEditing && (
                         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                            <PrimaryButton color="error" sx={{ textTransform: 'none', marginBottom: '0.5rem' }} onClick={onDeleteHandler}>
+                            <DeleteButton
+                                color="error"
+                                sx={{ textTransform: 'none', marginBottom: '0.5rem', width: '40%' }}
+                                onClick={() => selectCategoryHandler(category)}
+                            >
                                 <Delete />
-                            </PrimaryButton>
-                            <PrimaryButton color="warning" sx={{ textTransform: 'none', marginBottom: '0.5rem' }} onClick={onEditHandler}>
+                            </DeleteButton>
+                            <PrimaryButton
+                                color="warning"
+                                sx={{ textTransform: 'none', marginBottom: '0.5rem', width: '40%' }}
+                                onClick={onEditHandler}
+                            >
                                 <Edit />
                             </PrimaryButton>
                         </div>
@@ -80,20 +85,20 @@ export const CategoryListItem: React.FC<Props> = ({ category }) => {
                                 />
                             </form>
                             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                <PrimaryButton
+                                <DeleteButton
                                     color="error"
-                                    sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
+                                    sx={{ textTransform: 'none', marginBottom: '0.5rem', width: '40%' }}
                                     onClick={() => setIsEditing(false)}
                                 >
                                     <Close />
-                                </PrimaryButton>
-                                <PrimaryButton
+                                </DeleteButton>
+                                <AcceptButton
                                     color="success"
-                                    sx={{ textTransform: 'none', marginBottom: '0.5rem' }}
+                                    sx={{ textTransform: 'none', marginBottom: '0.5rem', width: '40%' }}
                                     onClick={onSubmitHandler}
                                 >
                                     <Done />
-                                </PrimaryButton>
+                                </AcceptButton>
                             </div>
                         </>
                     )}

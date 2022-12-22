@@ -5,8 +5,7 @@ import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
 import { mapActions } from '../store/state/map.state';
 import { mapServices } from '../features/map';
 
-import { ILocation } from '../interfaces';
-import { locationStatus } from '../types';
+import { ILocation, LocationStatus } from '../interfaces';
 
 import { LocationCard, LocationModal, StatusSelector } from '../features/admin';
 import { Section } from '../components/Layout';
@@ -25,7 +24,7 @@ const Admin: React.FC = () => {
 
     const onSelectStatusHandler = (
         option: SingleValue<{
-            value: locationStatus;
+            value: LocationStatus;
             label: string;
         }>,
     ) => {

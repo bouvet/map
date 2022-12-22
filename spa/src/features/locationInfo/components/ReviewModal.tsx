@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { FABCloseButton, PrimaryButton } from '../../../components/Common';
 import { ILocation } from '../../../interfaces';
 import { MyTheme } from '../../../styles/global';
-import { IReviewType } from '../../../utils/types.d';
 
 interface ReviewProps {
     selectedLocation: ILocation;
@@ -90,7 +89,7 @@ export const ReviewModal: FC<ReviewProps> = ({ selectedLocation, open, close }) 
         if (value === 0 || value === null) {
             e.preventDefault();
         } else {
-            const payload: IReviewType = {
+            const payload: any = {
                 rating: value,
                 text: review,
                 locationId: selectedLocation.id,

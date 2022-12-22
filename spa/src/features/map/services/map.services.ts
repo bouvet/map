@@ -1,11 +1,10 @@
-import { ICategory } from '../../../interfaces';
+import { ICategory, LocationStatus } from '../../../interfaces';
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store/index';
 import { mapActions } from '../../../store/state/map.state';
-import { locationStatus } from '../../../types';
 
 export const mapServices = {
-    getLocations(filter: locationStatus = 'Approved') {
+    getLocations(filter: LocationStatus = 'Approved') {
         return async (dispatch: AppDispatch) => {
             try {
                 const { data: locations } = await API.get(`/locations/${filter}`);

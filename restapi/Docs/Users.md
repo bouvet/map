@@ -3,25 +3,16 @@
 > **All endpoints require Authorization header!**
 
 - [Users🔒](#users)
-  - [Get User By Id](#get-user-by-id)
-    - [Get User By Id Request](#get-user-by-id-request)
-    - [Get User By Id Response](#get-user-by-id-response)
-  - [Get Users](#get-users)
-    - [Get Users Request](#get-users-request)
-    - [Get Users Response](#get-users-response)
-  - [Update User](#update-user)
-    - [Update User Request](#update-user-request)
-    - [Update User Response](#update-user-response)
-  - [Add User Role](#add-user-role)
-    - [Add User Role Request](#add-user-role-request)
-    - [Add User Role Response](#add-user-role-response)
-  - [Delete User](#delete-user)
-    - [Delete User Request](#delete-user-request)
-    - [Delete User Response](#delete-user-response)
+  - [Get User By Id Request](#get-user-by-id-request)
+  - [Get Users Request](#get-users-request)
+  - [Update User Request](#update-user-request)
+  - [Add User Role Request](#add-user-role-request)
+  - [Delete User Request](#delete-user-request)
+  - [Update Password Request](#update-password-request)
+  - [Change Email Request](#change-email-request)
+  - [Confirm Email Request](#confirm-email-request)
 
-## Get User By Id
-
-### Get User By Id Request
+## Get User By Id Request
 
 ```js
 GET {{host}}/api/users/{{id}}
@@ -31,122 +22,39 @@ Authorization: Bearer {{token}}
 > User can fetch own details
 > Admin has free access
 
-### Get User By Id Response
-
-```js
-200 OK
-```
-
-```json
-{
-  "id": "",
-  "email": "",
-  "firstName": "",
-  "lastName": "",
-  "address": "",
-  "postalArea": "",
-  "postalCode": 0,
-  "phoneNumber": 0,
-  "dob": null,
-  "roles": [
-    {
-      "id": "",
-      "name": "",
-      "created": "",
-      "updated": null,
-      "creator": {
-        "id": "",
-        "email": "",
-        "firstName": "",
-        "lastName": ""
-      },
-      "editor": null
-    }
-  ]
-}
-```
-
-## Get Users
-
-### Get Users Request
+## Get Users Request
 
 ```js
 GET {{host}}/api/users
-Authorization: Bearer {{admintoken}}
+Authorization: Bearer {{token}}
 ```
 
-### Get Users Response
-
-```js
-200 OK
-```
-
-```json
-[
-  {
-    "id": "",
-    "email": "",
-    "firstName": "",
-    "lastName": "",
-    "address": "",
-    "postalArea": "",
-    "postalCode": 0,
-    "phoneNumber": 0,
-    "dob": null,
-    "roles": [
-      {
-        "id": "",
-        "name": "",
-        "created": "",
-        "updated": "",
-        "creator": {
-          "id": "",
-          "email": "",
-          "firstName": "",
-          "lastName": ""
-        },
-        "editor": null
-      }
-    ]
-  }
-]
-```
-
-## Update User
-
-### Update User Request
+## Update User Request
 
 ```js
 POST {{host}}/api/users/{{id}}
-Content-Type: application/json
 Authorization: Bearer {{token}}
+
+Content-Type: multipart/form-data
 ```
 
 > User can update their own details
 > Admin has free access
 
-```json
-{
-  "Email": "",
-  "FirstName": "",
-  "LastName": "",
-  "Address": "",
-  "PostalArea": "",
-  "PostalCode": 0,
-  "PhoneNumber": 0,
-  "DOB": "" // (DateOfBirth) Format: Year-Month-Day : 2022-09-30
-}
+```multipart/form-data
+FirstName = ""
+LastName = ""
+Address = ""
+PostalArea = ""
+PostalCode = number
+PhoneNumber = number
+DeleteProfileImage = boolean
+DOB = "" // (DateOfBirth) Format: Year-Month-Day : 2022-09-30
+FavoriteCategoryIds = []
+ProfileImage = FormFile
 ```
 
-### Update User Response
-
-```js
-204 No Content
-```
-
-## Add User Role
-
-### Add User Role Request
+## Add User Role Request
 
 ```js
 POST {{host}}/api/users/role
@@ -161,23 +69,46 @@ Authorization: Bearer {{token}}
 }
 ```
 
-### Add User Role Response
-
-```js
-204 No Content
-```
-
-## Delete User
-
-### Delete User Request
+## Delete User Request
 
 ```js
 DELETE {{host}}/api/users/{{id}}
 Authorization: Bearer {{token}}
 ```
 
-### Delete User Response
+## Update Password Request
 
 ```js
-204 No Content
+PUT {{host}}/api/users/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+```
+
+```json
+{
+  "CurrentPassword": "",
+  "Password": "",
+  "ConfirmPassword": ""
+}
+```
+
+## Change Email Request
+
+```js
+PUT {{host}}/api/users/change-email
+Content-Type: application/json
+Authorization: Bearer {{token}}
+```
+
+```json
+{
+  "Email": ""
+}
+```
+
+## Confirm Email Request
+
+```js
+PUT {{host}}/api/users/confirm-email
+Authorization: Bearer {{token}}
 ```

@@ -1,4 +1,4 @@
-@id=4aab2ac7-96dc-493a-a254-de39e1829d87
+@id=8b76584a-ac09-4ca0-88a2-a3cffc2abbae
 
 DELETE {{host}}/api/locations/{{id}}
 Authorization: Bearer {{admintoken}}

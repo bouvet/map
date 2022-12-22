@@ -33,10 +33,9 @@ export const Email = () => {
 
         if (!emailIsValid) return;
 
-        localStorage.setItem('email', email);
-
         dispatch(
             registerServices.getCode(email, (emailIsConfirmed) => {
+                localStorage.setItem('email', email);
                 if (emailIsConfirmed) {
                     navigate('/register/personal-info');
                     return;

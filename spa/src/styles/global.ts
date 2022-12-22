@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { header } from './header';
-
 export const MyTheme = {
     colors: {
         accent: '#007BC0',
@@ -10,8 +8,10 @@ export const MyTheme = {
         darkColor: '#000000',
         opaque: 'rgba(0, 0, 0, 0.5)',
         gray: '#A7A7A7',
-        alert: '#D32F2F',
-        success: '#2E7D32',
+        alert: '#d32f2f',
+        alertLight: '#f44336',
+        success: '#388e3c',
+        successLight: '#66bb6a',
         warning: '#ffa726',
     },
     fontFamily: {
@@ -23,9 +23,6 @@ export const MyTheme = {
         icon: '16px',
         header: '16px',
         largeIcon: '24px',
-    },
-    size: {
-        header,
     },
 };
 

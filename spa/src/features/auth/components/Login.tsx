@@ -9,7 +9,7 @@ import { GoogleLoginLink } from './GoogleLoginLink';
 import { DivideLine } from './DivideLine';
 import { LoginForm } from './LoginForm';
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
     const { isAuthenticated } = useStateSelector((state) => state.auth);
 
     if (isAuthenticated) {

@@ -11,6 +11,7 @@ import { MyTheme, deviceWidth } from '../../styles/global';
 import { useStateDispatch, useStateSelector } from '../../hooks';
 import { authActions, uiActions, userActions } from '../../store';
 import { PrimaryButton } from '../Common';
+import { sleep } from '../../utils';
 
 export const Sidebar: React.FC = () => {
     const { showSidebar } = useStateSelector((state) => state.ui);
@@ -21,25 +22,26 @@ export const Sidebar: React.FC = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
-    const closeSidebarHandler = () => {
-        dispatch(uiActions.toggleShowSidebar());
+    const closeSidebarHandler = async () => {
+        await sleep(100);
+        dispatch(uiActions.setShowSidebar(false));
     };
 
     const logoutHandler = () => {
         dispatch(authActions.logOut());
         dispatch(userActions.resetState());
-        dispatch(uiActions.toggleShowSidebar());
+        dispatch(uiActions.setShowSidebar(false));
         navigate('/');
         dispatch(uiActions.showSnackbar({ message: 'Du er logget ut', severity: 'success' }));
     };
 
     return (
-        <Drawer anchor="right" open={showSidebar} onClose={closeSidebarHandler}>
+        <Drawer anchor="right" open={showSidebar}>
             <nav style={{ height: '100%' }}>
-                <SidebarHeader />
+                <SidebarHeader>Verden Venter</SidebarHeader>
                 <ul
                     style={{
-                        height: `calc(100% - ${MyTheme.size.header.height.mobileS})`,
+                        height: `calc(100% - 3rem)`,
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.3rem',
@@ -57,38 +59,38 @@ export const Sidebar: React.FC = () => {
                             </NavLink>
                         </li>
                     )}
+
+                    <li>
+                        <NavLink
+                            to="/add-location"
+                            className={pathname === '/add-location' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                            onClick={closeSidebarHandler}
+                        >
+                            Legg til lokasjon
+                        </NavLink>
+                    </li>
+
                     {isAdmin && (
-                        <li>
-                            <NavLink
-                                to="/admin"
-                                className={pathname === '/admin' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-                                onClick={closeSidebarHandler}
-                            >
-                                Behandle lokasjoner
-                            </NavLink>
-                        </li>
-                    )}
-                    {isAdmin && (
-                        <li>
-                            <NavLink
-                                to="/admin/category"
-                                className={pathname === '/admin/category' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-                                onClick={closeSidebarHandler}
-                            >
-                                Behandle kategorier
-                            </NavLink>
-                        </li>
-                    )}
-                    {!isAuthenticated && (
-                        <li>
-                            <NavLink
-                                to="/auth/login"
-                                className={pathname === '/auth/login' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
-                                onClick={closeSidebarHandler}
-                            >
-                                Logg inn
-                            </NavLink>
-                        </li>
+                        <>
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    className={pathname === '/admin' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                    onClick={closeSidebarHandler}
+                                >
+                                    Behandle lokasjoner
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/admin/category"
+                                    className={pathname === '/admin/category' ? 'sidebar-link sidebar-link--active' : 'sidebar-link'}
+                                    onClick={closeSidebarHandler}
+                                >
+                                    Behandle kategorier
+                                </NavLink>
+                            </li>
+                        </>
                     )}
 
                     <li>
@@ -96,6 +98,19 @@ export const Sidebar: React.FC = () => {
                             Hjem
                         </NavLink>
                     </li>
+
+                    {!isAuthenticated && (
+                        <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
+                            <NavLink to="/auth/login" onClick={closeSidebarHandler}>
+                                <PrimaryButton
+                                    className="sidebar-link sidebar-link--btn"
+                                    sx={{ textTransform: 'none', borderRadius: 0, fontSize: '1rem' }}
+                                >
+                                    Logg inn
+                                </PrimaryButton>
+                            </NavLink>
+                        </li>
+                    )}
                     {isAuthenticated && (
                         <li style={{ marginBottom: '1rem', marginTop: 'auto' }}>
                             <PrimaryButton
@@ -115,7 +130,11 @@ export const Sidebar: React.FC = () => {
 
 const SidebarHeader = styled.div`
     width: 75vw;
-    height: ${MyTheme.size.header.height.mobileS};
+    height: 3rem;
     background-color: ${MyTheme.colors.accent};
+    color: ${MyTheme.colors.lightBase};
     max-width: ${deviceWidth.mobileS};
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
 `;

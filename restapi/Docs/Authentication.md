@@ -1,16 +1,13 @@
 # Authentication
 
 - [Authentication](#authentication)
-  - [Register](#register)
-    - [Register Request](#register-request)
-    - [Register Response](#register-response)
-  - [Login](#login)
-    - [Login Request](#login-request)
-    - [Login Response](#login-response)
+  - [Register Request](#register-request)
+  - [Register With Google Request](#register-with-google-request)
+  - [Login Request](#login-request)
+  - [Reset Password Request](#reset-password-request)
+  - [Authenticate With Code Request](#authenticate-with-code-request)
 
-## Register
-
-### Register Request
+## Register Request
 
 ```js
 POST {{host}}/api/auth/register
@@ -37,56 +34,34 @@ Required fields:
 }
 ```
 
-### Register Response
+## Register With Google Request
 
 ```js
-200 Ok
+POST {{host}}/api/auth/register-with-google
+Content-Type: application/json
+```
+
+```yml
+Required fields:
+  - email
+  - password (min 8 chars)
+  - firstName
+  - lastName
+  - DOB (Date Of Birth)
 ```
 
 ```json
 {
-  "id": "",
   "email": "",
+  "password": "",
   "firstName": "",
   "lastName": "",
-  "address": null,
-  "postalArea": null,
-  "postalCode": 0,
-  "phoneNumber": 0,
-  "dob": "",
-  "roles": [
-    {
-      "id": "",
-      "name": "",
-      "created": "",
-      "updated": null,
-      "creator": null,
-      "editor": null
-    }
-  ],
-  "favoriteCategories": [
-    {
-      "id": "",
-      "name": "",
-      "emoji": "",
-      "creator": null,
-      "editor": null
-    },
-    {
-      "id": "",
-      "name": "",
-      "emoji": "",
-      "creator": null,
-      "editor": null
-    }
-  ],
-  "token": ""
+  "DOB": "", // Format: Year-Month-Day: 2022-09-27
+  "favoriteCategoryIds": ["", ""]
 }
 ```
 
-## Login
-
-### Login Request
+## Login Request
 
 ```js
 POST {{host}}/api/auth/login
@@ -106,35 +81,38 @@ Required fields:
 }
 ```
 
-### Login Response
+## Reset Password Request
 
 ```js
-200 OK
+POST {{host}}/api/auth/reset-password
+Content-Type: application/json
+```
+
+```yml
+Required fields:
+  - email
 ```
 
 ```json
 {
-  "id": "",
-  "email": "",
-  "firstName": "",
-  "lastName": "",
-  "address": "",
-  "postalArea": "",
-  "postalCode": 0,
-  "phoneNumber": 0,
-  "dob": "",
-  "registered": "",
-  "roles": [
-    {
-      "id": "",
-      "name": "",
-      "created": "",
-      "updated": null,
-      "creator": null,
-      "editor": null
-    }
-  ],
-  "favoriteCategories": [],
-  "token": ""
+  "email": ""
+}
+```
+
+## Authenticate With Code Request
+
+```js
+POST {{host}}/api/auth/code
+Content-Type: application/json
+```
+
+```yml
+Required fields:
+  - code
+```
+
+```json
+{
+  "code": ""
 }
 ```

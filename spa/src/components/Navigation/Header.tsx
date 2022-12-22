@@ -16,7 +16,7 @@ interface Props {
 
 const StyledHeader = styled.header`
     width: 100%;
-    height: ${MyTheme.size.header.height.mobileS};
+    height: 3rem;
     padding: 0 0.5rem;
     display: flex;
     align-items: center;
@@ -55,10 +55,10 @@ export const Header: React.FC<Props> = ({ children, style }) => {
             <IconButton
                 color="inherit"
                 aria-label="toggle drawer"
-                onClick={() => dispatch(uiActions.toggleShowSidebar())}
+                onClick={() => dispatch(uiActions.setShowSidebar(!showSidebar))}
                 sx={{
                     alignItems: 'center',
-                    zIndex: 3000,
+                    zIndex: 1300,
                 }}
             >
                 <span style={{ color: 'white' }} className="material-symbols-outlined">

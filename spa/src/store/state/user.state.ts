@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../interfaces';
+import { IUser, ISession } from '../../interfaces';
 
 const initialState = {
     loading: false,
@@ -8,6 +8,7 @@ const initialState = {
     authMethod: '',
     emailVerified: false,
     favoriteCategoryIds: [] as string[],
+    sessions: [] as ISession[],
 };
 
 const userState = createSlice({
@@ -32,6 +33,9 @@ const userState = createSlice({
         },
         setFavoriteCategoryIds(state, action: PayloadAction<string[]>) {
             state.favoriteCategoryIds = action.payload;
+        },
+        loadSessions(state, action: PayloadAction<ISession[]>) {
+            state.sessions = action.payload;
         },
         resetState(state) {
             state.loading = false;

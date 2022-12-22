@@ -45,7 +45,7 @@ export const ImageSelector: React.FC<Props> = ({ label = 'Legg til bilde', style
     </Section>
 );
 
-const Section = styled.section`
+const Section = styled.div`
     width: 100%;
     &:hover {
         cursor: pointer;
