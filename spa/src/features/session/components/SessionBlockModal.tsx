@@ -30,7 +30,7 @@ interface ISessionBlockModal {
 }
 
 export const SessionBlockModal: FC<ISessionBlockModal> = ({ handler, isOpen, deleteBlock }) => {
-    const handleCloseModalOnClick = () => handler();
+    const handleCloseModal = () => handler();
     const handleDeleteandClose = () => {
         deleteBlock();
         handler();
@@ -38,7 +38,7 @@ export const SessionBlockModal: FC<ISessionBlockModal> = ({ handler, isOpen, del
     return (
         <Modal open={isOpen}>
             <>
-                <Backdrop onClick={handleCloseModalOnClick} />
+                <Backdrop onClick={handleCloseModal} />
                 <form>
                     <Stack>
                         <Box sx={StyledModalBox}>
@@ -49,7 +49,7 @@ export const SessionBlockModal: FC<ISessionBlockModal> = ({ handler, isOpen, del
                                     Slett
                                 </Button>
 
-                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleCloseModalOnClick}>
+                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleCloseModal}>
                                     Avbryt
                                 </Button>
                             </div>

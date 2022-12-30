@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { IconButton } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
-import { MyTheme } from '../../styles/global';
 import { useStateDispatch, useStateSelector } from '../../hooks/useRedux';
 import { uiActions } from '../../store';
+import { MyTheme } from '../../styles/global';
 
 interface Props {
     children?: React.ReactNode;

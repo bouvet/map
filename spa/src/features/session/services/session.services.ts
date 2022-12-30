@@ -1,3 +1,4 @@
+import { ISession } from '../../../interfaces';
 import { API } from '../../../lib/api';
 import { AppDispatch } from '../../../store';
 import { sessionActions } from '../../../store/state/session.state';
@@ -9,6 +10,8 @@ export const sessionServices = {
             try {
                 await API.post('/sessions', payload);
                 dispatch(uiActions.showSnackbar({ message: 'Ny treningsøkt registrert!', severity: 'success' }));
+
+                dispatch(sessionActions.createSession(payload));
             } catch (error) {
                 console.error('error', error);
             }
@@ -17,20 +20,20 @@ export const sessionServices = {
     getAllSessions() {
         return async (dispatch: AppDispatch) => {
             try {
-                const requestUrl = '/Sessions/mySessions';
-                const { data } = await API.get(requestUrl);
-                dispatch(sessionActions.setCurrentSessions(data));
+                const requestUrl = '/Sessions/mysessions';
+                const sessions: ISession[] = await (await API.get(requestUrl)).data;
+                dispatch(sessionActions.setUserSessions(sessions));
             } catch (error) {
                 console.error('error', error);
             }
         };
     },
-    getSessions(payload: string) {
+    getSessionsAtLocation(payload: string) {
         return async (dispatch: AppDispatch) => {
             try {
                 const requestUrl = `/Sessions?locationId=${payload}`;
-                const { data } = await API.get(requestUrl);
-                dispatch(sessionActions.setCurrentSessions(data));
+                const sessions: ISession[] = await (await API.get(requestUrl)).data;
+                dispatch(sessionActions.setUserSessions(sessions));
             } catch (error) {
                 console.error('error', error);
             }

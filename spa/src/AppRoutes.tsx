@@ -2,14 +2,14 @@ import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { App } from './App';
-import { RequireAuth } from './features/auth';
 import { FullPageSpinner } from './components/Common';
+import { RequireAuth } from './features/auth';
 import { ChangeEmail, ChangePassword, DeleteAccount, EditProfile, ProfileImage } from './features/profile';
-import { Email, ConfirmCode, PersonalInfo, Password, Personalization } from './features/register';
+import { ConfirmCode, Email, Password, PersonalInfo, Personalization } from './features/register';
 
 import { Home, Profile } from './pages';
-
 import { MySessions } from './pages/MySessions';
+
 // const Sessions = lazy(() => import('./pages/Sessions'));
 
 const Auth = lazy(() => import('./pages/Auth'));

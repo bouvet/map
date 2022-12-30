@@ -1,25 +1,19 @@
 import moment from 'moment';
-import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { Main } from '../components/Layout';
 import { SessionBlock } from '../features/session/components/SessionBlock';
+import { SessionHeader } from '../features/session/components/SessionHeader';
 import { sessionServices } from '../features/session/services/session.services';
 
 import { useStateDispatch, useStateSelector } from '../hooks/useRedux';
-import { ISessionTypeGet } from '../utils/types.d';
-
-export const SessionHeader = styled.div`
-    width: 100%;
-    height: 2rem;
-    padding: 1rem;
-    text-align: center;
-`;
+import { ISession } from '../interfaces';
 
 const SessionSubHeader = styled.p`
     font-weight: 600;
     display: flex;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
 `;
 
 const SessionPageContainer = styled.div`
@@ -27,53 +21,65 @@ const SessionPageContainer = styled.div`
     margin-bottom: 0.5rem;
 `;
 
+const SessionPageSubContainer = styled.div`
+    width: 100%;
+`;
+
+moment.locale('nb');
+
 export const MySessions: FC = () => {
-    const navigate = useNavigate();
     const dispatch = useStateDispatch();
-    const { currentSessions } = useStateSelector((state) => state.session);
-
-    moment.locale('nb');
-
-    useEffect(() => {
-        dispatch(sessionServices.getAllSessions());
-    }, [dispatch]);
+    const { userSessions } = useStateSelector((state) => state.session);
 
     const HandleSessionBlockDelete = (deleteId: string) => {
         dispatch(sessionServices.deleteSession(deleteId));
     };
 
-    // if (currentSessions.length > 0) {
-    const sessionsSortedByDate: ISessionTypeGet[] = [...currentSessions].sort((a: any, b: any) => {
-        if (a.registered < b.registered) {
-            return 1;
-        }
-        return -1;
-    });
+    const getISOFromSessions: Date[] = useMemo(() => [], []);
+    const getMonthFromDates: number[] = useMemo(() => [], []);
+    const getYearFromDates: number[] = useMemo(() => [], []);
 
-    const getISOFromSessions: any = [];
-    sessionsSortedByDate.map((getDates: any) => getISOFromSessions.push(new Date(getDates.registered)));
+    const sessionsSortedByDate: ISession[] = useMemo(
+        () =>
+            [...userSessions].sort((a: ISession, b: ISession) => {
+                if (a.registered < b.registered) {
+                    return 1;
+                }
+                if (a.registered > b.registered) {
+                    return -1;
+                }
 
-    const getMonthFromDates: any = [];
-    const getYearFromDates: any = [];
+                return 0;
+            }),
+        [userSessions],
+    );
+    useMemo(() => {
+        sessionsSortedByDate.map((getDates: ISession) => getISOFromSessions.push(new Date(getDates.registered)));
 
-    getISOFromSessions.map((singleDate: Date) => {
-        if (getMonthFromDates.indexOf(singleDate.getMonth() + 1) === -1) {
-            getMonthFromDates.push(singleDate.getMonth() + 1);
-        }
-        if (getYearFromDates.indexOf(singleDate.getFullYear()) === -1) {
-            getYearFromDates.push(singleDate.getFullYear());
-        }
-        return singleDate;
-    });
+        getISOFromSessions.map((singleDate: Date) => {
+            if (getMonthFromDates.indexOf(singleDate.getMonth() + 1) === -1) {
+                getMonthFromDates.push(singleDate.getMonth() + 1);
+            }
+            if (getYearFromDates.indexOf(singleDate.getFullYear()) === -1) {
+                getYearFromDates.push(singleDate.getFullYear());
+            }
+            return singleDate;
+        });
+    }, [sessionsSortedByDate, getISOFromSessions, getMonthFromDates, getYearFromDates]);
+
+    // get data from store
+    useEffect(() => {
+        dispatch(sessionServices.getAllSessions());
+    }, [dispatch]);
 
     return (
-        <SessionPageContainer style={{ backgroundColor: '#fafafa' }}>
-            {/* <BackButton onClick={() => navigate('/')} /> */}
-            <SessionPageContainer>
-                <SessionHeader style={{ fontWeight: 700, marginBottom: 25 }}>Dine treningsøkter</SessionHeader>
+        <Main>
+            <SessionPageContainer style={{ backgroundColor: '#fafafa' }}>
+                <SessionHeader />
+
                 {getYearFromDates.map((year: number) => (
-                    <SessionPageContainer key={Math.round(Math.random() * 1000)}>
-                        <SessionSubHeader key={`${year} - ${new Date().getMilliseconds()}`}>
+                    <SessionPageSubContainer key={Math.random() * 1000}>
+                        <SessionSubHeader style={{ fontSize: 18 }} key={`${year} - ${new Date().getMilliseconds()}`}>
                             {moment(year.toString()).format('YYYY')}
                         </SessionSubHeader>
 
@@ -104,10 +110,9 @@ export const MySessions: FC = () => {
                                 </>
                             ) : null,
                         )}
-                    </SessionPageContainer>
+                    </SessionPageSubContainer>
                 ))}
-                ;
             </SessionPageContainer>
-        </SessionPageContainer>
+        </Main>
     );
 };

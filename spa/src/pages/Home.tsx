@@ -65,7 +65,9 @@ export const Home: React.FC = () => {
                         showMenu={showMenu}
                     />
 
-                    {selectedLocation && showLocationInfoPopup && <LocationInfoPopup selectedLocation={selectedLocation} />}
+                    {selectedLocation && showLocationInfoPopup && (
+                        <LocationInfoPopup selectedLocation={selectedLocation} onMarkerSelectHandler={onMarkerSelectHandler} />
+                    )}
 
                     {selectedLocation && showLocationInfoDrawer && <SwipeableEdgeDrawer selectedLocation={selectedLocation} />}
                 </Section>

@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { CircularProgress, Fab } from '@mui/material';
+import { CircularProgress, ClickAwayListener, Fab } from '@mui/material';
 
+import { PillButton } from '../../../components/Common';
 import { Footer } from '../../../components/Layout';
 import { MyTheme } from '../../../styles/global';
 import { HomeMenu } from './HomeMenu';
-import { PillButton } from '../../../components/Common';
 
 interface Props {
     getUserLocationHandler: () => void;
@@ -28,18 +28,20 @@ export const HomeFooter: React.FC<Props> = ({ getUserLocationHandler, showMenuTo
         >
             {!loadingUserLocation ? '🔍' : <CircularProgress color="inherit" size={17} sx={{ marginRight: '0.6rem' }} />} Nærmeste lokasjon
         </PillButton>
-        <Fab
-            onClick={showMenuToggler}
-            sx={{
-                backgroundColor: `${MyTheme.colors.accent}`,
-                color: 'white',
-                '&:hover': {
+        <ClickAwayListener onClickAway={() => (showMenu ? showMenuToggler() : null)}>
+            <Fab
+                onClick={showMenuToggler}
+                sx={{
                     backgroundColor: `${MyTheme.colors.accent}`,
-                },
-            }}
-        >
-            <span className="material-symbols-outlined">{showMenu ? 'close' : 'menu'}</span>
-        </Fab>
+                    color: 'white',
+                    '&:hover': {
+                        backgroundColor: `${MyTheme.colors.accent}`,
+                    },
+                }}
+            >
+                <span className="material-symbols-outlined">{showMenu ? 'close' : 'menu'}</span>
+            </Fab>
+        </ClickAwayListener>
         <HomeMenu showMenu={showMenu} />
     </Footer>
 );

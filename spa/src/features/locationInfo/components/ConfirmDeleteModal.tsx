@@ -2,6 +2,8 @@ import { Box, Button, Modal, Stack } from '@mui/material';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { Text } from '../../../components/Common';
+import { useStateDispatch } from '../../../hooks';
+import { approvalServices } from '../../admin';
 
 const Backdrop = styled.div`
     height: 100vh;
@@ -10,12 +12,13 @@ const Backdrop = styled.div`
 `;
 
 interface IConfirmDelete {
-    open: any;
-    close: any;
-    locationTitle: any;
+    open: boolean;
+    close: Function;
+    locationTitle: string;
+    locationId: string;
 }
 
-const AddSession = {
+const DeleteModal = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
@@ -29,33 +32,33 @@ const AddSession = {
     pt: 5,
 };
 
-export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTitle }) => {
-    const handleCloseSessionModal = () => {
+export const ConfirmDeleteModal: FC<IConfirmDelete> = ({ open, close, locationTitle, locationId }) => {
+    const dispatch = useStateDispatch();
+
+    const handleModalOnClick = () => {
+        close();
+    };
+
+    const deleteLocationHandler = () => {
+        dispatch(approvalServices.deleteLocation(locationId));
         close();
     };
 
     return (
         <Modal open={open}>
             <>
-                <Backdrop onClick={handleCloseSessionModal} />
+                <Backdrop onClick={handleModalOnClick} />
                 <form>
                     <Stack>
-                        <Box sx={AddSession}>
+                        <Box sx={DeleteModal}>
                             <Text style={{ textAlign: 'center' }}>Vil du virkelig slette lokasjonen:</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 600, marginBottom: 20 }}>{locationTitle}?</Text>
                             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button
-                                    variant="contained"
-                                    style={{ backgroundColor: 'rgb(220 17 17)' }}
-                                    onClick={() => {
-                                        console.log('lokasjon slettet');
-                                        handleCloseSessionModal();
-                                    }}
-                                >
+                                <Button variant="contained" style={{ backgroundColor: 'rgb(220 17 17)' }} onClick={deleteLocationHandler}>
                                     Slett
                                 </Button>
 
-                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleCloseSessionModal}>
+                                <Button variant="contained" style={{ backgroundColor: 'grey' }} onClick={handleModalOnClick}>
                                     Avbryt
                                 </Button>
                             </div>

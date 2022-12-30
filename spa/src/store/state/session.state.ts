@@ -1,21 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ISessionTypeGet } from '../../utils/types.d';
+import { ISession } from '../../interfaces';
 
 const initialState = {
-    currentSessions: [] as ISessionTypeGet[],
+    userSessions: [] as ISession[],
 };
 
 const sessionState = createSlice({
     name: 'session',
     initialState,
     reducers: {
-        setCurrentSessions(state, action: PayloadAction<ISessionTypeGet[]>) {
-            state.currentSessions = action.payload;
+        setUserSessions(state, action: PayloadAction<ISession[]>) {
+            state.userSessions = action.payload;
         },
         removeSession(state, action: PayloadAction<string>) {
-            state.currentSessions = state.currentSessions.filter((state) => state.id !== action.payload);
+            state.userSessions = state.userSessions.filter((state) => state.id !== action.payload);
         },
-        createSession(state, action: PayloadAction<Object>) {},
+        createSession(state, action: PayloadAction<any>) {
+            state.userSessions = [...state.userSessions, action.payload];
+        },
     },
 });
 
